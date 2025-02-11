@@ -1,0 +1,109 @@
+.trealers-trealer {
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.trealers-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.trealers-info-cont {
+  display: flex;
+  align-items: center;
+}
+
+.trealers-info-name {
+  color: white;
+  font-size: 45px;
+  font-weight: 900;
+  line-height: 57.33px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  height: 65px;
+}
+
+.trealers-info-socail_networks {
+  display: flex;
+  margin-left: 30px;
+}
+
+.trealers-info-socail_networks div {
+  width: 20px;
+  opacity: 0.6;
+  transition: 0.3s;
+  user-select: none;
+  cursor: pointer;
+  filter: invert();
+
+  &:not(:first-child) {
+    margin-left: 25px;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.trealers-info-likes {
+  display: flex;
+}
+
+.trealers-info-likes div {
+  cursor: pointer;
+  user-select: none;
+}
+
+.trealers-info-dislike {
+  margin-left: 15px;
+}
+
+.trealers-info-like-img {
+  width: 59px;
+  height: 59px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1b2133;
+  border-radius: 10px;
+}
+
+.trealers-info-like-count {
+  margin-top: 10px;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 17.85px;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.trealers-info-dislike-img {
+  width: 59px;
+  height: 59px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1b2133;
+  border-radius: 10px;
+}
+
+.trealers-info-dislike-count {
+  margin-top: 10px;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 17.85px;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}

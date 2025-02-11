@@ -1,0 +1,29 @@
+.similars-header {
+  font-size: 65px;
+  font-weight: 900;
+  line-height: 82.81px;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: white;
+}
+
+.similars-main {
+  overflow: hidden;
+}
+
+.similars-cards {
+  display: flex;
+  width: 100%;
+  transition: 0.7s;
+
+  & > :not(:first-child) {
+    margin-left: 54px;
+  }
+}
+
+.similars-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,13 @@
+.stills-main {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.stills-img {
+  width: 100%;
+  img {
+    width: 100%;
+    border-radius: 10px;
+  }
+}

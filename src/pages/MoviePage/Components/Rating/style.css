@@ -1,0 +1,42 @@
+.rating-container:not(:first-child) {
+    margin-left: 20px;
+}
+
+.progress-bar-container {
+  width: 55px;
+  height: 55px;
+  margin: 0 auto;
+  position: relative;
+  background-color: #369827;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.CircularProgressbar .CircularProgressbar-text {
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.CircularProgressbar-path {
+  stroke-width: 25px;
+}
+
+.CircularProgressbar-trail {
+  stroke-width: 25px;
+}
+
+.rating-text {
+  color: #ffffff;
+  margin-top: 4px;
+font-size: 15px;
+font-weight: 500;
+line-height: 18.11px;
+text-align: center;
+text-underline-position: from-font;
+text-decoration-skip-ink: none;
+
+}
+
+svg {
+  overflow: visible !important;
+}

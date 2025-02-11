@@ -1,0 +1,787 @@
+{
+    "id": 1055528,
+    "externalId": {
+      "kpHD": "418de99a8d0c1c279b1018850e4dc245",
+      "imdb": "tt5797184",
+      "tmdb": 502425
+    },
+    "name": "Побег из Претории",
+    "alternativeName": "Escape from Pretoria",
+    "enName": null,
+    "names": [
+      {
+        "name": "鑰命監獄",
+        "language": "TW",
+        "type": null
+      },
+      {
+        "name": "Fuga da Pretoria",
+        "language": "IT",
+        "type": null
+      },
+      {
+        "name": "Flucht aus Pretoria - Sein Mut ist der Schlüssel",
+        "language": "DE",
+        "type": null
+      },
+      {
+        "name": "逃离比勒陀利亚",
+        "language": "CN",
+        "type": null
+      },
+      {
+        "name": "プリズン・エスケープ 脱出への10の鍵：2020",
+        "language": "JP",
+        "type": null
+      }
+    ],
+    "type": "movie",
+    "year": 2020,
+    "description":
+      "Двое борцов за свободу отбывают срок в одной из самых строгих тюрем мира – в «Претории». Вместе с другими узниками они планируют дерзкий и опасный побег. Но придумать план – это только первый шаг. Шаг второй – реализация плана.",
+    "shortDescription":
+      "Борцы с апартеидом планируют побег из африканской тюрьмы. Дэниэл Рэдклифф в триллере по реальной истории",
+    "slogan": "Подбери ключ к свободе",
+    "status": null,
+    "rating": {
+      "kp": 7.122,
+      "imdb": 6.8,
+      "filmCritics": 6.4,
+      "russianFilmCritics": 0,
+      "await": null
+    },
+    "votes": {
+      "kp": 193216,
+      "imdb": 45298,
+      "filmCritics": 44,
+      "russianFilmCritics": 2,
+      "await": 0
+    },
+    "movieLength": 106,
+    "totalSeriesLength": null,
+    "seriesLength": null,
+    "ratingMpaa": "pg13",
+    "ageRating": 18,
+    "poster": {
+      "url": "https://image.openmoviedb.com/kinopoisk-images/1629390/03049446-ddac-49d0-a44b-d3bc4dcf6d73/orig",
+      "previewUrl":
+        "https://image.openmoviedb.com/kinopoisk-images/1629390/03049446-ddac-49d0-a44b-d3bc4dcf6d73/x1000"
+    },
+    "backdrop": {
+      "url": "https://image.openmoviedb.com/kinopoisk-ott-images/239697/2a00000174e2e86d202d0b361f733ece3004/orig",
+      "previewUrl":
+        "https://image.openmoviedb.com/kinopoisk-ott-images/239697/2a00000174e2e86d202d0b361f733ece3004/x1000"
+    },
+    "genres": [
+      {
+        "name": "триллер"
+      },
+      {
+        "name": "криминал"
+      },
+      {
+        "name": "детектив"
+      },
+      {
+        "name": "биография"
+      }
+    ],
+    "countries": [
+      {
+        "name": "Великобритания"
+      },
+      {
+        "name": "Австралия"
+      },
+      {
+        "name": "США"
+      },
+      {
+        "name": "ЮАР"
+      },
+      {
+        "name": "Германия"
+      }
+    ],
+    "persons": [
+      {
+        "id": 40778,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_40778.jpg",
+        "name": "Дэниэл Рэдклифф",
+        "enName": "Daniel Radcliffe",
+        "description": "Tim Jenkin",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1850905,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1850905.jpg",
+        "name": "Дэниэл Уэббер",
+        "enName": "Daniel Webber",
+        "description": "Stephen Lee",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 14492,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_14492.jpg",
+        "name": "Иэн Харт",
+        "enName": "Ian Hart",
+        "description": "Denis Goldberg",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1621800,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1621800.jpg",
+        "name": "Марк Леонард Винтер",
+        "enName": "Mark Leonard Winter",
+        "description": "Leonard Fontaine",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 247309,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_247309.jpg",
+        "name": "Нэйтан Пейдж",
+        "enName": "Nathan Page",
+        "description": "Mongo",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 34499,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_34499.jpg",
+        "name": "Грант Пиро",
+        "enName": "Grant Piro",
+        "description": "Schnepel",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 253180,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_253180.jpg",
+        "name": "Лен Фёрт",
+        "enName": "Lenny Firth",
+        "description": "Vermellen",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1401930,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1401930.jpg",
+        "name": "Лайам Амор",
+        "enName": "Lliam Amor",
+        "description": "Kitson",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1045421,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1045421.jpg",
+        "name": "Адам Туоминен",
+        "enName": "Adam Tuominen",
+        "description": "Jeremy",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1645760,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1645760.jpg",
+        "name": "Пиджей Оутен",
+        "enName": "PJ Oaten",
+        "description": "Rabkin",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 682026,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_682026.jpg",
+        "name": "Ратидзо Мамбо",
+        "enName": "Ratidzo Mambo",
+        "description": "Daphne",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 3362184,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_3362184.jpg",
+        "name": null,
+        "enName": "Vuyo Loko",
+        "description": "Potluck",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 815602,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_815602.jpg",
+        "name": "Марис Дж. Кон",
+        "enName": "Maris J. Caune",
+        "description": "Loggie (в титрах: Maris J Caune)",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 5088494,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_5088494.jpg",
+        "name": "Адам Овадия",
+        "enName": "Adam Ovadia",
+        "description": "Van Wyk",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 428362,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_428362.jpg",
+        "name": "Рори Уолкер",
+        "enName": "Rory Walker",
+        "description": "Walter",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 57129,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_57129.jpg",
+        "name": "Женевьева Муи",
+        "enName": "Genevieve Mooy",
+        "description": "Marcia",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 65336,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_65336.jpg",
+        "name": "Жанетт Кронин",
+        "enName": "Jeanette Cronin",
+        "description": "Mary",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1464892,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1464892.jpg",
+        "name": "Стивен Хантер",
+        "enName": "Stephen Hunter",
+        "description": "Peter",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 60767,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_60767.jpg",
+        "name": "Теренс Кроуфорд",
+        "enName": "Terence Crawford",
+        "description": "Judge",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 3601838,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_3601838.jpg",
+        "name": null,
+        "enName": "Michael Kumnick",
+        "description": "Escort",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 6125648,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_6125648.jpg",
+        "name": null,
+        "enName": "Sacha Peltier",
+        "description": "Antoine",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1460028,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1460028.jpg",
+        "name": "Никки Форт",
+        "enName": "Nikki Fort",
+        "description": "Lois",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 4628809,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_4628809.jpg",
+        "name": null,
+        "enName": "Day Robson",
+        "description": "Court Orderly",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 3174515,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_3174515.jpg",
+        "name": "Пол Харви",
+        "enName": "Paul Harvey",
+        "description": "Detention Officer",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 3712899,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_3712899.jpg",
+        "name": null,
+        "enName": "Stephen Tongun",
+        "description": "Taxi Driver",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1465161,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1465161.jpg",
+        "name": "Мишель Найтингейл",
+        "enName": "Michelle Nightingale",
+        "description": "Dentist",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1111657,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1111657.jpg",
+        "name": "Терри Роджерс",
+        "enName": "Terry Rogers",
+        "description": "Jurgen",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 6125650,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_6125650.jpg",
+        "name": null,
+        "enName": "Rod Glen",
+        "description": "Political Prisoner #1",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1745504,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1745504.jpg",
+        "name": "Дэвид Уилсон",
+        "enName": "David Wilson",
+        "description": "Political Prisoner #1",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 6125651,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_6125651.jpg",
+        "name": null,
+        "enName": "Mark Brady",
+        "description": "Political Prisoner #3",
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 5586006,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_5586006.jpg",
+        "name": "Мартин Эйлс",
+        "enName": "Martin Ayles",
+        "description": null,
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 10137973,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_10137973.jpg",
+        "name": null,
+        "enName": "Emma Batten",
+        "description": null,
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 1465154,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1465154.jpg",
+        "name": "Саксон Кордо",
+        "enName": "Saxon Cordeaux",
+        "description": null,
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 4795879,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_4795879.jpg",
+        "name": "Тим Дженкин",
+        "enName": "Tim Jenkin",
+        "description": null,
+        "profession": "актеры",
+        "enProfession": "actor"
+      },
+      {
+        "id": 611127,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_611127.jpg",
+        "name": "Дэвид Хиршфелдер",
+        "enName": "David Hirschfelder",
+        "description": null,
+        "profession": "композиторы",
+        "enProfession": "composer"
+      },
+      {
+        "id": 2005388,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_2005388.jpg",
+        "name": "Скотт Бёрд",
+        "enName": "Scott Bird",
+        "description": null,
+        "profession": "художники",
+        "enProfession": "designer"
+      },
+      {
+        "id": 2944353,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_2944353.jpg",
+        "name": "Эрика Брайан",
+        "enName": "Erica Brien",
+        "description": null,
+        "profession": "художники",
+        "enProfession": "designer"
+      },
+      {
+        "id": 1988427,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1988427.jpg",
+        "name": "Мариот Керр",
+        "enName": "Mariot Kerr",
+        "description": null,
+        "profession": "художники",
+        "enProfession": "designer"
+      },
+      {
+        "id": 2009105,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_2009105.jpg",
+        "name": "Лиза Бреннан",
+        "enName": "Lisa Brennan",
+        "description": null,
+        "profession": "художники",
+        "enProfession": "designer"
+      },
+      {
+        "id": 1263939,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1263939.jpg",
+        "name": "Фрэнсис Аннан",
+        "enName": "Francis Annan",
+        "description": null,
+        "profession": "режиссеры",
+        "enProfession": "director"
+      },
+      {
+        "id": 2023365,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_2023365.jpg",
+        "name": "Ник Фентон",
+        "enName": "Nick Fenton",
+        "description": null,
+        "profession": "монтажеры",
+        "enProfession": "editor"
+      },
+      {
+        "id": 610483,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_610483.jpg",
+        "name": "Джеффри Холл",
+        "enName": "Geoffrey Hall",
+        "description": null,
+        "profession": "операторы",
+        "enProfession": "operator"
+      },
+      {
+        "id": 1691108,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1691108.jpg",
+        "name": "Майк Оре",
+        "enName": "Mike Auret",
+        "description": null,
+        "profession": "продюсеры",
+        "enProfession": "producer"
+      },
+      {
+        "id": 13440,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_13440.jpg",
+        "name": "Дэвид Баррон",
+        "enName": "David Barron",
+        "description": null,
+        "profession": "продюсеры",
+        "enProfession": "producer"
+      },
+      {
+        "id": 4066412,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_4066412.jpg",
+        "name": "Брайан Бекманн",
+        "enName": "Brian Beckmann",
+        "description": null,
+        "profession": "продюсеры",
+        "enProfession": "producer"
+      },
+      {
+        "id": 439771,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_439771.jpg",
+        "name": "Марк Блэйни",
+        "enName": "Mark Blaney",
+        "description": null,
+        "profession": "продюсеры",
+        "enProfession": "producer"
+      },
+      {
+        "id": 1643974,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1643974.jpg",
+        "name": "Николай Быстров",
+        "enName": null,
+        "description": null,
+        "profession": "актеры дубляжа",
+        "enProfession": "voice_actor"
+      },
+      {
+        "id": 5004800,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_5004800.jpg",
+        "name": "Максим Синчуков",
+        "enName": null,
+        "description": null,
+        "profession": "актеры дубляжа",
+        "enProfession": "voice_actor"
+      },
+      {
+        "id": 2405574,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_2405574.jpg",
+        "name": "Дмитрий Викулов",
+        "enName": null,
+        "description": null,
+        "profession": "актеры дубляжа",
+        "enProfession": "voice_actor"
+      },
+      {
+        "id": 2406706,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_2406706.jpg",
+        "name": "Михаил Тишин",
+        "enName": null,
+        "description": null,
+        "profession": "актеры дубляжа",
+        "enProfession": "voice_actor"
+      },
+      {
+        "id": 1878494,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1878494.jpg",
+        "name": "Александр Завальский",
+        "enName": null,
+        "description": null,
+        "profession": "актеры дубляжа",
+        "enProfession": "voice_actor"
+      },
+      {
+        "id": 1878495,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1878495.jpg",
+        "name": "Олег Лепенец",
+        "enName": null,
+        "description": null,
+        "profession": "актеры дубляжа",
+        "enProfession": "voice_actor"
+      },
+      {
+        "id": 2406708,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_2406708.jpg",
+        "name": "Екатерина Буцкая",
+        "enName": null,
+        "description": null,
+        "profession": "актеры дубляжа",
+        "enProfession": "voice_actor"
+      },
+      {
+        "id": 2389102,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_2389102.jpg",
+        "name": "Алена Узлюк",
+        "enName": null,
+        "description": null,
+        "profession": "актеры дубляжа",
+        "enProfession": "voice_actor"
+      },
+      {
+        "id": 1263939,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_1263939.jpg",
+        "name": "Фрэнсис Аннан",
+        "enName": "Francis Annan",
+        "description": null,
+        "profession": "сценаристы",
+        "enProfession": "writer"
+      },
+      {
+        "id": 5527950,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_5527950.jpg",
+        "name": "Л.Х. Адамс",
+        "enName": "L.H. Adams",
+        "description": null,
+        "profession": "сценаристы",
+        "enProfession": "writer"
+      },
+      {
+        "id": 5737144,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_5737144.jpg",
+        "name": "Кэрол Гриффитс",
+        "enName": "Karol Griffiths",
+        "description": null,
+        "profession": "сценаристы",
+        "enProfession": "writer"
+      },
+      {
+        "id": 4795879,
+        "photo":
+          "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_4795879.jpg",
+        "name": "Тим Дженкин",
+        "enName": "Tim Jenkin",
+        "description": null,
+        "profession": "сценаристы",
+        "enProfession": "writer"
+      }
+    ],
+    "premiere": {
+      "country": null,
+      "digital": null,
+      "cinema": null,
+      "bluray": null,
+      "dvd": null,
+      "russia": "2020-08-01T00:00:00.000Z",
+      "world": "2020-02-29T00:00:00.000Z"
+    },
+    "watchability": {
+      "items": [
+        {
+          "name": "Okko",
+          "logo": {
+            "url": "https://avatars.mds.yandex.net/get-ott/239697/7713e586-17d1-42d1-ac62-53e9ef1e70c3/orig"
+          },
+          "url": "https://okko.tv/movie/escape-from-pretoria?utm_medium=referral&utm_source=yandex_search&utm_campaign=new_search_feed"
+        },
+        {
+          "name": "Wink",
+          "logo": {
+            "url": "https://avatars.mds.yandex.net/get-ott/1672343/54096cbe-cc3b-41c9-8e44-990ebbca8d61/orig"
+          },
+          "url": "https://wink.ru/media_items/104675795?utm_source=yandex&utm_medium=koldunschick&utm_content=name"
+        },
+        {
+          "name": "24ТВ",
+          "logo": {
+            "url": "https://avatars.mds.yandex.net/get-ott/2439731/85e83b8d-1159-4781-bad5-ce0a809b3843/orig"
+          },
+          "url": "https://24h.tv/contents/2020-escape-from-pretoria-546977930018816062"
+        },
+        {
+          "name": "Смотрёшка",
+          "logo": {
+            "url": "https://avatars.mds.yandex.net/get-ott/236744/c88e652e-2eb1-472d-b636-a266364dbf58/orig"
+          },
+          "url": "https://smotreshka.tv/archive/637abdc2c32865ab35a5056a?utm_source=yandex_search&utm_campaign=yandex_feed&utm_term=archive&utm_content=archive"
+        },
+        {
+          "name": "Kinopoisk HD",
+          "logo": {
+            "url": "https://yastatic.net/s3/kinopoisk-frontend/hd-www/release/apple-touch-icon-180x180.png"
+          },
+          "url": "https://hd.kinopoisk.ru/?rt=418de99a8d0c1c279b1018850e4dc245"
+        }
+      ]
+    },
+    "top10": null,
+    "top250": null,
+    "isSeries": false,
+    "ticketsOnSale": false,
+    "lists": ["hd"],
+    "networks": null,
+    "createdAt": "2024-04-13T01:59:34.980Z",
+    "updatedAt": "2024-11-16T01:00:52.496Z",
+    "fees": {
+      "russia": {
+        "value": 524512,
+        "currency": "$"
+      },
+      "world": {
+        "value": 2431995,
+        "currency": "$"
+      }
+    },
+    "videos": {
+      "trailers": [
+        {
+          "url": "https://www.youtube.com/embed/VMkX1i0xJws",
+          "name": "Дублированный трейлер",
+          "site": "youtube",
+          "type": "TRAILER"
+        },
+        {
+          "url": "https://www.youtube.com/embed/VMkX1i0xJws",
+          "name": "Дублированный трейлер",
+          "site": "youtube",
+          "type": "TRAILER"
+        },
+        {
+          "url": "https://www.youtube.com/embed/fKwsz6ua5EM",
+          "name": "Official Trailer",
+          "site": "youtube",
+          "type": "TRAILER"
+        },
+        {
+          "url": "https://www.youtube.com/embed/ao1A4SyfVhg",
+          "name": "UK Trailer",
+          "site": "youtube",
+          "type": "TRAILER"
+        }
+      ]
+    },
+    "logo": {
+      "url": "https://image.openmoviedb.com/tmdb-images/original/cR3OdV67LDLZn8SnSML0OOmWrB8.png",
+      "previewUrl":
+        "https://image.openmoviedb.com/tmdb-images/w500/cR3OdV67LDLZn8SnSML0OOmWrB8.png"
+    }
+  }

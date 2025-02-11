@@ -1,0 +1,22 @@
+{
+  "total": 4,
+  "totalPages": 1,
+  "items": [
+    {
+      "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-image/1777765/2e3c7ae4-3aa1-43c5-8dca-606f421b3ec4/orig",
+      "previewUrl": "https://avatars.mds.yandex.net/get-kinopoisk-image/1777765/2e3c7ae4-3aa1-43c5-8dca-606f421b3ec4/300x"
+    },
+    {
+      "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/1b83b67d-5283-4204-ba1d-97520f213c11/orig",
+      "previewUrl": "https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/1b83b67d-5283-4204-ba1d-97520f213c11/300x"
+    },
+    {
+      "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/70b86db8-9412-4b23-b0f1-fa7d05379276/orig",
+      "previewUrl": "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/70b86db8-9412-4b23-b0f1-fa7d05379276/300x"
+    },
+    {
+      "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/8cdc8d17-e12d-4ddb-95f1-a85ac6520c11/orig",
+      "previewUrl": "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/8cdc8d17-e12d-4ddb-95f1-a85ac6520c11/300x"
+    }
+  ]
+}
