@@ -14,13 +14,10 @@
                     </div>
 
                     <div class="now-playing__genres">
-                        <div class="active">Все</div>
-                        <div>Боевики</div>
-                        <div>Приключения</div>
-                        <div>Комедия</div>
-                        <div>Фантастика</div>
-                        <div>Триллеры</div>
-                        <div>Драма</div>
+                        <div v-for="genre in genres" :key="genre" :class="{ active: activeGenre === genre }"
+                            @click="setActiveGenre(genre)">
+                            {{ genre }}
+                        </div>
                     </div>
                 </div>
 
@@ -191,12 +188,15 @@ import Slider from "@/Components/Slider.vue";
 import Slider2 from "@/Components/Slider2.vue";
 import { getLatestVideosFromChannel } from "@/Services/apiService";
 
+import { fetchFilmsByGenre } from "@/Services/apiService";
+
 export default {
     data() {
         return {
             years: ['Все время', '2025', '2024', '2023', '2022', '2021', '2020'],
             activeYear: 'Все время',
-            sliderKey: 0,
+            genres: ['Всеㅤ', 'Боевики', 'Приключенияㅤ', 'Комедияㅤ', 'Фантастикаㅤ', 'Триллеры', 'Драмаㅤ'],
+            activeGenre: 'Всеㅤ',
             data: data,
             blackList: ["Гарри Поттер и Тайная Комната", "Гарри Поттер и Узник Азкабана", "Гарри Поттер и Кубок Огня", "Гарри Поттер и Принц-полукровка", "Гарри Поттер и Орден Феникса", "Анора", "Дети леса", "Постучись в мою Тверь", "Ущелье", "После. Глава 3", "Моя вина", "Из моего окна", "Пурпурные сердца", "Король Стейтен-Айленда", "После. Глава 2", "365 дней", "Борат 2", "Непослушная", "Не волнуйся, солнышко", "Субстанция", "Плохая девочка", "Оставь это ветру", "Как бы беременна", "Парни с тату. Прямо в сердце", "Моя вина: Лондон", "Ущелье", "Влюблённые глаза", "Бриджит Джонс. Без ума от мальчишки"],
             nowPlayingMovies: [],
@@ -253,6 +253,12 @@ export default {
             this.popularMovies = popularMovies
                 .filter(obj => !this.blackList.includes(obj.name))
                 .slice(0, 20);
+        },
+        async setActiveGenre(genre) {
+            this.nowPlayingMovies = []
+            this.activeGenre = genre;
+            
+            this.nowPlayingMovies = await fetchFilmsByGenre(genre.slice(0, genre.length - 1))
         }
     },
     async mounted() {
@@ -264,7 +270,9 @@ export default {
             nowPlayingMovies2024 = nowPlayingMovies2024.filter(obj => !this.blackList.includes(obj.name)).slice(0, 6);
             this.nowPlayingMovies = nowPlayingMovies2025.concat(nowPlayingMovies2024);
 
-            // this.trailers = await getLatestVideosFromChannel();
+            this.trailers = await getLatestVideosFromChannel();
+
+            let s = await fetchFilmsByGenre("Триллер")
 
             let popularMovies = await fetchFreeAPI(
                 isNaN(Number(this.activeYear))

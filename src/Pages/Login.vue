@@ -25,6 +25,12 @@
                 <div class="forgot_pass">
                     <a href="#" class="forgot_pass_link">Восстановить пароль</a>
                 </div>
+                <div class="social_login">
+                    <a href="#" class="social_icon_google"><img src="../assets/Googke.png" alt=""></a>
+                    <a href="#" class="social_icon_facebook"><img src="../assets/Facebook.png" alt=""></a>
+                    <a href="#" class="social_icon_twitter"><img src="../assets/Twitter.png" alt=""></a>
+                    <a href="#" class="social_icon_vk"><img src="../assets/VK.png" alt=""></a>
+                </div>
             </div>
         </div>
     </div>

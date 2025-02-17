@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "crypto-js": "^4.2.0",
     "vue": "^3.5.13",
     "vue-progressbar": "^0.7.5",
     "vue-router": "^4.5.0",

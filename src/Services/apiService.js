@@ -12,6 +12,8 @@ const API_200_REQUESTS_TOKEN = "5W6J03Z-ZNT4Y0V-MC7SVYX-WQS4ZEN";
 const API_500_REQUESTS_TOKEN = "f541243d-43ef-4e4e-a710-9d6a2eb02f26";
 const API_YOUTUBE_TOKEN = "7c902ac83amshbb53ec6e3e93e16p1f2ea5jsnbd7787c7c777";
 
+const blackList = ["Гарри Поттер и Тайная Комната", "Гарри Поттер и Узник Азкабана", "Гарри Поттер и Кубок Огня", "Гарри Поттер и Принц-полукровка", "Гарри Поттер и Орден Феникса", "Анора", "Дети леса", "Постучись в мою Тверь", "Ущелье", "После. Глава 3", "Моя вина", "Из моего окна", "Пурпурные сердца", "Король Стейтен-Айленда", "После. Глава 2", "365 дней", "Борат 2", "Непослушная", "Не волнуйся, солнышко", "Субстанция", "Плохая девочка", "Оставь это ветру", "Как бы беременна", "Парни с тату. Прямо в сердце", "Моя вина: Лондон", "Ущелье", "Влюблённые глаза", "Бриджит Джонс. Без ума от мальчишки"];
+
 export const fetchFreeAPI = async (dopparams = "") => {
   try {
     const response = await axios.get(`${FREE_API}${dopparams}`);
@@ -230,3 +232,73 @@ export const getLatestVideosFromChannel = async () => {
     return [];
   }
 }
+
+// export const fetchProverka = async (dopparams = "") => {
+//   try {
+//     const response = await axios.get(`${FREE_API}&limit=36&type=film${dopparams}`);
+
+//     let genresToTrack = ["Боевик", "Приключения", "Комедия","Фантастика","Триллер", "Драма"]
+
+//     const genreCounts = {};
+
+//     // Инициализируем счетчики для отслеживаемых жанров
+//     genresToTrack.forEach(genre => {
+//       genreCounts[genre.toLowerCase()] = 0; // Убедитесь, что жанры в нижнем регистре
+//     });
+
+//     response.data.results.forEach(element => {
+//       const genres = Object.values(element.genre);
+
+//       genres.forEach(genre => {
+//         const lowerCaseGenre = genre.toLowerCase();
+
+//         if (genresToTrack.map(g => g.toLowerCase()).includes(lowerCaseGenre)) { // Проверяем, есть ли жанр в списке отслеживаемых
+//           genreCounts[lowerCaseGenre]++;
+//         }
+//       });
+//     });
+
+//     // Выводим статистику в консоль
+//     for (const genre in genreCounts) {
+//       console.log(`${genre}: ${genreCounts[genre]}`);
+//     }
+
+//     return genreCounts; // Возвращаем объект со статистикой (только для отслеживаемых жанров)
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//     throw error;
+//   }
+// };
+
+
+export const fetchFilmsByGenre = async (genre, dopparams = "") => {
+  try {
+    const response = await axios.get(`${FREE_API}&limit=60&type=film${dopparams}`);
+
+    if (!response.data || !response.data.results) {
+      console.warn("No results found from API.");
+      return [];
+    }
+
+    if(genre.toLowerCase() !== "все"){
+      const lowerCaseGenre = genre.toLowerCase();
+      let filteredFilms = response.data.results.filter(element => {
+        const genres = Object.values(element.genre);
+
+        return genres.some(g => g.toLowerCase() === lowerCaseGenre);
+      });
+
+      filteredFilms = filteredFilms.filter(obj => !blackList.includes(obj.name))
+
+      console.log(filteredFilms);
+
+      return filteredFilms.slice(0, 8);
+    } else{
+      let a = response.data.results.filter(obj => !blackList.includes(obj.name)).slice(0, 8)
+      return a
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};

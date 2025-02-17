@@ -260,7 +260,7 @@
 
                 <div class="trealers-trealer">
                     <iframe width="100%" height="auto"
-                        :src="`https://www.youtube.com/embed/${!trealer ? trealer.videoId : 'jc35np7VT-Q'}`" title="YouTube video player"
+                        :src="`https://www.youtube.com/embed/${trealer.videoId}`" title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
@@ -337,12 +337,12 @@
                 </div>
             </div>
 
-            <!-- <div class="movie-watch" v-if="id">
+            <div class="movie-watch" v-if="id">
                 <BlockHeader :title="'Смотреть онлайн'" :text="false" :link="false" />
                 <div class="watch_movie-main">
                     <KiniboxWidget :kinopoiskId="id" />
                 </div>
-            </div> -->
+            </div>
 
             <div class="movie-sequels" v-if="sequels.length">
                 <div class="sequels__header">Сиквелы и приквелы</div>
@@ -372,13 +372,13 @@ import Cast from '@/Components/Cast.vue';
 import KiniboxWidget from '@/Components/KiniboxWidget.vue';
 import AwardCard from '@/Components/AwardCard.vue';
 import Slider2 from '@/Components/Slider2.vue';
-// import { fetchData } from '@/Services/apiService';
-// import { fetchAwards } from '@/Services/apiService';
-// import { fetchPosters } from '@/Services/apiService';
-// import { fetchStills } from '@/Services/apiService';
-// import { fetchSequels } from '@/Services/apiService';
-// import { fetchSimilars } from '@/Services/apiService';
-// import { searchTrailer } from '@/Services/apiService';
+import { fetchData } from '@/Services/apiService';
+import { fetchAwards } from '@/Services/apiService';
+import { fetchPosters } from '@/Services/apiService';
+import { fetchStills } from '@/Services/apiService';
+import { fetchSequels } from '@/Services/apiService';
+import { fetchSimilars } from '@/Services/apiService';
+import { searchTrailer } from '@/Services/apiService';
 
 export default {
     data() {
@@ -409,45 +409,45 @@ export default {
     },
     mounted() {
         window.scrollTo(0, 0);
-        this.fetchData('../src/assets/data/data.json', 'data');
-        this.fetchData('../src/assets/data/posters.json', 'posters');
-        this.fetchData('../src/assets/data/still.json', 'stills');
-        this.fetchData('../src/assets/data/awards.json', 'awards');
-        this.fetchData('../src/assets/data/sequelsAndPrequels.json', 'sequels');
-        this.fetchData('../src/assets/data/similars.json', 'similars');
-        // this.fetchMovieDataData()
+        // this.fetchData('../src/assets/data/data.json', 'data');
+        // this.fetchData('../src/assets/data/posters.json', 'posters');
+        // this.fetchData('../src/assets/data/still.json', 'stills');
+        // this.fetchData('../src/assets/data/awards.json', 'awards');
+        // this.fetchData('../src/assets/data/sequelsAndPrequels.json', 'sequels');
+        // this.fetchData('../src/assets/data/similars.json', 'similars');
+        this.fetchMovieDataData()
 
     },
     methods: {
         
-        // async fetchMovieDataData(){
-        //     try {
-        //         this.data = await fetchData(this.id)
-        //         this.trealer = await searchTrailer(`${this.data.type} ${this.data.name} ${this.data.year}`)
-        //         this.awards = await fetchAwards(this.id)
-        //         this.posters = await fetchPosters(this.id)
-        //         this.stills = await fetchStills(this.id)
-        //         this.sequels = await fetchSequels(this.id)
-        //         this.similars = await fetchSimilars(this.id)                
-        //     } catch (error) {
-        //         console.error(error);
-        //     }
-        // },
-
-
-        async fetchData(url, to) {
+        async fetchMovieDataData(){
             try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                this[to] = data
-
+                this.data = await fetchData(this.id)
+                this.trealer = await searchTrailer(`${this.data.type} ${this.data.name} ${this.data.year}`)
+                this.awards = await fetchAwards(this.id)
+                this.posters = await fetchPosters(this.id)
+                this.stills = await fetchStills(this.id)
+                this.sequels = await fetchSequels(this.id)
+                this.similars = await fetchSimilars(this.id)                
             } catch (error) {
-                console.error("Error fetching data:", error);
+                console.error(error);
             }
         },
+
+
+        // async fetchData(url, to) {
+        //     try {
+        //         const response = await fetch(url);
+        //         if (!response.ok) {
+        //             throw new Error(`HTTP error! status: ${response.status}`);
+        //         }
+        //         const data = await response.json();
+        //         this[to] = data
+
+        //     } catch (error) {
+        //         console.error("Error fetching data:", error);
+        //     }
+        // },
 
         scrollToTrailer() {
             this.$nextTick(() => {
