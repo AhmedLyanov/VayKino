@@ -1,5 +1,5 @@
 import './assets/base.css'
-
+import Profile from './Pages/ProfileEdit.vue'
 import { createApp } from 'vue'
 import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -30,6 +30,11 @@ const router = createRouter({
             path: "/login",
             name: "Login",
             component: Login,
+        },
+        {
+            path: "/profile",
+            name: "profile",
+            component: Profile,
         },
         {
             path: "/registration",

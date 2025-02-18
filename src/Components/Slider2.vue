@@ -1,8 +1,36 @@
 <template>
-    <div class="slider-container">
+    <div class="slider-container" v-if="data">
         <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * 1522.39}px)` }">
             <div class="slide" v-for="(slide, index) in slides" :key="index">
                 <Card v-for="(cardData, cardIndex) in slide" :key="cardIndex" :data="cardData" />
+            </div>
+        </div>
+
+        <div class="slider-controls">
+            <button :style="currentSlide !== 0 ? 'cursor: pointer' : 'cursor: default'" class="arrow_button"
+                @click="prevSlide">
+                <svg width="27" height="24" viewBox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M0.939341 10.9392C0.353554 11.525 0.353554 12.4748 0.939341 13.0605L10.4853 22.6065C11.0711 23.1923 12.0208 23.1923 12.6066 22.6065C13.1924 22.0207 13.1924 21.0709 12.6066 20.4852L4.12132 11.9999L12.6066 3.5146C13.1924 2.92881 13.1924 1.97906 12.6066 1.39328C12.0208 0.807489 11.0711 0.807489 10.4853 1.39328L0.939341 10.9392ZM27 10.4999L2 10.4999V13.4999L27 13.4999V10.4999Z"
+                        :fill="currentSlide !== 0 ? 'white' : 'grey'" />
+                </svg>
+            </button>
+            <span class="slide-counter">{{ currentSlide + 1 }} / {{ slides.length }}</span>
+            <button :style="currentSlide + 1 !== slides.length ? 'cursor: pointer' : 'cursor: default'"
+                class="arrow_button" @click="nextSlide">
+                <svg width="27" height="24" viewBox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M26.0607 13.0605C26.6464 12.4748 26.6464 11.525 26.0607 10.9392L16.5147 1.39328C15.9289 0.807489 14.9792 0.807489 14.3934 1.39328C13.8076 1.97906 13.8076 2.92881 14.3934 3.5146L22.8787 11.9999L14.3934 20.4852C13.8076 21.0709 13.8076 22.0207 14.3934 22.6065C14.9792 23.1923 15.9289 23.1923 16.5147 22.6065L26.0607 13.0605ZM0 13.4999L25 13.4999V10.4999L0 10.4999L0 13.4999Z"
+                        :fill="currentSlide + 1 !== slides.length ? 'white' : 'grey'" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="slider-container" v-else>
+        <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * 1522.39}px)` }">
+            <div class="slide">
+                <Card v-for="index in 4" :key="index" />
             </div>
         </div>
 
@@ -86,6 +114,13 @@ export default {
             this.$forceUpdate();
         },
     },
+    watch: {
+    data(newValue, oldValue) {
+      if (newValue && newValue.length > 0) {
+        this.currentSlide = 0;
+      }
+    },
+}
 };
 </script>
 

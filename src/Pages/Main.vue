@@ -1,6 +1,8 @@
 <template>
     <main>
         <div class="main-content">
+            <UpArrow />
+
             <div class="bg-joker">
                 <div class="bg-joker-temnee"></div>
             </div>
@@ -88,6 +90,9 @@
                         <div v-for="(trailer, index) in trailers" class="trailers__item" @click="currentTrailer = index" :key="index">
                             <div class="trailers__item-media">
                                 <img :src="`${trailer?.thumbnail[trailer?.thumbnail?.length-1]?.url}`" :alt="trailer.title.slice(0, trailer.title.indexOf('—') - 1)" />
+                                <div :class="{ active: currentTrailer === index }">
+                                    <img :src="`${linkToImg}/play.svg`" alt="">
+                                </div>
                             </div>
                             <div class="trailers__item-name">{{ trailer.title.slice(0, trailer.title.indexOf('—') - 1) }}</div>
                         </div>
@@ -113,6 +118,7 @@
 
                 <div class="popular-movies__content">
                     <Slider2 v-if="popularMovies.length != 0" :data="popularMovies" />
+                    <Slider2 v-else :data="false" />
                 </div>
             </div>
 
@@ -121,24 +127,21 @@
 
                 <div class="last-news__main">
                     <div class="last-news__main-left">
-                        <div class="last-news__item-large">
+                        <div class="last-news__item-large" @click="goToLocation(posts[activePost].url)">
                             <div class="last-news__item-large-img">
-                                <img :src="`${linkToImg}/image 3 (1).jpg`" alt="" />
+                                <img :src="posts[activePost].imageUrl" alt="" />
                             </div>
 
                             <div class="last-news__item-large-content">
-                                <div class="last-news__item-large-date">15 Апр 2020</div>
+                                <div class="last-news__item-large-date">{{ new Date(posts[activePost].publishedAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/\.$/, '') }}</div>
 
                                 <div>
                                     <div class="last-news__item-large-title">
-                                        Не время умирать. Перенос релиза фильма
+                                        {{ posts[activePost].title }}
                                     </div>
 
                                     <div class="last-news__item-large-description">
-                                        Но действия представителей оппозиции в равной степени предоставлены
-                                        сами себе. В рамках спецификации современных стандартов,
-                                        стремящиеся вытеснить традиционное производство, нанотехнологии
-                                        указаны как претенденты на роль ключевых факторов.
+                                        {{ posts[activePost].description }}
                                     </div>
                                 </div>
                             </div>
@@ -147,15 +150,18 @@
 
                     <div class="last-news__main-right">
                         <div class="last-news__list">
-                            <div v-for="index in 4" :key="index" class="last-news__item-small">
+                            <div v-for="(post, index) in posts" :key="index" class="last-news__item-small" @click="setActivePost(index)">
                                 <div class="last-news__item-small-img">
-                                    <img :src="`${linkToImg}/image 3 (1).jpg`" alt="" />
+                                    <img :src="post.imageUrl" alt="" />
+                                    <div class="last-news__item-small-blue" :style="{ opacity: activePost != index ? '0' : '1' }">
+                                        <div>Читать новость</div>
+                                    </div>
                                 </div>
 
-                                <div class="last-news__item-small-content">
-                                    <div class="last-news__item-small-date">15 Апр 2020</div>
+                                <div class="last-news__item-small-content" :style="{ opacity: activePost == index ? '0' : '1' }">
+                                    <div class="last-news__item-small-date">{{ new Date(post.publishedAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/\.$/, '') }}</div>
                                     <div class="last-news__item-small-title">
-                                        Как изменили Соника с последнего анонса
+                                        {{ post.title.slice(0, 40) }}...
                                     </div>
                                 </div>
                             </div>
@@ -184,11 +190,11 @@ import { fetchFreeAPI } from "@/Services/apiService";
 import data from "../assets/data/data.json";
 import Card from '@/Components/Card.vue';
 import BlockHeader from "@/Components/BlockHeader.vue";
-import Slider from "@/Components/Slider.vue";
 import Slider2 from "@/Components/Slider2.vue";
 import { getLatestVideosFromChannel } from "@/Services/apiService";
-
 import { fetchFilmsByGenre } from "@/Services/apiService";
+import UpArrow from '@/Components/UpArrow.vue';
+import posts from "../assets/data/posts.json";
 
 export default {
     data() {
@@ -197,6 +203,8 @@ export default {
             activeYear: 'Все время',
             genres: ['Всеㅤ', 'Боевики', 'Приключенияㅤ', 'Комедияㅤ', 'Фантастикаㅤ', 'Триллеры', 'Драмаㅤ'],
             activeGenre: 'Всеㅤ',
+            posts: posts.items.slice(0, 4),
+            activePost: 0,
             data: data,
             blackList: ["Гарри Поттер и Тайная Комната", "Гарри Поттер и Узник Азкабана", "Гарри Поттер и Кубок Огня", "Гарри Поттер и Принц-полукровка", "Гарри Поттер и Орден Феникса", "Анора", "Дети леса", "Постучись в мою Тверь", "Ущелье", "После. Глава 3", "Моя вина", "Из моего окна", "Пурпурные сердца", "Король Стейтен-Айленда", "После. Глава 2", "365 дней", "Борат 2", "Непослушная", "Не волнуйся, солнышко", "Субстанция", "Плохая девочка", "Оставь это ветру", "Как бы беременна", "Парни с тату. Прямо в сердце", "Моя вина: Лондон", "Ущелье", "Влюблённые глаза", "Бриджит Джонс. Без ума от мальчишки"],
             nowPlayingMovies: [],
@@ -238,12 +246,13 @@ export default {
     components: {
         Card,
         BlockHeader,
-        Slider,
         Slider2,
+        UpArrow
     },
     methods: {
         async setActiveYear(year) {
             this.activeYear = year;
+            this.popularMovies = []
 
             let popularMovies = await fetchFreeAPI(
                 isNaN(Number(this.activeYear))
@@ -256,8 +265,15 @@ export default {
         },
         async setActiveGenre(genre) {
             this.activeGenre = genre;
+            this.nowPlayingMovies = []
             
             this.nowPlayingMovies = await fetchFilmsByGenre(genre.slice(0, genre.length - 1))
+        },
+        setActivePost(index){
+            this.activePost = index;
+        },
+        goToLocation(url){
+            window.open(url,'_blank');
         }
     },
     async mounted() {
@@ -269,7 +285,7 @@ export default {
             nowPlayingMovies2024 = nowPlayingMovies2024.filter(obj => !this.blackList.includes(obj.name)).slice(0, 6);
             this.nowPlayingMovies = nowPlayingMovies2025.concat(nowPlayingMovies2024);
 
-            this.trailers = await getLatestVideosFromChannel();
+            // this.trailers = await getLatestVideosFromChannel();
 
             let s = await fetchFilmsByGenre("Триллер")
 
@@ -373,7 +389,6 @@ export default {
 .now-playing__films {
     display: grid;
     grid-template-columns: repeat(4, 340px);
-    align-items: center;
     justify-content: space-between;
     gap: 20px;
     margin-top: 60px;
@@ -553,9 +568,37 @@ export default {
     }
 }
 
-.trailers__item-media img {
+.trailers__item-media{
+    position: relative;
+    height: 198.63px;
+
+    div{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        border-radius: 10px;
+        background: transparent;
+        transition: 0.2s;
+
+        &.active{
+            background: #3657CBA6;
+        }
+
+        img{
+            width: 30px;
+            border-radius: 0px;
+        }
+    }
+
+    img {
     width: 355px;
     border-radius: 10px;
+}
 }
 
 .trailers__item-name {
@@ -657,16 +700,18 @@ export default {
 
 .last-news__item-large {
     position: relative;
+    cursor: pointer;
+    user-select: none;
 }
 
 .last-news__item-large-img {
     height: -webkit-fill-available;
-    aspect-ratio: 3 / 2;
 }
 
 .last-news__item-large-img img {
     width: 1220px;
     border-radius: 10px;
+    display: block;
 }
 
 .last-news__item-large-content {
@@ -715,15 +760,41 @@ export default {
 
 .last-news__item-small {
     position: relative;
+    cursor: pointer;
 }
 
 .last-news__item-small-img {
     z-index: -1;
+    position: relative;
 }
 
 .last-news__item-small-img img {
     width: 290px;
     border-radius: 10px;
+    display: block;
+}
+
+.last-news__item-small-blue{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    background-color: #3657CB94;
+    border-radius: 10px;
+    z-index: 4;
+    height: -webkit-fill-available;
+    transition: 0.2s;
+
+    div{
+        color: white;
+        padding: 10px 20px;
+        border: 2px solid white;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 16px;
+    }
 }
 
 .last-news__item-small-content {
@@ -735,6 +806,8 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    user-select: none;
+    transition: 0.2s;
 }
 
 .last-news__item-small-date {

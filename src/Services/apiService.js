@@ -233,44 +233,6 @@ export const getLatestVideosFromChannel = async () => {
   }
 }
 
-// export const fetchProverka = async (dopparams = "") => {
-//   try {
-//     const response = await axios.get(`${FREE_API}&limit=36&type=film${dopparams}`);
-
-//     let genresToTrack = ["Боевик", "Приключения", "Комедия","Фантастика","Триллер", "Драма"]
-
-//     const genreCounts = {};
-
-//     // Инициализируем счетчики для отслеживаемых жанров
-//     genresToTrack.forEach(genre => {
-//       genreCounts[genre.toLowerCase()] = 0; // Убедитесь, что жанры в нижнем регистре
-//     });
-
-//     response.data.results.forEach(element => {
-//       const genres = Object.values(element.genre);
-
-//       genres.forEach(genre => {
-//         const lowerCaseGenre = genre.toLowerCase();
-
-//         if (genresToTrack.map(g => g.toLowerCase()).includes(lowerCaseGenre)) { // Проверяем, есть ли жанр в списке отслеживаемых
-//           genreCounts[lowerCaseGenre]++;
-//         }
-//       });
-//     });
-
-//     // Выводим статистику в консоль
-//     for (const genre in genreCounts) {
-//       console.log(`${genre}: ${genreCounts[genre]}`);
-//     }
-
-//     return genreCounts; // Возвращаем объект со статистикой (только для отслеживаемых жанров)
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//     throw error;
-//   }
-// };
-
-
 export const fetchFilmsByGenre = async (genre, dopparams = "") => {
   try {
     const response = await axios.get(`${FREE_API}&limit=60&type=film${dopparams}`);
