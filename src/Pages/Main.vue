@@ -255,7 +255,6 @@ export default {
                 .slice(0, 20);
         },
         async setActiveGenre(genre) {
-            this.nowPlayingMovies = []
             this.activeGenre = genre;
             
             this.nowPlayingMovies = await fetchFilmsByGenre(genre.slice(0, genre.length - 1))
