@@ -1,0 +1,59 @@
+{
+    "total": 6,
+    "items": [
+      {
+        "filmId": 326,
+        "nameRu": "Побег из Шоушенка",
+        "nameEn": "The Shawshank Redemption",
+        "nameOriginal": "The Shawshank Redemption",
+        "posterUrl": "https://kinopoiskapiunofficial.tech/images/posters/kp/326.jpg",
+        "posterUrlPreview": "https://kinopoiskapiunofficial.tech/images/posters/kp_small/326.jpg",
+        "relationType": "SIMILAR"
+      },
+      {
+        "filmId": 939411,
+        "nameRu": "Мотылёк",
+        "nameEn": "Papillon",
+        "nameOriginal": "Papillon",
+        "posterUrl": "https://kinopoiskapiunofficial.tech/images/posters/kp/939411.jpg",
+        "posterUrlPreview": "https://kinopoiskapiunofficial.tech/images/posters/kp_small/939411.jpg",
+        "relationType": "SIMILAR"
+      },
+      {
+        "filmId": 10851,
+        "nameRu": "Побег из Алькатраса",
+        "nameEn": "Escape from Alcatraz",
+        "nameOriginal": "Escape from Alcatraz",
+        "posterUrl": "https://kinopoiskapiunofficial.tech/images/posters/kp/10851.jpg",
+        "posterUrlPreview": "https://kinopoiskapiunofficial.tech/images/posters/kp_small/10851.jpg",
+        "relationType": "SIMILAR"
+      },
+      {
+        "filmId": 4525,
+        "nameRu": "Мотылек",
+        "nameEn": "Papillon",
+        "nameOriginal": "Papillon",
+        "posterUrl": "https://kinopoiskapiunofficial.tech/images/posters/kp/4525.jpg",
+        "posterUrlPreview": "https://kinopoiskapiunofficial.tech/images/posters/kp_small/4525.jpg",
+        "relationType": "SIMILAR"
+      },
+      {
+        "filmId": 258048,
+        "nameRu": "Побег",
+        "nameEn": "Prison Break",
+        "nameOriginal": "Prison Break",
+        "posterUrl": "https://kinopoiskapiunofficial.tech/images/posters/kp/258048.jpg",
+        "posterUrlPreview": "https://kinopoiskapiunofficial.tech/images/posters/kp_small/258048.jpg",
+        "relationType": "SIMILAR"
+      },
+      {
+        "filmId": 7687,
+        "nameRu": "Полуночный экспресс",
+        "nameEn": "Midnight Express",
+        "nameOriginal": "Midnight Express",
+        "posterUrl": "https://kinopoiskapiunofficial.tech/images/posters/kp/7687.jpg",
+        "posterUrlPreview": "https://kinopoiskapiunofficial.tech/images/posters/kp_small/7687.jpg",
+        "relationType": "SIMILAR"
+      }
+    ]
+  }
