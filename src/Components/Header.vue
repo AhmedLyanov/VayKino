@@ -120,7 +120,6 @@ export default {
 
     onMounted(() => {
       checkAuth();
-      // Обновляем баланс каждые 5 минут
       setInterval(() => {
         const userString = localStorage.getItem('currentUser');
         if (userString) {
@@ -129,7 +128,7 @@ export default {
             updateUserBalance(user.login);
           }
         }
-      }, 300000); // 300000 мс = 5 минут
+      }, 300000); 
     });
 
     onUpdated(() => {
