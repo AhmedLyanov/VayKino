@@ -34,7 +34,20 @@
         <div class="header-search_btn" @click="showModal">
           <img :src="`${linkToImg}/search.svg`" alt="" />
         </div>
-        <div class="header-login" @click="this.$router.replace('/login')">Войти</div>
+        <div v-if="!isLoggedIn" class="header-login" @click="this.$router.replace('/login')">Войти</div>
+        <div v-else class="user-info">
+          <div class="balance_container">
+            <span class="balance">Баланс: </span>
+            <span class="balance_number">{{ userBalance }}</span>
+          </div>
+          <div class="avatar-container" @click="toggleDropdown">
+            <img :src="userAvatar" alt="Аватар" class="avatar" />
+          </div>
+          <div v-if="showDropdown" class="dropdown">
+            <button @click="goToProfile">Профиль</button>
+            <button @click="logout">Выйти</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -44,25 +57,151 @@
 
 <script>
 import SearchModal from './SearchModal.vue';
+import { ref, computed, onMounted, onUpdated } from 'vue';
+import { useRouter } from 'vue-router';
 
+import axios from 'axios';
 export default {
-  data() {
-    return {
-      linkToImg: "../src/assets/Media/Components"
-    }
-  },
   components: {
     SearchModal
   },
+  setup() {
+    const router = useRouter();
+    const isLoggedIn = ref(false);
+    const userBalance = ref(0);
+    const userAvatar = ref('');
+    const showDropdown = ref(false);
+
+    const linkToImg = "../src/assets/Media/Components";
+
+    const checkAuth = async () => {
+      const userString = localStorage.getItem('currentUser');
+      if (userString) {
+        try {
+          const user = JSON.parse(userString);
+          if (user) {
+            isLoggedIn.value = true;
+            await updateUserBalance(user.login);
+            userAvatar.value = user.avatarUrl || 'path/to/default/avatar.png';
+          }
+        } catch (error) {
+          console.error('Ошибка при парсинге данных пользователя:', error);
+          localStorage.removeItem('currentUser');
+        }
+      }
+    };
+
+    const updateUserBalance = async (login) => {
+      try {
+        const response = await axios.get(`http://91.197.96.204:3000/user/${login}`);
+        if (response.data) {
+          userBalance.value = response.data.balance;
+          localStorage.setItem('currentUser', JSON.stringify(response.data));
+        }
+      } catch (error) {
+        console.error('Ошибка при обновлении баланса:', error);
+      }
+    };
+
+    const toggleDropdown = () => {
+      showDropdown.value = !showDropdown.value;
+    };
+
+    const goToProfile = () => {
+      router.push('/profile');
+      showDropdown.value = false;
+    };
+
+    const logout = () => {
+      localStorage.removeItem('currentUser');
+      isLoggedIn.value = false;
+      router.push('/login');
+    };
+
+    onMounted(() => {
+      checkAuth();
+      // Обновляем баланс каждые 5 минут
+      setInterval(() => {
+        const userString = localStorage.getItem('currentUser');
+        if (userString) {
+          const user = JSON.parse(userString);
+          if (user) {
+            updateUserBalance(user.login);
+          }
+        }
+      }, 300000); // 300000 мс = 5 минут
+    });
+
+    onUpdated(() => {
+      checkAuth();
+    });
+
+    return {
+      linkToImg,
+      isLoggedIn,
+      userBalance,
+      userAvatar,
+      showDropdown,
+      toggleDropdown,
+      goToProfile,
+      logout
+    };
+  },
   methods: {
     showModal: function () {
-      this.$refs.modal.show = true
+      this.$refs.modal.show = true;
     }
   },
 }
 </script>
 
 <style scoped>
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.avatar-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dropdown button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  text-align: left;
+}
+
+.dropdown button:hover {
+  background: #f0f0f0;
+}
+
 header {
   width: 100%;
   display: flex;
@@ -136,6 +275,29 @@ header {
   }
 }
 
+
+.balance_container .balance_number{
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 17.85px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #f2f60f;
+}
+
+.balance_container .balance{
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 21.06px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: white;
+  transition: 0.3s;
+  user-select: none;
+}
+
 .header-center nav {
   display: flex;
 
@@ -163,6 +325,7 @@ header {
 
 .header-right {
   display: flex;
+  gap: 30px;
 }
 
 .header-search_btn {

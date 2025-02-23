@@ -1,3 +1,4 @@
+vue
 <template>
   <div class="container_profile_box">
     <div class="main_container_box" v-if="!isEditing">
@@ -78,7 +79,6 @@
         </div>
       </div>
     </div>
-
     <div class="profile-edit-container" v-if="isEditing">
       <div class="profile-edit-main">
         <div class="profile-edit-header">
@@ -163,18 +163,15 @@
         </div>
       </div>
     </div>
-
     <div v-if="showNotification" class="notification">
-      <span>  <img src="../assets/Media/profile/succesfull.svg" alt="Logo profile" />Сохранено</span>
+      <span><img src="../assets/Media/profile/succesfull.svg" alt="Logo profile" />Сохранено</span>
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import defaultAvatar from '../assets/Media/profile/default.png';
-
 const userProfile = ref({
   name: '',
   surname: '',
@@ -186,60 +183,66 @@ const userProfile = ref({
   description: '',
   avatarUrl: '',
 });
-
 const isEditing = ref(false);
 const showNotification = ref(false);
 const avatarUrl = ref('');
 const fileInput = ref(null);
-
 const avatarSrc = computed(() => {
   return avatarUrl.value || defaultAvatar;
 });
-
 onMounted(async () => {
-  const currentUser = localStorage.getItem('currentUser');
-  try {
-    const response = await axios.get(`http://91.197.96.204:3000/user/${currentUser}`);
-    if (response.data) {
-      userProfile.value = response.data;
-      avatarUrl.value = response.data.avatarUrl;
+  const currentUserString = localStorage.getItem('currentUser');
+  if (currentUserString) {
+    const currentUser = JSON.parse(currentUserString);
+    if (currentUser && currentUser.login) {
+      try {
+        const response = await axios.get(`http://91.197.96.204:3000/user/${currentUser.login}`);
+        if (response.data) {
+          userProfile.value = response.data;
+          avatarUrl.value = response.data.avatarUrl;
+          localStorage.setItem('currentUser', JSON.stringify(response.data));
+        }
+      } catch (error) {
+        console.error('Ошибка при получении данных пользователя:', error);
+      }
+    } else {
+      console.error('Пользователь не найден в localStorage');
     }
-  } catch (error) {
-    console.error('Ошибка при получении данных пользователя:', error);
   }
 });
-
 const saveProfile = async () => {
-  const currentUser = localStorage.getItem('currentUser');
-  try {
-    const response = await axios.put(`http://91.197.96.204:3000/user/${currentUser}`, userProfile.value);
-    if (response.data) {
-      isEditing.value = false;
-      showNotification.value = true;
-      setTimeout(() => {
-        showNotification.value = false;
-      }, 3000);
+  const currentUserString = localStorage.getItem('currentUser');
+  if (currentUserString) {
+    const currentUser = JSON.parse(currentUserString);
+    try {
+      const response = await axios.put(`http://91.197.96.204:3000/user/${currentUser.login}`, userProfile.value);
+      if (response.data) {
+        const updatedResponse = await axios.get(`http://91.197.96.204:3000/user/${currentUser.login}`);
+        localStorage.setItem('currentUser', JSON.stringify(updatedResponse.data));
+        isEditing.value = false;
+        showNotification.value = true;
+        setTimeout(() => {
+          showNotification.value = false;
+        }, 3000);
+      }
+    } catch (error) {
+      console.error('Ошибка при сохранении данных пользователя:', error);
     }
-  } catch (error) {
-    console.error('Ошибка при сохранении данных пользователя:', error);
+  } else {
+    console.error('Пользователь не найден в localStorage');
   }
 };
-
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;
 };
-
 const triggerFileInput = () => {
   fileInput.value.click();
 };
-
 const handleFileUpload = async (event) => {
   const file = event.target.files[0];
   if (!file) return;
-
   const formData = new FormData();
   formData.append('avatar', file);
-
   try {
     const response = await axios.post('http://91.197.96.204:3000/upload-avatar', formData, {
       headers: {

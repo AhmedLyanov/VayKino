@@ -1,4 +1,3 @@
-vue
 <template>
   <div class="container_reg">
     <div class="form_log">
@@ -9,6 +8,7 @@ vue
         <div class="container_input_form">
           <div class="form-group">
             <input type="text" v-model="login" class="form-control" id="login_text" placeholder="Логин, почта или телефон" />
+            <span v-if="error && error.includes('login')" class="error-message">{{ error }}</span>
           </div>
           <div class="form-group">
             <input type="password" v-model="password" class="form-control" id="your_Pass" placeholder="Ваш пароль" />
@@ -37,6 +37,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const login = ref('');
 const password = ref('');
+const error = ref('');
 
 document.title = "Вход"
 
@@ -52,11 +53,13 @@ const onSubmit = async () => {
     
     if (response.ok) {
       const userData = await response.json();
-      localStorage.setItem('currentUser', userData.login);
+      localStorage.setItem('currentUser', JSON.stringify(userData)); 
+      window.location.reload(); 
       router.push('/profile');
     } else {
       const errorData = await response.json();
-      alert(errorData.error || 'Неверный логин или пароль');
+      error.value = errorData.error || 'Неверный логин или пароль';
+      alert(error.value);
     }
   } catch (error) {
     console.error('Login error:', error);
@@ -64,7 +67,10 @@ const onSubmit = async () => {
   }
 };
 </script>
+
 <style scoped>
+
+
 @import url("https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
@@ -85,6 +91,12 @@ const onSubmit = async () => {
     align-items: center;
     align-content: center;
     justify-items: center;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
 .Title_Login {

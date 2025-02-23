@@ -1,4 +1,3 @@
-vue
 <template>
   <div class="container_reg">
     <div class="form_reg">
@@ -93,6 +92,8 @@ const validate = () => {
   }
   if (!email.value.trim()) {
     errors.email = 'Email обязателен';
+  } else if (!/\S+@\S+\.\S+/.test(email.value)) {
+    errors.email = 'Некорректный email';
   }
 };
 
