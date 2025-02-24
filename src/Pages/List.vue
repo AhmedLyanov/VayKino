@@ -5,7 +5,8 @@
                 <BlockHeader :title="categoryTitle" :text="false" :link="false" />
 
                 <div class="list-cont" v-if="movies.length">
-                    <Card v-for="(film, index) in movies" :data="film" :contextMenu="false" :key="index" />
+                    <Card v-if="movies.length" v-for="(film, index) in movies" :data="film" :contextMenu="false" :key="index" />
+                    <Card v-else v-for="key in 16" :key="key" :data="false" />
                 </div>
             </div>
         </div>

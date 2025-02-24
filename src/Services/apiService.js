@@ -13,7 +13,7 @@ const API_200_REQUESTS_TOKEN2 = "25VQB0J-Y1ZMMET-GPVV75G-1R3Q8BZ";
 const API_500_REQUESTS_TOKEN = "f541243d-43ef-4e4e-a710-9d6a2eb02f26";
 const API_YOUTUBE_TOKEN = "7c902ac83amshbb53ec6e3e93e16p1f2ea5jsnbd7787c7c777";
 
-const blackList = JSON.parse(localStorage.getItem("kinoareaBlackList"))
+const blackList = JSON.parse(localStorage.getItem("kinoareaBlackList"));
 
 
 export const fetchFreeAPI = async (dopparams = "") => {
@@ -227,7 +227,7 @@ export const getLatestVideosFromChannel = async () => {
     }
 
     const data = await response.json();
-
+    console.log(data.data.slice(0, 10));
     return data.data.slice(0, 10)
     
   } catch (error) {

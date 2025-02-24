@@ -339,8 +339,16 @@
 
             <div class="movie-watch" v-if="id">
                 <BlockHeader :title="'Смотреть онлайн'" :text="false" :link="false" />
-                <div class="watch_movie-main">
+                <div class="watch_movie-main" v-if="data.year < 2023">
                     <KiniboxWidget :kinopoiskId="id" />
+                </div>
+
+                <div class="movie-buy" v-else>
+                    <div>
+                        Для просмотра этого фильма, потребуется приобрести подписку.
+
+                        <div class="movie-buy-but">Перейти к покупке</div>
+                    </div>
                 </div>
             </div>
 
@@ -935,6 +943,38 @@ export default {
 .watch_movie-main iframe {
     width: 100%;
     aspect-ratio: 16 / 9;
+}
+
+.movie-buy{
+    background-color: black;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.movie-buy-but{
+    background-color: #3657cb;
+    padding: 20px 25px;
+    border-radius: 50px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    font-size: 18px;
+    user-select: none;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0px 0px 0px 0px #3657cb;
+
+    &:hover {
+      box-shadow: 0px 0px 15px 0px #3657cb;
+    }
 }
 
 /* movie-watch */
