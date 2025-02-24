@@ -11,7 +11,7 @@
                         <div class="email_mailing-cont-logo-img">
                             <img :src="`${linkToImg}/logo.svg`" alt="" />
                         </div>
-                        <div class="email_mailing-cont-logo-title">Kinoarea</div>
+                        <div class="email_mailing-cont-logo-title">VayKino</div>
                     </div>
 
                     <div class="email_mailing-cont-title">Подпишитесь на E-mail рассылку</div>
@@ -57,7 +57,7 @@
             </div>
 
             <div class="footer-all_rights">
-                2020 © Kinoarea. Все права защищены
+                2020 © VayKino. Все права защищены
             </div>
 
             <div class="footer-privacy_policy">

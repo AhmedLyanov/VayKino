@@ -1,8 +1,8 @@
 <template>
-    <div class="slider-container" v-if="data">
+    <div class="slider-container" v-if="data.length">
         <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * 1522.39}px)` }">
             <div class="slide" v-for="(slide, index) in slides" :key="index">
-                <Card v-for="(cardData, cardIndex) in slide" :key="cardIndex" :data="cardData" />
+                <Card v-for="(cardData, cardIndex) in slide" :key="cardIndex" :data="cardData" :contextMenu="false" />
             </div>
         </div>
 
@@ -30,7 +30,7 @@
     <div class="slider-container" v-else>
         <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * 1522.39}px)` }">
             <div class="slide">
-                <Card v-for="index in 4" :key="index" />
+                <Card v-for="index in 4" :key="index" :data="false" />
             </div>
         </div>
 
@@ -134,6 +134,7 @@ export default {
 .slider-wrapper {
     display: flex;
     transition: transform 0.3s ease-in-out;
+    position: relative;
 }
 
 .slide {

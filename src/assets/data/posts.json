@@ -1,142 +1,14 @@
 {
-    "total": 1564,
-    "totalPages": 79,
-    "items": [
+  "total": 1564,
+  "totalPages": 79,
+  "items": [
       {
-        "kinopoiskId": 4009983,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/986012/c0a64dde37538119949b329bd602de9f/orig",
-        "title": "Хабенский в крови, Кологривый-Зверь и Быков-силовик: как снимается третий «Метод» в Петербурге",
-        "description": "Юрий Быков, Никита Кологривый, Константин Хабенский снимаются в третьем сезоне сериала «Метод» о приключениях следователя Меглина, который выйдет на Кинопоиске.",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009983",
-        "publishedAt": "2024-09-17T09:57:41"
-      },
-      {
-        "kinopoiskId": 4008451,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1644748/7c3e618c2ef1b2925901340b8590063e/orig",
-        "title": "Как устроена вселенная «Transhumanism Inc.»? И что нужно знать перед выходом романа «Круть» Виктора Пелевина",
-        "description": "3 октября выйдет новый роман Виктора Пелевина «Круть». Действие разворачивается в той же вселенной, что и предыдущие «Путешествие в Элевсин», «Transhumanism Inc.» и «KGBT+».",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4008451",
-        "publishedAt": "2024-09-17T10:01:09"
-      },
-      {
-        "kinopoiskId": 4009985,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1101343/c014145396837c4074b3c305d3e61446/orig",
-        "title": "«Субстанция»: феминистский боди-хоррор с Деми Мур и Маргарет Куолли",
-        "description": "Рецензия на фильм ужасов «Субстанция», в котором сыграли Деми Мур и Маргарет Куолли.",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009985",
-        "publishedAt": "2024-09-17T11:38:08"
-      },
-      {
-        "kinopoiskId": 4009989,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/986012/16607a0aef34e92bbe7809218fbbe4d3/orig",
-        "title": "Что происходит в прокате: у нас — «Лунтик», у них — «Битлджус»",
-        "description": "«Лунтик» стал самым кассовым мультфильмом 2024 года. Собрали ключевые новости прошедших недель в отечественном и зарубежном прокате.",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009989",
-        "publishedAt": "2024-09-17T12:17:55"
-      },
-      {
-        "kinopoiskId": 4009991,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1644748/2d0b471d69771fb6dcbfec60eefa0361/orig",
-        "title": "Как создавался художественный мир «Игр»? Рассказывает команда сериала",
-        "description": "На Кинопоиске завершился сериал «Игры» про подготовку Олимпиады-80 в Москве. Рассказываем, как создавалась советская атмосфера в кадре. ",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009991",
-        "publishedAt": "2024-09-18T07:31:54"
-      },
-      {
-        "kinopoiskId": 4009986,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1347825/7a7ecc607f4e989ed7c75988d89084a3/orig",
-        "title": "Маргарет Куолли о «Субстанции»: «Хорроры отлично подходят для выражения женского гнева»",
-        "description": "Интервью с Маргарет Куолли — звездой фильма «Субстанция».",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009986",
-        "publishedAt": "2024-09-18T08:52:33"
-      },
-      {
-        "kinopoiskId": 4009987,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1669849/f58ac050dd208e0e70e35eefd3ead9d0/orig",
-        "title": "Что смотреть в кино: новый «Хеллбой», боди-хоррор из Канн и экранизация Дюма",
-        "description": "Что смотреть в российских кинотеатрах с 19 сентября 2024 года: «Субстанция», «Хеллбой: Проклятие Горбуна», «Граф Монте-Кристо», «Чума». ",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009987",
-        "publishedAt": "2024-09-18T09:14:14"
-      },
-      {
-        "kinopoiskId": 4009992,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1347825/323b05a7d0fc54782d2c729d93ca570c/orig",
-        "title": "Пираты ХХI века: история кинопиратства в России и промежуточные итоги «параллельного проката»",
-        "description": "Обсудили с представителем студии дубляжа Red Head Sound, актером Петром Гланцем, продюсером Сергеем Сельяновым и другими кинодеятелями, как было устроено пиратство в России и кто зарабатывает на нем сейчас. ",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009992",
-        "publishedAt": "2024-09-18T14:53:52"
-      },
-      {
-        "kinopoiskId": 4009988,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1520341/3f015770b0cccd6479e6bcd324e83157/orig",
-        "title": "Фестиваль «Маяк» объявил программу. В конкурсе — новый Александр Хант и Максим Арбугаев, номинант на «Оскар»",
-        "description": "На фестивале пройдет российская премьера фильма «Анора», лауреата Канн в этом году. В фильме сыграли Юра Борисов, Марк Эйдельштейн и Дарья Екамасова.",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009988",
-        "publishedAt": "2024-09-19T07:16:41"
-      },
-      {
-        "kinopoiskId": 4009990,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1669849/dfe32f37f4fbf65d066a1a2f30b38664/orig",
-        "title": "Что было в «Триггере»? Вспоминаем события прошлых сезонов и полнометражного фильма",
-        "description": "К старту третьего сезона вспоминаем весь экранный путь провокационного психолога Артёма Стрелецкого.",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009990",
-        "publishedAt": "2024-09-19T08:00:21"
-      },
-      {
-        "kinopoiskId": 4009982,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1669849/51ce88da52df712cc2bf6d7b5ef89c48/orig",
-        "title": "Мы побывали на съемках «Этерны». Поздравили королеву и посмотрели шоу. Рассказываем!",
-        "description": "Репортаж со съемок сериала «Этерна», который скоро выйдет на Кинопоиске.",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009982",
-        "publishedAt": "2024-09-19T11:11:23"
-      },
-      {
-        "kinopoiskId": 4009995,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1520341/eef48e443082ef01397ff4b40978c634/orig",
-        "title": "Что смотреть дома: третий сезон «Триггера», «Пингвин», «Монстры» и хоккей",
-        "description": "Шоковая терапия с Максимом Матвеевым, Райаном Мёрфи, суперзлодеями и политиками. ",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009995",
-        "publishedAt": "2024-09-19T12:42:29"
-      },
-      {
-        "kinopoiskId": 4009997,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1101343/6a6fd6634dd1c59ae74b67b6aade8521/orig",
-        "title": "Кинопоиск готовит экранизацию Atomic Heart. Чем известна игра и почему она так кинематографична?",
-        "description": "К анонсу экранизации видеоигры Atomic Heart вспоминаем, почему она стала настолько популярной у геймеров всего мира.  ",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009997",
-        "publishedAt": "2024-09-19T18:02:57"
-      },
-      {
-        "kinopoiskId": 4007620,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/879158/98d5ac2ad45c489e529625028f815f96/orig",
-        "title": "По «Королю и Шуту» снимут фильм. А тут — всё, что мы писали, снимали и говорили о сериале",
-        "description": "Расскажите в комментариях, что думаете о новой серии. Для ваших аргументов, чтобы обсуждения были по существу, мы собрали здесь рекапы эпизодов и все публикации Кинопоиска о сериале.",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4007620",
-        "publishedAt": "2024-09-19T18:08:00"
-      },
-      {
-        "kinopoiskId": 4008514,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1644748/f407926d94330791fa39cc059a7b4c5e/orig",
-        "title": "«Чума» Дмитрия Давыдова: лаконичный якутский ответ на вопрос «В чем сила?»",
-        "description": "Фестиваль «Маяк» подошел к концу. Одним из его сюрпризов стал новый фильм автора «Пугала» и «Нелегала», не похожий ни на предыдущие работы режиссера, ни на кино Республики Саха вообще. ",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4008514",
-        "publishedAt": "2024-09-20T06:51:57"
-      },
-      {
-        "kinopoiskId": 4009998,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1540726/bf48ea894445341cb94f7bcb01fc1129/orig",
-        "title": "«Не говори никому»: хоррор в духе «Сплита», в котором Джеймс Макэвой снова играет мускулами",
-        "description": "Рецензия на фильм «Не говори никому» (2024), триллер с Джеймсом Макэвоем. ",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009998",
-        "publishedAt": "2024-09-20T07:16:54"
-      },
-      {
-        "kinopoiskId": 4009994,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/879158/fd6a9cbe97fcf80952934c69fb287dd1/orig",
-        "title": "«Капельник». Безукоризненное драмеди о несовершенстве жизни",
-        "description": "Ведущие разбирают сериал «Капельник» с Денисом Прытковым и Анастасией Резник.",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4009994",
-        "publishedAt": "2024-09-20T09:05:27"
+        "kinopoiskId": 4010002,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1520341/fd8294d25d4ab259708c4a3307455bcb/orig",
+        "title": "Роман «Саттри» Кормака Маккарти: «практически автобиография» знаменитого затворника",
+        "description": "Впервые на русском языке вышел роман «Саттри» Кормака Маккарти, автора  «Дороги» и «Старикам тут не место». Рассказываем, почему эту книгу стоит читать и насколько она автобиографична. ",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4010002",
+        "publishedAt": "2024-09-20T10:14:56"
       },
       {
         "kinopoiskId": 4009999,
@@ -147,20 +19,252 @@
         "publishedAt": "2024-09-20T09:22:19"
       },
       {
-        "kinopoiskId": 4010002,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1520341/fd8294d25d4ab259708c4a3307455bcb/orig",
-        "title": "Роман «Саттри» Кормака Маккарти: «практически автобиография» знаменитого затворника",
-        "description": "Впервые на русском языке вышел роман «Саттри» Кормака Маккарти, автора  «Дороги» и «Старикам тут не место». Рассказываем, почему эту книгу стоит читать и насколько она автобиографична. ",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4010002",
-        "publishedAt": "2024-09-20T10:14:56"
+        "kinopoiskId": 4009994,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/879158/fd6a9cbe97fcf80952934c69fb287dd1/orig",
+        "title": "«Капельник». Безукоризненное драмеди о несовершенстве жизни",
+        "description": "Ведущие разбирают сериал «Капельник» с Денисом Прытковым и Анастасией Резник.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009994",
+        "publishedAt": "2024-09-20T09:05:27"
       },
       {
-        "kinopoiskId": 4010003,
-        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/5410517/27187edf08664c05f7d689c5904562c0/orig",
-        "title": "Что происходит в онлайне: «Иванушки», Гай Ричи и Kingsman",
-        "description": "Ключевые события и топы просмотров августа — в регулярном обзоре Кинопоиска. ",
-        "url": "https://www.kinopoisk.ru/api/webview/post/4010003",
-        "publishedAt": "2024-09-20T14:46:35"
+        "kinopoiskId": 4009998,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1540726/bf48ea894445341cb94f7bcb01fc1129/orig",
+        "title": "«Не говори никому»: хоррор в духе «Сплита», в котором Джеймс Макэвой снова играет мускулами",
+        "description": "Рецензия на фильм «Не говори никому» (2024), триллер с Джеймсом Макэвоем. ",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009998",
+        "publishedAt": "2024-09-20T07:16:54"
+      },
+      {
+        "kinopoiskId": 4007620,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/879158/98d5ac2ad45c489e529625028f815f96/orig",
+        "title": "По «Королю и Шуту» снимут фильм. А тут — всё, что мы писали, снимали и говорили о сериале",
+        "description": "Расскажите в комментариях, что думаете о новой серии. Для ваших аргументов, чтобы обсуждения были по существу, мы собрали здесь рекапы эпизодов и все публикации Кинопоиска о сериале.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4007620",
+        "publishedAt": "2024-09-19T18:08:00"
+      },
+      {
+        "kinopoiskId": 4009995,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1520341/eef48e443082ef01397ff4b40978c634/orig",
+        "title": "Что смотреть дома: третий сезон «Триггера», «Пингвин», «Монстры» и хоккей",
+        "description": "Шоковая терапия с Максимом Матвеевым, Райаном Мёрфи, суперзлодеями и политиками. ",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009995",
+        "publishedAt": "2024-09-19T12:42:29"
+      },
+      {
+        "kinopoiskId": 4009982,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1669849/51ce88da52df712cc2bf6d7b5ef89c48/orig",
+        "title": "Мы побывали на съемках «Этерны». Поздравили королеву и посмотрели шоу. Рассказываем!",
+        "description": "Репортаж со съемок сериала «Этерна», который скоро выйдет на Кинопоиске.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009982",
+        "publishedAt": "2024-09-19T11:11:23"
+      },
+      {
+        "kinopoiskId": 4009990,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1669849/dfe32f37f4fbf65d066a1a2f30b38664/orig",
+        "title": "Что было в «Триггере»? Вспоминаем события прошлых сезонов и полнометражного фильма",
+        "description": "К старту третьего сезона вспоминаем весь экранный путь провокационного психолога Артёма Стрелецкого.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009990",
+        "publishedAt": "2024-09-19T08:00:21"
+      },
+      {
+        "kinopoiskId": 4009988,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1520341/3f015770b0cccd6479e6bcd324e83157/orig",
+        "title": "Фестиваль «Маяк» объявил программу. В конкурсе — новый Александр Хант и Максим Арбугаев, номинант на «Оскар»",
+        "description": "На фестивале пройдет российская премьера фильма «Анора», лауреата Канн в этом году. В фильме сыграли Юра Борисов, Марк Эйдельштейн и Дарья Екамасова.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009988",
+        "publishedAt": "2024-09-19T07:16:41"
+      },
+      {
+        "kinopoiskId": 4009992,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1347825/323b05a7d0fc54782d2c729d93ca570c/orig",
+        "title": "Пираты ХХI века: история кинопиратства в России и промежуточные итоги «параллельного проката»",
+        "description": "Обсудили с представителем студии дубляжа Red Head Sound, актером Петром Гланцем, продюсером Сергеем Сельяновым и другими кинодеятелями, как было устроено пиратство в России и кто зарабатывает на нем сейчас. ",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009992",
+        "publishedAt": "2024-09-18T14:53:52"
+      },
+      {
+        "kinopoiskId": 4009987,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1669849/f58ac050dd208e0e70e35eefd3ead9d0/orig",
+        "title": "Что смотреть в кино: новый «Хеллбой», боди-хоррор из Канн и экранизация Дюма",
+        "description": "Что смотреть в российских кинотеатрах с 19 сентября 2024 года: «Субстанция», «Хеллбой: Проклятие Горбуна», «Граф Монте-Кристо», «Чума». ",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009987",
+        "publishedAt": "2024-09-18T09:14:14"
+      },
+      {
+        "kinopoiskId": 4009991,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1644748/2d0b471d69771fb6dcbfec60eefa0361/orig",
+        "title": "Как создавался художественный мир «Игр»? Рассказывает команда сериала",
+        "description": "На Кинопоиске завершился сериал «Игры» про подготовку Олимпиады-80 в Москве. Рассказываем, как создавалась советская атмосфера в кадре. ",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009991",
+        "publishedAt": "2024-09-18T07:31:54"
+      },
+      {
+        "kinopoiskId": 4009989,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/986012/16607a0aef34e92bbe7809218fbbe4d3/orig",
+        "title": "Что происходит в прокате: у нас — «Лунтик», у них — «Битлджус»",
+        "description": "«Лунтик» стал самым кассовым мультфильмом 2024 года. Собрали ключевые новости прошедших недель в отечественном и зарубежном прокате.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009989",
+        "publishedAt": "2024-09-17T12:17:55"
+      },
+      {
+        "kinopoiskId": 4009985,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1101343/c014145396837c4074b3c305d3e61446/orig",
+        "title": "«Субстанция»: феминистский боди-хоррор с Деми Мур и Маргарет Куолли",
+        "description": "Рецензия на фильм ужасов «Субстанция», в котором сыграли Деми Мур и Маргарет Куолли.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009985",
+        "publishedAt": "2024-09-17T11:38:08"
+      },
+      {
+        "kinopoiskId": 4008451,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1644748/7c3e618c2ef1b2925901340b8590063e/orig",
+        "title": "Как устроена вселенная «Transhumanism Inc.»? И что нужно знать перед выходом романа «Круть» Виктора Пелевина",
+        "description": "3 октября выйдет новый роман Виктора Пелевина «Круть». Действие разворачивается в той же вселенной, что и предыдущие «Путешествие в Элевсин», «Transhumanism Inc.» и «KGBT+».",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4008451",
+        "publishedAt": "2024-09-17T10:01:09"
+      },
+      {
+        "kinopoiskId": 4009983,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/986012/c0a64dde37538119949b329bd602de9f/orig",
+        "title": "Хабенский в крови, Кологривый-Зверь и Быков-силовик: как снимается третий «Метод» в Петербурге",
+        "description": "Юрий Быков, Никита Кологривый, Константин Хабенский снимаются в третьем сезоне сериала «Метод» о приключениях следователя Меглина, который выйдет на Кинопоиске.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009983",
+        "publishedAt": "2024-09-17T09:57:41"
+      },
+      {
+        "kinopoiskId": 4009984,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1669849/f2a4ea764e1ff874ac8b66f27690ac4f/orig",
+        "title": "На кинофестивале в Торонто победила «Жизнь Чака». Рассказываем про нее и еще 9 фильмов, которые стоит ждать",
+        "description": "Кто победил на 49-м Международном кинофестивале в Торонто и где смотреть лучшие фильмы.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009984",
+        "publishedAt": "2024-09-16T14:23:05"
+      },
+      {
+        "kinopoiskId": 4009981,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/5410517/2fdbb19767f79c93083f775976a4030a/orig",
+        "title": "«Битлджус Битлджус». Настоящее возвращение Тима Бёртона",
+        "description": "Ведущие обсуждают новый фильм Тима Бёртона «Битлджус Битлджус» с Майклом Китоном, Вайноной Райдер и Дженной Ортегой.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009981",
+        "publishedAt": "2024-09-16T13:51:50"
+      },
+      {
+        "kinopoiskId": 4009978,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1520341/2ab91da57e0365a698c93d14ffb13dd3/orig",
+        "title": "«Сёгун» — триумфатор «Эмми»! Рассказываем, кого еще наградили на 76-й церемонии",
+        "description": "Все победители 76-й церемонии «Эмми».",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009978",
+        "publishedAt": "2024-09-16T08:50:42"
+      },
+      {
+        "kinopoiskId": 4009966,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1540726/59d30cad2477b677f831cc8599ffe949/orig",
+        "title": "Как устроен жанр файтингов — от Mortal Kombat до Street Fighter",
+        "description": "Кинопоиск разбирает в новом игровом видеоэссе историю и устройство жанра файтингов — от Mortal Kombat до Street Fighter — и то, что происходит с этими играми сегодня.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009966",
+        "publishedAt": "2024-09-15T11:23:25"
+      },
+      {
+        "kinopoiskId": 4009971,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1348084/db7fad24284e9fc1a1355ca514257f3f/orig",
+        "title": "Сорванные пробы Гандольфини и жадность HBO. Что мы узнали из нового дока про создание «Сопрано»",
+        "description": "Как создавался культовый сериал? Пересказываем документалку «Умник: Дэвид Чейз и „Сопрано“». ",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009971",
+        "publishedAt": "2024-09-15T06:00:00"
+      },
+      {
+        "kinopoiskId": 4009977,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1101343/27b3b6a1d8c127e70141845e2ea3d607/orig",
+        "title": "«Где наши деньги?» и «Аутсорс» — победители «Нового сезона». Подводим итоги фестиваля онлайн-кинотеатров",
+        "description": "Собрали список победителей фестиваля онлайн-кинотеатров «Новый сезон» 2024 года, а еще поговорили с актерами, представлявшими сериалы, о своих героях. Среди спикеров — Юра Борисов, Максим Матвеев, Рузиль Минекаев и другие. \n",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009977",
+        "publishedAt": "2024-09-14T18:18:09"
+      },
+      {
+        "kinopoiskId": 4009976,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1644748/ada2322568e0b40352250ad86b7a8c84/orig",
+        "title": "«Первый номер», «Последний богатырь. Наследие» и «Где наши деньги?»: последние обзоры с «Нового сезона»",
+        "description": "Финальные ревью с фестиваля «Новый сезон»: «Фарма», «Первый номер», «Последний богатырь. Наследие» и «Где наши деньги?»",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009976",
+        "publishedAt": "2024-09-14T15:26:50"
+      },
+      {
+        "kinopoiskId": 4009967,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1532671/9cbf8ae3b6021d63688a035d6e6a390d/orig",
+        "title": "Евгений Стычкин — о секретах съемок и смыслах сериала «Игры»",
+        "description": "Личные воспоминания об Олимпиаде, сложности производства и скрытые смыслы сериала «Игры». Рассказывает режиссер Евгений Стычкин.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009967",
+        "publishedAt": "2024-09-14T10:19:14"
+      },
+      {
+        "kinopoiskId": 4009979,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/5394945/493a77f971ce07955924ddf7fde5866c/orig",
+        "title": "Не смотрите «Кольца власти»? Мы сделали это за вас. Вот рекап пяти серий",
+        "description": "Что случилось во втором сезоне сериала «Властелин колец: Кольца власти».",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009979",
+        "publishedAt": "2024-09-13T14:31:56"
+      },
+      {
+        "kinopoiskId": 4009975,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1669849/0b41914e3913161cde2fc9ae2d6428d4/orig",
+        "title": "«Красная Поляна», «Подростки в космосе», «Жвачка» и «Танго на осколках»: ревью свежих сериалов фестиваля «Новый сезон»",
+        "description": "Рассказываем о сериалах фестиваля «Новый сезон»: «Жвачка», «Танго на осколках», «Красная Поляна» и «Подростки в космосе»",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009975",
+        "publishedAt": "2024-09-13T10:44:05"
+      },
+      {
+        "kinopoiskId": 4009974,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1669849/35aaa7750a1921348985fbc05312e1e9/orig",
+        "title": "Древний бог, инопланетное вторжение и конь-симбиот: что мы знаем про третью часть «Венома»",
+        "description": "Вся информация о фильме «Веном: Последний танец» — сюжет, актеры, режиссеры, сценаристы, трейлер, дата выхода.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009974",
+        "publishedAt": "2024-09-13T10:29:29"
+      },
+      {
+        "kinopoiskId": 4009964,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/986012/c4a262cb8d5cd0faa5cfe45995c7ceb7/orig",
+        "title": "Зачем нужен Венецианский кинофестиваль? Итоги смотра-2024",
+        "description": "Обсуждаем историю Венецианского кинофестиваля и итоги конкурса-2024. Упоминаем фильмы «Джокер: Безумие на двоих», «Бруталист», «Горная невеста», «Allégorie Citadine», «Счастливый конец», «Малдорор», «Убить жокея», «Baby Invasion», «Комната по соседству». ",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009964",
+        "publishedAt": "2024-09-12T17:17:51"
+      },
+      {
+        "kinopoiskId": 4009969,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1347825/c6d55f5a613a06e3888b0862bd21a5aa/orig",
+        "title": "Что смотреть дома: «Барсукот. Очень зверский детектив», «Синяя тюрьма: Блю Лок» и продолжение «Эмили в Париже»",
+        "description": "Новый мультсериал про барсука-детектива, юбилей «Леона» и запуск нового спортивного шоу на Кинопоиске.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009969",
+        "publishedAt": "2024-09-12T13:38:05"
+      },
+      {
+        "kinopoiskId": 4009970,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1532671/fb09c4164b3aeffea42eb444fa69c476/orig",
+        "title": "«Ненасытные люди»: криминальное чтиво в духе братьев Коэн",
+        "description": "Рецензия на фильм Потси Пончироли «Ненасытные люди» с Джозефом Гордоном-Левиттом.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009970",
+        "publishedAt": "2024-09-12T11:14:45"
+      },
+      {
+        "kinopoiskId": 4009965,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1532671/e5601beb87e11c8e08c972c448592b8e/orig",
+        "title": "Что мы узнали из новой книги Юваля Ноя Харари «Nexus»",
+        "description": "У автора «Sapiens» и «Homo Deus» Юваля Ноя Харари вышла новая книга — «Nexus». Рассказываем основные идеи из нее — об информационных сетях, искусственном интеллекте и политике. ",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009965",
+        "publishedAt": "2024-09-12T08:16:13"
+      },
+      {
+        "kinopoiskId": 4009963,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/1644748/5c8cc902c18125f768c7b9db39794e65/orig",
+        "title": "«Барсукот. Очень зверский детектив»: гид по персонажам и местности",
+        "description": "Анимационный сериал «Барсукот. Очень зверский детектив» стартовал на Кинопоиске. Рассказываем, кто такие барсуки полиции и другие герои Дальнего Леса.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009963",
+        "publishedAt": "2024-09-12T08:12:23"
+      },
+      {
+        "kinopoiskId": 4009962,
+        "imageUrl": "https://avatars.mds.yandex.net/get-kinopoisk-post-thumb/986012/fb786b59481dd49f0a21cb4dc4050c0f/orig",
+        "title": "Проблемы галактических масштабов: рецензия на Star Wars Outlaws",
+        "description": "Сыграли в Star Wars Outlaws и пришли к неутешительным выводам.",
+        "url": "https://www.kinopoisk.ru/api/webview/post/4009962",
+        "publishedAt": "2024-09-11T13:33:18"
       }
     ]
-  }
+}

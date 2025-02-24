@@ -20,13 +20,13 @@
 
       <div class="header-center">
         <nav>
-          <div>Афиша</div>
-          <div>Медиа</div>
-          <div>Фильмы</div>
-          <div>Актеры</div>
-          <div>Новости</div>
-          <div>Подборки</div>
-          <div>Категории</div>
+          <router-link to="/premiere" active-class="active">Афиша</router-link>
+          <router-link>Медиа</router-link>
+          <router-link to="/movies" active-class="active">Фильмы</router-link>
+          <router-link>Актеры</router-link>
+          <router-link to="/posts" active-class="active">Новости</router-link>
+          <router-link to="/lists" active-class="active">Подборки</router-link>
+          <router-link>Категории</router-link>
         </nav>
       </div>
 
@@ -57,7 +57,8 @@
 
 <script>
 import SearchModal from './SearchModal.vue';
-import { ref, computed, onMounted, onUpdated } from 'vue';
+import { ref, onMounted, onUpdated } from 'vue';
+import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 
 import axios from 'axios';
@@ -71,6 +72,8 @@ export default {
     const userBalance = ref(0);
     const userAvatar = ref('');
     const showDropdown = ref(false);
+    const route = useRoute();
+    const pathSegment = ref('');
 
     const linkToImg = "../src/assets/Media/Components";
 
@@ -128,7 +131,9 @@ export default {
             updateUserBalance(user.login);
           }
         }
-      }, 300000); 
+      }, 300000);
+
+      pathSegment.value = route.path.split('/').pop();
     });
 
     onUpdated(() => {
@@ -143,7 +148,8 @@ export default {
       showDropdown,
       toggleDropdown,
       goToProfile,
-      logout
+      logout,
+      pathSegment
     };
   },
   methods: {
@@ -255,7 +261,7 @@ header {
 .header-social_networks {
   margin-top: 10px;
   display: flex;
-  width: 120px;
+  width: 100%;
   margin-left: 3px;
   align-items: center;
   justify-content: space-between;
@@ -300,7 +306,7 @@ header {
 .header-center nav {
   display: flex;
 
-  div {
+  a {
     font-size: 17px;
     font-weight: 700;
     line-height: 21.06px;
@@ -311,6 +317,11 @@ header {
     transition: 0.3s;
     user-select: none;
     cursor: pointer;
+    text-decoration: none;
+
+    &.active{
+      color: #3657cb;
+    }
 
     &:not(:first-child) {
       margin-left: 40px;

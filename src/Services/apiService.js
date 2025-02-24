@@ -3,19 +3,18 @@ import axios from "axios";
 const FREE_API = "https://api1650820663.bhcesh.me/list?token=3794a7638b5863cc60d7b2b9274fa32e&sort=-views";
 const FREE_API2 = "https://api.bhcesh.me/list?token=eedefb541aeba871dcfc756e6b31c02e&sort=-views";
 const API_200_REQUESTS = "https://api.kinopoisk.dev/v1.4/movie/";
-const API_500_REQUESTS_VERSION1 =
-  "https://kinopoiskapiunofficial.tech/api/v2.1/films/";
-const API_500_REQUESTS_VERSION2 =
-  "https://kinopoiskapiunofficial.tech/api/v2.2/films/";
-
+const API_500_REQUESTS_VERSION1 = "https://kinopoiskapiunofficial.tech/api/v2.1/films/";
+const API_500_REQUESTS_VERSION2 = "https://kinopoiskapiunofficial.tech/api/v2.2/films/";
 const API_FETCH_ACTOR = "https://api.kinopoisk.dev/v1.4/person/"
+const API_FETCH_TO_LISTS = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=52&selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=rating&selectFields=genres&selectFields=poster&sortField=rating.kp&sortType=-1&lists="
 
 const API_200_REQUESTS_TOKEN = "5W6J03Z-ZNT4Y0V-MC7SVYX-WQS4ZEN";
 const API_200_REQUESTS_TOKEN2 = "25VQB0J-Y1ZMMET-GPVV75G-1R3Q8BZ";
 const API_500_REQUESTS_TOKEN = "f541243d-43ef-4e4e-a710-9d6a2eb02f26";
 const API_YOUTUBE_TOKEN = "7c902ac83amshbb53ec6e3e93e16p1f2ea5jsnbd7787c7c777";
 
-const blackList = ["Гарри Поттер и Тайная Комната", "Совсем ошалели", "Гарри Поттер и Узник Азкабана", "Гарри Поттер и Кубок Огня", "Гарри Поттер и Принц-полукровка", "Гарри Поттер и Орден Феникса", "Анора", "Дети леса", "Постучись в мою Тверь", "Ущелье", "После. Глава 3", "Моя вина", "Из моего окна", "Пурпурные сердца", "Король Стейтен-Айленда", "После. Глава 2", "365 дней", "Борат 2", "Непослушная", "Не волнуйся, солнышко", "Субстанция", "Плохая девочка", "Оставь это ветру", "Как бы беременна", "Парни с тату. Прямо в сердце", "Моя вина: Лондон", "Ущелье", "Влюблённые глаза", "Бриджит Джонс. Без ума от мальчишки"];
+const blackList = JSON.parse(localStorage.getItem("kinoareaBlackList"))
+
 
 export const fetchFreeAPI = async (dopparams = "") => {
   try {
@@ -45,7 +44,6 @@ export const fetchData = async (id) => {
         "X-API-KEY": API_200_REQUESTS_TOKEN,
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -68,7 +66,6 @@ export const fetchAwards = async (id) => {
     if (response.status !== 200) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching awards:", error);
@@ -91,7 +88,6 @@ export const fetchPosters = async (id) => {
     if (response.status !== 200) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching posters:", error);
@@ -114,7 +110,6 @@ export const fetchStills = async (id) => {
     if (response.status !== 200) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching stills:", error);
@@ -137,7 +132,6 @@ export const fetchSequels = async (id) => {
     if (response.status !== 200) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching sequels:", error);
@@ -160,7 +154,6 @@ export const fetchSimilars = async (id) => {
     if (response.status !== 200) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching similars:", error);
@@ -191,21 +184,20 @@ export const searchTrailer = async (movieTitle) => {
     }
 
     const data = response.data;
-    console.log(data);
 
     if (data.data && data.data.length > 0) {
       const preferredChannelIds = [
         "UCDgVWEC93NuidEeDxWHAIFg",
         "UC6A-Z0jDKemh9-CwGbj5yog",
         "UCh9gYjgnUB1BRY0-LYJXKRg",
+        "UCs9tHGGpNjOMiCnbqTGA1PQ",
         "UCJSrnFU1ILHyhJ4Oe9GayGw",
       ];
 
       const preferedVideo = data.data.find((item) =>
         preferredChannelIds.includes(item.channelId)
       );
-
-      console.log(preferedVideo || data.data[0]);
+      
       return preferedVideo || data.data[0];
     } else {
       return null;
@@ -235,7 +227,6 @@ export const getLatestVideosFromChannel = async () => {
     }
 
     const data = await response.json();
-    console.log(data);
 
     return data.data.slice(0, 10)
     
@@ -247,7 +238,7 @@ export const getLatestVideosFromChannel = async () => {
 
 export const fetchFilmsByGenre = async (genre, dopparams = "") => {
   try {
-    const response = await axios.get(`${FREE_API}&limit=60&type=film${dopparams}`);
+    const response = await axios.get(`${FREE_API}&limit=80&type=film${dopparams}`);
 
     if (!response.data || !response.data.results) {
       console.warn("No results found from API.");
@@ -261,10 +252,9 @@ export const fetchFilmsByGenre = async (genre, dopparams = "") => {
 
         return genres.some(g => g.toLowerCase() === lowerCaseGenre);
       });
-
+      
       filteredFilms = filteredFilms.filter(obj => !blackList.includes(obj.name))
-
-      console.log(filteredFilms);
+      
 
       return filteredFilms.slice(0, 8);
     } else{
@@ -280,7 +270,6 @@ export const fetchFilmsByGenre = async (genre, dopparams = "") => {
 export const fetchMovieToId = async (id) => {
   try {
     const response = await axios.get(`${FREE_API}&kinopoisk_id=${id}`);
-    console.log(response);
     return response.data.results;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -296,8 +285,26 @@ export const fetchActor = async (id) => {
         "X-API-KEY": API_200_REQUESTS_TOKEN2,
       },
     });
-    console.log(response.data);
+    
     return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+export const fetchMoviesToList = async (list) => {
+  try {
+    const response = await axios.get(`${API_FETCH_TO_LISTS}${list}`, {
+      headers: {
+        Accept: "application/json",
+        "X-API-KEY": API_200_REQUESTS_TOKEN2,
+      },
+    });
+    console.log(response);
+    console.log(response.docs);
+    
+    return response.data.docs;
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;

@@ -6,7 +6,7 @@
           <img :src="`${linkToImg}/logo.svg`" alt="" />
         </div>
 
-        <div className="modal-logo-title">Kino<mark>area</mark></div>
+        <div className="modal-logo-title">Vay<mark>Kino</mark></div>
       </div>
 
       <div className="modal-input">

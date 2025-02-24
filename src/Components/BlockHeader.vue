@@ -42,7 +42,6 @@ export default {
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-    height: 100px;
 }
 
 .block_header-btn {

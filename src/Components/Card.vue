@@ -1,31 +1,38 @@
 <template>
-    <div v-if="data" class="movie-card" @click="goToMovie(cardInfo.filmId || cardInfo.kinopoisk_id ||  cardInfo.id)">
+    <div v-if="data" @contextmenu.prevent="contextMenu ? showContextMenu($event) : null" class="movie-card"
+        @click="goToMovie(cardInfo.filmId || cardInfo.kinopoisk_id || cardInfo.id)">
         <div class="movie-card-content">
             <div class="movie-card-img">
                 <div v-if="cardInfo?.rating || cardInfo.imdb || cardInfo.kinopoisk" class="movie-card-rating"
                     :style="{ backgroundColor: colorScale[Math.ceil(Number(cardInfo?.rating?.kp || cardInfo.imdb || cardInfo.kinopoisk))]?.color }">
                     {{ cardInfo?.rating?.kp ? cardInfo.rating.kp.toFixed(2) : cardInfo?.imdb ?
                         Number(cardInfo.imdb).toFixed(2) : cardInfo?.kinopoisk ? Number(cardInfo.kinopoisk).toFixed(2) :
-                    ''}}
-
+                            '' }}
                 </div>
 
                 <div v-if="cardInfo.relationType" class="movie-card-relationType">
                     {{ cardInfo?.relationType === "PREQUEL" ? "Приквел" : cardInfo?.relationType === "SEQUEL" ? "Сиквел"
-                    : cardInfo?.relationType === "REMAKE" ? "Ремэйк" : "Похожий"}}
+                        : cardInfo?.relationType === "REMAKE" ? "Ремэйк" : "Похожий" }}
                 </div>
                 <img :src="cardInfo?.poster?.url || cardInfo.posterUrl || cardInfo.poster" :alt="data?.name" />
             </div>
             <div class="movie-card-title">{{ cardInfo.name || cardInfo.nameRu }}</div>
             <div v-if="cardInfo.genres" class="movie-card-genres">
-                <span v-for="(genre, index) in cardInfo.genres" :key="index">{{ genre.name }} <span
+                <span v-for="(genre, index) in cardInfo.genres" :key="index">{{ genre.name }}<span
                         v-if="index < cardInfo.genres.length - 1">, </span></span>
             </div>
             <div className='movie-card-genres' v-if="cardInfo.genre">
-                <span v-for="(genre, index) in Object.values(cardInfo.genre)" :key="index">{{ genre }}<span
-                        v-if="index < Object.values(cardInfo.genre).length - 1">, </span></span>
+                <span v-for="(genre, index) in Object.values(cardInfo.genre)" :key="index">{{ genre }}<span v-if="index < Object.values(cardInfo.genre).length - 1">, </span></span>
             </div>
             <div v-if="cardInfo.nameEn" class="movie-card-genres">{{ cardInfo.nameEn }}</div>
+        </div>
+
+        <div v-if="showMenu" class="movie-card-menu" @click.stop @contextmenu.stop.prevent :style="{
+            top: menuY + 'px',
+            left: menuX + 'px',
+        }">
+        <span>{{ cardInfo.name || cardInfo.nameRu }}</span>
+            <button @click="deleteItem">Добавить в черный список</button>
         </div>
     </div>
     <div v-else class="movie-card">
@@ -45,6 +52,8 @@
 
 <script>
 import { useRouter } from 'vue-router';
+import { mapActions } from 'vuex';
+
 export default {
     data() {
         return {
@@ -59,26 +68,70 @@ export default {
                 8: { color: "#66CC00" },
                 9: { color: "#33CC00" },
                 10: { color: "#00CC00" },
-            }
+            },
+            showMenu: false,
+            menuX: 0,
+            menuY: 0,
         }
     },
-    props: ['data'],
+    props: {
+      data: {
+        type: Object,
+        required: true
+      },
+      contextMenu: {
+        type: Boolean,
+        default: true
+      }
+    },
     computed: {
         cardInfo() {
             return this.data;
         }
     },
     setup() {
-      const router = useRouter();
+        const router = useRouter();
 
-      const goToMovie = (movieId) => {
-        router.push({ name: 'MoviePage', params: { id: movieId } });
-      };
+        const goToMovie = (movieId) => {
+            router.push({ name: 'MoviePage', params: { id: movieId } });
+        };
 
-      return { goToMovie };
-    }
+        return { goToMovie };
+    },
+    methods: {
+    ...mapActions(['toggleOverlay']),
+    ...mapActions(['addToBlackList']),
+    deleteItem() {
+        this.closeContextMenu();
+        this.addToBlackList(this.cardInfo.name || this.cardInfo.nameRu);
+    },
+    showContextMenu(event) {
+      event.preventDefault();
+
+      const cardRect = event.currentTarget.getBoundingClientRect();
+      this.menuX = event.clientX - cardRect.left;
+      this.menuY = event.clientY - cardRect.top;
+
+      this.showMenu = true;
+      this.toggleOverlay(true);
+        document.body.classList.add('no-scroll');
+
+      document.addEventListener('click', this.closeContextMenu);
+    },
+    closeContextMenu() {
+      this.showMenu = false;
+      this.toggleOverlay(false);
+      document.body.classList.remove('no-scroll');
+      document.removeEventListener('click', this.closeContextMenu);
+    },
+},
+  beforeDestroy() {
+    document.removeEventListener('click', this.closeContextMenu);
+  },
 }
 </script>
+
+
 
 <style scoped>
 .movie-card {
@@ -90,18 +143,26 @@ export default {
     user-select: none;
     width: 340px;
     height: fit-content;
+
+    &:hover{
+        img{
+            scale: 1.02;
+        }
+    }
 }
 
 .movie-card-img {
     position: relative;
     width: 340px;
     height: 460px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .movie-card-img img {
-    border-radius: 10px;
     width: 100%;
     height: 100%;
+    transition: 0.3s;
 }
 
 .movie-card-title {
@@ -133,6 +194,7 @@ export default {
     color: white;
     top: 15px;
     right: 15px;
+    z-index: 9;
 
     font-size: 17px;
     font-weight: 600;
@@ -150,6 +212,7 @@ export default {
     top: 15px;
     left: 15px;
     background-color: #3657cb;
+    z-index: 9;
 
     font-size: 15px;
     font-weight: 700;
@@ -157,5 +220,34 @@ export default {
     text-align: center;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
+}
+
+.movie-card-menu{
+    position: absolute;
+    background: rgb(21, 26, 38);
+    padding: 20px 15px;
+    z-index: 9999999999999999999;
+    cursor: auto;
+    border-radius: 10px;
+
+    button{
+        width: 230px;
+        height: 35px;
+        background-color: red;
+        border-radius: 50px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        user-select: none;
+
+        &:not(:first-child){
+            margin-top: 10px;
+        }
+    }
+
+    span{
+        color: white;
+        font-weight: 600;
+    }
 }
 </style>

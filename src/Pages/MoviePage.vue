@@ -361,9 +361,9 @@
             <div class="bg-movie_cadr" :style="{ backgroundImage: data ? `url(${data?.backdrop?.url})` : 'none' }">
                 <div class="bg-movie_cadr-temnee"></div>
             </div>
-
-            <UpArrow />
         </div>
+        
+        <UpArrow />
     </main>
 </template>
 
@@ -374,7 +374,7 @@ import Cast from '@/Components/Cast.vue';
 import KiniboxWidget from '@/Components/KiniboxWidget.vue';
 import AwardCard from '@/Components/AwardCard.vue';
 import Slider2 from '@/Components/Slider2.vue';
-import UpArrow from '@/Components/UpArrow.vue';
+import UpArrow from '@/Components/UpArrow.vue'
 import { fetchData } from '@/Services/apiService';
 import { fetchAwards } from '@/Services/apiService';
 import { fetchPosters } from '@/Services/apiService';
@@ -382,7 +382,6 @@ import { fetchStills } from '@/Services/apiService';
 import { fetchSequels } from '@/Services/apiService';
 import { fetchSimilars } from '@/Services/apiService';
 import { searchTrailer } from '@/Services/apiService';
-
 
 export default {
     data() {
@@ -394,14 +393,7 @@ export default {
             sequels: {},
             similars: {},
             trealer: {},
-            linkToImg: "../src/assets/Media/MoviePage",
-            movieTypes: {
-              movie: "Фильм",
-              "tv-series": "Сериал",
-              cartoon: "Мультфильм",
-              "animated-series": "Мультсериал",
-              anime: "Аниме",
-            }
+            linkToImg: "../src/assets/Media/MoviePage"
         };
     },
     props: {
@@ -415,7 +407,7 @@ export default {
         if (newId !== oldId) {
           window.scrollTo(0, 0);
           this.data = {}
-          this.fetchMovieData();
+          this.fetchMovieDataData();
         }
       }
     },
@@ -427,40 +419,39 @@ export default {
         // this.fetchData('../src/assets/data/awards.json', 'awards');
         // this.fetchData('../src/assets/data/sequelsAndPrequels.json', 'sequels');
         // this.fetchData('../src/assets/data/similars.json', 'similars');
-        this.fetchMovieData();
+        this.fetchMovieDataData();
+
     },
     methods: {
         
-        async fetchMovieData(){
+        async fetchMovieDataData(){
             try {
                 this.data = await fetchData(this.id)
-                console.log(this.data.name);
-                document.title = this.data.name
-                this.trealer = await searchTrailer(`${this.movieTypes[this.data.type]} ${this.data.name} ${this.data.year}`)
+                this.trealer = await searchTrailer(`${this.data.type} ${this.data.name} ${this.data.year}`)
                 this.awards = await fetchAwards(this.id)
                 this.posters = await fetchPosters(this.id)
                 this.stills = await fetchStills(this.id)
                 this.sequels = await fetchSequels(this.id)
-                this.similars = await fetchSimilars(this.id)
+                this.similars = await fetchSimilars(this.id)                
             } catch (error) {
                 console.error(error);
             }
         },
 
 
-        async fetchData(url, to) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                this[to] = data
+        // async fetchData(url, to) {
+        //     try {
+        //         const response = await fetch(url);
+        //         if (!response.ok) {
+        //             throw new Error(`HTTP error! status: ${response.status}`);
+        //         }
+        //         const data = await response.json();
+        //         this[to] = data
 
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        },
+        //     } catch (error) {
+        //         console.error("Error fetching data:", error);
+        //     }
+        // },
 
         scrollToTrailer() {
             this.$nextTick(() => {
@@ -484,7 +475,7 @@ export default {
         KiniboxWidget,
         AwardCard,
         Slider2,
-        UpArrow,
+        UpArrow
     }
 }
 </script>

@@ -255,7 +255,6 @@ export default {
     },
     async mounted() {
         this.person = await fetchActor(this.id)
-        document.title = this.person.name
         window.scrollTo(0, 0);
         this.notNullRatingMovies = this.person?.movies?.filter(el => el.rating != null)
     },

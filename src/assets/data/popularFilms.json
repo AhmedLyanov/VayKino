@@ -1,0 +1,1471 @@
+{
+    "docs": [
+      {
+        "rating": {
+          "kp": 9.109,
+          "imdb": 9.3,
+          "filmCritics": 8.3,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 326,
+        "name": "Побег из Шоушенка",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/0b76b2a2-d1c7-4f04-a284-80ff7bb709a4/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/0b76b2a2-d1c7-4f04-a284-80ff7bb709a4/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          }
+        ],
+        "alternativeName": "The Shawshank Redemption",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 9.076,
+          "imdb": 8.6,
+          "filmCritics": 6.8,
+          "russianFilmCritics": 66.6667,
+          "await": null
+        },
+        "id": 435,
+        "name": "Зеленая миля",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/4057c4b8-8208-4a04-b169-26b0661453e3/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/4057c4b8-8208-4a04-b169-26b0661453e3/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          },
+          {
+            "name": "фэнтези"
+          },
+          {
+            "name": "криминал"
+          }
+        ],
+        "alternativeName": "The Green Mile",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.921,
+          "imdb": 8.8,
+          "filmCritics": 7.8,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 448,
+        "name": "Форрест Гамп",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/3560b757-9b95-45ec-af8c-623972370f9d/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/3560b757-9b95-45ec-af8c-623972370f9d/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "мелодрама"
+          },
+          {
+            "name": "история"
+          },
+          {
+            "name": "военный"
+          }
+        ],
+        "alternativeName": "Forrest Gump",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.849,
+          "imdb": 9,
+          "filmCritics": 9.2,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 329,
+        "name": "Список Шиндлера",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/6201401/1e1ac6d9-c658-4f5f-937e-d080bca0d893/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/6201401/1e1ac6d9-c658-4f5f-937e-d080bca0d893/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          },
+          {
+            "name": "биография"
+          },
+          {
+            "name": "история"
+          },
+          {
+            "name": "военный"
+          }
+        ],
+        "alternativeName": "Schindler's List",
+        "enName": null
+      },
+      {
+        "id": 535341,
+        "name": "1+1",
+        "alternativeName": "Intouchables",
+        "enName": null,
+        "rating": {
+          "kp": 8.846,
+          "imdb": 8.5,
+          "filmCritics": 6.8,
+          "russianFilmCritics": 100,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/10900341/caf9f155-1a19-42f1-a0f3-9c8773e9083e/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/10900341/caf9f155-1a19-42f1-a0f3-9c8773e9083e/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          },
+          {
+            "name": "комедия"
+          }
+        ]
+      },
+      {
+        "rating": {
+          "kp": 8.775,
+          "imdb": 8.5,
+          "filmCritics": 8.5,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 2360,
+        "name": "Король Лев",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1704946/60aa1abc-b754-4817-ad9c-0bcda427a12b/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1704946/60aa1abc-b754-4817-ad9c-0bcda427a12b/x1000"
+        },
+        "genres": [
+          {
+            "name": "мультфильм"
+          },
+          {
+            "name": "мюзикл"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "приключения"
+          },
+          {
+            "name": "семейный"
+          }
+        ],
+        "alternativeName": "The Lion King",
+        "enName": null
+      },
+      {
+        "id": 42782,
+        "name": "Операция «Ы» и другие приключения Шурика",
+        "alternativeName": null,
+        "enName": null,
+        "rating": {
+          "kp": 8.73,
+          "imdb": 8.4,
+          "filmCritics": 0,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4774061/ccd69a69-7405-4b41-89a8-60dd6dc2a3ee/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4774061/ccd69a69-7405-4b41-89a8-60dd6dc2a3ee/x1000"
+        },
+        "genres": [
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "мелодрама"
+          },
+          {
+            "name": "криминал"
+          }
+        ]
+      },
+      {
+        "rating": {
+          "kp": 8.723,
+          "imdb": 8.4,
+          "filmCritics": 8.3,
+          "russianFilmCritics": 94.1176,
+          "await": null
+        },
+        "id": 679486,
+        "name": "Тайна Коко",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1946459/6e11a16e-c9e7-491f-9162-01098a7d8dd9/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1946459/6e11a16e-c9e7-491f-9162-01098a7d8dd9/x1000"
+        },
+        "genres": [
+          {
+            "name": "мультфильм"
+          },
+          {
+            "name": "фэнтези"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "приключения"
+          },
+          {
+            "name": "семейный"
+          },
+          {
+            "name": "музыка"
+          }
+        ],
+        "alternativeName": "Coco",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.705,
+          "imdb": 9.2,
+          "filmCritics": 9.4,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 325,
+        "name": "Крестный отец",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/c11652e8-653b-47c1-8e72-1552399a775b/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/c11652e8-653b-47c1-8e72-1552399a775b/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          },
+          {
+            "name": "криминал"
+          }
+        ],
+        "alternativeName": "The Godfather",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.699,
+          "imdb": 8.3,
+          "filmCritics": 7.8,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 970882,
+        "name": "Дангал",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/9784475/c35ae964-08b7-4e64-b90c-34225ee9b247/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/9784475/c35ae964-08b7-4e64-b90c-34225ee9b247/x1000"
+        },
+        "genres": [
+          {
+            "name": "биография"
+          },
+          {
+            "name": "спорт"
+          },
+          {
+            "name": "драма"
+          }
+        ],
+        "alternativeName": "Dangal",
+        "enName": null
+      },
+      {
+        "id": 6634211,
+        "name": "Поднятие уровня в одиночку. Второе пробуждение",
+        "alternativeName": "Ore dake Level Up na Ken: ReAwakening",
+        "enName": null,
+        "rating": {
+          "kp": 8.675,
+          "imdb": 8.6,
+          "filmCritics": 0,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "genres": [
+          {
+            "name": "мультфильм"
+          },
+          {
+            "name": "фэнтези"
+          },
+          {
+            "name": "боевик"
+          },
+          {
+            "name": "приключения"
+          },
+          {
+            "name": "аниме"
+          }
+        ],
+        "poster": {
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4486362/ca577875-a331-4ba9-9ba1-d17060612bb3/x1000",
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4486362/ca577875-a331-4ba9-9ba1-d17060612bb3/orig"
+        }
+      },
+      {
+        "rating": {
+          "kp": 8.674,
+          "imdb": 9,
+          "filmCritics": 8.7,
+          "russianFilmCritics": 100,
+          "await": null
+        },
+        "id": 3498,
+        "name": "Властелин колец: Возвращение короля",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4303601/e410c71f-baa1-4fe5-bb29-aedb4662f49b/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4303601/e410c71f-baa1-4fe5-bb29-aedb4662f49b/x1000"
+        },
+        "genres": [
+          {
+            "name": "фэнтези"
+          },
+          {
+            "name": "приключения"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "боевик"
+          }
+        ],
+        "alternativeName": "The Lord of the Rings: The Return of the King",
+        "enName": null
+      },
+      {
+        "id": 389,
+        "name": "Леон",
+        "alternativeName": "Léon",
+        "enName": null,
+        "rating": {
+          "kp": 8.673,
+          "imdb": 8.5,
+          "filmCritics": 6.9,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/6201401/8662d92a-5881-4600-a7ae-549e6fd53b03/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/6201401/8662d92a-5881-4600-a7ae-549e6fd53b03/x1000"
+        },
+        "genres": [
+          {
+            "name": "боевик"
+          },
+          {
+            "name": "триллер"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "криминал"
+          }
+        ]
+      },
+      {
+        "id": 361,
+        "name": "Бойцовский клуб",
+        "alternativeName": "Fight Club",
+        "enName": null,
+        "rating": {
+          "kp": 8.673,
+          "imdb": 8.8,
+          "filmCritics": 7.4,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4716873/85b585ea-410f-4d1c-aaa5-8d242756c2a4/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4716873/85b585ea-410f-4d1c-aaa5-8d242756c2a4/x1000"
+        },
+        "genres": [
+          {
+            "name": "триллер"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "криминал"
+          }
+        ]
+      },
+      {
+        "rating": {
+          "kp": 8.667,
+          "imdb": 8.8,
+          "filmCritics": 8.2,
+          "russianFilmCritics": 80.9524,
+          "await": null
+        },
+        "id": 447301,
+        "name": "Начало",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1629390/8ab9a119-dd74-44f0-baec-0629797483d7/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1629390/8ab9a119-dd74-44f0-baec-0629797483d7/x1000"
+        },
+        "genres": [
+          {
+            "name": "фантастика"
+          },
+          {
+            "name": "боевик"
+          },
+          {
+            "name": "триллер"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "детектив"
+          }
+        ],
+        "alternativeName": "Inception",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.664,
+          "imdb": 8.2,
+          "filmCritics": 7.7,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 957887,
+        "name": "Клаус",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1773646/279f9f19-6a29-4fae-935e-54ddf80c653b/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1773646/279f9f19-6a29-4fae-935e-54ddf80c653b/x1000"
+        },
+        "genres": [
+          {
+            "name": "мультфильм"
+          },
+          {
+            "name": "семейный"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "приключения"
+          }
+        ],
+        "alternativeName": "Klaus",
+        "enName": null
+      },
+      {
+        "id": 6402838,
+        "name": "Атака Титанов: Последняя атака",
+        "alternativeName": "Shingeki no Kyojin Movie: Kanketsu-hen - The Last Attack",
+        "enName": null,
+        "rating": {
+          "kp": 8.662,
+          "imdb": 9.3,
+          "filmCritics": 0,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/9784475/1658bd9d-06d0-429c-b8bd-421a82f111c8/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/9784475/1658bd9d-06d0-429c-b8bd-421a82f111c8/x1000"
+        },
+        "genres": [
+          {
+            "name": "аниме"
+          },
+          {
+            "name": "мультфильм"
+          },
+          {
+            "name": "фантастика"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "боевик"
+          },
+          {
+            "name": "фэнтези"
+          }
+        ]
+      },
+      {
+        "rating": {
+          "kp": 8.653,
+          "imdb": 8.7,
+          "filmCritics": 7.1,
+          "russianFilmCritics": 80.6452,
+          "await": null
+        },
+        "id": 258687,
+        "name": "Интерстеллар",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1600647/430042eb-ee69-4818-aed0-a312400a26bf/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1600647/430042eb-ee69-4818-aed0-a312400a26bf/x1000"
+        },
+        "genres": [
+          {
+            "name": "фантастика"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "приключения"
+          }
+        ],
+        "alternativeName": "Interstellar",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.653,
+          "imdb": 8.9,
+          "filmCritics": 9.3,
+          "russianFilmCritics": 100,
+          "await": null
+        },
+        "id": 342,
+        "name": "Криминальное чтиво",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1900788/87b5659d-a159-4224-9bff-d5a5d109a53b/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1900788/87b5659d-a159-4224-9bff-d5a5d109a53b/x1000"
+        },
+        "genres": [
+          {
+            "name": "криминал"
+          },
+          {
+            "name": "драма"
+          }
+        ],
+        "alternativeName": "Pulp Fiction",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.647,
+          "imdb": 8.5,
+          "filmCritics": 8.9,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 476,
+        "name": "Назад в будущее",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/73cf2ed0-fd52-47a2-9e26-74104360786a/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/73cf2ed0-fd52-47a2-9e26-74104360786a/x1000"
+        },
+        "genres": [
+          {
+            "name": "фантастика"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "приключения"
+          }
+        ],
+        "alternativeName": "Back to the Future",
+        "enName": null
+      },
+      {
+        "id": 32898,
+        "name": "Достучаться до небес",
+        "alternativeName": "Knockin' on Heaven's Door",
+        "enName": null,
+        "rating": {
+          "kp": 8.646,
+          "imdb": 7.8,
+          "filmCritics": 0,
+          "russianFilmCritics": 100,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4483445/df6c9527-c2cb-4a17-b4bd-1ed05d2e733d/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4483445/df6c9527-c2cb-4a17-b4bd-1ed05d2e733d/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "криминал"
+          }
+        ]
+      },
+      {
+        "rating": {
+          "kp": 8.627,
+          "imdb": 8.6,
+          "filmCritics": 7.6,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 381,
+        "name": "Жизнь прекрасна",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/97353be9-362d-47bc-bbeb-c366db381c33/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/97353be9-362d-47bc-bbeb-c366db381c33/x1000"
+        },
+        "genres": [
+          {
+            "name": "военный"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "мелодрама"
+          }
+        ],
+        "alternativeName": "La vita è bella",
+        "enName": null
+      },
+      {
+        "id": 1143242,
+        "name": "Джентльмены",
+        "alternativeName": "The Gentlemen",
+        "enName": null,
+        "rating": {
+          "kp": 8.626,
+          "imdb": 7.8,
+          "filmCritics": 6.6,
+          "russianFilmCritics": 86.3636,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/637271d5-61b4-4e46-ac83-6d07494c7645/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/637271d5-61b4-4e46-ac83-6d07494c7645/x1000"
+        },
+        "genres": [
+          {
+            "name": "криминал"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "боевик"
+          }
+        ]
+      },
+      {
+        "rating": {
+          "kp": 8.62,
+          "imdb": 8.9,
+          "filmCritics": 8.2,
+          "russianFilmCritics": 71.4286,
+          "await": null
+        },
+        "id": 328,
+        "name": "Властелин колец: Братство кольца",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/6201401/a2d5bcae-a1a9-442f-8195-f5373a5ba77f/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/6201401/a2d5bcae-a1a9-442f-8195-f5373a5ba77f/x1000"
+        },
+        "genres": [
+          {
+            "name": "фэнтези"
+          },
+          {
+            "name": "приключения"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "боевик"
+          }
+        ],
+        "alternativeName": "The Lord of the Rings: The Fellowship of the Ring",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.615,
+          "imdb": 8.8,
+          "filmCritics": 8.5,
+          "russianFilmCritics": 83.3333,
+          "await": null
+        },
+        "id": 312,
+        "name": "Властелин колец: Две крепости",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/6201401/772093e4-7f68-49aa-a805-d654693aee26/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/6201401/772093e4-7f68-49aa-a805-d654693aee26/x1000"
+        },
+        "genres": [
+          {
+            "name": "фэнтези"
+          },
+          {
+            "name": "приключения"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "боевик"
+          }
+        ],
+        "alternativeName": "The Lord of the Rings: The Two Towers",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.588,
+          "imdb": 8.5,
+          "filmCritics": 7.4,
+          "russianFilmCritics": 50,
+          "await": null
+        },
+        "id": 474,
+        "name": "Гладиатор",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/7c3460dc-344d-433f-8220-f18d86c8397d/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/7c3460dc-344d-433f-8220-f18d86c8397d/x1000"
+        },
+        "genres": [
+          {
+            "name": "история"
+          },
+          {
+            "name": "боевик"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "приключения"
+          }
+        ],
+        "alternativeName": "Gladiator",
+        "enName": null
+      },
+      {
+        "id": 5459137,
+        "name": "Рай под ногами матерей",
+        "alternativeName": "Бейиш эненин таманында",
+        "enName": null,
+        "rating": {
+          "kp": 8.581,
+          "imdb": 7.6,
+          "filmCritics": 0,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1898899/52096347-7d6f-46f0-83f6-43935e05bfcb/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1898899/52096347-7d6f-46f0-83f6-43935e05bfcb/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          }
+        ]
+      },
+      {
+        "rating": {
+          "kp": 8.559,
+          "imdb": 8.1,
+          "filmCritics": 6.7,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 522,
+        "name": "Карты, деньги, два ствола",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/6492653f-11d5-4087-a1d2-ec7a74f161d3/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/6492653f-11d5-4087-a1d2-ec7a74f161d3/x1000"
+        },
+        "genres": [
+          {
+            "name": "боевик"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "криминал"
+          }
+        ],
+        "alternativeName": "Lock, Stock and Two Smoking Barrels",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.554,
+          "imdb": 8.2,
+          "filmCritics": 6.4,
+          "russianFilmCritics": 100,
+          "await": null
+        },
+        "id": 526,
+        "name": "Большой куш",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4303601/47fe48f6-ff17-4411-a12f-d337bea2639d/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4303601/47fe48f6-ff17-4411-a12f-d337bea2639d/x1000"
+        },
+        "genres": [
+          {
+            "name": "криминал"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "боевик"
+          }
+        ],
+        "alternativeName": "Snatch",
+        "enName": null
+      },
+      {
+        "id": 5457596,
+        "name": "Леди Баг и Супер-Кот из Альтернативной Вселенной: Приключения в Париже",
+        "alternativeName": "Miraculous World: Paris",
+        "enName": null,
+        "rating": {
+          "kp": 8.547,
+          "imdb": 0,
+          "filmCritics": 0,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4483445/c11adaa5-a321-4ed2-ada3-345b55adf526/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4483445/c11adaa5-a321-4ed2-ada3-345b55adf526/x1000"
+        },
+        "genres": [
+          {
+            "name": "мультфильм"
+          },
+          {
+            "name": "семейный"
+          },
+          {
+            "name": "детский"
+          },
+          {
+            "name": "фэнтези"
+          },
+          {
+            "name": "мелодрама"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "приключения"
+          }
+        ]
+      },
+      {
+        "id": 397667,
+        "name": "Остров проклятых",
+        "alternativeName": "Shutter Island",
+        "enName": null,
+        "rating": {
+          "kp": 8.544,
+          "imdb": 8.2,
+          "filmCritics": 6.7,
+          "russianFilmCritics": 85.7143,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4303601/617303b7-cfa7-4273-bd1d-63974bf68927/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4303601/617303b7-cfa7-4273-bd1d-63974bf68927/x1000"
+        },
+        "genres": [
+          {
+            "name": "триллер"
+          },
+          {
+            "name": "детектив"
+          },
+          {
+            "name": "драма"
+          }
+        ]
+      },
+      {
+        "id": 5105855,
+        "name": "Одна жизнь",
+        "alternativeName": "One Life",
+        "enName": null,
+        "rating": {
+          "kp": 8.542,
+          "imdb": 7.5,
+          "filmCritics": 7.3,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/9784475/4564801f-fe39-4493-b042-98038357d242/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/9784475/4564801f-fe39-4493-b042-98038357d242/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          },
+          {
+            "name": "биография"
+          },
+          {
+            "name": "история"
+          }
+        ]
+      },
+      {
+        "id": 530,
+        "genres": [
+          {
+            "name": "биография"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "мелодрама"
+          }
+        ],
+        "alternativeName": "A Beautiful Mind",
+        "enName": null,
+        "name": "Игры разума",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4303601/80f21137-eebb-4cdc-8124-96c68c07c2a8/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4303601/80f21137-eebb-4cdc-8124-96c68c07c2a8/x1000"
+        },
+        "rating": {
+          "kp": 8.541,
+          "imdb": 8.2,
+          "filmCritics": 7.2,
+          "russianFilmCritics": 80,
+          "await": null
+        }
+      },
+      {
+        "rating": {
+          "kp": 8.538,
+          "imdb": 8.6,
+          "filmCritics": 8.6,
+          "russianFilmCritics": 100,
+          "await": null
+        },
+        "id": 370,
+        "name": "Унесённые призраками",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/10812607/ee04f3d4-6e87-4b34-93f8-95b4f33954a5/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/10812607/ee04f3d4-6e87-4b34-93f8-95b4f33954a5/x1000"
+        },
+        "genres": [
+          {
+            "name": "аниме"
+          },
+          {
+            "name": "мультфильм"
+          },
+          {
+            "name": "фэнтези"
+          },
+          {
+            "name": "приключения"
+          },
+          {
+            "name": "семейный"
+          }
+        ],
+        "alternativeName": "Sen to Chihiro no kamikakushi",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.53,
+          "imdb": 9,
+          "filmCritics": 8.6,
+          "russianFilmCritics": 50,
+          "await": null
+        },
+        "id": 111543,
+        "name": "Темный рыцарь",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/0fa5bf50-d5ad-446f-a599-b26d070c8b99/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/0fa5bf50-d5ad-446f-a599-b26d070c8b99/x1000"
+        },
+        "genres": [
+          {
+            "name": "фантастика"
+          },
+          {
+            "name": "боевик"
+          },
+          {
+            "name": "триллер"
+          },
+          {
+            "name": "криминал"
+          },
+          {
+            "name": "драма"
+          }
+        ],
+        "alternativeName": "The Dark Knight",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.529,
+          "imdb": 8.1,
+          "filmCritics": 7.9,
+          "russianFilmCritics": 80,
+          "await": null
+        },
+        "id": 324,
+        "name": "Поймай меня, если сможешь",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1704946/e38dd6f9-610e-4c90-8540-dc48560cb9cc/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1704946/e38dd6f9-610e-4c90-8540-dc48560cb9cc/x1000"
+        },
+        "genres": [
+          {
+            "name": "криминал"
+          },
+          {
+            "name": "биография"
+          },
+          {
+            "name": "комедия"
+          }
+        ],
+        "alternativeName": "Catch Me If You Can",
+        "enName": null
+      },
+      {
+        "id": 346,
+        "name": "12 разгневанных мужчин",
+        "rating": {
+          "kp": 8.526,
+          "imdb": 9,
+          "filmCritics": 9.1,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/9784475/081f9649-0bbd-4232-b4d7-1312c64e567c/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/9784475/081f9649-0bbd-4232-b4d7-1312c64e567c/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          },
+          {
+            "name": "детектив"
+          },
+          {
+            "name": "криминал"
+          }
+        ],
+        "alternativeName": "12 Angry Men",
+        "enName": null
+      },
+      {
+        "id": 1108577,
+        "name": "Зеленая книга",
+        "alternativeName": "Green Book",
+        "enName": null,
+        "rating": {
+          "kp": 8.517,
+          "imdb": 8.2,
+          "filmCritics": 7.2,
+          "russianFilmCritics": 93.3333,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/4b27e219-a8a5-4d85-9874-57d6016e0837/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/4b27e219-a8a5-4d85-9874-57d6016e0837/x1000"
+        },
+        "genres": [
+          {
+            "name": "биография"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "драма"
+          }
+        ]
+      },
+      {
+        "id": 195334,
+        "name": "Престиж",
+        "rating": {
+          "kp": 8.516,
+          "imdb": 8.5,
+          "filmCritics": 7.1,
+          "russianFilmCritics": 33.3333,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1773646/0e1384ae-6367-4bba-9e5d-d91c6625371e/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1773646/0e1384ae-6367-4bba-9e5d-d91c6625371e/x1000"
+        },
+        "genres": [
+          {
+            "name": "триллер"
+          },
+          {
+            "name": "фантастика"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "детектив"
+          }
+        ],
+        "alternativeName": "The Prestige",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.51,
+          "imdb": 8.7,
+          "filmCritics": 9.1,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 336,
+        "name": "Пролетая над гнездом кукушки",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1704946/3521be40-0419-4864-9d62-461cc7959f2c/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1704946/3521be40-0419-4864-9d62-461cc7959f2c/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          }
+        ],
+        "alternativeName": "One Flew Over the Cuckoo's Nest",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.498,
+          "imdb": 8.7,
+          "filmCritics": 7.7,
+          "russianFilmCritics": 60,
+          "await": null
+        },
+        "id": 301,
+        "name": "Матрица",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4774061/cf1970bc-3f08-4e0e-a095-2fb57c3aa7c6/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4774061/cf1970bc-3f08-4e0e-a095-2fb57c3aa7c6/x1000"
+        },
+        "genres": [
+          {
+            "name": "фантастика"
+          },
+          {
+            "name": "боевик"
+          }
+        ],
+        "alternativeName": "The Matrix",
+        "enName": null
+      },
+      {
+        "id": 1445170,
+        "name": "Три кота и море приключений",
+        "alternativeName": null,
+        "enName": null,
+        "rating": {
+          "kp": 8.494,
+          "imdb": 5.9,
+          "filmCritics": 0,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4774061/b4f8d337-de5d-44e2-8f6b-bc81a4bdb796/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4774061/b4f8d337-de5d-44e2-8f6b-bc81a4bdb796/x1000"
+        },
+        "genres": [
+          {
+            "name": "мультфильм"
+          },
+          {
+            "name": "детский"
+          },
+          {
+            "name": "комедия"
+          },
+          {
+            "name": "семейный"
+          }
+        ]
+      },
+      {
+        "id": 44168,
+        "name": "Девчата",
+        "alternativeName": null,
+        "enName": null,
+        "rating": {
+          "kp": 8.482,
+          "imdb": 7.8,
+          "filmCritics": 0,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4303601/d5ee73ae-82af-4f60-af5e-f080bed523d8/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4303601/d5ee73ae-82af-4f60-af5e-f080bed523d8/x1000"
+        },
+        "genres": [
+          {
+            "name": "мелодрама"
+          },
+          {
+            "name": "комедия"
+          }
+        ]
+      },
+      {
+        "id": 1228407,
+        "name": "Крик тишины",
+        "alternativeName": null,
+        "enName": null,
+        "rating": {
+          "kp": 8.476,
+          "imdb": 6.6,
+          "filmCritics": 0,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4774061/a3c9705f-e6cc-40d6-821f-ced1b04308f2/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4774061/a3c9705f-e6cc-40d6-821f-ced1b04308f2/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          },
+          {
+            "name": "история"
+          },
+          {
+            "name": "военный"
+          }
+        ]
+      },
+      {
+        "id": 355,
+        "name": "Пианист",
+        "rating": {
+          "kp": 8.472,
+          "imdb": 8.5,
+          "filmCritics": 8.2,
+          "russianFilmCritics": 42.8571,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1946459/6d71694e-3796-4e1c-96aa-0e982c2bc03d/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1946459/6d71694e-3796-4e1c-96aa-0e982c2bc03d/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          },
+          {
+            "name": "военный"
+          },
+          {
+            "name": "биография"
+          },
+          {
+            "name": "музыка"
+          }
+        ],
+        "alternativeName": "The Pianist",
+        "enName": null
+      },
+      {
+        "id": 1004203,
+        "name": "Мой дикий друг",
+        "alternativeName": null,
+        "enName": null,
+        "rating": {
+          "kp": 8.464,
+          "imdb": 6.7,
+          "filmCritics": 0,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/9784475/63171b48-4d57-4c7c-82e3-c338040554fb/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/9784475/63171b48-4d57-4c7c-82e3-c338040554fb/x1000"
+        },
+        "genres": [
+          {
+            "name": "семейный"
+          },
+          {
+            "name": "детский"
+          },
+          {
+            "name": "приключения"
+          }
+        ]
+      },
+      {
+        "rating": {
+          "kp": 8.456,
+          "imdb": 8.5,
+          "filmCritics": 8.3,
+          "russianFilmCritics": 60,
+          "await": null
+        },
+        "id": 81314,
+        "name": "Отступники",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1898899/f2c70176-43c8-4ca6-8f67-7119a2b73f19/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1898899/f2c70176-43c8-4ca6-8f67-7119a2b73f19/x1000"
+        },
+        "genres": [
+          {
+            "name": "триллер"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "криминал"
+          }
+        ],
+        "alternativeName": "The Departed",
+        "enName": null
+      },
+      {
+        "rating": {
+          "kp": 8.445,
+          "imdb": 8,
+          "filmCritics": 7,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "id": 4871,
+        "name": "Запах женщины",
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/1599028/378890fe-a68d-45ba-a87e-9108ae0e4574/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/1599028/378890fe-a68d-45ba-a87e-9108ae0e4574/x1000"
+        },
+        "genres": [
+          {
+            "name": "драма"
+          }
+        ],
+        "alternativeName": "Scent of a Woman",
+        "enName": null
+      },
+      {
+        "id": 46708,
+        "name": "Москва слезам не верит",
+        "alternativeName": null,
+        "enName": null,
+        "rating": {
+          "kp": 8.436,
+          "imdb": 8,
+          "filmCritics": 4.8,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4774061/f94e36eb-2a77-422b-94f2-c599c418497c/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4774061/f94e36eb-2a77-422b-94f2-c599c418497c/x1000"
+        },
+        "genres": [
+          {
+            "name": "мелодрама"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "комедия"
+          }
+        ]
+      },
+      {
+        "id": 456,
+        "name": "Унесённые ветром",
+        "rating": {
+          "kp": 8.43,
+          "imdb": 8.2,
+          "filmCritics": 8.8,
+          "russianFilmCritics": 0,
+          "await": null
+        },
+        "poster": {
+          "url": "https://image.openmoviedb.com/kinopoisk-images/4774061/0e8db812-35c1-4650-8c76-654f6eed9535/orig",
+          "previewUrl": "https://image.openmoviedb.com/kinopoisk-images/4774061/0e8db812-35c1-4650-8c76-654f6eed9535/x1000"
+        },
+        "genres": [
+          {
+            "name": "мелодрама"
+          },
+          {
+            "name": "история"
+          },
+          {
+            "name": "драма"
+          },
+          {
+            "name": "военный"
+          }
+        ],
+        "alternativeName": "Gone with the Wind",
+        "enName": null
+      }
+    ],
+    "total": 1000,
+    "limit": 50,
+    "page": 1,
+    "pages": 20
+  }

@@ -1,8 +1,6 @@
 <template>
     <main>
         <div class="main-content">
-            <UpArrow />
-
             <div class="bg-joker">
                 <div class="bg-joker-temnee"></div>
             </div>
@@ -18,21 +16,22 @@
                     <div class="now-playing__genres">
                         <div v-for="genre in genres" :key="genre" :class="{ active: activeGenre === genre }"
                             @click="setActiveGenre(genre)">
-                            {{ genre }}
+                            {{ genre.slice(0, genre.length - 1) }}
                         </div>
                     </div>
                 </div>
 
                 <div class="now-playing__content">
                     <div class="now-playing__films">
-                        <Card v-if="nowPlayingMovies.length" v-for="(film, index) in nowPlayingMovies" :data="film"
+                        <Card v-if="nowPlayingMovies.length" v-for="(film, index) in nowPlayingMovies.slice(0, 8)" :data="film"
+                        :contextMenu="false"
                             :key="index" />
-                        <Card v-else v-for="key in 8" :key="key" />
+                        <Card v-else v-for="key in 8" :key="key" :data="false" />
                     </div>
                 </div>
 
                 <div class="now-playing__footer">
-                    <div class="now-playing__all-movies-button">Все новинки</div>
+                    <div class="now-playing__all-movies-button" @click="this.$router.replace('/movies')">Все новинки</div>
                 </div>
             </div>
 
@@ -118,7 +117,7 @@
 
                 <div class="popular-movies__content">
                     <Slider2 v-if="popularMovies.length != 0" :data="popularMovies" />
-                    <Slider2 v-else :data="false" />
+                    <Slider2 v-else :data="[]" />
                 </div>
             </div>
 
@@ -171,7 +170,7 @@
             </div>
         </div>
 
-        <div style="width: 100%; background-color: #151A26; display: flex; justify-content: center;">
+        <!-- <div style="width: 100%; background-color: #151A26; display: flex; justify-content: center;">
             <div style="width: 80%;">
                 <div class="upcoming-movies">
                     <BlockHeader :title="'Ожидаемые новинки'" :text="'Все новинки'" :link="'/'" />
@@ -181,7 +180,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
+
+        
+        <UpArrow />
     </main>
 </template>
 
@@ -195,6 +197,7 @@ import { getLatestVideosFromChannel } from "@/Services/apiService";
 import { fetchFilmsByGenre } from "@/Services/apiService";
 import UpArrow from '@/Components/UpArrow.vue';
 import posts from "../assets/data/posts.json";
+import { mapGetters } from "vuex";
 
 export default {
     data() {
@@ -206,7 +209,6 @@ export default {
             posts: posts.items.slice(0, 4),
             activePost: 0,
             data: data,
-            blackList: ["Гарри Поттер и Тайная Комната", "Совсем ошалели", "Гарри Поттер и Узник Азкабана", "Гарри Поттер и Кубок Огня", "Гарри Поттер и Принц-полукровка", "Гарри Поттер и Орден Феникса", "Анора", "Дети леса", "Постучись в мою Тверь", "Ущелье", "После. Глава 3", "Моя вина", "Из моего окна", "Пурпурные сердца", "Король Стейтен-Айленда", "После. Глава 2", "365 дней", "Борат 2", "Непослушная", "Не волнуйся, солнышко", "Субстанция", "Плохая девочка", "Оставь это ветру", "Как бы беременна", "Парни с тату. Прямо в сердце", "Моя вина: Лондон", "Ущелье", "Влюблённые глаза", "Бриджит Джонс. Без ума от мальчишки"],
             nowPlayingMovies: [],
             trailers: [],
             currentTrailer: 0,
@@ -249,6 +251,9 @@ export default {
         Slider2,
         UpArrow
     },
+    computed: {
+        ...mapGetters(['blackList']),
+    },
     methods: {
         async setActiveYear(year) {
             this.activeYear = year;
@@ -276,15 +281,18 @@ export default {
             window.open(url,'_blank');
         }
     },
+    watch: {
+        blackList(){
+            this.nowPlayingMovies = this.nowPlayingMovies.filter(obj => !this.blackList.includes(obj.name))
+        }
+    },
     async mounted() {
-        document.title = "VayKino"
         window.scrollTo(0, 0);
         try {
-            let nowPlayingMovies2025 = await fetchFreeAPI('&year=2025&limit=10&type=film');
-            nowPlayingMovies2025 = nowPlayingMovies2025.filter(obj => !this.blackList.includes(obj.name)).slice(0, 2);
-            let nowPlayingMovies2024 = await fetchFreeAPI('&year=2024&limit=4&type=film');
-            nowPlayingMovies2024 = nowPlayingMovies2024.filter(obj => !this.blackList.includes(obj.name)).slice(0, 6);
-            this.nowPlayingMovies = nowPlayingMovies2025.concat(nowPlayingMovies2024);
+            let nowPlayingMovies2025 = await fetchFreeAPI('&year=2025&limit=15&type=film');
+            let nowPlayingMovies2024 = await fetchFreeAPI('&year=2024&limit=20&type=film');
+            this.nowPlayingMovies = nowPlayingMovies2025.filter(obj => !this.blackList.includes(obj.name)).slice(0, 2).concat(nowPlayingMovies2024);
+            this.nowPlayingMovies = this.nowPlayingMovies.filter(obj => !this.blackList.includes(obj.name))
 
             this.trailers = await getLatestVideosFromChannel();
 
@@ -327,7 +335,7 @@ export default {
 }
 
 .now-playing {
-    margin-top: 40px;
+    margin-top: 60px;
     width: 100%;
 }
 
