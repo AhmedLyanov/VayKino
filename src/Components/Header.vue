@@ -321,6 +321,7 @@ header {
 
     &.active{
       color: #3657cb;
+      text-shadow: 0 0 15px rgba(54, 87, 203, .7);
     }
 
     &:not(:first-child) {

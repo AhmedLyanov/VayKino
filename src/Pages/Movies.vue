@@ -29,11 +29,10 @@ export default {
             moviesPage: 1,
             allMovies: [],
             clearMovies: [],
-            // blackList: [],
         }
     },
     computed: {
-        ...mapGetters(['blackList']), // Подключаем getter blackList
+        ...mapGetters(['blackList']),
     },
     components: {
         BlockHeader,
@@ -52,6 +51,7 @@ export default {
     },
     async mounted() {
         window.scrollTo(0, 0);
+        document.title = 'Фильмы'
         this.allMovies = await fetchFreeAPI2(`&type=film&limit=40&page=${this.moviesPage}`)
         this.clearMovies = this.allMovies.filter(obj => !this.blackList.includes(obj.name))
     }

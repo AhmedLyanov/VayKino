@@ -1,7 +1,7 @@
 <template>
-    <div class="slider-container" v-if="data.length">
-        <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * 1522.39}px)` }">
-            <div class="slide" v-for="(slide, index) in slides" :key="index">
+    <div class="slider-container" ref="container" v-if="data.length">
+        <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * sWidth}px)` }">
+            <div class="slide" :style="{ minWidth:`${sWidth}px `}" v-for="(slide, index) in slides" :key="index">
                 <Card v-for="(cardData, cardIndex) in slide" :key="cardIndex" :data="cardData" :contextMenu="false" />
             </div>
         </div>
@@ -25,10 +25,12 @@
                 </svg>
             </button>
         </div>
+
+        <h1 style="margin-left: auto; margin-right: auto;">Width: {{ sWidth }}</h1>
     </div>
 
     <div class="slider-container" v-else>
-        <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * 1522.39}px)` }">
+        <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * sWidth}px)` }">
             <div class="slide">
                 <Card v-for="index in 4" :key="index" :data="false" />
             </div>
@@ -75,6 +77,7 @@ export default {
             currentSlide: 0,
             sliderWidthPercentage: 0.8,
             cardWidth: 340,
+            sWidth: null
         };
     },
     computed: {
@@ -92,10 +95,17 @@ export default {
             return Math.min(1920 * this.sliderWidthPercentage, this.cardsPerPage * this.cardWidth);
         },
     },
+    created() {
+    window.addEventListener("resize", this.screenWidth);
+  },
     mounted() {
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
+        this.screenWidth()
     },
+    destroyed() {
+    window.removeEventListener("resize", this.screenWidth);
+  },
     beforeUnmount() {
         window.removeEventListener('resize', this.handleResize);
     },
@@ -113,6 +123,9 @@ export default {
         handleResize() {
             this.$forceUpdate();
         },
+        screenWidth() {
+      this.sWidth = this.$refs.container?.offsetWidth;
+    },
     },
     watch: {
     data(newValue, oldValue) {
@@ -141,7 +154,6 @@ export default {
     justify-content: space-between;
     display: grid;
     grid-template-columns: repeat(4, 340px);
-    min-width: 1522.40px;
 }
 
 .slider-controls {

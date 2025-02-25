@@ -4,7 +4,7 @@
             <div class="list">
                 <BlockHeader :title="categoryTitle" :text="false" :link="false" />
 
-                <div class="list-cont" v-if="movies.length">
+                <div class="list-cont">
                     <Card v-if="movies.length" v-for="(film, index) in movies" :data="film" :contextMenu="false" :key="index" />
                     <Card v-else v-for="key in 16" :key="key" :data="false" />
                 </div>
@@ -19,7 +19,6 @@ import { mapGetters } from 'vuex';
 import { fetchMoviesToList } from '@/Services/apiService';
 import BlockHeader from '@/Components/BlockHeader.vue';
 import Card from '@/Components/Card.vue';
-import popularMovies from '@/assets/data/popularFilms.json'
 
 export default {
     data(){
@@ -39,6 +38,7 @@ export default {
     },
     async mounted(){
         window.scrollTo(0, 0);
+        document.title = this.categoryTitle
         this.movies = await fetchMoviesToList(this.list)
     },
     computed: {

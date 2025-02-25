@@ -41,6 +41,7 @@ export default {
   },
   mounted() {
     this.groupMoviesByDate();
+    document.title = 'Афиша'
   },
   methods: {
     groupMoviesByDate() {

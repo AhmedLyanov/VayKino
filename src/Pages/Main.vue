@@ -288,6 +288,7 @@ export default {
     },
     async mounted() {
         window.scrollTo(0, 0);
+        document.title = 'VayKino'
         try {
             let nowPlayingMovies2025 = await fetchFreeAPI('&year=2025&limit=15&type=film');
             let nowPlayingMovies2024 = await fetchFreeAPI('&year=2024&limit=20&type=film');

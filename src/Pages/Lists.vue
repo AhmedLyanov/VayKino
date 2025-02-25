@@ -54,6 +54,7 @@ export default {
       },
       mounted(){
         this.listsCards = this.lists;
+        document.title = 'Подборки'
       }
 }
 </script>

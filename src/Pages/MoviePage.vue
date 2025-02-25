@@ -435,6 +435,7 @@ export default {
         async fetchMovieDataData(){
             try {
                 this.data = await fetchData(this.id)
+                document.title = this.data.name || this.data.alternativeName
                 this.trealer = await searchTrailer(`${this.data.type} ${this.data.name} ${this.data.year}`)
                 this.awards = await fetchAwards(this.id)
                 this.posters = await fetchPosters(this.id)
