@@ -24,12 +24,15 @@
                 </div>
             </div>
         </div>
+
+        <UpArrow />
     </main>
 </template>
 
 <script>
 import posts from "../assets/data/posts.json";
 import BlockHeader from "@/Components/BlockHeader.vue";
+import UpArrow from "@/Components/UpArrow.vue";
 
 export default {
     data() {
@@ -69,7 +72,8 @@ export default {
         document.title = 'Новости'
     },
     components: {
-        BlockHeader
+        BlockHeader,
+        UpArrow
     }
 };
 </script>

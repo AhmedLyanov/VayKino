@@ -5,7 +5,7 @@
                 <div class="movie-info__main">
                     <div class="movie-info__left">
                         <div class="movie-info__image">
-                            <img v-if="data && data.poster && data.poster.url" :src="data.poster.url" alt="" />
+                            <img v-if="!isLoading" :src="data?.poster?.url || '../src/assets/Media/Components/PosterDefault.jpg'" alt="" />
                             <div v-else class="loading" style="width: 100%; height: 100%"></div>
                         </div>
                     </div>
@@ -19,26 +19,26 @@
                             <span style="margin-left: 4px; margin-right: 4px;">
                                 <img width="7" :src="`${linkToImg}/arrow_mini.svg`" alt="arrow" />
                             </span>
-                            <span v-if="data && data.name">{{ data.name }}</span>
+                            <span v-if="!isLoading">{{ data.name ? data.name : data.alternativeName }}</span>
                             <div v-else class="loading" style="width: 200px; height: 75%; margin-left: 3px;"></div>
                         </div>
                         <div class="movie-info__details">
                             <div class="movie-info__name-ru">
-                                <span v-if="data && data.name">{{ data.name }}</span>
+                                <span v-if="!isLoading">{{ data.name ? data.name : data.alternativeName }}</span>
                                 <div v-else class="loading" style="width: 700px; height: 60px; margin-left: 3px;">
                                 </div>
                             </div>
-                            <div class="movie-info__name-en">
-                                <span v-if="data && data.alternativeName">{{ data.alternativeName }}</span>
+                            <div class="movie-info__name-en" v-if="data.name">
+                                <span v-if="!isLoading">{{ data.alternativeName }}</span>
                                 <div v-else class="loading" style="width: 300px; height: 30px; margin-left: 3px;">
                                 </div>
                             </div>
                             <div class="movie-info__ratings">
-                                <Rating :rating="data?.rating?.kp || 1" :label="'Kinopoisk'" />
-                                <Rating :rating="data?.rating?.imdb || 1" :label="'IMDb'" />
+                                <Rating :rating="data?.rating?.kp || 1" :label="'Kinopoisk'" v-if="data?.rating?.kp" />
+                                <Rating :rating="data?.rating?.imdb || 1" :label="'IMDb'" v-if="data?.rating?.imdb" />
                             </div>
-                            <div class="movie-info__description">
-                                <span v-if="data && data.description">{{ data.description }}</span>
+                            <div class="movie-info__description" v-if="data.description">
+                                <span v-if="!isLoading">{{ data.description }}</span>
                                 <div v-else class="loading" style="width: 900px; height: 100px; margin-left: 3px;">
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
 
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'designer')">
+                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'designer').length">
                         <div class="movie-table__cell--header">
                             Художники:
                         </div>
@@ -117,7 +117,7 @@
                         </div>
                     </div>
 
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'editor')">
+                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'editor').length">
                         <div class="movie-table__cell--header">
                             Монтаж:
                         </div>
@@ -146,7 +146,7 @@
                         </div>
                     </div>
 
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'director')">
+                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'director').length">
                         <div class="movie-table__cell--header">
                             Режисер:
                         </div>
@@ -167,7 +167,7 @@
                         </div>
                     </div>
 
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'writer')">
+                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'writer').length">
                         <div class="movie-table__cell--header">
                             Сценарий:
                         </div>
@@ -190,7 +190,7 @@
                         </div>
                     </div>
 
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'producer')">
+                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'producer').length">
                         <div class="movie-table__cell--header">
                             Продюсер:
                         </div>
@@ -212,7 +212,7 @@
                         </div>
                     </div>
 
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'operator')">
+                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'operator').length">
                         <div class="movie-table__cell--header">
                             Оператор:
                         </div>
@@ -231,7 +231,7 @@
                         </div>
                     </div>
 
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'composer')">
+                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'composer').length">
                         <div class="movie-table__cell--header">
                             Композитор:
                         </div>
@@ -401,7 +401,8 @@ export default {
             sequels: {},
             similars: {},
             trealer: {},
-            linkToImg: "../src/assets/Media/MoviePage"
+            linkToImg: "../src/assets/Media/MoviePage",
+            isLoading: false
         };
     },
     props: {
@@ -432,22 +433,59 @@ export default {
     },
     methods: {
         
-        async fetchMovieDataData(){
-            try {
-                this.data = await fetchData(this.id)
-                document.title = this.data.name || this.data.alternativeName
-                this.trealer = await searchTrailer(`${this.data.type} ${this.data.name} ${this.data.year}`)
-                this.awards = await fetchAwards(this.id)
-                this.posters = await fetchPosters(this.id)
-                this.stills = await fetchStills(this.id)
-                this.sequels = await fetchSequels(this.id)
-                this.similars = await fetchSimilars(this.id)                
-            } catch (error) {
-                console.error(error);
-            }
-        },
+        async fetchMovieDataData() {
+    this.isLoading = true;
+    try {
+        this.data = await fetchData(this.id);
+        document.title = this.data.name || this.data.alternativeName;
+    } catch (error) {
+        console.error("Ошибка при получении данных фильма:", error);
+    }
 
+    try {
+        this.trealer = await searchTrailer(`${this.data.type} ${this.data.name} ${this.data.year}`);
+    } catch (error) {
+        console.error("Ошибка при получении трейлера:", error);
+        this.trealer = null;
+    }
 
+    try {
+        this.awards = await fetchAwards(this.id);
+    } catch (error) {
+        console.error("Ошибка при получении наград:", error);
+        this.awards = [];
+    }
+
+    try {
+        this.posters = await fetchPosters(this.id);
+    } catch (error) {
+        console.error("Ошибка при получении постеров:", error);
+        this.posters = [];
+    }
+
+    try {
+        this.stills = await fetchStills(this.id);
+    } catch (error) {
+        console.error("Ошибка при получении кадров:", error);
+        this.stills = [];
+    }
+
+    try {
+        this.sequels = await fetchSequels(this.id);
+    } catch (error) {
+        console.error("Ошибка при получении сиквелов/приквелов:", error);
+        this.sequels = [];
+    }
+
+    try {
+        this.similars = await fetchSimilars(this.id);
+    } catch (error) {
+        console.error("Ошибка при получении похожих фильмов:", error);
+        this.similars = [];
+    }
+
+    this.isLoading = false;
+},
         // async fetchData(url, to) {
         //     try {
         //         const response = await fetch(url);
@@ -512,7 +550,7 @@ export default {
 .movie-info__image img {
     width: 100%;
     height: auto;
-    border-radius: 10px;
+    border-radius: 13px;
 }
 
 .movie-info__right {

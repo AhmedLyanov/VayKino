@@ -1,6 +1,8 @@
 <template>
     <div class="person_movie-card" v-if="currentMovie?.length">
-        <div class="person_movie-poster"><img :src="currentMovie[0].poster" alt=""></div>
+        <div class="person_movie-poster">
+            <img :src="currentMovie[0].poster" :alt="name || enName">
+        </div>
 
         <div class="person_movie-info">
             <div class="person_movie-name">{{ name }} ({{ currentMovie[0].year }})</div>
@@ -107,6 +109,7 @@ export default {
 
 .person_movie-poster {
     width: 200px;
+    min-height: 295px;
 
     img {
         width: 100%;

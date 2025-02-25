@@ -6,10 +6,12 @@
 
                 <div class="list-cont">
                     <Card v-if="movies.length" v-for="(film, index) in movies" :data="film" :contextMenu="false" :key="index" />
-                    <Card v-else v-for="key in 16" :key="key" :data="false" />
+                    <Card v-else v-for="key in 16" :key="key" :data="{}" />
                 </div>
             </div>
         </div>
+
+        <UpArrow />
     </main>
 </template>
 
@@ -19,6 +21,7 @@ import { mapGetters } from 'vuex';
 import { fetchMoviesToList } from '@/Services/apiService';
 import BlockHeader from '@/Components/BlockHeader.vue';
 import Card from '@/Components/Card.vue';
+import UpArrow from '@/Components/UpArrow.vue';
 
 export default {
     data(){
@@ -28,7 +31,8 @@ export default {
     },
     components: {
         BlockHeader,
-        Card
+        Card,
+        UpArrow
     },
     setup() {
         const route = useRoute();

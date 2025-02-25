@@ -227,7 +227,6 @@ export const getLatestVideosFromChannel = async () => {
     }
 
     const data = await response.json();
-    console.log(data.data.slice(0, 10));
     return data.data.slice(0, 10)
     
   } catch (error) {
@@ -301,8 +300,6 @@ export const fetchMoviesToList = async (list) => {
         "X-API-KEY": API_200_REQUESTS_TOKEN2,
       },
     });
-    console.log(response);
-    console.log(response.docs);
     
     return response.data.docs;
   } catch (error) {

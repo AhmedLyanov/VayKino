@@ -6,13 +6,13 @@
 
                 <div class="movies-cont">
                     <Card v-if="clearMovies.length" v-for="(film, index) in clearMovies" :data="film" :key="index" />
-                    <Card v-else v-for="key in 16" :key="key" :data="false" />
+                    <Card v-else v-for="key in 16" :key="key" :data="{}" />
                 </div>
                 <div class="movies-loadmore" @click="moviesPage++">Загрузить еще</div>
             </div>
         </div>
 
-<UpArrow />
+        <UpArrow />
     </main>
 </template>
 

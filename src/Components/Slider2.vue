@@ -1,7 +1,7 @@
 <template>
     <div class="slider-container" ref="container" v-if="data.length">
         <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * sWidth}px)` }">
-            <div class="slide" :style="{ minWidth:`${sWidth}px `}" v-for="(slide, index) in slides" :key="index">
+            <div class="slide" :style="{ minWidth: `${sWidth}px`, gridTemplateColumns: `repeat(${cardsPerPage}, 340px)` }" v-for="(slide, index) in slides" :key="index">
                 <Card v-for="(cardData, cardIndex) in slide" :key="cardIndex" :data="cardData" :contextMenu="false" />
             </div>
         </div>
@@ -25,14 +25,12 @@
                 </svg>
             </button>
         </div>
-
-        <h1 style="margin-left: auto; margin-right: auto;">Width: {{ sWidth }}</h1>
     </div>
 
     <div class="slider-container" v-else>
         <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * sWidth}px)` }">
             <div class="slide">
-                <Card v-for="index in 4" :key="index" :data="false" />
+                <Card v-for="index in 4" :key="index" :data="{}" />
             </div>
         </div>
 
@@ -96,16 +94,16 @@ export default {
         },
     },
     created() {
-    window.addEventListener("resize", this.screenWidth);
-  },
+        window.addEventListener("resize", this.screenWidth);
+    },
     mounted() {
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
-        this.screenWidth()
+        this.screenWidth();
     },
     destroyed() {
-    window.removeEventListener("resize", this.screenWidth);
-  },
+        window.removeEventListener("resize", this.screenWidth);
+    },
     beforeUnmount() {
         window.removeEventListener('resize', this.handleResize);
     },
@@ -124,16 +122,17 @@ export default {
             this.$forceUpdate();
         },
         screenWidth() {
-      this.sWidth = this.$refs.container?.offsetWidth;
-    },
+            this.sWidth = this.$refs.container?.offsetWidth + 0.44;
+            this.cardsPerPage = Math.floor(this.sWidth / 340)
+        },
     },
     watch: {
-    data(newValue, oldValue) {
-      if (newValue && newValue.length > 0) {
-        this.currentSlide = 0;
-      }
-    },
-}
+        data(newValue, oldValue) {
+            if (newValue && newValue.length > 0) {
+                this.currentSlide = 0;
+            }
+        },
+    }
 };
 </script>
 
@@ -153,7 +152,7 @@ export default {
 .slide {
     justify-content: space-between;
     display: grid;
-    grid-template-columns: repeat(4, 340px);
+    /* grid-template-columns: repeat(4, 340px); */
 }
 
 .slider-controls {

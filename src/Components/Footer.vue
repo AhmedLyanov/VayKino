@@ -83,6 +83,7 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     width: 80%;
+    max-width: 1920px;
 }
 
 .email_mailing-img {

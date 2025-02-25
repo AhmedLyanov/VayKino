@@ -37,6 +37,7 @@ main{
   flex-direction: column;
   align-items: center;
   padding-bottom: 100px;
+  max-width: 1920px;
 }
 
 .loading {

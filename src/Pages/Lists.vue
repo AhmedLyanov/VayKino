@@ -20,6 +20,8 @@
                 </div>
             </div>
         </div>
+
+        <UpArrow />
     </main>
 </template>
 
@@ -27,6 +29,7 @@
 import { useRouter } from 'vue-router';
 import { mapGetters } from 'vuex';
 import BlockHeader from '@/Components/BlockHeader.vue';
+import UpArrow from '@/Components/UpArrow.vue';
 
 export default {
     data() {
@@ -35,7 +38,8 @@ export default {
         }
     },
     components: {
-        BlockHeader
+        BlockHeader,
+        UpArrow
     },
     setup() {
         const router = useRouter();

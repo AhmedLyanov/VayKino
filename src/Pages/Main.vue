@@ -26,7 +26,7 @@
                         <Card v-if="nowPlayingMovies.length" v-for="(film, index) in nowPlayingMovies.slice(0, 8)" :data="film"
                         :contextMenu="false"
                             :key="index" />
-                        <Card v-else v-for="key in 8" :key="key" :data="false" />
+                        <Card v-else v-for="key in 8" :key="key" :data="{}" />
                     </div>
                 </div>
 
@@ -122,7 +122,7 @@
             </div>
 
             <div class="last-news">
-                <BlockHeader :title="'Последние новости'" :text="'Все новости'" :link="'/'" />
+                <BlockHeader :title="'Последние новости'" :text="'Все новости'" :link="'/posts'" />
 
                 <div class="last-news__main">
                     <div class="last-news__main-left">

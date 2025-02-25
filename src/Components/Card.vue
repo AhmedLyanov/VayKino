@@ -1,5 +1,5 @@
 <template>
-    <div v-if="data" @contextmenu.prevent="contextMenu ? showContextMenu($event) : null" class="movie-card"
+    <div v-if="cardInfo.filmId || cardInfo.kinopoisk_id || cardInfo.id" @contextmenu.prevent="contextMenu ? showContextMenu($event) : null" class="movie-card"
         @click="goToMovie(cardInfo.filmId || cardInfo.kinopoisk_id || cardInfo.id)">
         <div class="movie-card-content">
             <div class="movie-card-img">
@@ -14,9 +14,9 @@
                     {{ cardInfo?.relationType === "PREQUEL" ? "Приквел" : cardInfo?.relationType === "SEQUEL" ? "Сиквел"
                         : cardInfo?.relationType === "REMAKE" ? "Ремэйк" : "Похожий" }}
                 </div>
-                <img :src="cardInfo?.poster?.url || cardInfo.posterUrl || cardInfo.poster" :alt="data?.name" />
+                <img :src="cardInfo?.poster?.url || cardInfo.posterUrl || cardInfo.poster || '../src/assets/Media/Components/PosterDefault.jpg'" :alt="data?.name || cardInfo.nameRu || cardInfo.alternativeName" />
             </div>
-            <div class="movie-card-title">{{ cardInfo.name || cardInfo.nameRu }}</div>
+            <div class="movie-card-title">{{ cardInfo.name || cardInfo.nameRu || cardInfo.alternativeName }}</div>
             <div v-if="cardInfo.genres" class="movie-card-genres">
                 <span v-for="(genre, index) in cardInfo.genres" :key="index">{{ genre.name }}<span
                         v-if="index < cardInfo.genres.length - 1">, </span></span>

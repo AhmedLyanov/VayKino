@@ -21,12 +21,11 @@
       <div class="header-center">
         <nav>
           <router-link to="/premiere" active-class="active">Афиша</router-link>
-          <router-link>Медиа</router-link>
+          <router-link to="">Медиа</router-link>
           <router-link to="/movies" active-class="active">Фильмы</router-link>
-          <router-link>Актеры</router-link>
           <router-link to="/posts" active-class="active">Новости</router-link>
           <router-link to="/lists" active-class="active">Подборки</router-link>
-          <router-link>Категории</router-link>
+          <router-link to="">Категории</router-link>
         </nav>
       </div>
 

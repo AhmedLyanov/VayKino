@@ -1,33 +1,34 @@
 <template>
-    <div class="cont" :style="{ opacity: isAtTop ? '0' : '1', pointerEvents: isAtTop ? 'none' : 'auto' }" @click="goToUp">
-    <img src="../assets/Media/Components/UpArrow.svg" alt="">
-  </div>
+  <div class="cont" :style="{ opacity: isPastThreshold ? '1' : '0', pointerEvents: isPastThreshold ? 'auto' : 'none' }" @click="goToUp">
+  <img src="../assets/Media/Components/UpArrow.svg" alt="">
+</div>
 </template>
 
 <script>
 export default{
-    data() {
-      return {
-        isAtTop: true
-      };
-    },
-    methods: {
-        goToUp(){
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth'
-            });
-        },
-        handleScroll() {
-              this.isAtTop = window.scrollY === 0; 
-        }
-    },
-    mounted() {
-      window.addEventListener('scroll', this.handleScroll);
-    },
-    beforeUnmount() {
-      window.removeEventListener('scroll', this.handleScroll);
-    },
+  data() {
+    return {
+      isPastThreshold: false,
+      scrollThreshold: 200
+    };
+  },
+  methods: {
+      goToUp(){
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+      },
+      handleScroll() {
+            this.isPastThreshold = window.scrollY > this.scrollThreshold;
+      }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
 }
 </script>
 
@@ -45,7 +46,7 @@ export default{
     border-radius: 10px;
     user-select: none;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.5s ease;
 
     img{
         pointer-events: none;

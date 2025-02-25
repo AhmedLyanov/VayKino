@@ -5,15 +5,22 @@
                 <div>
                     <div>
                         <div class="person-img">
-                            <img :src="person.photo" :alt="person.name || person.enName">
+                            <img v-if="!isLoading" :src="person.photo" :alt="person.name || person.enName">
+                            <div v-else class="loading" style="width: 100%; height: 100%"></div>
                         </div>
                     </div>
 
                     <div class="person-right">
-                        <div class="person-name">{{ person.name }}</div>
-                        <div class="person-enName">{{ person.enName }}</div>
+                        <div class="person-name">
+                            <span v-if="!isLoading">{{ person.name }}</span>
+                            <div v-else class="loading" style="width: 600px; height: 83px;"></div>
+                            </div>
+                        <div class="person-enName">
+                            <span v-if="!isLoading">{{ person.enName }}</span>
+                            <div v-else class="loading" style="width: 350px; height: 30px;"></div>
+                        </div>
 
-                        <div class="person-table">
+                        <div class="person-table" v-if="!isLoading">
                             <div class="person-table__row" v-if="person.birthday">
                                 <div class="person-table__cell--header">
                                     Дата рождения:
@@ -105,6 +112,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div v-else class="loading" style="width: 600px; height: 213px; margin-top: 30px;"></div>
                     </div>
                 </div>
             </div>
@@ -147,11 +155,14 @@
                 </div>
             </div>
         </div>
+
+        <UpArrow />
     </main>
 </template>
 
 <script>
 import PersonMovieCard from "@/Components/PersonMovieCard.vue";
+import UpArrow from "@/Components/UpArrow.vue";
 import { fetchActor } from "@/Services/apiService";
 
 export default {
@@ -160,6 +171,7 @@ export default {
             person: {},
             notNullRatingMovies: [],
             displayedCount: 10,
+            isLoading: false
         }
     },
     props: {
@@ -254,12 +266,16 @@ export default {
         },
     },
     async mounted() {
-        this.person = await fetchActor(this.id)
+        this.isLoading = true;
+        this.person = await fetchActor(this.id);
+        document.title = this.person.name || this.person.enName
         window.scrollTo(0, 0);
+        this.isLoading = false;
         this.notNullRatingMovies = this.person?.movies?.filter(el => el.rating != null)
     },
     components: {
-        PersonMovieCard
+        PersonMovieCard,
+        UpArrow
     }
 }
 </script>
@@ -295,6 +311,7 @@ main {
     display: flex;
     justify-content: center;
     overflow: hidden;
+    border-radius: 10px;
 
     img {
         width: 100%;
