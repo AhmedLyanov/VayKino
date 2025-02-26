@@ -6,10 +6,8 @@
           <div class="header-logo-img">
             <img :src="`${linkToImg}/logo.svg`" alt="" />
           </div>
-
           <div class="header-logo-title">Vay<mark>Kino</mark></div>
         </div>
-
         <div class="header-social_networks">
           <div><img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="" /></div>
           <div><img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="" /></div>
@@ -39,8 +37,11 @@
             <span class="balance">Баланс: </span>
             <span class="balance_number">{{ userBalance }}</span>
           </div>
-          <div class="avatar-container" @click="toggleDropdown">
-            <img :src="userAvatar" alt="Аватар" class="avatar" />
+          <div v-if="!isPremium" class="premium-button" @click="showPremiumModal">
+            <img :src="`${linkToImg}/GoldCrown.svg`" alt="Premium" />
+          </div>
+          <div class="avatar-container" @click="toggleDropdown" :class="{ 'premium-glow': isPremium }">
+            <img :src="userAvatar || defaultAvatar" alt="Аватар" class="avatar" />
           </div>
           <div v-if="showDropdown" class="dropdown">
             <button @click="goToProfile">Профиль</button>
@@ -51,19 +52,23 @@
     </div>
 
     <SearchModal ref="modal"></SearchModal>
+    <PremiumModal v-if="showPremiumModalFlag" @close="closePremiumModal" @buy-premium="buyPremium" />
   </header>
 </template>
 
 <script>
 import SearchModal from './SearchModal.vue';
+import PremiumModal from './PremiumModal.vue';
 import { ref, onMounted, onUpdated } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
-
 import axios from 'axios';
+import defaultAvatar from '@/assets/Media/profile/default.png'; 
+
 export default {
   components: {
-    SearchModal
+    SearchModal,
+    PremiumModal
   },
   setup() {
     const router = useRouter();
@@ -71,6 +76,8 @@ export default {
     const userBalance = ref(0);
     const userAvatar = ref('');
     const showDropdown = ref(false);
+    const showPremiumModalFlag = ref(false);
+    const isPremium = ref(false);
     const route = useRoute();
     const pathSegment = ref('');
 
@@ -83,8 +90,9 @@ export default {
           const user = JSON.parse(userString);
           if (user) {
             isLoggedIn.value = true;
+            isPremium.value = user.premium || false;
+            userAvatar.value = user.avatarUrl || defaultAvatar; 
             await updateUserBalance(user.login);
-            userAvatar.value = user.avatarUrl || 'path/to/default/avatar.png';
           }
         } catch (error) {
           console.error('Ошибка при парсинге данных пользователя:', error);
@@ -98,10 +106,38 @@ export default {
         const response = await axios.get(`http://91.197.96.204:3000/user/${login}`);
         if (response.data) {
           userBalance.value = response.data.balance;
+          isPremium.value = response.data.premium || false;
+          userAvatar.value = response.data.avatarUrl || defaultAvatar; 
           localStorage.setItem('currentUser', JSON.stringify(response.data));
         }
       } catch (error) {
         console.error('Ошибка при обновлении баланса:', error);
+      }
+    };
+
+    const showPremiumModal = () => {
+      showPremiumModalFlag.value = true;
+    };
+
+    const closePremiumModal = () => {
+      showPremiumModalFlag.value = false;
+    };
+
+    const buyPremium = async () => {
+      const userString = localStorage.getItem('currentUser');
+      if (userString) {
+        const user = JSON.parse(userString);
+        try {
+          const response = await axios.post('http://91.197.96.204:3000/buy-premium', { login: user.login });
+          if (response.data.message) {
+            alert(response.data.message);
+            await updateUserBalance(user.login);
+            closePremiumModal();
+          }
+        } catch (error) {
+          console.error('Ошибка при покупке премиум-подписки:', error);
+          alert(error.response?.data.error || 'Ошибка при покупке премиум-подписки');
+        }
       }
     };
 
@@ -145,10 +181,16 @@ export default {
       userBalance,
       userAvatar,
       showDropdown,
+      showPremiumModalFlag,
+      isPremium,
+      defaultAvatar,
       toggleDropdown,
       goToProfile,
       logout,
-      pathSegment
+      pathSegment,
+      showPremiumModal,
+      closePremiumModal,
+      buyPremium
     };
   },
   methods: {
@@ -160,6 +202,63 @@ export default {
 </script>
 
 <style scoped>
+.premium-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 10px;
+  background: #20356e;
+  padding: 10px;
+  border-radius: 10px;
+  display: grid;
+  align-items: center;
+
+  justify-items: center;
+  transition: all 0.5s;
+}
+
+.premium-button:hover{
+  background: #19255c;
+  box-shadow: 1px 1px 20px #f2f60f;
+}
+
+.premium-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.avatar-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.premium-glow {
+  animation: glow 2s infinite;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px #ffd700;
+  }
+  50% {
+    box-shadow: 0 0 20px #ffd700;
+  }
+  100% {
+    box-shadow: 0 0 5px #ffd700;
+  }
+}
+
+
 .user-info {
   display: flex;
   align-items: center;

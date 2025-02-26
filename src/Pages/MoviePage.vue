@@ -1,415 +1,410 @@
 <template>
     <main>
-        <div class="main-content">
-            <div class="movie-info">
-                <div class="movie-info__main">
-                    <div class="movie-info__left">
-                        <div class="movie-info__image">
-                            <img v-if="!isLoading" :src="data?.poster?.url || '../src/assets/Media/Components/PosterDefault.jpg'" alt="" />
-                            <div v-else class="loading" style="width: 100%; height: 100%"></div>
-                        </div>
-                    </div>
-                    <div class="movie-info__right">
-                        <div class="movie-info__path">
-                            <span>Главная</span>
-                            <span style="margin-left: 4px; margin-right: 4px;">
-                                <img width="7" :src="`${linkToImg}/arrow_mini.svg`" alt="arrow" />
-                            </span>
-                            <span>Фильмы</span>
-                            <span style="margin-left: 4px; margin-right: 4px;">
-                                <img width="7" :src="`${linkToImg}/arrow_mini.svg`" alt="arrow" />
-                            </span>
-                            <span v-if="!isLoading">{{ data.name ? data.name : data.alternativeName }}</span>
-                            <div v-else class="loading" style="width: 200px; height: 75%; margin-left: 3px;"></div>
-                        </div>
-                        <div class="movie-info__details">
-                            <div class="movie-info__name-ru">
-                                <span v-if="!isLoading">{{ data.name ? data.name : data.alternativeName }}</span>
-                                <div v-else class="loading" style="width: 700px; height: 60px; margin-left: 3px;">
-                                </div>
-                            </div>
-                            <div class="movie-info__name-en" v-if="data.name">
-                                <span v-if="!isLoading">{{ data.alternativeName }}</span>
-                                <div v-else class="loading" style="width: 300px; height: 30px; margin-left: 3px;">
-                                </div>
-                            </div>
-                            <div class="movie-info__ratings">
-                                <Rating :rating="data?.rating?.kp || 1" :label="'Kinopoisk'" v-if="data?.rating?.kp" />
-                                <Rating :rating="data?.rating?.imdb || 1" :label="'IMDb'" v-if="data?.rating?.imdb" />
-                            </div>
-                            <div class="movie-info__description" v-if="data.description">
-                                <span v-if="!isLoading">{{ data.description }}</span>
-                                <div v-else class="loading" style="width: 900px; height: 100px; margin-left: 3px;">
-                                </div>
-                            </div>
-                            <div class="movie-info__actions">
-                                <div class="movie-info__watch-trailer" @click="scrollToTrailer">
-                                    <img :src="`${linkToImg}/play.svg`" alt="" />
-                                    Смотреть трейлер
-                                </div>
-
-                                <div class="movie-info__socials">
-                                    <div class="movie-info__social">
-                                        <img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="" />
-                                    </div>
-                                    <div class="movie-info__social">
-                                        <img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="" />
-                                    </div>
-                                    <div class="movie-info__social">
-                                        <img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="" />
-                                    </div>
-                                    <div class="movie-info__social">
-                                        <img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="movie-info__interactions">
-                    <div class="movie-info__reactions">
-                        <div class="movie-info__like">
-                            <img :src="`${linkToImg}/like.svg`" alt="" />
-                        </div>
-                        <div class="movie-info__dislike">
-                            <img :src="`${linkToImg}/dislike.svg`" alt="" />
-                        </div>
-                    </div>
-
-                    <div class="movie-info__favorites">
-                        <div class="movie-info__favorite-icon">
-                            <img :src="`${linkToImg}/heart.svg`" alt="" />
-                        </div>
-                        <div class="movie-info__favorite-count">
-                            В избранном у 37933 человек
-                        </div>
-                    </div>
-                </div>
-
-                <div class="movie-table">
-                    <div class="movie-table__row" v-if="data.year">
-                        <div class="movie-table__cell--header">
-                            Год:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data.year }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'designer').length">
-                        <div class="movie-table__cell--header">
-                            Художники:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data?.persons?.filter(item => item.enProfession === 'designer').slice(0, 2).map(item =>
-                                item.name).join(', ') }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data.countries">
-                        <div class="movie-table__cell--header">
-                            Страна:
-                        </div>
-                        <div class="movie-table__cell">
-                            <span v-for="(country, index) in data.countries" :key="index">{{ country.name }}<span
-                                    v-if="index < data.countries.length - 1">, </span></span>
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'editor').length">
-                        <div class="movie-table__cell--header">
-                            Монтаж:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data?.persons?.filter(item => item.enProfession === 'editor').slice(0, 2).map(item =>
-                                item.name).join(', ') }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data.slogan">
-                        <div class="movie-table__cell--header">
-                            Слоган:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data.slogan }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data.genres">
-                        <div class="movie-table__cell--header">
-                            Жанр:
-                        </div>
-                        <div class="movie-table__cell">
-                            <span v-for="(country, index) in data.genres" :key="index">{{ country.name }}<span
-                                    v-if="index < data.genres.length - 1">, </span></span>
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'director').length">
-                        <div class="movie-table__cell--header">
-                            Режисер:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data?.persons?.filter(item => item.enProfession === 'director').slice(0, 2).map(item =>
-                                item.name).join(', ') }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data?.fees?.world">
-                        <div class="movie-table__cell--header">
-                            Сборы в мире:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data && data.fees && data.fees.world ?
-                                `${data.fees.world.currency}${data?.fees?.world?.value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
-                                    " ")}` : '' }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'writer').length">
-                        <div class="movie-table__cell--header">
-                            Сценарий:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data?.persons?.filter(item => item.enProfession === 'writer').slice(0, 2).map(item =>
-                                item.name).join(', ') }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data?.premiere?.world">
-                        <div class="movie-table__cell--header">
-                            Премьера (мир):
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data.premiere ? new Date(`${data.premiere.world}`).toLocaleDateString("ru-RU", {
-                                day:
-                                    "numeric", month: "long", year: "numeric"
-                            }) : '' }}
-
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'producer').length">
-                        <div class="movie-table__cell--header">
-                            Продюсер:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data?.persons?.filter(item => item.enProfession === 'producer').slice(0, 2).map(item =>
-                                item.name).join(', ') }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data?.premiere?.russia">
-                        <div class="movie-table__cell--header">
-                            Премьера (РФ):
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data.premiere ? new Date(`${data.premiere.russia}`).toLocaleDateString("ru-RU", {
-                                day:
-                                    "numeric", month: "long", year: "numeric"
-                            }) : '' }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'operator').length">
-                        <div class="movie-table__cell--header">
-                            Оператор:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data?.persons?.filter(item => item.enProfession === 'operator').slice(0, 2).map(item =>
-                                item.name).join(', ') }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data.ageRating">
-                        <div class="movie-table__cell--header">
-                            Возраст:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ (data.ageRating) ? data.ageRating + "+" : '' }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'composer').length">
-                        <div class="movie-table__cell--header">
-                            Композитор:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ data?.persons?.filter(item => item.enProfession === 'composer').slice(0, 2).map(item =>
-                                item.name).join(', ') }}
-                        </div>
-                    </div>
-
-                    <div class="movie-table__row" v-if="data.movieLength">
-                        <div class="movie-table__cell--header">
-                            Время:
-                        </div>
-                        <div class="movie-table__cell">
-                            {{ `${data.movieLength} мин. / 0${Math.floor(data.movieLength /
-                                60)}:${data.movieLength % 60}` }}
-                        </div>
-                    </div>
-                </div>
+      <div class="main-content">
+        <div class="movie-info">
+          <div class="movie-info__main">
+            <div class="movie-info__left">
+              <div class="movie-info__image">
+                <img v-if="data && data.poster && data.poster.url" :src="data.poster.url" alt="" />
+                <div v-else class="loading" style="width: 100%; height: 100%"></div>
+              </div>
             </div>
-
-            <Cast :data="data" />
-
-            <div class="movie-trealer" ref="treailer">
-                <BlockHeader :title="'Трейлеры фильма'" :text="'Все трейлеры'" :link="'/'" />
-
-                <div class="trealers-trealer">
-                    <iframe width="100%" height="auto"
-                        :src="`https://www.youtube.com/embed/${trealer.videoId}`" title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+            <div class="movie-info__right">
+              <div class="movie-info__path">
+                <span>Главная</span>
+                <span style="margin-left: 4px; margin-right: 4px;">
+                  <img width="7" :src="`${linkToImg}/arrow_mini.svg`" alt="arrow" />
+                </span>
+                <span>Фильмы</span>
+                <span style="margin-left: 4px; margin-right: 4px;">
+                  <img width="7" :src="`${linkToImg}/arrow_mini.svg`" alt="arrow" />
+                </span>
+                <span v-if="data && data.name">{{ data.name }}</span>
+                <div v-else class="loading" style="width: 200px; height: 75%; margin-left: 3px;"></div>
+              </div>
+              <div class="movie-info__details">
+                <div class="movie-info__name-ru">
+                  <span v-if="data && data.name">{{ data.name }}</span>
+                  <div v-else class="loading" style="width: 700px; height: 60px; margin-left: 3px;"></div>
                 </div>
-
-                <div class="trealers-info">
-                    <div class="trealers-info-cont">
-                        <div class="trealers-info-name">{{ data.name }}</div>
-
-                        <div class="trealers-info-socail_networks">
-                            <div>
-                                <img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" />
-                            </div>
-                            <div>
-                                <img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Instagram" />
-                            </div>
-                            <div>
-                                <img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="Facebook" />
-                            </div>
-                            <div>
-                                <img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="Twitter(X)" />
-                            </div>
-                        </div>
+                <div class="movie-info__name-en">
+                  <span v-if="data && data.alternativeName">{{ data.alternativeName }}</span>
+                  <div v-else class="loading" style="width: 300px; height: 30px; margin-left: 3px;"></div>
+                </div>
+                <div class="movie-info__ratings">
+                  <Rating :rating="data?.rating?.kp || 1" :label="'Kinopoisk'" />
+                  <Rating :rating="data?.rating?.imdb || 1" :label="'IMDb'" />
+                </div>
+                <div class="movie-info__description">
+                  <span v-if="data && data.description">{{ data.description }}</span>
+                  <div v-else class="loading" style="width: 900px; height: 100px; margin-left: 3px;"></div>
+                </div>
+                <div class="movie-info__actions">
+                  <div class="movie-info__watch-trailer" @click="scrollToTrailer">
+                    <img :src="`${linkToImg}/play.svg`" alt="" />
+                    Смотреть трейлер
+                  </div>
+                  <div class="movie-info__socials">
+                    <div class="movie-info__social">
+                      <img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="" />
                     </div>
-
-                    <div class="trealers-info-likes">
-                        <div class="trealers-info-like">
-                            <div class="trealers-info-like-img">
-                                <img :src="`${linkToImg}/like.svg`" alt="like" />
-                            </div>
-                            <div class="trealers-info-like-count">
-                                426
-                            </div>
-                        </div>
-                        <div class="trealers-info-dislike">
-                            <div class="trealers-info-dislike-img">
-                                <img :src="`${linkToImg}/dislike.svg`" alt="dislike" />
-                            </div>
-                            <div class="trealers-info-dislike-count">
-                                74
-                            </div>
-                        </div>
+                    <div class="movie-info__social">
+                      <img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="" />
                     </div>
-                </div>
-            </div>
-
-            <div class="movie-awards" v-if="awards?.items?.length">
-                <BlockHeader :title="'Награды'" :text="awards?.items?.length > 4 ? 'Все награды' : false" :link="'/'" />
-
-                <div class="awards-main">
-                    <AwardCard v-for="(award, index) in awards.items.slice(0, 4)" :key="index" :award="award" />
-                </div>
-            </div>
-
-            <div class="movie-posters" v-if="posters?.items?.length">
-                <BlockHeader :title="'Постеры к фильму'" :text="posters?.items?.length > 4 ? 'Все кадры' : false"
-                    :link="'/'" />
-
-                <div class="posters-main">
-                    <div v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index" class="posters-img">
-                        <img :src="poster.imageUrl" alt="poster" />
+                    <div class="movie-info__social">
+                      <img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="" />
                     </div>
-                </div>
-            </div>
-
-            <div class="movie-stills" v-if="stills && stills?.items?.length">
-                <BlockHeader :title="'Кадры из фильма'" :text="stills?.items?.length > 4 ? 'Все кадры' : false"
-                    :link="'/'" />
-
-                <div class="stills-main">
-                    <div v-for="(still, index) in stills?.items?.slice(0, 4)" :key="index" class="stills-img">
-                        <img :src="still.previewUrl" alt="" />
+                    <div class="movie-info__social">
+                      <img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="" />
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
-
-            <div class="movie-watch" v-if="id">
-                <BlockHeader :title="'Смотреть онлайн'" :text="false" :link="false" />
-                <div class="watch_movie-main" v-if="data.year < 2023">
-                    <KiniboxWidget :kinopoiskId="id" />
-                </div>
-
-                <div class="movie-buy" v-else>
-                    <div>
-                        Для просмотра этого фильма, потребуется приобрести подписку.
-
-                        <div class="movie-buy-but">Перейти к покупке</div>
-                    </div>
-                </div>
+          </div>
+  
+          <div class="movie-info__interactions">
+            <div class="movie-info__reactions">
+              <div class="movie-info__like">
+                <img :src="`${linkToImg}/like.svg`" alt="" />
+              </div>
+              <div class="movie-info__dislike">
+                <img :src="`${linkToImg}/dislike.svg`" alt="" />
+              </div>
             </div>
-
-            <div class="movie-sequels" v-if="sequels.length">
-                <div class="sequels__header">Сиквелы и приквелы</div>
-                <div class="sequels__content">
-                    <Slider2 :data="sequels" />
-                </div>
+  
+            <div class="movie-info__favorites">
+              <div class="movie-info__favorite-icon">
+                <img :src="`${linkToImg}/heart.svg`" alt="" />
+              </div>
+              <div class="movie-info__favorite-count">
+                В избранном у 37933 человек
+              </div>
             </div>
-
-            <div class="movie-similars" v-if="similars && similars?.items?.length">
-                <div class="similars__header">Похожие фильмы</div>
-                <div class="similars__content">
-                    <Slider2 :data="similars.items" />
-                </div>
+          </div>
+  
+          <div class="movie-table">
+            <div class="movie-table__row" v-if="data.year">
+              <div class="movie-table__cell--header">
+                Год:
+              </div>
+              <div class="movie-table__cell">
+                {{ data.year }}
+              </div>
             </div>
-
-            <div class="bg-movie_cadr" :style="{ backgroundImage: data ? `url(${data?.backdrop?.url})` : 'none' }">
-                <div class="bg-movie_cadr-temnee"></div>
+  
+            <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'designer')">
+              <div class="movie-table__cell--header">
+                Художники:
+              </div>
+              <div class="movie-table__cell">
+                {{ data?.persons?.filter(item => item.enProfession === 'designer').slice(0, 2).map(item =>
+                  item.name).join(', ') }}
+              </div>
             </div>
+  
+            <div class="movie-table__row" v-if="data.countries">
+              <div class="movie-table__cell--header">
+                Страна:
+              </div>
+              <div class="movie-table__cell">
+                <span v-for="(country, index) in data.countries" :key="index">{{ country.name }}<span
+                    v-if="index < data.countries.length - 1">, </span></span>
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'editor')">
+              <div class="movie-table__cell--header">
+                Монтаж:
+              </div>
+              <div class="movie-table__cell">
+                {{ data?.persons?.filter(item => item.enProfession === 'editor').slice(0, 2).map(item =>
+                  item.name).join(', ') }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data.slogan">
+              <div class="movie-table__cell--header">
+                Слоган:
+              </div>
+              <div class="movie-table__cell">
+                {{ data.slogan }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data.genres">
+              <div class="movie-table__cell--header">
+                Жанр:
+              </div>
+              <div class="movie-table__cell">
+                <span v-for="(country, index) in data.genres" :key="index">{{ country.name }}<span
+                    v-if="index < data.genres.length - 1">, </span></span>
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'director')">
+              <div class="movie-table__cell--header">
+                Режисер:
+              </div>
+              <div class="movie-table__cell">
+                {{ data?.persons?.filter(item => item.enProfession === 'director').slice(0, 2).map(item =>
+                  item.name).join(', ') }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data?.fees?.world">
+              <div class="movie-table__cell--header">
+                Сборы в мире:
+              </div>
+              <div class="movie-table__cell">
+                {{ data && data.fees && data.fees.world ?
+                  `${data.fees.world.currency}${data?.fees?.world?.value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                    " ")}` : '' }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'writer')">
+              <div class="movie-table__cell--header">
+                Сценарий:
+              </div>
+              <div class="movie-table__cell">
+                {{ data?.persons?.filter(item => item.enProfession === 'writer').slice(0, 2).map(item =>
+                  item.name).join(', ') }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data?.premiere?.world">
+              <div class="movie-table__cell--header">
+                Премьера (мир):
+              </div>
+              <div class="movie-table__cell">
+                {{ data.premiere ? new Date(`${data.premiere.world}`).toLocaleDateString("ru-RU", {
+                  day:
+                    "numeric", month: "long", year: "numeric"
+                }) : '' }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'producer')">
+              <div class="movie-table__cell--header">
+                Продюсер:
+              </div>
+              <div class="movie-table__cell">
+                {{ data?.persons?.filter(item => item.enProfession === 'producer').slice(0, 2).map(item =>
+                  item.name).join(', ') }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data?.premiere?.russia">
+              <div class="movie-table__cell--header">
+                Премьера (РФ):
+              </div>
+              <div class="movie-table__cell">
+                {{ data.premiere ? new Date(`${data.premiere.russia}`).toLocaleDateString("ru-RU", {
+                  day:
+                    "numeric", month: "long", year: "numeric"
+                }) : '' }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'operator')">
+              <div class="movie-table__cell--header">
+                Оператор:
+              </div>
+              <div class="movie-table__cell">
+                {{ data?.persons?.filter(item => item.enProfession === 'operator').slice(0, 2).map(item =>
+                  item.name).join(', ') }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data.ageRating">
+              <div class="movie-table__cell--header">
+                Возраст:
+              </div>
+              <div class="movie-table__cell">
+                {{ (data.ageRating) ? data.ageRating + "+" : '' }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'composer')">
+              <div class="movie-table__cell--header">
+                Композитор:
+              </div>
+              <div class="movie-table__cell">
+                {{ data?.persons?.filter(item => item.enProfession === 'composer').slice(0, 2).map(item =>
+                  item.name).join(', ') }}
+              </div>
+            </div>
+  
+            <div class="movie-table__row" v-if="data.movieLength">
+              <div class="movie-table__cell--header">
+                Время:
+              </div>
+              <div class="movie-table__cell">
+                {{ `${data.movieLength} мин. / 0${Math.floor(data.movieLength /
+                  60)}:${data.movieLength % 60}` }}
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <UpArrow />
+  
+        <Cast :data="data" />
+  
+        <div class="movie-trealer" ref="treailer">
+          <BlockHeader :title="'Трейлеры фильма'" :text="'Все трейлеры'" :link="'/'" />
+  
+          <div class="trealers-trealer">
+            <iframe width="100%" height="auto"
+              :src="`https://www.youtube.com/embed/${trealer.videoId}`" title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+          </div>
+  
+          <div class="trealers-info">
+            <div class="trealers-info-cont">
+              <div class="trealers-info-name">{{ data.name }}</div>
+  
+              <div class="trealers-info-socail_networks">
+                <div>
+                  <img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" />
+                </div>
+                <div>
+                  <img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Instagram" />
+                </div>
+                <div>
+                  <img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="Facebook" />
+                </div>
+                <div>
+                  <img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="Twitter(X)" />
+                </div>
+              </div>
+            </div>
+  
+            <div class="trealers-info-likes">
+              <div class="trealers-info-like">
+                <div class="trealers-info-like-img">
+                  <img :src="`${linkToImg}/like.svg`" alt="like" />
+                </div>
+                <div class="trealers-info-like-count">
+                  426
+                </div>
+              </div>
+              <div class="trealers-info-dislike">
+                <div class="trealers-info-dislike-img">
+                  <img :src="`${linkToImg}/dislike.svg`" alt="dislike" />
+                </div>
+                <div class="trealers-info-dislike-count">
+                  74
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="movie-awards" v-if="awards?.items?.length">
+          <BlockHeader :title="'Награды'" :text="awards?.items?.length > 4 ? 'Все награды' : false" :link="'/'" />
+  
+          <div class="awards-main">
+            <AwardCard v-for="(award, index) in awards.items.slice(0, 4)" :key="index" :award="award" />
+          </div>
+        </div>
+  
+        <div class="movie-posters" v-if="posters?.items?.length">
+          <BlockHeader :title="'Постеры к фильму'" :text="posters?.items?.length > 4 ? 'Все кадры' : false"
+            :link="'/'" />
+  
+          <div class="posters-main">
+            <div v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index" class="posters-img">
+              <img :src="poster.imageUrl" alt="poster" />
+            </div>
+          </div>
+        </div>
+  
+        <div class="movie-stills" v-if="stills && stills?.items?.length">
+          <BlockHeader :title="'Кадры из фильма'" :text="stills?.items?.length > 4 ? 'Все кадры' : false"
+            :link="'/'" />
+  
+          <div class="stills-main">
+            <div v-for="(still, index) in stills?.items?.slice(0, 4)" :key="index" class="stills-img">
+              <img :src="still.previewUrl" alt="" />
+            </div>
+          </div>
+        </div>
+  
+        <div class="movie-watch" v-if="id">
+          <BlockHeader :title="'Смотреть онлайн'" :text="false" :link="false" />
+          <div class="watch_movie-main" v-if="data.year < 2023 || isPremium">
+            <KiniboxWidget :kinopoiskId="id" />
+          </div>
+  
+          <div class="movie-buy" v-else>
+            <div>
+              Для просмотра этого фильма, потребуется приобрести подписку.
+              <div class="movie-buy-but" @click="buyPremium">Перейти к покупке</div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="movie-sequels" v-if="sequels.length">
+          <div class="sequels__header">Сиквелы и приквелы</div>
+          <div class="sequels__content">
+            <Slider2 :data="sequels" />
+          </div>
+        </div>
+  
+        <div class="movie-similars" v-if="similars && similars?.items?.length">
+          <div class="similars__header">Похожие фильмы</div>
+          <div class="similars__content">
+            <Slider2 :data="similars.items" />
+          </div>
+        </div>
+  
+        <div class="bg-movie_cadr" :style="{ backgroundImage: data ? `url(${data?.backdrop?.url})` : 'none' }">
+          <div class="bg-movie_cadr-temnee"></div>
+        </div>
+      </div>
+  
+      <UpArrow />
     </main>
-</template>
-
-<script>
-import Rating from '@/Components/Rating.vue';
-import BlockHeader from '@/Components/BlockHeader.vue';
-import Cast from '@/Components/Cast.vue';
-import KiniboxWidget from '@/Components/KiniboxWidget.vue';
-import AwardCard from '@/Components/AwardCard.vue';
-import Slider2 from '@/Components/Slider2.vue';
-import UpArrow from '@/Components/UpArrow.vue'
-import { fetchData } from '@/Services/apiService';
-import { fetchAwards } from '@/Services/apiService';
-import { fetchPosters } from '@/Services/apiService';
-import { fetchStills } from '@/Services/apiService';
-import { fetchSequels } from '@/Services/apiService';
-import { fetchSimilars } from '@/Services/apiService';
-import { searchTrailer } from '@/Services/apiService';
-
-export default {
+  </template>
+  
+  <script>
+  import Rating from '@/Components/Rating.vue';
+  import BlockHeader from '@/Components/BlockHeader.vue';
+  import Cast from '@/Components/Cast.vue';
+  import KiniboxWidget from '@/Components/KiniboxWidget.vue';
+  import AwardCard from '@/Components/AwardCard.vue';
+  import Slider2 from '@/Components/Slider2.vue';
+  import UpArrow from '@/Components/UpArrow.vue'
+  import { fetchData } from '@/Services/apiService';
+  import { fetchAwards } from '@/Services/apiService';
+  import { fetchPosters } from '@/Services/apiService';
+  import { fetchStills } from '@/Services/apiService';
+  import { fetchSequels } from '@/Services/apiService';
+  import { fetchSimilars } from '@/Services/apiService';
+  import { searchTrailer } from '@/Services/apiService';
+  import axios from 'axios';
+  
+  export default {
     data() {
-        return {
-            data: {},
-            posters: {},
-            stills: {},
-            awards: {},
-            sequels: {},
-            similars: {},
-            trealer: {},
-            linkToImg: "../src/assets/Media/MoviePage",
-            isLoading: false
-        };
+      return {
+        data: {},
+        posters: {},
+        stills: {},
+        awards: {},
+        sequels: {},
+        similars: {},
+        trealer: {},
+        linkToImg: "../src/assets/Media/MoviePage",
+        isPremium: false
+      };
     },
     props: {
-        id: {
-            type: String,
-            required: true
-        }
+      id: {
+        type: String,
+        required: true
+      }
     },
     watch: {
       id(newId, oldId) {
@@ -421,111 +416,74 @@ export default {
       }
     },
     mounted() {
-        window.scrollTo(0, 0);
-        // this.fetchData('../src/assets/data/data.json', 'data');
-        // this.fetchData('../src/assets/data/posters.json', 'posters');
-        // this.fetchData('../src/assets/data/still.json', 'stills');
-        // this.fetchData('../src/assets/data/awards.json', 'awards');
-        // this.fetchData('../src/assets/data/sequelsAndPrequels.json', 'sequels');
-        // this.fetchData('../src/assets/data/similars.json', 'similars');
-        this.fetchMovieDataData();
-
+      window.scrollTo(0, 0);
+      this.fetchMovieDataData();
+      this.checkPremiumStatus();
     },
     methods: {
-        
-        async fetchMovieDataData() {
-    this.isLoading = true;
-    try {
-        this.data = await fetchData(this.id);
-        document.title = this.data.name || this.data.alternativeName;
-    } catch (error) {
-        console.error("Ошибка при получении данных фильма:", error);
-    }
-
-    try {
-        this.trealer = await searchTrailer(`${this.data.type} ${this.data.name} ${this.data.year}`);
-    } catch (error) {
-        console.error("Ошибка при получении трейлера:", error);
-        this.trealer = null;
-    }
-
-    try {
-        this.awards = await fetchAwards(this.id);
-    } catch (error) {
-        console.error("Ошибка при получении наград:", error);
-        this.awards = [];
-    }
-
-    try {
-        this.posters = await fetchPosters(this.id);
-    } catch (error) {
-        console.error("Ошибка при получении постеров:", error);
-        this.posters = [];
-    }
-
-    try {
-        this.stills = await fetchStills(this.id);
-    } catch (error) {
-        console.error("Ошибка при получении кадров:", error);
-        this.stills = [];
-    }
-
-    try {
-        this.sequels = await fetchSequels(this.id);
-    } catch (error) {
-        console.error("Ошибка при получении сиквелов/приквелов:", error);
-        this.sequels = [];
-    }
-
-    try {
-        this.similars = await fetchSimilars(this.id);
-    } catch (error) {
-        console.error("Ошибка при получении похожих фильмов:", error);
-        this.similars = [];
-    }
-
-    this.isLoading = false;
-},
-        // async fetchData(url, to) {
-        //     try {
-        //         const response = await fetch(url);
-        //         if (!response.ok) {
-        //             throw new Error(`HTTP error! status: ${response.status}`);
-        //         }
-        //         const data = await response.json();
-        //         this[to] = data
-
-        //     } catch (error) {
-        //         console.error("Error fetching data:", error);
-        //     }
-        // },
-
-        scrollToTrailer() {
-            this.$nextTick(() => {
-                const trailerElement = this.$refs.treailer;
-                if (trailerElement) {
-                    trailerElement.style.marginTop = '60px';
-                    trailerElement.scrollIntoView({ behavior: 'smooth' });
-                    setTimeout(() => {
-                        trailerElement.style.marginTop = '';
-                    }, 600);
-                } else {
-                    console.error('Элемент trailer не найден!');
-                }
-            });
-        },
+      async fetchMovieDataData() {
+        try {
+          this.data = await fetchData(this.id);
+          document.title = this.data.name || this.data.alternativeName;
+          this.trealer = await searchTrailer(`${this.data.type} ${this.data.name} ${this.data.year}`);
+          this.awards = await fetchAwards(this.id);
+          this.posters = await fetchPosters(this.id);
+          this.stills = await fetchStills(this.id);
+          this.sequels = await fetchSequels(this.id);
+          this.similars = await fetchSimilars(this.id);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      async checkPremiumStatus() {
+        const userString = localStorage.getItem('currentUser');
+        if (userString) {
+          const user = JSON.parse(userString);
+          this.isPremium = user.premium || false;
+        }
+      },
+      async buyPremium() {
+        const userString = localStorage.getItem('currentUser');
+        if (userString) {
+          const user = JSON.parse(userString);
+          try {
+            const response = await axios.post('http://91.197.96.204:3000/buy-premium', { login: user.login });
+            if (response.data.message) {
+              alert(response.data.message);
+              this.checkPremiumStatus();
+            }
+          } catch (error) {
+            console.error('Ошибка при покупке премиум-подписки:', error);
+            alert(error.response?.data.error || 'Ошибка при покупке премиум-подписки');
+          }
+        }
+      },
+      scrollToTrailer() {
+        this.$nextTick(() => {
+          const trailerElement = this.$refs.treailer;
+          if (trailerElement) {
+            trailerElement.style.marginTop = '60px';
+            trailerElement.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+              trailerElement.style.marginTop = '';
+            }, 600);
+          } else {
+            console.error('Элемент trailer не найден!');
+          }
+        });
+      }
     },
     components: {
-        Rating,
-        BlockHeader,
-        Cast,
-        KiniboxWidget,
-        AwardCard,
-        Slider2,
-        UpArrow
+      Rating,
+      BlockHeader,
+      Cast,
+      KiniboxWidget,
+      AwardCard,
+      Slider2,
+      UpArrow
     }
-}
-</script>
+  }
+  </script>
 
 <style scoped>
 /* ////////////////////////////////////////////////////////////////////////////////////////////////// */
@@ -550,7 +508,7 @@ export default {
 .movie-info__image img {
     width: 100%;
     height: auto;
-    border-radius: 13px;
+    border-radius: 10px;
 }
 
 .movie-info__right {
