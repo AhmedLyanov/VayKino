@@ -14,6 +14,7 @@ import Premiere from './Pages/Premiere.vue'
 import Posts from './Pages/Posts.vue'
 import Lists from './Pages/Lists.vue'
 import List from './Pages/List.vue'
+import Media from './Pages/Media.vue'
 
 const router = createRouter({
     routes: [
@@ -41,6 +42,11 @@ const router = createRouter({
             path: "/lists",
             name: "Lists",
             component: Lists,
+        },
+        {
+            path: "/media",
+            name: "Media",
+            component: Media,
         },
         {
             path: "/movie/:id",

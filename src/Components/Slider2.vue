@@ -27,9 +27,9 @@
         </div>
     </div>
 
-    <div class="slider-container" v-else>
+    <div class="slider-container" ref="container" v-else>
         <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * sWidth}px)` }">
-            <div class="slide">
+            <div class="slide" :style="{ minWidth: `${sWidth}px`, gridTemplateColumns: `repeat(${cardsPerPage}, 340px)` }">
                 <Card v-for="index in 4" :key="index" :data="{}" />
             </div>
         </div>
