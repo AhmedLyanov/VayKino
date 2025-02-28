@@ -101,12 +101,6 @@ export default {
       return `${day} ${month} ${year}`;
     },
     moviesCountIncrement(){
-      console.log(this.groupedMovies.length);
-      console.log(this.moviesCount);
-      
-      
-      
-      
       if(this.moviesCount + 8 <= this.groupedMovies.length){
         this.moviesCount += 8;        
       }

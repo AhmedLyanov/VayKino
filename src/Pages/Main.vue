@@ -24,7 +24,7 @@
                 <div class="now-playing__content">
                     <div class="now-playing__films">
                         <Card v-if="nowPlayingMovies.length" v-for="(film, index) in nowPlayingMovies.slice(0, 8)" :data="film"
-                        :contextMenu="false"
+                            :contextMenu="false"
                             :key="index" />
                         <Card v-else v-for="key in 8" :key="key" :data="{}" />
                     </div>
@@ -36,7 +36,7 @@
             </div>
 
             <div class="trailers" v-if="trailers.length">
-                <BlockHeader :title="'Новые трейлеры'" :text="'Все трейлеры'" :link="'/'" />
+                <BlockHeader :title="'Новые трейлеры'" :text="'Все трейлеры'" :link="'/media'" />
 
                 <div class="trailers__main">
                     <div class="trailers__active">
@@ -169,20 +169,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- <div style="width: 100%; background-color: #151A26; display: flex; justify-content: center;">
-            <div style="width: 80%;">
-                <div class="upcoming-movies">
-                    <BlockHeader :title="'Ожидаемые новинки'" :text="'Все новинки'" :link="'/'" />
-
-                    <div class="upcoming-movies__content">
-                        <Slider2 :data="fakeData.items" />
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-        
+                
         <UpArrow />
     </main>
 </template>
@@ -214,35 +201,6 @@ export default {
             currentTrailer: 0,
             popularMovies: [],
             linkToImg: "../src/assets/Media/Main",
-            fakeData: {
-                items: [
-                    {
-                        posterUrl: "https://image.openmoviedb.com/kinopoisk-images/1629390/03049446-ddac-49d0-a44b-d3bc4dcf6d73/orig",
-                        nameRu: "Побег из Претории",
-                        nameEn: "Escape from Pretoria"
-                    },
-                    {
-                        posterUrl: "https://image.openmoviedb.com/kinopoisk-images/1629390/03049446-ddac-49d0-a44b-d3bc4dcf6d73/orig",
-                        nameRu: "Побег из Претории",
-                        nameEn: "Escape from Pretoria"
-                    },
-                    {
-                        posterUrl: "https://image.openmoviedb.com/kinopoisk-images/1629390/03049446-ddac-49d0-a44b-d3bc4dcf6d73/orig",
-                        nameRu: "Побег из Претории",
-                        nameEn: "Escape from Pretoria"
-                    },
-                    {
-                        posterUrl: "https://image.openmoviedb.com/kinopoisk-images/1629390/03049446-ddac-49d0-a44b-d3bc4dcf6d73/orig",
-                        nameRu: "Побег из Претории",
-                        nameEn: "Escape from Pretoria"
-                    },
-                    {
-                        posterUrl: "https://image.openmoviedb.com/kinopoisk-images/1629390/03049446-ddac-49d0-a44b-d3bc4dcf6d73/orig",
-                        nameRu: "Побег из Претории",
-                        nameEn: "Escape from Pretoria"
-                    },
-                ]
-            }
         }
     },
     components: {

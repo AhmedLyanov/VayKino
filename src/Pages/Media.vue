@@ -5,69 +5,154 @@
                 <div class="media-header">
                     <BlockHeader :title="'Медиа'" :text="false" :link="false" />
                     <div class="media-selects">
-                        <div v-for="media in medias" :key="media" :class="{ active: activeMedia === media }" @click="setActiveMedia(media)">
+                        <div v-for="media in medias" :key="media" :class="{ active: activeMedia === media }"
+                            @click="setActiveMedia(media)">
                             {{ media }}
                         </div>
                     </div>
                 </div>
 
                 <div class="media-content">
-                    <div class="media-trailers">
+                    <div class="media-trailers" v-if="activeMedia === 'Трейлеры'">
                         <div class="media-mini_header">Трейлеры</div>
 
                         <div class="media-trailers-cont">
-                            <div class="media-trailer" v-for="trailer in trailers.slice(0, trailersCount)" :key="trailer.videoId">
+                            <div class="media-trailer" v-for="trailer in trailers.slice(0, trailersCount)"
+                                :key="trailer.videoId" @click="openTrailerModal(trailer.videoId)">
                                 <div class="trailer-img">
                                     <img :src="trailer.thumbnail[trailer.thumbnail.length - 1].url" alt="">
+
+                                    <svg width="60" height="58" viewBox="0 0 60 58" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M57.1298 25.3305C60.1253 26.7913 60.1253 31.0601 57.1297 32.521L6.4174 57.2522C3.7603 58.548 0.66409 56.6132 0.66409 53.6569L0.664089 4.19447C0.664089 1.23823 3.76031 -0.696589 6.41741 0.59922L57.1298 25.3305Z"
+                                            fill="#FFFFFFA1" />
+                                    </svg>
+
                                 </div>
 
                                 <div class="trailer-info">
-                                    <div class="trailer-title">{{ trailer.title.slice(0, trailer.title.indexOf('—') - 1) }}</div>
-                                    <div class="trailer-date">{{ new Date(trailer.publishedAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/\.$/, '') }}</div>
-                                    <div class="trailer-views"><img src="../assets/Media/Media/views.svg" alt="views"> {{ trailer.viewCount }}</div>
-                                    <div class="trailer-length"><img src="../assets/Media/Media/time.svg" alt="time"> {{ trailer.lengthText }}</div>
+                                    <div class="trailer-title">{{ trailer.title.slice(0, trailer.title.indexOf('—') - 1)
+                                        }}</div>
+                                    <div class="trailer-date">{{ new
+                                        Date(trailer.publishedAt).toLocaleDateString('ru-RU', {
+                                            day: 'numeric', month:
+                                        'short', year: 'numeric' }).replace(/\.$/, '') }}</div>
+                                    <div class="trailer-views"><img src="../assets/Media/Media/views.svg" alt="views">
+                                        {{ trailer.viewCount }}</div>
+                                    <div class="trailer-length"><img src="../assets/Media/Media/time.svg" alt="time"> {{
+                                        trailer.lengthText }}</div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="trailers-loadMore" v-if="trailers.length > trailersCount" @click="loadMoreTrailers">
+                        <div class="loadMore" v-if="trailers.length > trailersCount" @click="loadMoreTrailers">
+                            Показать ещё
+                        </div>
+                    </div>
+
+                    <div class="media-posters" v-if="activeMedia === 'Постеры'">
+                        <div class="media-mini_header">Постеры</div>
+
+                        <div class="media-posters-cont">
+                            <div class="poster" v-for="poster in posters.slice(0, postersCount)" :key="poster.id" @click="openPosterModal(poster.poster.url)">
+                                <div class="poster-img">
+                                    <img :src="poster.poster.url" :alt="poster.name">
+                                </div>
+                                <div class="poster-title">{{ poster.name }}</div>
+                            </div>
+                        </div>
+
+                        <div class="loadMore" v-if="posters.length > postersCount" @click="loadMorePosters">
                             Показать ещё
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <MediaTrailerModal :is-open="isModalTrailerOpen" :videoId="videoId" @close="closeTrailerModal" />
+        <MediaPosterModal :is-open="isModalPosterOpen" :posterUrl="videoId" @close="closePosterModal" />
+        <UpArrow />
     </main>
 </template>
 
 <script>
 import BlockHeader from "@/Components/BlockHeader.vue";
+import MediaTrailerModal from "@/Components/MediaTrailerModal.vue";
+import MediaPosterModal from "@/Components/MediaPosterModal.vue";
+import UpArrow from "@/Components/UpArrow.vue";
+import { getLatestVideosFromChannel } from "@/Services/apiService";
+import { fetchLatestPosters } from "@/Services/apiService";
 
 export default {
-    data(){
+    data() {
         return {
-            medias: ['Трейлеры', 'Постеры', 'Кадры'],
+            medias: ['Трейлеры', 'Постеры'],
             activeMedia: 'Трейлеры',
             trailersCount: 6,
-            trailers: [{ "type": "video", "videoId": "OWPLQ095UHo", "title": "Андор (2 сезон) — Русский трейлер (2025)", "description": "Русский трейлер 2 сезона сериала «Андор» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/...", "viewCount": "6342", "publishedTimeText": "1 day ago", "publishDate": "2025-02-25", "publishedAt": "2025-02-25T00:00:00Z", "lengthText": "1:45", "thumbnail": [ { "url": "https://i.ytimg.com/vi/OWPLQ095UHo/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDRmmrBtSCqWeKj77fBl2uqtDIb1Q", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/OWPLQ095UHo/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDa6V7sVfj9lDwO5y7Rcsy433JwMQ", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/OWPLQ095UHo/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB5aaOijehIaJnIAMw6Qz4pWJ4TNA", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/OWPLQ095UHo/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDkbk2d7HkxLwljYD9pzGECUn58Ww", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/OWPLQ095UHo/mqdefault_6s.webp?du=3000&sqp=CKjb_70G&rs=AOn4CLAVOiI-rIyKNto5Pd7j_KakEMFetw", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "5s3qVz9e9eg", "title": "Белоснежка — Русский ТВ-Спот (Дубляж, 2025)", "description": "Официальный дублированный тв-спот из фильма «Белоснежка» 2025 года\n\nДрузья, подписывайтесь на нашу группу...", "viewCount": "4133", "publishedTimeText": "1 day ago", "publishDate": "2025-02-25", "publishedAt": "2025-02-25T00:00:00Z", "lengthText": "1:04", "thumbnail": [ { "url": "https://i.ytimg.com/vi/5s3qVz9e9eg/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCVioBKlcuI84egSCUAhZxhzKtByQ", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/5s3qVz9e9eg/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLC_q-y4zk_Z58WsuncFNu7BUJI_ig", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/5s3qVz9e9eg/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDfuAvw-dDoGe74CosepgdQ7GymAg", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/5s3qVz9e9eg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAzovgxDPkIaru3ASD0q6_OBgf-ug", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/5s3qVz9e9eg/mqdefault_6s.webp?du=3000&sqp=CLD6_70G&rs=AOn4CLCs-scfeVtVEPB0-C8kPFpR-f1vXw", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "sgPyB-qe5W8", "title": "В списках не значился — Официальный трейлер (2025)", "description": "Официальный трейлер фильма «В списках не значился» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакт...", "viewCount": "9305", "publishedTimeText": "1 day ago", "publishDate": "2025-02-25", "publishedAt": "2025-02-25T00:00:00Z", "lengthText": "2:14", "thumbnail": [ { "url": "https://i.ytimg.com/vi/sgPyB-qe5W8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCo7S0TiwlxwMb4VqquAR2Dyp9sdQ", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/sgPyB-qe5W8/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLC4GLY3UjWuliH8SZk_b3hB9slJKg", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/sgPyB-qe5W8/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDdxqlFVFTt0rR1lXxDcEF9j2D-7Q", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/sgPyB-qe5W8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDk-DqnqzYwRMkdo2kSNkRylJUmMw", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/sgPyB-qe5W8/mqdefault_6s.webp?du=3000&sqp=CMSKgL4G&rs=AOn4CLAbgRFqFMBsRHPc4uAeoWSE0xxZrw", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "SF3rKQ_j2yY", "title": "Алиса в Стране Чудес — Официальный тизер-трейлер (2025)", "description": "Официальный тизер-трейлер фильма «Алиса в Стране Чудес» 2025 года\n\nДрузья, подписывайтесь на нашу группу...", "viewCount": "11233", "publishedTimeText": "2 days ago", "publishDate": "2025-02-24", "publishedAt": "2025-02-24T00:00:00Z", "lengthText": "1:23", "thumbnail": [ { "url": "https://i.ytimg.com/vi/SF3rKQ_j2yY/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCaJWFVKpy_ZfcuBf4XMBTwEc3jeA", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/SF3rKQ_j2yY/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBpJtbD95TVwPxqfe-uz8ar3pONUg", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/SF3rKQ_j2yY/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBrZcqfwN_Zbeeu4yLlXINSSNxP9w", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/SF3rKQ_j2yY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC1GsR9DxQy7sOWMIrRKcJPKjzp2Q", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/SF3rKQ_j2yY/mqdefault_6s.webp?du=3000&sqp=CIaEgL4G&rs=AOn4CLDln6S6EyepXPixNNll_i9GPkKVHw", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "dsmLo3r_nsg", "title": "Последний экзорцист — Русский трейлер (Дубляж, 2025)", "description": "Русский трейлер фильма «Последний экзорцист» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте...", "viewCount": "12271", "publishedTimeText": "5 days ago", "publishDate": "2025-02-21", "publishedAt": "2025-02-21T00:00:00Z", "lengthText": "1:45", "thumbnail": [ { "url": "https://i.ytimg.com/vi/dsmLo3r_nsg/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBDOvGtVlJZwJKrqMRYV0HzRIaxLg", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/dsmLo3r_nsg/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAxbS0ESzipWCx93snxn_FOGXgwng", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/dsmLo3r_nsg/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCIb2OTDf3dSCXwMFoVAeWZ_dBh5g", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/dsmLo3r_nsg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDJVamT2lkR2PWCLnqWxr48TdLEcw", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/dsmLo3r_nsg/mqdefault_6s.webp?du=3000&sqp=CNjh_70G&rs=AOn4CLDmzJYBnCnF8Do_bv5wICxun8eacA", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "GZ4QQDIu_zE", "title": "Саван — Русский тизер-трейлер (Дубляж, 2025)", "description": "Русский тизер-трейлер фильма «Саван» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/kinoma...", "viewCount": "8516", "publishedTimeText": "6 days ago", "publishDate": "2025-02-20", "publishedAt": "2025-02-20T00:00:00Z", "lengthText": "0:44", "thumbnail": [ { "url": "https://i.ytimg.com/vi/GZ4QQDIu_zE/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAhEb8L56Ce2R2YoVWaPZLFJtCp8g", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/GZ4QQDIu_zE/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDmTE_X3OjYH8zSL5BdZFAnrx6pAA", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/GZ4QQDIu_zE/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAHpKCQcXHGdwAOZ_CLWwCICE220w", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/GZ4QQDIu_zE/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCtyT01gb78HI37AbGazGI69w7GQg", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/GZ4QQDIu_zE/mqdefault_6s.webp?du=3000&sqp=CMnr_70G&rs=AOn4CLDY3KGXIHheYGF_W2ImS8oP9KFVrQ", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "hDvyIaXBbws", "title": "Дикие истории — Русский трейлер (4К, Субтитры, 2025)", "description": "Русский трейлер фильма «Дикие истории» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/ki...", "viewCount": "17989", "publishedTimeText": "7 days ago", "publishDate": "2025-02-19", "publishedAt": "2025-02-19T00:00:00Z", "lengthText": "2:19", "thumbnail": [ { "url": "https://i.ytimg.com/vi/hDvyIaXBbws/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBK_Pb8B1RYYM-BoWC6zyxnyBVe5w", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/hDvyIaXBbws/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDCVmjJ6g_n1vQzA6UOw_n9SX2UUA", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/hDvyIaXBbws/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAqR1BCSSbYPEKp9ih_cky-LO6Ptg", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/hDvyIaXBbws/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCQv9Wu16-4wTZUzg8BXZKfXh9sYQ", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/hDvyIaXBbws/mqdefault_6s.webp?du=3000&sqp=CJ6KgL4G&rs=AOn4CLClpcKrV8Jp18wkzNQY6sQDDUnHcw", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "8DCHIScZBNg", "title": "Чужой: Земля — Русский тизер-трейлер (Дубляж, 2025)", "description": "Русский тизер-трейлер сериала «Чужой: Земля» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https:/...", "viewCount": "34486", "publishedTimeText": "7 days ago", "publishDate": "2025-02-19", "publishedAt": "2025-02-19T00:00:00Z", "lengthText": "0:41", "thumbnail": [ { "url": "https://i.ytimg.com/vi/8DCHIScZBNg/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBkabw8yoAS5o3Yu-IlYc82mE6K5Q", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/8DCHIScZBNg/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDuoZFg5e0VB7T2hYaJJCFbDvS6dg", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/8DCHIScZBNg/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDleUfNS-k1jfvIFATKsAanCGbVgw", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/8DCHIScZBNg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCPHZFtsvWX26RUZ7Mo-XVT5E47LQ", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/8DCHIScZBNg/mqdefault_6s.webp?du=3000&sqp=CPCMgL4G&rs=AOn4CLCfLeYuc418UsLdQo7wN9W5wfV5kA", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "uTQSbbKW_hI", "title": "Сорвиголова: Рожденный заново — Новый русский трейлер (2025)", "description": "Русский трейлер сериала «Сорвиголова: Рожденный заново» 2025 года\n\nДрузья, подписывайтесь на нашу группу...", "viewCount": "48974", "publishedTimeText": "7 days ago", "publishDate": "2025-02-19", "publishedAt": "2025-02-19T00:00:00Z", "lengthText": "2:47", "thumbnail": [ { "url": "https://i.ytimg.com/vi/uTQSbbKW_hI/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAv2qp0OdNJG3nAnz7lSOPZE9FT5g", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/uTQSbbKW_hI/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDIDrmkY4ttZPbbW7NKtjs3cKTftQ", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/uTQSbbKW_hI/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCZNnNMA63XO2rUA8Jiy2PRwH3dLw", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/uTQSbbKW_hI/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAaza6qRObYtjRUTJs_NMC4g0pUKw", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/uTQSbbKW_hI/mqdefault_6s.webp?du=3000&sqp=CISUgL4G&rs=AOn4CLAwBKq_-L0ezgRpBTobIYKVfCBz1g", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "KE57y8hHHUU", "title": "Киллер в отставке — Русский трейлер (Дубляж, 2025)", "description": "Русский трейлер фильма «Киллер в отставке» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk...", "viewCount": "31697", "publishedTimeText": "9 days ago", "publishDate": "2025-02-17", "publishedAt": "2025-02-17T00:00:00Z", "lengthText": "1:17", "thumbnail": [ { "url": "https://i.ytimg.com/vi/KE57y8hHHUU/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCGWvUFtemHzKBu0bKo6QyPcT6NOw", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/KE57y8hHHUU/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLACkcvservk57J5ji7WbTnpk6K3Ng", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/KE57y8hHHUU/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDIlLemKyg5s5CBGoLzb7ztNgPCPw", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/KE57y8hHHUU/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAwEKbzc7p19YA06-Kz4myf5PbnDg", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/KE57y8hHHUU/mqdefault_6s.webp?du=3000&sqp=CMaGgL4G&rs=AOn4CLCZ0Hhaak2I4xT4eQrTmnqjzQSjDw", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "NXz-SAkqh4M", "title": "Под огнем — Русский трейлер (Дубляж, 2025)", "description": "Русский трейлер фильма «Под огнем» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/kinomantra...", "viewCount": "69147", "publishedTimeText": "9 days ago", "publishDate": "2025-02-17", "publishedAt": "2025-02-17T00:00:00Z", "lengthText": "2:35", "thumbnail": [ { "url": "https://i.ytimg.com/vi/NXz-SAkqh4M/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDWBEgnvKg5oluaqUp5Um1KW5OS8w", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/NXz-SAkqh4M/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDwxUGUeGMYEHtgeVxr1UTlzNixSQ", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/NXz-SAkqh4M/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDW0jNqSIC6qhUVuJoNKCjGciQTHQ", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/NXz-SAkqh4M/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCf1Af4wz_h3H0nZpDQDkAItbQHhg", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/NXz-SAkqh4M/mqdefault_6s.webp?du=3000&sqp=CM_X_70G&rs=AOn4CLDuZ2-C7zY-zantTJkNfFEW5nD5fg", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "wAoqxEEnOUM", "title": "Батя 2: Дед — Официальный трейлер (2025)", "description": "Официальный трейлер фильма «Батя 2: Дед» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/k...", "viewCount": "15847", "publishedTimeText": "10 days ago", "publishDate": "2025-02-16", "publishedAt": "2025-02-16T00:00:00Z", "lengthText": "1:23", "thumbnail": [ { "url": "https://i.ytimg.com/vi/wAoqxEEnOUM/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCXw3J4jEaMpFDLscTBhRYhl9SIEA", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/wAoqxEEnOUM/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLA6jXlMHya8EVeZqRFDkBDi3oK_yg", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/wAoqxEEnOUM/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCYi95fw0F6Zc_kZ6lttFTqYD7B7A", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/wAoqxEEnOUM/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBaz7KpYDIVeJvZp4nG8YJ8VCgD5Q", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/wAoqxEEnOUM/mqdefault_6s.webp?du=3000&sqp=CKLt_70G&rs=AOn4CLBi3uB7sAES0quiAnFwp017_KTi-w", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "FOif20Grruo", "title": "Скрежет металла (2 сезон) — Русский трейлер (2025)", "description": "Русский трейлер 2 сезона сериала «Скрежет металла» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте...", "viewCount": "19463", "publishedTimeText": "11 days ago", "publishDate": "2025-02-15", "publishedAt": "2025-02-15T00:00:00Z", "lengthText": "1:11", "thumbnail": [ { "url": "https://i.ytimg.com/vi/FOif20Grruo/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAJRGaemilwmdAEIKJWsRh6ZpTypQ", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/FOif20Grruo/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLChYGil7LF73doGRdiRzUjVAjxr3w", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/FOif20Grruo/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDatNWBws8j0AwYkrKWAhk56I0yQA", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/FOif20Grruo/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB8sAdZP_PXe1qjuCzGBdeyiEt3ww", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/FOif20Grruo/mqdefault_6s.webp?du=3000&sqp=CNr9_70G&rs=AOn4CLAWVYLo54SI5b8B9A4lL6Vp_APjLg", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "tJKdilwLKxs", "title": "Крушение мира — Русский трейлер (Дубляж, 2025)", "description": "Русский трейлер фильма «Крушение мира» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/ki...", "viewCount": "41950", "publishedTimeText": "11 days ago", "publishDate": "2025-02-15", "publishedAt": "2025-02-15T00:00:00Z", "lengthText": "2:21", "thumbnail": [ { "url": "https://i.ytimg.com/vi/tJKdilwLKxs/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDP6gKg6iMKCWM0O6AeB5oTFB1Olw", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/tJKdilwLKxs/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBm98L77cMM1blc-0GK2xkOmhnuvQ", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/tJKdilwLKxs/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCUD1SovOWVKwIjk4J-qCvFGNYW2w", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/tJKdilwLKxs/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDMO_Gc55cqUxjB5XzTcQAhVmESOQ", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/tJKdilwLKxs/mqdefault_6s.webp?du=3000&sqp=COOBgL4G&rs=AOn4CLCA9du5KtiKhQj5p8twTkfp34ZqmQ", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "OKruB063MCA", "title": "Походу любовь — Официальный трейлер (2025)", "description": "Официальный трейлер фильма «Походу любовь» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://v...", "viewCount": "7922", "publishedTimeText": "11 days ago", "publishDate": "2025-02-15", "publishedAt": "2025-02-15T00:00:00Z", "lengthText": "1:31", "thumbnail": [ { "url": "https://i.ytimg.com/vi/OKruB063MCA/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDYSRmqe_4e6cxlFILnCajmkyKTtQ", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/OKruB063MCA/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDsQxgiJuSVvNZdZXDGzQTsIUWOgg", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/OKruB063MCA/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLArgkM4cOdsx1JZYLo-XQb2ZBS4ug", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/OKruB063MCA/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAJqG6_YAiP7aXPdcwjM3fe1O-Low", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/OKruB063MCA/mqdefault_6s.webp?du=3000&sqp=CICQgL4G&rs=AOn4CLCVZpGwcEc5swa4bSHweS2NUzyVqg", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "jc35np7VT-Q", "title": "The Accountant 2 — Official Trailer (2025)", "description": "Ben Affleck and Jon Bernthal star in #TheAccountant2 trailer, in cinemas April 25.\n\nChristian Wolff (Ben Affleck) has a talent for solving complex problems. When an old\nacquaintance is murdered,...", "viewCount": "100010", "publishedTimeText": "12 days ago", "publishDate": "2025-02-14", "publishedAt": "2025-02-14T00:00:00Z", "lengthText": "3:10", "thumbnail": [ { "url": "https://i.ytimg.com/vi/jc35np7VT-Q/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDKGmaZP53_wKFqlXWy-cGhKcr4-g", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/jc35np7VT-Q/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDOHtqQAMyDtAn_rLMsxccczp32zw", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/jc35np7VT-Q/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA_1EfqtKZpRTneZSlTl0EnFtvjaA", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/jc35np7VT-Q/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBxoiuM__3a6SgIta_PT9C74yCfiQ", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/jc35np7VT-Q/mqdefault_6s.webp?du=3000&sqp=CMyNgL4G&rs=AOn4CLASlM71A-1VO0aSZB0pW7zd-B7p0g", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "81Qk-byvyFo", "title": "Один хороший день — Трейлер (2025)", "description": "Трейлер фильма «Один хороший день» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/kinomantra...", "viewCount": "12361", "publishedTimeText": "12 days ago", "publishDate": "2025-02-14", "publishedAt": "2025-02-14T00:00:00Z", "lengthText": "2:33", "thumbnail": [ { "url": "https://i.ytimg.com/vi/81Qk-byvyFo/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCk35iRqKPS1mTSBtW6E0Idwlrxag", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/81Qk-byvyFo/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDXmBbRRIQjiiPKw0Lo52w38HUzCA", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/81Qk-byvyFo/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDZktZg3-DTqulAK0HR7my-aIWE0A", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/81Qk-byvyFo/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDYMU-owLlaRwvnU-6qbZpoMD7HHQ", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/81Qk-byvyFo/mqdefault_6s.webp?du=3000&sqp=CLL6_70G&rs=AOn4CLAHjCwwrEE5rCqscCpr2m29m7b_eg", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "gLDxJAoph1E", "title": "Дожить до рассвета — Русский трейлер #2 (Дубляж, 2025)", "description": "Официальный дублированный трейлер фильма «Дожить до рассвета» 2025 года\n\nДрузья, подписывайтесь на нашу...", "viewCount": "26693", "publishedTimeText": "13 days ago", "publishDate": "2025-02-13", "publishedAt": "2025-02-13T00:00:00Z", "lengthText": "2:11", "thumbnail": [ { "url": "https://i.ytimg.com/vi/gLDxJAoph1E/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAKvgyA9RSiYnSN8VG8uwQLxmXycA", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/gLDxJAoph1E/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBESccfBY-GGQF96eM8_ZPsPCbzIg", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/gLDxJAoph1E/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDOGuPd0zMVB4E7FW92WiIpg6PNhQ", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/gLDxJAoph1E/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBLHXVk1XGT4Fr73Yhv_9e6BfSTxA", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/gLDxJAoph1E/mqdefault_6s.webp?du=3000&sqp=CL7r_70G&rs=AOn4CLChEA-TZgnvu27O_7ZW1rT1NzAQVg", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "FAd-zFJ4e7A", "title": "Последний охотник на демонов — Русский трейлер (Дубляж, 2025)", "description": "Русский трейлер фильма «Последний охотник на демонов» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконт...", "viewCount": "87418", "publishedTimeText": "13 days ago", "publishDate": "2025-02-13", "publishedAt": "2025-02-13T00:00:00Z", "lengthText": "2:25", "thumbnail": [ { "url": "https://i.ytimg.com/vi/FAd-zFJ4e7A/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLB-XXGj9zCOp-hycHR9LI4Hwe0R1A", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/FAd-zFJ4e7A/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAG8nDeIjspsRLiDeZDsJw36JHEkQ", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/FAd-zFJ4e7A/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBvL6ASVKiPClc_H-R_ikYozXj7Mw", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/FAd-zFJ4e7A/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDOfU5xMHvK-esOOzSrDjXVraa7YQ", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/FAd-zFJ4e7A/mqdefault_6s.webp?du=3000&sqp=CID-_70G&rs=AOn4CLC3EakQAcp0agiim6Yf1icK4XXeVA", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "HGmt7inp2Es", "title": "Зверопоиск — Русский трейлер (Дубляж, 2025)", "description": "Русский трейлер мультфильма «Зверопоиск» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.c...", "viewCount": "12716", "publishedTimeText": "13 days ago", "publishDate": "2025-02-13", "publishedAt": "2025-02-13T00:00:00Z", "lengthText": "2:22", "thumbnail": [ { "url": "https://i.ytimg.com/vi/HGmt7inp2Es/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBEDPIKKLBC5cvKyEQY4Uk6jty0zQ", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/HGmt7inp2Es/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLA3dpIBdgXC1iKs6LH989RDQ2zfBA", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/HGmt7inp2Es/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDje_8LoovwgkedNMdZ9wY1d3dZgw", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/HGmt7inp2Es/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCjXKGSGyhlbEJocLM_4IMdQjjqbw", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/HGmt7inp2Es/mqdefault_6s.webp?du=3000&sqp=COT7_70G&rs=AOn4CLBUWGnUBaJZuv0PnF9uhwWTZJM2DQ", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "5QrRs2-o6Qs", "title": "Как приручить дракона — Русский трейлер #2 (Дубляж, 2025)", "description": "Официальный дублированный трейлер фильма «Как приручить дракона» 2025 года\n\nДрузья, подписывайтесь на нашу...", "viewCount": "59327", "publishedTimeText": "2 weeks ago", "publishDate": "2025-02-12", "publishedAt": "2025-02-12T00:00:00Z", "lengthText": "2:32", "thumbnail": [ { "url": "https://i.ytimg.com/vi/5QrRs2-o6Qs/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLC_dMPztUWNDVQQAkx3w28L5p84LQ", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/5QrRs2-o6Qs/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDpteF_nKzbD5c-JOl_tI4Xh8JR6A", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/5QrRs2-o6Qs/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDmZ3APNHfR6Y7PNTNxv6rFkBGl0Q", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/5QrRs2-o6Qs/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA1dglfboY3DVZ-41JBYD5o6ugvFw", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/5QrRs2-o6Qs/mqdefault_6s.webp?du=3000&sqp=CJuLgL4G&rs=AOn4CLDz2cABFYyc98fDaP8SdQeIdNQGjg", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "x1Z_oebFahg", "title": "Как приручить дракона — Русский трейлер #2 (4К, Субтитры, 2025)", "description": "Официальный трейлер фильма «Как приручить дракона» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакт...", "viewCount": "33869", "publishedTimeText": "2 weeks ago", "publishDate": "2025-02-12", "publishedAt": "2025-02-12T00:00:00Z", "lengthText": "2:32", "thumbnail": [ { "url": "https://i.ytimg.com/vi/x1Z_oebFahg/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDIsCV-ZPfUZRRtigRSy_PRl-sYpQ", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/x1Z_oebFahg/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDvbS7TKAy4_oZIvbPKSdDj5xDmLw", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/x1Z_oebFahg/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBVqVN2TL6Q9E2rpLE4aTHghVPIow", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/x1Z_oebFahg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCP_51tdn3TjaIrKLqQXukvRdka9A", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/x1Z_oebFahg/mqdefault_6s.webp?du=3000&sqp=CPj-_70G&rs=AOn4CLD3SogzRSpsz2NRohsKPYpl-pxqNA", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "F-WbQ-0sfd4", "title": "М3ГАН 2.0 — Русский тизер-трейлер (Дубляж, 2025)", "description": "Официальный дублированный тизер-трейлер фильма «М3ГАН 2.0» 2025 года\n\nДрузья, подписывайтесь на нашу группу...", "viewCount": "12246", "publishedTimeText": "2 weeks ago", "publishDate": "2025-02-12", "publishedAt": "2025-02-12T00:00:00Z", "lengthText": "0:56", "thumbnail": [ { "url": "https://i.ytimg.com/vi/F-WbQ-0sfd4/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAxGVj2Ekcggf72eXJhZLHdEpouhA", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/F-WbQ-0sfd4/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDzErqjHnLGMrwbW90zTqCx_JYZQQ", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/F-WbQ-0sfd4/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCDT4UJqUzm1iqbFNsefWxH8lauGw", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/F-WbQ-0sfd4/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCDS2fSrtkw245hXCOveE7GI3yUQQ", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/F-WbQ-0sfd4/mqdefault_6s.webp?du=3000&sqp=COj0_70G&rs=AOn4CLCrPHUpTmyi-EjLvZOii-Z-Qy5JVw", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "IAqRdHzlbjM", "title": "Смурфики в кино — Русский трейлер (Дубляж, 2025)", "description": "Официальный дублированный трейлер мультфильма «Смурфики в кино» 2025 года\n\nДрузья, подписывайтесь на нашу...", "viewCount": "11512", "publishedTimeText": "2 weeks ago", "publishDate": "2025-02-12", "publishedAt": "2025-02-12T00:00:00Z", "lengthText": "2:02", "thumbnail": [ { "url": "https://i.ytimg.com/vi/IAqRdHzlbjM/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDYChqc51VhxCo2npmJknSs2vZ9qg", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/IAqRdHzlbjM/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLC5mSYTK5e-Fz_0x4tBcSBrMVRBqA", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/IAqRdHzlbjM/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCUSfCH3w3-j7RfXya80j8pRkR55A", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/IAqRdHzlbjM/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDy5tPIV1gdLna8oFVgzzPOOtuUHw", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/IAqRdHzlbjM/mqdefault_6s.webp?du=3000&sqp=CJrh_70G&rs=AOn4CLAV4ofEyW2Oq9Wgf_fq0wKhI-999w", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "ni5ZHPiUk08", "title": "Настоящая боль — Русский трейлер (Дубляж, 2025)", "description": "Официальный дублированный трейлер фильма «Настоящая боль» 2025 года\n\nДрузья, подписывайтесь на нашу группу...", "viewCount": "18753", "publishedTimeText": "2 weeks ago", "publishDate": "2025-02-12", "publishedAt": "2025-02-12T00:00:00Z", "lengthText": "2:31", "thumbnail": [ { "url": "https://i.ytimg.com/vi/ni5ZHPiUk08/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCOI3kiTRSC0C8zGGUu5Y0T3Uq9LQ", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/ni5ZHPiUk08/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAag4AF-OfmS1APG5CztqlDjgGz-g", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/ni5ZHPiUk08/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB32RLdUcRVwSvC4I5QHYQH--ivSg", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/ni5ZHPiUk08/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLALsEs9mfbUXSr29GrAHXRXUHQbpw", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/ni5ZHPiUk08/mqdefault_6s.webp?du=3000&sqp=CMiHgL4G&rs=AOn4CLBkioc7iR3omVvzL_Ti1LxA358n0g", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "Sc54np58Ans", "title": "Опус — Русский трейлер (Дубляж, 2025)", "description": "Русский трейлер фильма «Опус» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/kinomantrailers...", "viewCount": "10778", "publishedTimeText": "2 weeks ago", "publishDate": "2025-02-12", "publishedAt": "2025-02-12T00:00:00Z", "lengthText": "2:16", "thumbnail": [ { "url": "https://i.ytimg.com/vi/Sc54np58Ans/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBpShqTmEJ7KwmoG0Afe2Bn9lxKCw", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/Sc54np58Ans/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCgzrfEdVDvphHv5ka7acDijAlVcg", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/Sc54np58Ans/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCDzunWmnQtgVYyQZxyKBYVcHRz2g", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/Sc54np58Ans/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCDCX5B9Nt0rGOdwMzxCdkBiJ9Fxw", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/Sc54np58Ans/mqdefault_6s.webp?du=3000&sqp=CK35_70G&rs=AOn4CLC5dNJl3hTskgpicZKfqy7COqe4jw", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "7jjilh6DBw8", "title": "Западня — Русский трейлер (Дубляж, 2025)", "description": "Русский трейлер фильма «Западня» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/kinomantraile...", "viewCount": "26583", "publishedTimeText": "2 weeks ago", "publishDate": "2025-02-12", "publishedAt": "2025-02-12T00:00:00Z", "lengthText": "2:37", "thumbnail": [ { "url": "https://i.ytimg.com/vi/7jjilh6DBw8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCtvM-tAweQ7AIxTkN8zD2uHtjNiQ", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/7jjilh6DBw8/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAywpkSIBYZeG7bCHCE_-toWV7PJw", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/7jjilh6DBw8/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCrmbtXyTijvtFZm4iiYsJwHSF_GA", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/7jjilh6DBw8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAf3Hqh1OpNmqrTMpkOT8Sy7PrO8A", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/7jjilh6DBw8/mqdefault_6s.webp?du=3000&sqp=CLz1_70G&rs=AOn4CLC8kyZ8hisC_2DS4kwNutjJiobU1g", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "nAlx2-l9cgk", "title": "Громовержцы* — Русский трейлер super bowl (Дубляж, 2025)", "description": "Официальный дублированный трейлер фильма «Громовержцы» 2025 года\n\nДрузья, подписывайтесь на нашу группу...", "viewCount": "150253", "publishedTimeText": "2 weeks ago", "publishDate": "2025-02-12", "publishedAt": "2025-02-12T00:00:00Z", "lengthText": "2:33", "thumbnail": [ { "url": "https://i.ytimg.com/vi/nAlx2-l9cgk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDuSWMS9SioB4jtmqfmZjr7TT0y_w", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/nAlx2-l9cgk/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAqriDp1NEmcLL5IcDVHOhYHFb9lA", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/nAlx2-l9cgk/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD2sefvmh2djuphCF8U1Fs1dGzgOA", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/nAlx2-l9cgk/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD-Wk0dGd9sF6tawCOWoF41yKcCwQ", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/nAlx2-l9cgk/mqdefault_6s.webp?du=3000&sqp=CO7x_70G&rs=AOn4CLD2EhPgNJnqbpthgtPIRB3h6GzRkQ", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "PJnQUovNc-c", "title": "1923 (2 сезон) — Русский трейлер (2025)", "description": "Русский трейлер 2 сезона сериала «1923» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/kinoma...", "viewCount": "16632", "publishedTimeText": "2 weeks ago", "publishDate": "2025-02-12", "publishedAt": "2025-02-12T00:00:00Z", "lengthText": "2:09", "thumbnail": [ { "url": "https://i.ytimg.com/vi/PJnQUovNc-c/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLA3_Un5wYh2bPD1oJEgdXWSeBTW1w", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/PJnQUovNc-c/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLACiRonZD-CIrU9vkLyEgJfzbRhJA", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/PJnQUovNc-c/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA4bT65Jb8UjLKe_yYvvF5qHvsjXw", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/PJnQUovNc-c/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLADcvJIrquYvv5jLWc1oBUFBSud2g", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/PJnQUovNc-c/mqdefault_6s.webp?du=3000&sqp=CIuEgL4G&rs=AOn4CLACc70zPMDTotl3EX9aIYa7tQ4DKw", "width": 320, "height": 180 } ] }, { "type": "video", "videoId": "APjc-GP8cDM", "title": "Рейс навылет — Русский трейлер (2025)", "description": "Русский трейлер фильма «Рейс навылет» 2025 года\n\nДрузья, подписывайтесь на нашу группу Вконтакте\n►https://vk.com/kino...", "viewCount": "67576", "publishedTimeText": "2 weeks ago", "publishDate": "2025-02-12", "publishedAt": "2025-02-12T00:00:00Z", "lengthText": "2:12", "thumbnail": [ { "url": "https://i.ytimg.com/vi/APjc-GP8cDM/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBBSq7ronIYABq6FCIXDyQIE5Fa0A", "width": 168, "height": 94 }, { "url": "https://i.ytimg.com/vi/APjc-GP8cDM/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAwYgq21xuEam3S5lS9CxG0Ty01rw", "width": 196, "height": 110 }, { "url": "https://i.ytimg.com/vi/APjc-GP8cDM/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAGmF6R5LcUWXCuDTEL2wYgztIEng", "width": 246, "height": 138 }, { "url": "https://i.ytimg.com/vi/APjc-GP8cDM/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDayzAjbvRqcseUHhWx364sdI_Xvw", "width": 336, "height": 188 } ], "richThumbnail": [ { "url": "https://i.ytimg.com/an_webp/APjc-GP8cDM/mqdefault_6s.webp?du=3000&sqp=CPuFgL4G&rs=AOn4CLA16mkZtaAUQQQO-rrKkOM96mX23w", "width": 320, "height": 180 }]}]
+            postersCount: 16,
+            isModalTrailerOpen: false,
+            isModalPosterOpen: false,
+            videoId: '',
+            posters: [],
+            trailers: [],
         }
     },
     components: {
-        BlockHeader
+        BlockHeader,
+        MediaTrailerModal,
+        UpArrow,
+        MediaPosterModal,
     },
     methods: {
         setActiveMedia(media) {
             this.activeMedia = media;
+            this.trailersCount = 6;
+            this.postersCount = 16;
         },
-        loadMoreTrailers(){
+        loadMoreTrailers() {
             if (this.trailers.length >= this.trailersCount) {
                 this.trailersCount += 6
             }
-        }
+        },
+        loadMorePosters() {
+            if (this.posters.length >= this.postersCount) {
+                this.postersCount += 16
+            }
+        },
+        openTrailerModal(videoId) {
+            this.videoId = videoId;
+            this.isModalTrailerOpen = true;
+            document.body.classList.add('no-scroll');
+
+        },
+        closeTrailerModal() {
+            this.isModalTrailerOpen = false;
+            this.videoId = '';
+            document.body.classList.remove('no-scroll');
+        },
+        openPosterModal(videoId) {
+            this.videoId = videoId;
+            this.isModalPosterOpen = true;
+            document.body.classList.add('no-scroll');
+
+        },
+        closePosterModal() {
+            this.isModalPosterOpen = false;
+            this.videoId = '';
+            document.body.classList.remove('no-scroll');
+        },
     },
-    mounted(){
-        console.log(this.trailers);
-        
+    async mounted() {
+        window.scrollTo(0, 0);
+        document.title = "Медиа"
+        try {
+            this.trailers = await getLatestVideosFromChannel();
+            this.posters = await fetchLatestPosters();
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 </script>
@@ -105,66 +190,96 @@ export default {
     }
 }
 
-.media-content{
+.media-content {
     margin-top: 30px;
 }
 
-.media-mini_header{
+.media-mini_header {
     font-weight: 900;
     font-size: 30px;
     color: white;
 }
 
-.media-trailers-cont{
+.media-trailers-cont {
     display: grid;
     grid-template-columns: repeat(2, 49.5%);
     justify-content: space-between;
-    padding-top: 20px;
 }
 
-.media-trailer{
+.media-trailer {
     width: 100%;
     margin-top: 20px;
-}
+    user-select: none;
+    cursor: pointer;
 
-.trailer-img{
-    width: 100%;
+    &:hover {
+        .trailer-img img {
+            scale: 1.02;
+        }
 
-    img{
-        width: 100%;
-        display: block;
-        border-radius: 10px;
+        .trailer-img path {
+            fill: #3657CB;
+        }
     }
 }
 
-.trailer-info{
+.trailer-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    min-width: 753px;
+    min-height: 421px;
+    width: 753px;
+    height: 421px;
+
+    img {
+        width: 100%;
+        display: block;
+        transition: 0.3s;
+        pointer-events: none;
+    }
+
+    svg {
+        position: absolute;
+    }
+
+    path {
+        transition: 0.3s;
+    }
+}
+
+.trailer-info {
     display: flex;
     margin-top: 5px;
     align-items: center;
-font-weight: 700;
-font-size: 15px;
-color: white;
+    font-weight: 700;
+    font-size: 15px;
+    color: white;
 
-div{
-    display: flex;
-    align-items: center;
-    img{
-        margin-right: 8px;
+    div {
+        display: flex;
+        align-items: center;
+
+        img {
+            margin-right: 8px;
+        }
+
+        &:not(:first-child) {
+            margin-left: 20px;
+        }
     }
-
-    &:not(:first-child){
-        margin-left: 20px;
-    }
-}
 }
 
-.trailer-title{
-font-weight: 900;
-font-size: 20px;
-color: white;
+.trailer-title {
+    font-weight: 900;
+    font-size: 20px;
+    color: white;
 }
 
-.trailers-loadMore{
+.loadMore {
     padding: 20px 25px;
     border: 1px solid white;
     color: white;
@@ -175,5 +290,38 @@ color: white;
     cursor: pointer;
     user-select: none;
     width: fit-content;
+}
+
+.media-posters-cont {
+    display: grid;
+    grid-template-columns: repeat(4, 360px);
+    justify-content: space-between;
+}
+
+.poster {
+    height: 100%;
+    margin-top: 20px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.poster-img {
+  width: 360px;
+  height: 540px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    border-radius: 10px;
+    min-width: 100%;
+    height: 100%;
+  }
+}
+
+.poster-title {
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
 }
 </style>

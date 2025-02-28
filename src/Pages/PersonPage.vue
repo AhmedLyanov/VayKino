@@ -266,10 +266,10 @@ export default {
         },
     },
     async mounted() {
+        window.scrollTo(0, 0);
         this.isLoading = true;
         this.person = await fetchActor(this.id);
         document.title = this.person.name || this.person.enName
-        window.scrollTo(0, 0);
         this.isLoading = false;
         this.notNullRatingMovies = this.person?.movies?.filter(el => el.rating != null)
     },

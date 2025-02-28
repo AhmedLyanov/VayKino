@@ -43,9 +43,15 @@ export default {
         async moviesPage() {
             let allMovies = await fetchFreeAPI2(`&type=film&limit=40&page=${this.moviesPage}`)
             this.allMovies = this.allMovies.concat(allMovies);
-            this.clearMovies = this.allMovies.filter(obj => !this.blackList.includes(obj.name))
+            this.clearMovies = this.allMovies.filter(movie => {
+                if (!movie.genre) {
+                    return true;
+                }
+                const hasErotica = Object.values(movie.genre).includes("Эротика");
+                return !hasErotica && !this.blackList.includes(movie.name);
+            });
         },
-        blackList(){
+        blackList() {
             this.clearMovies = this.allMovies.filter(obj => !this.blackList.includes(obj.name))
         }
     },
@@ -53,7 +59,14 @@ export default {
         window.scrollTo(0, 0);
         document.title = 'Фильмы'
         this.allMovies = await fetchFreeAPI2(`&type=film&limit=40&page=${this.moviesPage}`)
-        this.clearMovies = this.allMovies.filter(obj => !this.blackList.includes(obj.name))
+        this.clearMovies = this.allMovies.filter(movie => {
+            if (!movie.genre) {
+                return true;
+            }
+            const hasErotica = Object.values(movie.genre).includes("Эротика");
+            return !hasErotica && !this.blackList.includes(movie.name);
+        });
+
     }
 }
 </script>
