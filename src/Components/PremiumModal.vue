@@ -11,11 +11,12 @@
                     <ul>
                         <li>Бесплатный доступ ко всем фильмам</li>
                         <li>Свечение аватара</li>
+                        <li>Премиум Беседа</li>
                         <li>50 баллов за КТ</li>
                     </ul>
                 </div>
                 <div class="button_buy">
-                    <button class="buy-button" @click="buyPremium">Купить за 5000 баллов</button>
+                    <button class="buy-button" @click="buyPremium">Купить за 8000 баллов</button>
                 </div>
                
             </div>

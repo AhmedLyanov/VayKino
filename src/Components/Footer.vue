@@ -19,19 +19,19 @@
                     <div class="email_mailing-cont-discription">Если хотиет быть в курсе последних
                         новостей и новинок кино - заполните форму ниже и оформите бесплатную E-mail рассылку! </div>
 
-                    <form class="email_mailing-cont-form">
-                        <div class="email_mailing-cont-form-cont">
-                            <input class="email_mailing-cont-form-input_text" type="email"
-                                placeholder="Введите свой E-mail адрес" required />
-                            <input class="email_mailing-cont-form-input_submit" type="submit" value="Подписаться" />
-                        </div>
-                        <label>
-                            <input class="email_mailing-cont-form-input_checkbox" type="checkbox" id=""
-                                defaultChecked />
-                            <div class="email_mailing-cont-form-input_checkbox-txt">Соглашаюсь на
-                                условия <router-link to="">политики конфиденциальности</router-link></div>
-                        </label>
-                    </form>
+                        <form class="email_mailing-cont-form" @submit.prevent="subscribe">
+                <div class="email_mailing-cont-form-cont">
+                    <input v-model="email" class="email_mailing-cont-form-input_text" type="email"
+                        placeholder="Введите свой E-mail адрес" required />
+                    <input class="email_mailing-cont-form-input_submit" type="submit" value="Подписаться" />
+                </div>
+                <label>
+                    <input class="email_mailing-cont-form-input_checkbox" type="checkbox" id=""
+                        defaultChecked />
+                    <div class="email_mailing-cont-form-input_checkbox-txt">Соглашаюсь на
+                        условия <router-link to="">политики конфиденциальности</router-link></div>
+                </label>
+            </form>
                 </div>
             </div>
 

@@ -23,7 +23,7 @@
           <router-link to="/movies" active-class="active">Фильмы</router-link>
           <router-link to="/posts" active-class="active">Новости</router-link>
           <router-link to="/lists" active-class="active">Подборки</router-link>
-          <router-link to="">Категории</router-link>
+          <router-link to="/chat" active-class="active">Премиум-Чат</router-link>
         </nav>
       </div>
 
@@ -215,6 +215,10 @@ export default {
 
   justify-items: center;
   transition: all 0.5s;
+}
+
+.header-center nav :nth-child(6){
+  color: #f2f60f;
 }
 
 .premium-button:hover{

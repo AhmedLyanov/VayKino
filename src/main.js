@@ -15,6 +15,8 @@ import Posts from './Pages/Posts.vue'
 import Lists from './Pages/Lists.vue'
 import List from './Pages/List.vue'
 import Media from './Pages/Media.vue'
+import Chat from './Components/Chat.vue'
+
 
 const router = createRouter({
     routes: [
@@ -79,7 +81,12 @@ const router = createRouter({
             path: "/registration",
             name: "Registration",
             component: Registration,
-        }
+        },
+        {
+            path: "/Chat",
+            name: "Chat",
+            component: Chat,
+        },
     ],
     history: createWebHistory(),
 })
