@@ -141,16 +141,23 @@ vue
               </div>
               <div class="genre_container">
                 <select name="genre" class="genre_select" v-model="userProfile.genre">
-                  <option value="Рок">Рок</option>
-                  <option value="Поп">Поп</option>
-                  <option value="Классика">Классика</option>
-                  <option value="Джаз">Джаз</option>
-                  <option value="Рэп">Рэп</option>
-                  <option value="Хип-хоп">Хип-хоп</option>
-                  <option value="Блюз">Блюз</option>
-                  <option value="Электроника">Электроника</option>
-                  <option value="Регги">Регги</option>
-                  <option value="Кантри">Кантри</option>
+                  <option value="Экшен">Экшен</option>
+                  <option value="Фэнтези">Фэнтези</option>
+                  <option value="Боевик">Боевик</option>
+                  <option value="Для детей">Для детей</option>
+                  <option value="Комедия">Комедия</option>
+                  <option value="Мистика">Мистика</option>
+                  <option value="Триллер">Триллер</option>
+                  <option value="Документальное">Документальное</option>
+                  <option value="Биография">Биография</option>
+                  <option value="Драма">Драма</option>
+                  <option value="Семейное">Семейное</option>
+                  <option value="Сказка">Сказка</option>
+                  <option value="Ужасы">Ужасы</option>
+                  <option value="Криминал">Криминал</option>
+                  <option value="Аниме">Аниме</option>
+
+                  
                 </select>
               </div>
             </div>

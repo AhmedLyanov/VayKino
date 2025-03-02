@@ -15,13 +15,16 @@
     </div>
     <div class="chat-messages">
       <div v-for="(message, index) in messages" :key="index" class="message">
-        <div class="message-avatar" :class="{ 'admin-avatar': message.role === 'admin' }">
+        <div
+          class="message-avatar"
+          :class="{ 'admin-avatar': message.role === 'admin' }"
+          v-if="shouldShowAvatar(index)"
+        >
           <img :src="message.avatarUrl || defaultAvatar" alt="Аватар" />
         </div>
-        <div class="message-content">
+        <div class="message-content" :class="{ 'no-avatar': !shouldShowAvatar(index) }">
           <div class="message-sender">
             {{ message.sender }}
-            <span v-if="message.role == 'admin'" class="admin-prefix">[Админ]</span>
           </div>
           <div class="message-text">{{ message.text }}</div>
         </div>
@@ -41,10 +44,6 @@
 <script>
 import axios from "axios";
 import defaultAvatar from "@/assets/Media/profile/default.png";
-
-if (typeof global === 'undefined') {
-  window.global = window;
-}
 import io from "socket.io-client";
 
 export default {
@@ -80,19 +79,26 @@ export default {
       }
     },
     async sendMessage() {
-  if (!this.newMessage.trim()) return;
-  try {
-    const message = {
-      sender: this.currentUser.login,
-      text: this.newMessage,
-      avatarUrl: this.currentUser.avatarUrl,
-    };
-    await axios.post("http://91.197.96.204:3000/chat-messages", message);
-    this.newMessage = "";
-  } catch (error) {
-    console.error("Ошибка при отправке сообщения:", error);
-  }
-}
+      if (!this.newMessage.trim()) return;
+      try {
+        const message = {
+          sender: this.currentUser.login,
+          text: this.newMessage,
+          avatarUrl: this.currentUser.avatarUrl,
+          role: this.currentUser.role,
+        };
+        await axios.post("http://91.197.96.204:3000/chat-messages", message);
+        this.newMessage = "";
+      } catch (error) {
+        console.error("Ошибка при отправке сообщения:", error);
+      }
+    },
+    shouldShowAvatar(index) {
+      if (index === 0) return true;
+      const currentMessage = this.messages[index];
+      const previousMessage = this.messages[index - 1];
+      return currentMessage.sender !== previousMessage.sender;
+    },
   },
   beforeUnmount() {
     if (this.socket) {
@@ -103,8 +109,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -156,11 +160,20 @@ export default {
   margin-bottom: 15px;
 }
 
-.message-avatar img {
+.message-avatar {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   margin-right: 10px;
+}
+
+.message-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.admin-avatar img {
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
 }
 
 .message-content {
@@ -168,12 +181,23 @@ export default {
   background-color: #3657cb;
   padding: 10px;
   border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+.message-content.no-avatar {
+  margin-left: 50px; 
 }
 
 .message-sender {
   font-weight: bold;
   color: white;
   margin-bottom: 5px;
+}
+
+.admin-prefix {
+  color: #ffcc00;
+  font-weight: bold;
+  margin-left: 5px;
 }
 
 .message-text {
