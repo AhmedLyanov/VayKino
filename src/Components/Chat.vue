@@ -26,7 +26,10 @@
           <div class="message-sender">
             {{ message.sender }}
           </div>
-          <div class="message-text">{{ message.text }}</div>
+          <div class="message-text">
+            <span v-if="message.text">{{ message.text }}</span>
+            <audio v-if="message.audioUrl" :src="message.audioUrl" controls></audio>
+          </div>
         </div>
       </div>
     </div>
@@ -37,6 +40,12 @@
         placeholder="Введите сообщение..."
       />
       <button @click="sendMessage">Отправить</button>
+      <div class="record-button" @click="toggleRecording">
+        <div class="microphone-icon" :class="{ 'recording': isRecording }">
+          <img src="../assets/Media/Components/audio.svg" alt="Запись" />
+          <div class="aura" v-if="isRecording"></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +54,7 @@
 import axios from "axios";
 import defaultAvatar from "@/assets/Media/profile/default.png";
 import io from "socket.io-client";
+import RecordRTC from "recordrtc";
 
 export default {
   data() {
@@ -54,6 +64,8 @@ export default {
       currentUser: null,
       defaultAvatar: defaultAvatar,
       socket: null,
+      isRecording: false,
+      recorder: null,
     };
   },
   async created() {
@@ -93,6 +105,43 @@ export default {
         console.error("Ошибка при отправке сообщения:", error);
       }
     },
+    toggleRecording() {
+      if (this.isRecording) {
+        this.stopRecording();
+      } else {
+        this.startRecording();
+      }
+    },
+    async startRecording() {
+      this.isRecording = true;
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      this.recorder = new RecordRTC(stream, { type: "audio" });
+      this.recorder.startRecording();
+    },
+    async stopRecording() {
+      this.isRecording = false;
+      this.recorder.stopRecording(async () => {
+        const blob = this.recorder.getBlob();
+        await this.sendVoiceMessage(blob);
+      });
+    },
+    async sendVoiceMessage(blob) {
+  const formData = new FormData();
+  formData.append("file", blob, "voice-message.webm");
+  formData.append("sender", this.currentUser.login);
+  formData.append("avatarUrl", this.currentUser.avatarUrl);
+
+  try {
+    const response = await axios.post("http://91.197.96.204:3000/upload-voice-message", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+  } catch (error) {
+    console.error("Ошибка при отправке голосового сообщения:", error);
+  }
+},
     shouldShowAvatar(index) {
       if (index === 0) return true;
       const currentMessage = this.messages[index];
@@ -113,7 +162,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  max-width: 1100px;
+  max-width: 1470px;
   margin: 0 auto;
   padding: 20px;
   background-color: #1b2133;
@@ -152,6 +201,9 @@ export default {
   margin-bottom: 20px;
   padding: 10px;
   background-color: #2a324b;
+  background-image: url(../assets/Media/Components/background_chat.jpg);
+  background-size: cover;
+  background-position: center;
   border-radius: 10px;
 }
 
@@ -177,7 +229,7 @@ export default {
 }
 
 .message-content {
-  flex: 1;
+  max-width: 70%;
   background-color: #3657cb;
   padding: 10px;
   border-radius: 10px;
@@ -185,19 +237,13 @@ export default {
 }
 
 .message-content.no-avatar {
-  margin-left: 50px; 
+  margin-left: 50px;
 }
 
 .message-sender {
   font-weight: bold;
   color: white;
   margin-bottom: 5px;
-}
-
-.admin-prefix {
-  color: #ffcc00;
-  font-weight: bold;
-  margin-left: 5px;
 }
 
 .message-text {
@@ -207,6 +253,7 @@ export default {
 .chat-input {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .chat-input input {
@@ -230,5 +277,54 @@ export default {
 
 .chat-input button:hover {
   background-color: #1f4ae6;
+}
+
+.record-button {
+  cursor: pointer;
+  position: relative;
+}
+
+.microphone-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3657cb;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.microphone-icon.recording {
+  background-color: #ff4d4d;
+}
+
+.microphone-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.aura {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgba(255, 77, 77, 0.3);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
 }
 </style>
