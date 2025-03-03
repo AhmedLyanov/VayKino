@@ -1,4 +1,3 @@
-vue
 <template>
   <div class="container_profile_box">
     <div class="main_container_box" v-if="!isEditing">

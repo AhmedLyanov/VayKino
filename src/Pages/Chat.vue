@@ -1,20 +1,19 @@
 <template>
   <div class="chat-container">
-    <div class="chat-header">
-      <div class="premuim_logo">
-        <img src="../assets/Media/Components/GoldCrown.svg" alt="PremUI" />
-      </div>
-      <div class="named_page">
-        <article>
-          <h1>Премиум-Чат</h1>
-        </article>
-      </div>
-      <div class="header_chat_welcome">
-        <span>Общайтесь, советуйтесь, деградируйтесь</span>
-      </div>
-    </div>
     <div class="chat-messages">
-      <div v-for="(message, index) in messages" :key="index" class="message">
+      <div class="hello_chat_table">
+        <div class="hello-chat-header">
+          <div class="hello-chat-title">Привествуем и поздравляем вас {{ currentUser.name }}</div>
+          <div class="hello-chat-subtitle">Вы в премиум-чате</div>
+          <div class="hello-chat-text">
+            Здесь вы можете общаться с другими обладателями премиум-аккаунтов, задавать вопросы, веселиться.
+            И в целом весело проводить время
+          </div>
+            
+         
+        </div>
+      </div>
+      <div v-for="(message, index) in messages" :key="index" class="message" :class="{ 'my-message': message.sender === currentUser.login, 'other-message': message.sender !== currentUser.login }">
         <div
           class="message-avatar"
           :class="{ 'admin-avatar': message.role === 'admin' }"
@@ -22,6 +21,7 @@
         >
           <img :src="message.avatarUrl || defaultAvatar" alt="Аватар" />
         </div>
+
         <div class="message-content" :class="{ 'no-avatar': !shouldShowAvatar(index) }">
           <div class="message-sender">
             {{ message.sender }}
@@ -34,11 +34,7 @@
       </div>
     </div>
     <div class="chat-input">
-      <input
-        v-model="newMessage"
-        @keyup.enter="sendMessage"
-        placeholder="Введите сообщение..."
-      />
+      <input v-model="newMessage" @keyup.enter="sendMessage" placeholder="Введите сообщение..." />
       <button @click="sendMessage">Отправить</button>
       <div class="record-button" @click="toggleRecording">
         <div class="microphone-icon" :class="{ 'recording': isRecording }">
@@ -170,46 +166,28 @@ export default {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.chat-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.chat-header span {
-  color: white;
-  font-size: 25px;
-  font-weight: 900;
-  line-height: 57.33px;
-}
-
-.premuim_logo img {
-  width: 150px;
-}
-
-.named_page {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: #f2f60f;
-}
-
 .chat-messages {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 20px;
   padding: 10px;
   background-color: #2a324b;
-  background-image: url(../assets/Media/Components/background_chat.jpg);
-  background-size: cover;
-  background-position: center;
+  background-image: url(../assets/Media/Components/background_chat.png);
+  background-size: 50%;
   border-radius: 10px;
 }
 
 .message {
   display: flex;
   margin-bottom: 15px;
+}
+
+.message.my-message {
+  justify-content: flex-end; 
+}
+
+.message.other-message {
+  justify-content: flex-start; 
 }
 
 .message-avatar {
@@ -230,10 +208,33 @@ export default {
 
 .message-content {
   max-width: 70%;
-  background-color: #3657cb;
   padding: 10px;
   border-radius: 10px;
   overflow-wrap: anywhere;
+}
+
+.message.my-message .message-content {
+  background-color: #3657cb; 
+  color: white;
+}
+
+.hello_chat_table{
+  padding: 30px;
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    color: wheat;
+    border-radius: 15px;
+    background: #74747499;
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+
+.message.other-message .message-content {
+  background-color: #4a5568;
+  color: white;
 }
 
 .message-content.no-avatar {
@@ -242,12 +243,11 @@ export default {
 
 .message-sender {
   font-weight: bold;
-  color: white;
   margin-bottom: 5px;
 }
 
 .message-text {
-  color: white;
+  color: inherit;
 }
 
 .chat-input {

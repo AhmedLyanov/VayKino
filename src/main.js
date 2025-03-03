@@ -15,7 +15,7 @@ import Posts from './Pages/Posts.vue'
 import Lists from './Pages/Lists.vue'
 import List from './Pages/List.vue'
 import Media from './Pages/Media.vue'
-import Chat from './Components/Chat.vue'
+import Chat from './Pages/Chat.vue'
 
 
 const router = createRouter({

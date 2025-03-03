@@ -54,8 +54,12 @@ const onSubmit = async () => {
     if (response.ok) {
       const userData = await response.json();
       localStorage.setItem('currentUser', JSON.stringify(userData)); 
-      window.location.reload(); 
       router.push('/profile');
+      setTimeout(() => {
+        window.location.reload(); 
+      }, 100);
+     
+     
     } else {
       const errorData = await response.json();
       error.value = errorData.error || 'Неверный логин или пароль';
