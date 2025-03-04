@@ -12,12 +12,13 @@
           </div>
           <div class="movie-info__right">
             <div class="movie-info__path">
-              <span>Главная</span>
-              <span style="margin-left: 4px; margin-right: 4px;">
+              <span @click="this.$router.replace('/')" style="cursor: pointer; user-select: none;">Главная</span>
+              <span style="margin-left: 7px; margin-right: 7px; user-select: none;">
                 <img width="7" :src="`${linkToImg}/arrow_mini.svg`" alt="arrow" />
               </span>
-              <span>Фильмы</span>
-              <span style="margin-left: 4px; margin-right: 4px;">
+              <span @click="this.$router.replace(`/${movieTypes[data?.type]?.path}`)"
+                style="cursor: pointer; user-select: none;">{{ movieTypes[data?.type]?.nameMnogo }}</span>
+              <span style="margin-left: 7px; margin-right: 7px; user-select: none;">
                 <img width="7" :src="`${linkToImg}/arrow_mini.svg`" alt="arrow" />
               </span>
               <span v-if="!isLoading">{{ data.name ? data.name : data.alternativeName }}</span>
@@ -50,18 +51,18 @@
                 </div>
 
                 <div class="movie-info__socials">
-                  <div class="movie-info__social">
-                    <img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="" />
-                  </div>
-                  <div class="movie-info__social">
+                  <a href="https://vk.com/" target="_blank">
+                    <img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" />
+                  </a>
+                  <a href="https://www.instagram.com/" target="_blank">
                     <img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="" />
-                  </div>
-                  <div class="movie-info__social">
+                  </a>
+                  <a href="https://facebook.com/" target="_blank">
                     <img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="" />
-                  </div>
-                  <div class="movie-info__social">
+                  </a>
+                  <a href="https://x.com/" target="_blank">
                     <img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="" />
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -71,19 +72,19 @@
         <div class="movie-info__interactions">
           <div class="movie-info__reactions">
             <div class="movie-info__like">
-              <img :src="`${linkToImg}/like.svg`" alt="" />
+              <img :src="`${linkToImg}/like.svg`" alt="like" />
             </div>
             <div class="movie-info__dislike">
-              <img :src="`${linkToImg}/dislike.svg`" alt="" />
+              <img :src="`${linkToImg}/dislike.svg`" alt="dislike" />
             </div>
           </div>
 
           <div class="movie-info__favorites">
-            <div class="movie-info__favorite-icon">
-              <img :src="`${linkToImg}/heart.svg`" alt="" />
+            <div class="movie-info__favorite-icon" @click="toggleFavorite">
+              <img :src="`${linkToImg}/${isFavorite ? 'blue-heart.svg' : 'heart.svg'}`" alt="" />
             </div>
             <div class="movie-info__favorite-count">
-              В избранном у 37933 человек
+              В избранном у {{ 9999 + isFavorite }} человек
             </div>
           </div>
         </div>
@@ -254,10 +255,10 @@
         </div>
       </div>
 
-      <Cast :data="data" />
+      <Cast :data="data" :movieId="da" />
 
       <div class="movie-trealer" ref="treailer">
-        <BlockHeader :title="'Трейлеры фильма'" :text="'Все трейлеры'" :link="'/'" />
+        <BlockHeader :title="'Трейлер фильма'" :text="false" :link="false" />
 
         <div class="trealers-trealer">
           <iframe width="100%" height="auto" :src="`https://www.youtube.com/embed/${trealer.videoId}`"
@@ -271,36 +272,38 @@
             <div class="trealers-info-name">{{ data.name }}</div>
 
             <div class="trealers-info-socail_networks">
-              <div>
+              <a href="https://vk.com/" target="_blank">
                 <img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" />
-              </div>
-              <div>
+              </a>
+              <a href="https://www.instagram.com/" target="_blank">
                 <img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Instagram" />
-              </div>
-              <div>
+              </a>
+              <a href="https://facebook.com/" target="_blank">
                 <img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="Facebook" />
-              </div>
-              <div>
+              </a>
+              <a href="https://x.com/" target="_blank">
                 <img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="Twitter(X)" />
-              </div>
+              </a>
             </div>
           </div>
 
           <div class="trealers-info-likes">
-            <div class="trealers-info-like">
+            <div class="trealers-info-like" @click="likeVideo(trealer)">
               <div class="trealers-info-like-img">
-                <img :src="`${linkToImg}/like.svg`" alt="like" />
+                <img :src="likeIcon(trealer.videoId)" alt="like" />
               </div>
               <div class="trealers-info-like-count">
-                426
+                <div class="trailers__active-like-count">{{ trealer?.likesCount }}
+                </div>
               </div>
             </div>
-            <div class="trealers-info-dislike">
+            <div class="trealers-info-dislike" @click="dislikeVideo(trealer)">
               <div class="trealers-info-dislike-img">
-                <img :src="`${linkToImg}/dislike.svg`" alt="dislike" />
+                <img :src="dislikeIcon(trealer.videoId)" alt="dislike" />
               </div>
               <div class="trealers-info-dislike-count">
-                74
+                <div class="trailers__active-dislike-count">{{
+                  trealer?.dislikesCount }}</div>
               </div>
             </div>
           </div>
@@ -381,12 +384,6 @@ import AwardCard from '@/Components/AwardCard.vue';
 import Slider2 from '@/Components/Slider2.vue';
 import UpArrow from '@/Components/UpArrow.vue'
 import { fetchData, fetchAwards, fetchPosters, fetchStills, fetchSequels, fetchSimilars, searchTrailer } from '@/Services/apiService';
-// import { fetchAwards } from '@/Services/apiService';
-// import { fetchPosters } from '@/Services/apiService';
-// import { fetchStills } from '@/Services/apiService';
-// import { fetchSequels } from '@/Services/apiService';
-// import { fetchSimilars } from '@/Services/apiService';
-// import { searchTrailer } from '@/Services/apiService';
 import axios from 'axios';
 
 export default {
@@ -401,7 +398,17 @@ export default {
       trealer: {},
       linkToImg: "../src/assets/Media/MoviePage",
       isLoading: false,
-      isPremium: false
+      isPremium: false,
+      isFavorite: false,
+            likedVideos: [],
+            dislikedVideos: [],
+      movieTypes: {
+        "movie": { name: "Фильм", nameMnogo: "Фильмы", path: "movies" },
+        "tv-series": { name: "Сериал", nameMnogo: "Сериалы", path: "series" },
+        "cartoon": { name: "Мультфильм", nameMnogo: "Мультфильмы", path: "cartoons" },
+        "animated-series": { name: "Мультсериал", nameMnogo: "Мультсериалы", path: "animated-series" },
+        "anime": { name: "Аниме", nameMnogo: "Аниме", path: "anime" },
+      }
     };
   },
   props: {
@@ -417,12 +424,27 @@ export default {
         this.data = {}
         this.fetchMovieDataData();
       }
-    }
+    },
+    likedVideos: {
+      handler() {
+        this.saveLocalStorage();
+        this.updateCounts();
+      },
+      deep: true,
+    },
+    dislikedVideos: {
+      handler() {
+        this.saveLocalStorage();
+        this.updateCounts();
+      },
+      deep: true,
+    },
   },
   mounted() {
     window.scrollTo(0, 0);
     this.fetchMovieDataData();
     this.checkPremiumStatus();
+    this.checkIfFavorite();
   },
   methods: {
     async fetchMovieDataData() {
@@ -435,7 +457,9 @@ export default {
       }
 
       try {
-        this.trealer = await searchTrailer(`${this.data.type} ${this.data.name} ${this.data.year}`);
+        this.trealer = await searchTrailer(`${this.movieTypes[this.data.type].name} ${this.data.name} ${this.data.year}`);
+    this.addLikesAndDislikes();
+    this.loadLocalStorage();
       } catch (error) {
         console.error("Ошибка при получении трейлера:", error);
         this.trealer = null;
@@ -514,6 +538,129 @@ export default {
           console.error('Элемент trailer не найден!');
         }
       });
+    },
+    checkIfFavorite() {
+      if (JSON.parse(localStorage.getItem("currentUser"))) {
+        const user = JSON.parse(localStorage.getItem("currentUser"))
+        const userId = user._id
+        const favoritesString = localStorage.getItem(`${userId}_favoriteMovies`);
+        if (favoritesString) {
+          try {
+            const favorites = JSON.parse(favoritesString);
+            this.isFavorite = favorites.some(movie => movie.id === this.id);
+          } catch (error) {
+            console.error('Ошибка разбора JSON из localStorage:', error);
+            localStorage.setItem(`${userId}_favoriteMovies`, JSON.stringify([]));
+            this.isFavorite = false;
+          }
+        } else {
+          this.isFavorite = false;
+        }
+      }
+    },
+    toggleFavorite() {
+      if (JSON.parse(localStorage.getItem("currentUser"))) {
+        const user = JSON.parse(localStorage.getItem("currentUser"))
+        const userId = user._id
+        let favoritesString = localStorage.getItem(`${userId}_favoriteMovies`);
+        let favorites = [];
+
+        if (favoritesString) {
+          try {
+            favorites = JSON.parse(favoritesString);
+          } catch (error) {
+            console.error('Ошибка разбора JSON из localStorage:', error);
+            localStorage.setItem(`${userId}_favoriteMovies`, JSON.stringify([]));
+            favorites = [];
+          }
+        }
+
+        const index = favorites.findIndex(movie => movie.id === this.id);
+
+        if (index > -1) {
+          favorites.splice(index, 1);
+          this.isFavorite = false;
+        } else {
+          favorites.push({ id: this.id, name: this.data.name, enName: this.data.alternativeName, poster: this.data?.poster?.url || '../src/assets/Media/Components/PosterDefault.jpg' });
+          this.isFavorite = true;
+        }
+
+        localStorage.setItem(`${userId}_favoriteMovies`, JSON.stringify(favorites));
+      } else {
+        console.log("Нужно быть зареганным для выполнения этого действия");
+      }
+    },
+    addLikesAndDislikes() {
+      this.trealer.likesCount = Math.floor(Math.random() * (9999 - 2000 + 1)) + 2000;
+      this.trealer.dislikesCount = Math.floor(Math.random() * (1000 - 0 + 1)) + 0;
+
+      console.log(this.trealer.likesCount);
+      console.log(this.trealer.dislikesCount);
+      
+    },
+    likeVideo(trailer) {
+      if (!this.likedVideos.includes(trailer.videoId)) {
+        this.likedVideos.push(trailer.videoId);
+        trailer.likesCount++;
+
+        if (this.dislikedVideos.includes(trailer.videoId)) {
+          this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
+          trailer.dislikesCount--;
+        }
+
+      } else {
+        this.likedVideos = this.likedVideos.filter(id => id !== trailer.videoId);
+        trailer.likesCount--;
+      }
+    },
+    dislikeVideo(trailer) {
+      if (!this.dislikedVideos.includes(trailer.videoId)) {
+        this.dislikedVideos.push(trailer.videoId);
+        trailer.dislikesCount++;
+
+        if (this.likedVideos.includes(trailer.videoId)) {
+          this.likedVideos = this.likedVideos.filter(id => id !== trailer.videoId);
+          trailer.likesCount--;
+        }
+      } else {
+        this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
+        trailer.dislikesCount--;
+      }
+    },
+    saveLocalStorage() {
+      localStorage.setItem('likedVideos', JSON.stringify(this.likedVideos));
+      localStorage.setItem('dislikedVideos', JSON.stringify(this.dislikedVideos));
+    },
+    loadLocalStorage() {
+      try {
+        this.likedVideos = JSON.parse(localStorage.getItem('likedVideos')) || [];
+        this.dislikedVideos = JSON.parse(localStorage.getItem('dislikedVideos')) || [];
+        this.updateCounts();
+      } catch (e) {
+        console.error('Ошибка при загрузке из localStorage:', e);
+        localStorage.removeItem('likedVideos');
+        localStorage.removeItem('dislikedVideos');
+        this.likedVideos = [];
+        this.dislikedVideos = [];
+      }
+    },
+    updateCounts() {
+        if (this.likedVideos.includes(this.trealer.videoId)) {
+          this.trealer.likesCount = this.trealer.likesCount === 0 ? 1 : this.trealer.likesCount;
+        }
+        if (this.dislikedVideos.includes(this.trealer.videoId)) {
+          this.trealer.dislikesCount = this.trealer.dislikesCount === 0 ? 1 : this.trealer.dislikesCount;
+        }
+    },
+    likeIcon(videoId) {
+      return this.likedVideos.includes(videoId)
+        ? `${this.linkToImg}/blue-like.svg`
+        : `${this.linkToImg}/like.svg`;
+    },
+    dislikeIcon(videoId) {
+      return this.dislikedVideos.includes(videoId)
+        ? `${this.linkToImg}/blue-dislike.svg`
+        : `${this.linkToImg}/dislike.svg`;
     }
   },
   components: {
@@ -658,21 +805,26 @@ export default {
   display: flex;
   align-items: center;
   margin-left: 50px;
+
+  a {
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+    transition: 0.3s;
+    user-select: none;
+    cursor: pointer;
+    filter: invert();
+
+    &:not(:first-child) {
+      margin-left: 20px;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 
-.movie-info__social {
-  width: 20px;
-  height: 20px;
-  opacity: 0.6;
-  transition: 0.3s;
-  user-select: none;
-  cursor: pointer;
-  filter: invert();
-}
-
-.movie-info__social:hover {
-  opacity: 1;
-}
 
 .movie-info__social:not(:first-child) {
   margin-left: 20px;
@@ -705,6 +857,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
+  cursor: pointer;
 }
 
 .movie-info__like img {
@@ -821,7 +975,7 @@ export default {
   margin-left: 30px;
 }
 
-.trealers-info-socail_networks div {
+.trealers-info-socail_networks a {
   width: 20px;
   opacity: 0.6;
   transition: 0.3s;
@@ -840,6 +994,10 @@ export default {
 
 .trealers-info-likes {
   display: flex;
+
+  img{
+    pointer-events: none;
+  }
 }
 
 .trealers-info-likes div {

@@ -8,9 +8,11 @@ const API_500_REQUESTS_VERSION2 = "https://kinopoiskapiunofficial.tech/api/v2.2/
 const API_FETCH_ACTOR = "https://api.kinopoisk.dev/v1.4/person/"
 const API_FETCH_TO_LISTS = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=52&selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=rating&selectFields=genres&selectFields=poster&sortField=rating.kp&sortType=-1&lists=";
 const API_FETCH_POSTERS = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=128&selectFields=id&selectFields=name&selectFields=poster&notNullFields=name&notNullFields=poster.url&lists=planned-to-watch-films"
+const API_FETCH_ACTORS = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&selectFields=name&selectFields=alternativeName&selectFields=persons&notNullFields=persons.id&notNullFields=persons.name&notNullFields=persons.photo&notNullFields=persons.description&notNullFields=persons.profession&notNullFields=persons.enProfession&id=";
 
 const API_200_REQUESTS_TOKEN = "5W6J03Z-ZNT4Y0V-MC7SVYX-WQS4ZEN";
 const API_200_REQUESTS_TOKEN2 = "25VQB0J-Y1ZMMET-GPVV75G-1R3Q8BZ";
+const API_200_REQUESTS_TOKEN3 = "RP2WK9M-GCAMZCQ-JTDB83C-9S0QAQ1";
 const API_500_REQUESTS_TOKEN = "f541243d-43ef-4e4e-a710-9d6a2eb02f26";
 const API_YOUTUBE_TOKEN = "7c902ac83amshbb53ec6e3e93e16p1f2ea5jsnbd7787c7c777";
 
@@ -319,6 +321,22 @@ export const fetchLatestPosters = async () => {
     });
     
     return response.data.docs;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+export const fetchActors = async (id) => {
+  try {
+    const response = await axios.get(`${API_FETCH_ACTORS}${id}`, {
+      headers: {
+        Accept: "application/json",
+        "X-API-KEY": API_200_REQUESTS_TOKEN3,
+      },
+    });
+    
+    return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;

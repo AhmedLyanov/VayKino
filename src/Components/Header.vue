@@ -9,10 +9,10 @@
           <div class="header-logo-title">Vay<mark>Kino</mark></div>
         </div>
         <div class="header-social_networks">
-          <div><img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="" /></div>
-          <div><img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="" /></div>
-          <div><img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="" /></div>
-          <div><img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="" /></div>
+          <a href="https://vk.com/" target="_blank"><img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" /></a>
+          <a href="https://www.instagram.com/" target="_blank"><img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Facebook" /></a>
+          <a href="http://facebook.com/" target="_blank"><img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="Instagram" /></a>
+          <a href="https://x.com/" target="_blank"><img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="Twitter(X)" /></a>
         </div>
       </div>
 
@@ -368,7 +368,7 @@ header {
   align-items: center;
   justify-content: space-between;
 
-  div {
+  a {
     width: 20px;
     opacity: 0.6;
     transition: 0.3s;

@@ -1,6 +1,6 @@
 <template>
   <div class="movie-cast">
-    <BlockHeader :title="'В главных ролях:'" :text="'Все актёры'" :link="'/'" />
+    <BlockHeader :title="'В главных ролях:'" :text="'Весь персонал'" :link="`/actors/${data.id}`" />
 
     <div class="movie-cast__list">
       <template v-if="data?.persons">

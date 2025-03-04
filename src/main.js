@@ -16,6 +16,7 @@ import Lists from './Pages/Lists.vue'
 import List from './Pages/List.vue'
 import Media from './Pages/Media.vue'
 import Chat from './Pages/Chat.vue'
+import ActorsPage from './Pages/ActorsPage.vue'
 
 
 const router = createRouter({
@@ -65,6 +66,12 @@ const router = createRouter({
             path: "/person/:id",
             name: "PersonPage",
             component: PersonPage,
+            props: true
+        },
+        {
+            path: "/actors/:movieId",
+            name: "ActorsPage",
+            component: ActorsPage,
             props: true
         },
         {

@@ -40,6 +40,7 @@ export default {
     UpArrow
   },
   mounted() {
+    window.scrollTo(0, 0);
     this.groupMoviesByDate();
     document.title = 'Афиша'
   },

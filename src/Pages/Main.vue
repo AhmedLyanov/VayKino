@@ -23,15 +23,15 @@
 
                 <div class="now-playing__content">
                     <div class="now-playing__films">
-                        <Card v-if="nowPlayingMovies.length" v-for="(film, index) in nowPlayingMovies.slice(0, 8)" :data="film"
-                            :contextMenu="false"
-                            :key="index" />
+                        <Card v-if="nowPlayingMovies.length" v-for="(film, index) in nowPlayingMovies.slice(0, 8)"
+                            :data="film" :contextMenu="false" :key="index" />
                         <Card v-else v-for="key in 8" :key="key" :data="{}" />
                     </div>
                 </div>
 
                 <div class="now-playing__footer">
-                    <div class="now-playing__all-movies-button" @click="this.$router.replace('/movies')">Все новинки</div>
+                    <div class="now-playing__all-movies-button" @click="this.$router.replace('/movies')">Все новинки
+                    </div>
                 </div>
             </div>
 
@@ -42,58 +42,64 @@
                     <div class="trailers__active">
                         <div class="trailers__active-media">
                             <iframe width="100%" height="auto"
-                                :src="`https://www.youtube.com/embed/${trailers[currentTrailer]?.videoId}`" title="YouTube video player"
-                                frameBorder="0"
+                                :src="`https://www.youtube.com/embed/${trailers[currentTrailer]?.videoId}`"
+                                title="YouTube video player" frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                         </div>
 
                         <div class="trailers__active-info">
                             <div class="trailers__active-info-container">
-                                <div class="trailers__active-name">{{ trailers[currentTrailer]?.title.slice(0, trailers[currentTrailer].title.indexOf('—') - 1) }}</div>
+                                <div class="trailers__active-name">{{ trailers[currentTrailer]?.title.slice(0,
+                                    trailers[currentTrailer].title.indexOf('—') - 1) }}</div>
 
                                 <div class="trailers__active-socials">
-                                    <div class="trailers__active-social">
+                                    <a href="https://vk.com/" target="_blank">
                                         <img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" />
-                                    </div>
-                                    <div class="trailers__active-social">
+                                    </a>
+                                    <a href="https://www.instagram.com/" target="_blank">
                                         <img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Instagram" />
-                                    </div>
-                                    <div class="trailers__active-social">
+                                    </a>
+                                    <a href="http://facebook.com/" target="_blank">
                                         <img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="Facebook" />
-                                    </div>
-                                    <div class="trailers__active-social">
+                                    </a>
+                                    <a href="https://x.com/" target="_blank">
                                         <img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="Twitter(X)" />
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
 
                             <div class="trailers__active-likes">
-                                <div class="trailers__active-like">
+                                <div class="trailers__active-like" @click="likeVideo(trailers[currentTrailer])">
                                     <div class="trailers__active-like-img">
-                                        <img :src="`${linkToImg}/like.svg`" alt="like" />
+                                        <img :src="likeIcon(trailers[currentTrailer]?.videoId)" alt="like" />
                                     </div>
-                                    <div class="trailers__active-like-count">3 245</div>
+                                    <div class="trailers__active-like-count">{{ trailers[currentTrailer]?.likesCount }}
+                                    </div>
                                 </div>
-                                <div class="trailers__active-dislike">
+                                <div class="trailers__active-dislike" @click="dislikeVideo(trailers[currentTrailer])">
                                     <div class="trailers__active-dislike-img">
-                                        <img :src="`${linkToImg}/dislike.svg`" alt="dislike" />
+                                        <img :src="dislikeIcon(trailers[currentTrailer]?.videoId)" alt="dislike" />
                                     </div>
-                                    <div class="trailers__active-dislike-count">420</div>
+                                    <div class="trailers__active-dislike-count">{{
+                                        trailers[currentTrailer]?.dislikesCount }}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="trailers__list">
-                        <div v-for="(trailer, index) in trailers" class="trailers__item" @click="currentTrailer = index" :key="index">
+                        <div v-for="(trailer, index) in trailers" class="trailers__item" @click="currentTrailer = index"
+                            :key="index">
                             <div class="trailers__item-media">
-                                <img :src="`${trailer?.thumbnail[trailer?.thumbnail?.length-1]?.url}`" :alt="trailer.title.slice(0, trailer.title.indexOf('—') - 1)" />
+                                <img :src="`${trailer?.thumbnail[trailer?.thumbnail?.length - 1]?.url}`"
+                                    :alt="trailer.title.slice(0, trailer.title.indexOf('—') - 1)" />
                                 <div :class="{ active: currentTrailer === index }">
                                     <img :src="`${linkToImg}/play.svg`" alt="">
                                 </div>
                             </div>
-                            <div class="trailers__item-name">{{ trailer.title.slice(0, trailer.title.indexOf('—') - 1) }}</div>
+                            <div class="trailers__item-name">{{ trailer.title.slice(0, trailer.title.indexOf('—') - 1)
+                            }}</div>
                         </div>
                     </div>
                 </div>
@@ -132,7 +138,11 @@
                             </div>
 
                             <div class="last-news__item-large-content">
-                                <div class="last-news__item-large-date">{{ new Date(posts[activePost].publishedAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/\.$/, '') }}</div>
+                                <div class="last-news__item-large-date">{{ new
+                                    Date(posts[activePost].publishedAt).toLocaleDateString('ru-RU', {
+                                        day: 'numeric',
+                                        month: 'short', year: 'numeric'
+                                    }).replace(/\.$/, '') }}</div>
 
                                 <div>
                                     <div class="last-news__item-large-title">
@@ -149,16 +159,23 @@
 
                     <div class="last-news__main-right">
                         <div class="last-news__list">
-                            <div v-for="(post, index) in posts" :key="index" class="last-news__item-small" @click="setActivePost(index)">
+                            <div v-for="(post, index) in posts" :key="index" class="last-news__item-small"
+                                @click="setActivePost(index)">
                                 <div class="last-news__item-small-img">
                                     <img :src="post.imageUrl" alt="" />
-                                    <div class="last-news__item-small-blue" :style="{ opacity: activePost != index ? '0' : '1' }">
+                                    <div class="last-news__item-small-blue"
+                                        :style="{ opacity: activePost != index ? '0' : '1' }">
                                         <div>Читать новость</div>
                                     </div>
                                 </div>
 
-                                <div class="last-news__item-small-content" :style="{ opacity: activePost == index ? '0' : '1' }">
-                                    <div class="last-news__item-small-date">{{ new Date(post.publishedAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/\.$/, '') }}</div>
+                                <div class="last-news__item-small-content"
+                                    :style="{ opacity: activePost == index ? '0' : '1' }">
+                                    <div class="last-news__item-small-date">{{ new
+                                        Date(post.publishedAt).toLocaleDateString('ru-RU', {
+                                            day: 'numeric', month:
+                                                'short', year: 'numeric'
+                                        }).replace(/\.$/, '') }}</div>
                                     <div class="last-news__item-small-title">
                                         {{ post.title.slice(0, 40) }}...
                                     </div>
@@ -169,7 +186,7 @@
                 </div>
             </div>
         </div>
-                
+
         <UpArrow />
     </main>
 </template>
@@ -200,6 +217,8 @@ export default {
             trailers: [],
             currentTrailer: 0,
             popularMovies: [],
+            likedVideos: [],
+            dislikedVideos: [],
             linkToImg: "../src/assets/Media/Main",
         }
     },
@@ -229,20 +248,115 @@ export default {
         async setActiveGenre(genre) {
             this.activeGenre = genre;
             this.nowPlayingMovies = []
-            
+
             this.nowPlayingMovies = await fetchFilmsByGenre(genre.slice(0, genre.length - 1))
         },
-        setActivePost(index){
+        setActivePost(index) {
             this.activePost = index;
         },
-        goToLocation(url){
-            window.open(url,'_blank');
+        goToLocation(url) {
+            window.open(url, '_blank');
+        },
+        addLikesAndDislikes() {
+            if (this.trailers && Array.isArray(this.trailers)) {
+                this.trailers = this.trailers.map(trailer => {
+                    const likes = Math.floor(Math.random() * (9999 - 2000 + 1)) + 2000;
+                    const dislikes = Math.floor(Math.random() * (1000 - 0 + 1)) + 0;
+                    return {
+                        ...trailer,
+                        likesCount: likes,
+                        dislikesCount: dislikes
+                    };
+                });
+            } else {
+                console.warn('this.trailers не является массивом или не существует.');
+            }
+        },
+        likeVideo(trailer) {
+            if (!this.likedVideos.includes(trailer.videoId)) {
+                this.likedVideos.push(trailer.videoId);
+                trailer.likesCount++;
+
+                if (this.dislikedVideos.includes(trailer.videoId)) {
+                    this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
+                    trailer.dislikesCount--;
+                }
+
+            } else {
+                this.likedVideos = this.likedVideos.filter(id => id !== trailer.videoId);
+                trailer.likesCount--;
+            }
+        },
+        dislikeVideo(trailer) {
+            if (!this.dislikedVideos.includes(trailer.videoId)) {
+                this.dislikedVideos.push(trailer.videoId);
+                trailer.dislikesCount++;
+
+                if (this.likedVideos.includes(trailer.videoId)) {
+                    this.likedVideos = this.likedVideos.filter(id => id !== trailer.videoId);
+                    trailer.likesCount--;
+                }
+            } else {
+                this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
+                trailer.dislikesCount--;
+            }
+        },
+        saveLocalStorage() {
+            localStorage.setItem('likedVideos', JSON.stringify(this.likedVideos));
+            localStorage.setItem('dislikedVideos', JSON.stringify(this.dislikedVideos));
+        },
+        loadLocalStorage() {
+            try {
+                this.likedVideos = JSON.parse(localStorage.getItem('likedVideos')) || [];
+                this.dislikedVideos = JSON.parse(localStorage.getItem('dislikedVideos')) || [];
+                this.updateCounts();
+            } catch (e) {
+                console.error('Ошибка при загрузке из localStorage:', e);
+                localStorage.removeItem('likedVideos');
+                localStorage.removeItem('dislikedVideos');
+                this.likedVideos = [];
+                this.dislikedVideos = [];
+            }
+        },
+        updateCounts() {
+            this.trailers.forEach(trailer => {
+                if (this.likedVideos.includes(trailer.videoId)) {
+                    trailer.likesCount = trailer.likesCount === 0 ? 1 : trailer.likesCount;
+                }
+                if (this.dislikedVideos.includes(trailer.videoId)) {
+                    trailer.dislikesCount = trailer.dislikesCount === 0 ? 1 : trailer.dislikesCount;
+                }
+            });
+        },
+        likeIcon(videoId) {
+            return this.likedVideos.includes(videoId)
+                ? `${this.linkToImg}/blue-like.svg`
+                : `${this.linkToImg}/like.svg`;
+        },
+        dislikeIcon(videoId) {
+            return this.dislikedVideos.includes(videoId)
+                ? `${this.linkToImg}/blue-dislike.svg`
+                : `${this.linkToImg}/dislike.svg`;
         }
     },
     watch: {
-        blackList(){
+        blackList() {
             this.nowPlayingMovies = this.nowPlayingMovies.filter(obj => !this.blackList.includes(obj.name))
-        }
+        },
+        likedVideos: {
+            handler() {
+                this.saveLocalStorage();
+                this.updateCounts();
+            },
+            deep: true,
+        },
+        dislikedVideos: {
+            handler() {
+                this.saveLocalStorage();
+                this.updateCounts();
+            },
+            deep: true,
+        },
     },
     async mounted() {
         window.scrollTo(0, 0);
@@ -254,6 +368,10 @@ export default {
             this.nowPlayingMovies = this.nowPlayingMovies.filter(obj => !this.blackList.includes(obj.name))
 
             this.trailers = await getLatestVideosFromChannel();
+
+            this.addLikesAndDislikes();
+
+            this.loadLocalStorage()
 
             let popularMovies = await fetchFreeAPI(
                 isNaN(Number(this.activeYear))
@@ -429,9 +547,8 @@ export default {
 .trailers__active-socials {
     display: flex;
     margin-left: 30px;
-}
-
-.trailers__active-social {
+    
+    a {
     width: 20px;
     opacity: 0.6;
     transition: 0.3s;
@@ -447,9 +564,20 @@ export default {
         opacity: 1;
     }
 }
+}
 
 .trailers__active-likes {
     display: flex;
+}
+
+.trailers__active-like,
+.trailers__active-dislike {
+    cursor: pointer;
+    user-select: none;
+
+    img {
+        pointer-events: none;
+    }
 }
 
 .trailers__active-dislike {
@@ -529,16 +657,17 @@ export default {
     user-select: none;
     cursor: pointer;
     transform: scale(1, -1);
+
     &:not(:first-child) {
         margin-left: 20px;
     }
 }
 
-.trailers__item-media{
+.trailers__item-media {
     position: relative;
     height: 198.63px;
 
-    div{
+    div {
         width: 100%;
         height: 100%;
         display: flex;
@@ -551,20 +680,20 @@ export default {
         background: transparent;
         transition: 0.2s;
 
-        &.active{
+        &.active {
             background: #3657CBA6;
         }
 
-        img{
+        img {
             width: 30px;
             border-radius: 0px;
         }
     }
 
     img {
-    width: 355px;
-    border-radius: 10px;
-}
+        width: 355px;
+        border-radius: 10px;
+    }
 }
 
 .trailers__item-name {
@@ -740,7 +869,7 @@ export default {
     display: block;
 }
 
-.last-news__item-small-blue{
+.last-news__item-small-blue {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -753,7 +882,7 @@ export default {
     height: -webkit-fill-available;
     transition: 0.2s;
 
-    div{
+    div {
         color: white;
         padding: 10px 20px;
         border: 2px solid white;

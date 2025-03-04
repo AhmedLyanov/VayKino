@@ -40,24 +40,24 @@
 
         <div class="footer-cont">
             <div class="footer-social_networks">
-                <div><img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="" /></div>
-                <div><img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="" /></div>
-                <div><img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="" /></div>
-                <div><img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="" /></div>
-                <div><img :src="`${linkToImg}/youtube_social_media_icon.svg`" alt="" /></div>
+                <a href="https://vk.com/" target="_blank"><img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" /></a>
+                <a href="https://www.instagram.com/" target="_blank"><img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Instagram" /></a>
+                <a href="https://facebook.com/" target="_blank"><img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="Facebook" /></a>
+                <a href="https://x.com/" target="_blank"><img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="Twitter(X)" /></a>
+                <a href="https://youtube.com/" target="_blank"><img :src="`${linkToImg}/youtube_social_media_icon.svg`" alt="YouTube" /></a>
             </div>
 
             <div class="footer-nav">
-                <div>Афиша</div>
-                <div>Новости</div>
-                <div>Персоны</div>
-                <div>Рейтинги</div>
-                <div>Рецензии</div>
-                <div>Каталог фильмов</div>
+                <router-link to="/premiere" active-class="active">Афиша</router-link>
+                <router-link to="/media" active-class="active">Медиа</router-link>
+                <router-link to="/movies" active-class="active">Фильмы</router-link>
+                <router-link to="/posts" active-class="active">Новости</router-link>
+                <router-link to="/lists" active-class="active">Подборки</router-link>
+                <router-link to="/chat" active-class="active" class="chat">Премиум-Чат</router-link>
             </div>
 
             <div class="footer-all_rights">
-                2020 © VayKino. Все права защищены
+                2025 © VayKino. Все права защищены
             </div>
 
             <div class="footer-privacy_policy">
@@ -255,7 +255,7 @@ footer {
     margin-top: 70px;
 }
 
-.footer-social_networks div {
+.footer-social_networks a {
     width: 25px;
     opacity: 0.6;
     transition: 0.3s;
@@ -278,7 +278,8 @@ footer {
     margin-top: 30px;
 }
 
-.footer-nav div {
+.footer-nav a {
+    text-decoration: none;
     font-size: 17px;
     font-weight: 700;
     line-height: 21.06px;
@@ -290,12 +291,21 @@ footer {
     cursor: pointer;
     transition: 0.3s;
 
+    &.active{
+      color: #3657cb;
+      text-shadow: 0 0 15px rgba(54, 87, 203, .7);
+    }
+
     &:hover {
         color: #3657cb;
     }
 
     &:not(:first-child) {
         margin-left: 35px;
+    }
+
+    &:nth-child(6){
+      color: #f2f60f;
     }
 }
 
