@@ -3,11 +3,14 @@
     <div class="chat-messages">
       <div class="hello_chat_table">
         <div class="hello-chat-header">
-          <div class="hello-chat-title">Привествуем и поздравляем вас {{ currentUser.name }}</div>
+          <div class="hello-chat-title">Привествуем и поздравляем вас, {{ currentUser.name }}!</div>
           <div class="hello-chat-subtitle">Вы в премиум-чате</div>
           <div class="hello-chat-text">
-            Здесь вы можете общаться с другими обладателями премиум-аккаунтов, задавать вопросы, веселиться.
-            И в целом весело проводить время
+            Здесь, вы можете общаться с другими обладателями премиум-подписки, 
+            посоветовать фильм, общаться с администратором, дурачиться с другими пользователями и в целом весело проводить время.
+            Приятной беседы! :)
+
+            
           </div>
             
          
@@ -23,26 +26,45 @@
         </div>
 
         <div class="message-content" :class="{ 'no-avatar': !shouldShowAvatar(index) }">
-          <div class="message-sender">
-            {{ message.sender }}
-          </div>
-          <div class="message-text">
-            <span v-if="message.text">{{ message.text }}</span>
-            <audio v-if="message.audioUrl" :src="message.audioUrl" controls></audio>
-          </div>
-        </div>
+  <div class="message-sender">
+    {{ message.sender }}
+  </div>
+  <div class="message-text">
+    <span v-if="message.text">{{ message.text }}</span>
+    <audio v-if="message.audioUrl" :src="message.audioUrl" controls></audio>
+    <img v-if="message.imageUrl" :src="message.imageUrl" alt="Изображение" class="message-image" />
+  </div>
+  <div class="user-info">
+    <div class="message_time">
+      {{ formatTime(message.timestamp) }}
+    </div>
+  </div>
+</div>
       </div>
     </div>
     <div class="chat-input">
-      <input v-model="newMessage" @keyup.enter="sendMessage" placeholder="Введите сообщение..." />
-      <button @click="sendMessage">Отправить</button>
-      <div class="record-button" @click="toggleRecording">
-        <div class="microphone-icon" :class="{ 'recording': isRecording }">
-          <img src="../assets/Media/Components/audio.svg" alt="Запись" />
-          <div class="aura" v-if="isRecording"></div>
-        </div>
-      </div>
+  <div class="setBinaryFiles">
+    <div class="button_paperclip">
+      <label class="setImageOrVideo" for="fileInput">
+        <img src="../assets/Media/Components/paperclip.svg" alt="Прикрепить файл" />
+      </label>
+      <input
+        id="fileInput"
+        type="file"
+        accept="image/*"
+        style="display: none;"
+        @change="handleFileUpload"
+      />
     </div>
+  </div>
+  <input v-model="newMessage" @keyup.enter="sendMessage" placeholder="Введите сообщение..." />
+  <div class="record-button" @click="toggleRecording">
+    <div class="microphone-icon" :class="{ 'recording': isRecording }">
+      <img src="../assets/Media/Components/audio.svg" alt="Запись" />
+      <div class="aura" v-if="isRecording"></div>
+    </div>
+  </div>
+</div>
   </div>
 </template>
 
@@ -75,9 +97,11 @@ export default {
     this.socket = io("http://91.197.96.204:3000");
     this.socket.on("newMessage", (message) => {
       this.messages.push(message);
+      this.newMessageScroll();
     });
   },
-  methods: {
+  methods: 
+  {
     async fetchMessages() {
       try {
         const response = await axios.get("http://91.197.96.204:3000/chat-messages");
@@ -101,11 +125,54 @@ export default {
         console.error("Ошибка при отправке сообщения:", error);
       }
     },
+    formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const options = {
+
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return date.toLocaleString("ru", options);
+  },
+
+
+  async handleFileUpload(event) {
+       const file = event.target.files[0];
+       if (!file) return;
+       if (!file.type.startsWith("image/")) {
+           alert("Пожалуйста, выберите изображение.");
+           return;
+       }
+       const formData = new FormData();
+       formData.append("file", file);
+       formData.append("sender", this.currentUser.login);
+       formData.append("avatarUrl", this.currentUser.avatarUrl);
+       try {
+           const response = await axios.post("http://91.197.96.204:3000/upload-image-message", formData, {
+               headers: {
+                   "Content-Type": "multipart/form-data",
+               },
+           });
+           console.log("Ответ от сервера:", response.data);
+           event.target.value = "";
+           this.$nextTick(() => {
+               this.scrollToBottom();
+           });
+       } catch (error) {
+           console.error("Ошибка при отправке изображения:", error);
+       }
+   },
     toggleRecording() {
       if (this.isRecording) {
         this.stopRecording();
       } else {
         this.startRecording();
+      }
+    },
+    newMessageScroll() {
+    const chatMessages = this.$el.querySelector(".chat-messages");
+       if(chatMessages){
+        chatMessages.scrollTop = chatMessages.scrollHeight;
       }
     },
     async startRecording() {
@@ -121,6 +188,8 @@ export default {
         await this.sendVoiceMessage(blob);
       });
     },
+
+    
     async sendVoiceMessage(blob) {
   const formData = new FormData();
   formData.append("file", blob, "voice-message.webm");
@@ -150,7 +219,7 @@ export default {
       this.socket.disconnect();
     }
   },
-};
+}
 </script>
 
 <style scoped>
@@ -190,6 +259,13 @@ export default {
   justify-content: flex-start; 
 }
 
+.message-image {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
 .message-avatar {
   width: 40px;
   height: 40px;
@@ -216,6 +292,10 @@ export default {
 .message.my-message .message-content {
   background-color: #3657cb; 
   color: white;
+}
+
+.setImageOrVideo img{
+  display: grid;
 }
 
 .hello_chat_table{
@@ -253,16 +333,24 @@ export default {
 .chat-input {
   display: flex;
   gap: 10px;
+  user-select: none;
   align-items: center;
 }
 
 .chat-input input {
   flex: 1;
   padding: 10px;
-  border: 1px solid #3657cb;
+  border: none;
   border-radius: 10px;
-  background-color: #2a324b;
+  background-color: transparent;
+  outline: none;
   color: white;
+  font-size: 20px;
+}
+
+.user-info{
+  display: flex;
+  justify-content: flex-end;
 }
 
 .chat-input button {
@@ -274,7 +362,32 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+.chat-messages {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #3657cb #2a324b; 
+  scroll-behavior: smooth;
+}
 
+.chat-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: #2a324b;
+  border-radius: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #3657cb;
+  border-radius: 4px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #1f4ae6;
+}
 .chat-input button:hover {
   background-color: #1f4ae6;
 }
@@ -290,7 +403,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #3657cb;
   border-radius: 50%;
   transition: background-color 0.3s;
 }
@@ -300,8 +412,8 @@ export default {
 }
 
 .microphone-icon img {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
 }
 
 .aura {
