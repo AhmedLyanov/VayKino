@@ -5,7 +5,7 @@
                 <img :src="award.imageUrl" alt="" />
             </div>
         </div>
-        <div :style="award.imageUrl ? 'width: 200px;' : 'width: fit-content;'">
+        <div :style="award.imageUrl ? 'max-width: 250px;' : 'width: fit-content;'">
             <div class="award_card-name">{{ award.name }}</div>
             <div class="award_card-nominationName">{{ award.nominationName }}</div>
             <div class="award_card-year">{{ award.year }}</div>

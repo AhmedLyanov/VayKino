@@ -1,6 +1,6 @@
 <template>
   <div class="movie-cast">
-    <BlockHeader :title="'В главных ролях:'" :text="'Весь персонал'" :link="`/actors/${data.id}`" />
+    <BlockHeader :title="'В главных ролях:'" :text="'Весь персонал'" :link="`/cast/${data.id}`" />
 
     <div class="movie-cast__list">
       <template v-if="data?.persons">
@@ -60,86 +60,19 @@ export default defineComponent({
     const router = useRouter();
 
     const goToPerson = (personId) => {
-        router.push({ name: 'PersonPage', params: { id: personId } });
-      };
-
-    const sha256 = async (buffer) => {
-      const uint8Array = new Uint8Array(buffer);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', uint8Array);
-      return Array.from(new Uint8Array(hashBuffer))
-        .map(byte => byte.toString(16).padStart(2, '0'))
-        .join('');
+      router.push({ name: 'PersonPage', params: { id: personId } });
     };
-    const fetchImage = async (url) => {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(
-            `Ошибка при загрузке изображения ${url}: ${response.status} ${response.statusText}`
-          );
+
+
+    const fetchActors = () => {
+        if (props.data?.persons) {
+            const actors = props.data.persons.filter(person => person.enProfession === 'actor').slice(0, 10);
+            tenActors.value = actors;
+        } else {
+            tenActors.value = [];
         }
-        const blob = await response.blob();
-        const reader = new FileReader();
-        return new Promise((resolve, reject) => {
-          reader.onloadend = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsArrayBuffer(blob);
-        });
-      } catch (error) {
-        console.error('Ошибка в fetchImage:', error);
-        throw error;
-      }
     };
 
-    const compareImages = async (leftImageUrl, rightImageUrl) => {
-      try {
-        const leftImage = await fetchImage(leftImageUrl);
-        const rightImage = await fetchImage(rightImageUrl);
-
-        const leftHash = await sha256(leftImage);
-        const rightHash = await sha256(rightImage);
-
-        return !(leftHash === rightHash);
-      } catch (error) {
-        console.error('Ошибка при сравнении изображений:', error);
-        return false;
-      }
-    };
-
-    const fetchActors = async () => {
-      if (props.data?.persons) {
-        try {
-          const promises = props.data.persons
-            .filter(person => person.enProfession === 'actor')
-            .map(async person => {
-              try {
-                const imagesMatch = await compareImages(
-                  'https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_253180.jpg',
-                  person.photo
-                );
-                return imagesMatch ? person : null;
-              } catch (error) {
-                console.error(
-                  'Ошибка сравнения изображений для актера:',
-                  person.name,
-                  error
-                );
-                return null;
-              }
-            });
-
-          const results = await Promise.all(promises);
-          const filteredActors = results.filter(person => person !== null).slice(0, 10);
-
-          tenActors.value = filteredActors;
-        } catch (error) {
-          console.error('Ошибка при получении данных об актерах:', error);
-          tenActors.value = [];
-        }
-      } else {
-        tenActors.value = [];
-      }
-    };
 
     onMounted(fetchActors);
     watch(

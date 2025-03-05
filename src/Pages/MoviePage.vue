@@ -255,7 +255,7 @@
         </div>
       </div>
 
-      <Cast :data="data" :movieId="da" />
+      <Cast :data="data" />
 
       <div class="movie-trealer" ref="treailer">
         <BlockHeader :title="'Трейлер фильма'" :text="false" :link="false" />
@@ -311,7 +311,7 @@
       </div>
 
       <div class="movie-awards" v-if="awards?.items?.length">
-        <BlockHeader :title="'Награды'" :text="awards?.items?.length > 4 ? 'Все награды' : false" :link="'/'" />
+        <BlockHeader :title="'Награды'" :text="awards?.items?.length > 4 ? 'Все награды' : false" :link="`/awards/${data.id}`" />
 
         <div class="awards-main">
           <AwardCard v-for="(award, index) in awards.items.slice(0, 4)" :key="index" :award="award" />
@@ -319,7 +319,8 @@
       </div>
 
       <div class="movie-posters" v-if="posters?.items?.length">
-        <BlockHeader :title="'Постеры к фильму'" :text="posters?.items?.length > 4 ? 'Все кадры' : false" :link="'/'" />
+        <BlockHeader :title="'Постеры к фильму'" :text="posters?.items?.length > 4 ? 'Все постеры' : false"
+          :link="`/posters/${data.id}`" />
 
         <div class="posters-main">
           <div v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index" class="posters-img">
@@ -329,7 +330,7 @@
       </div>
 
       <div class="movie-stills" v-if="stills && stills?.items?.length">
-        <BlockHeader :title="'Кадры из фильма'" :text="stills?.items?.length > 4 ? 'Все кадры' : false" :link="'/'" />
+        <BlockHeader :title="'Кадры из фильма'" :text="stills?.items?.length > 4 ? 'Все кадры' : false" :link="`/stills/${data.id}`" />
 
         <div class="stills-main">
           <div v-for="(still, index) in stills?.items?.slice(0, 4)" :key="index" class="stills-img">
@@ -400,8 +401,8 @@ export default {
       isLoading: false,
       isPremium: false,
       isFavorite: false,
-            likedVideos: [],
-            dislikedVideos: [],
+      likedVideos: [],
+      dislikedVideos: [],
       movieTypes: {
         "movie": { name: "Фильм", nameMnogo: "Фильмы", path: "movies" },
         "tv-series": { name: "Сериал", nameMnogo: "Сериалы", path: "series" },
@@ -423,6 +424,7 @@ export default {
         window.scrollTo(0, 0);
         this.data = {}
         this.fetchMovieDataData();
+        this.checkIfFavorite()
       }
     },
     likedVideos: {
@@ -458,8 +460,8 @@ export default {
 
       try {
         this.trealer = await searchTrailer(`${this.movieTypes[this.data.type].name} ${this.data.name} ${this.data.year}`);
-    this.addLikesAndDislikes();
-    this.loadLocalStorage();
+        this.addLikesAndDislikes();
+        this.loadLocalStorage();
       } catch (error) {
         console.error("Ошибка при получении трейлера:", error);
         this.trealer = null;
@@ -556,6 +558,8 @@ export default {
         } else {
           this.isFavorite = false;
         }
+      } else {
+        console.log("Нужно быть зареганным для выполнения этого действия");
       }
     },
     toggleFavorite() {
@@ -581,7 +585,7 @@ export default {
           favorites.splice(index, 1);
           this.isFavorite = false;
         } else {
-          favorites.push({ id: this.id, name: this.data.name, enName: this.data.alternativeName, poster: this.data?.poster?.url || '../src/assets/Media/Components/PosterDefault.jpg' });
+          favorites.push({ id: this.id, name: this.data.name, enName: this.data.alternativeName, poster: this.data?.poster?.url || '../src/assets/Media/Components/PosterDefault.jpg', genres: this.data?.genres });
           this.isFavorite = true;
         }
 
@@ -593,64 +597,72 @@ export default {
     addLikesAndDislikes() {
       this.trealer.likesCount = Math.floor(Math.random() * (9999 - 2000 + 1)) + 2000;
       this.trealer.dislikesCount = Math.floor(Math.random() * (1000 - 0 + 1)) + 0;
-
-      console.log(this.trealer.likesCount);
-      console.log(this.trealer.dislikesCount);
-      
     },
     likeVideo(trailer) {
-      if (!this.likedVideos.includes(trailer.videoId)) {
-        this.likedVideos.push(trailer.videoId);
-        trailer.likesCount++;
+      if (JSON.parse(localStorage.getItem("currentUser"))) {
+        if (!this.likedVideos.includes(trailer.videoId)) {
+          this.likedVideos.push(trailer.videoId);
+          trailer.likesCount++;
 
-        if (this.dislikedVideos.includes(trailer.videoId)) {
-          this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
-          trailer.dislikesCount--;
-        }
+          if (this.dislikedVideos.includes(trailer.videoId)) {
+            this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
+            trailer.dislikesCount--;
+          }
 
-      } else {
-        this.likedVideos = this.likedVideos.filter(id => id !== trailer.videoId);
-        trailer.likesCount--;
-      }
-    },
-    dislikeVideo(trailer) {
-      if (!this.dislikedVideos.includes(trailer.videoId)) {
-        this.dislikedVideos.push(trailer.videoId);
-        trailer.dislikesCount++;
-
-        if (this.likedVideos.includes(trailer.videoId)) {
+        } else {
           this.likedVideos = this.likedVideos.filter(id => id !== trailer.videoId);
           trailer.likesCount--;
         }
       } else {
-        this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
-        trailer.dislikesCount--;
+        console.log("Нужно быть зареганным для выполнения этого действия");
+      }
+    },
+    dislikeVideo(trailer) {
+      if (JSON.parse(localStorage.getItem("currentUser"))) {
+        if (!this.dislikedVideos.includes(trailer.videoId)) {
+          this.dislikedVideos.push(trailer.videoId);
+          trailer.dislikesCount++;
+
+          if (this.likedVideos.includes(trailer.videoId)) {
+            this.likedVideos = this.likedVideos.filter(id => id !== trailer.videoId);
+            trailer.likesCount--;
+          }
+        } else {
+          this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
+          trailer.dislikesCount--;
+        }
+      } else {
+        console.log("Нужно быть зареганным для выполнения этого действия");
       }
     },
     saveLocalStorage() {
-      localStorage.setItem('likedVideos', JSON.stringify(this.likedVideos));
-      localStorage.setItem('dislikedVideos', JSON.stringify(this.dislikedVideos));
+      const user = JSON.parse(localStorage.getItem("currentUser"))
+      const userId = user._id
+      localStorage.setItem(`${userId}_likedVideos`, JSON.stringify(this.likedVideos));
+      localStorage.setItem(`${userId}_dislikedVideos`, JSON.stringify(this.dislikedVideos));
     },
     loadLocalStorage() {
+      const user = JSON.parse(localStorage.getItem("currentUser"))
+      const userId = user._id
       try {
-        this.likedVideos = JSON.parse(localStorage.getItem('likedVideos')) || [];
-        this.dislikedVideos = JSON.parse(localStorage.getItem('dislikedVideos')) || [];
+        this.likedVideos = JSON.parse(localStorage.getItem(`${userId}_likedVideos`)) || [];
+        this.dislikedVideos = JSON.parse(localStorage.getItem(`${userId}_dislikedVideos`)) || [];
         this.updateCounts();
       } catch (e) {
         console.error('Ошибка при загрузке из localStorage:', e);
-        localStorage.removeItem('likedVideos');
-        localStorage.removeItem('dislikedVideos');
+        localStorage.removeItem(`${userId}_likedVideos`);
+        localStorage.removeItem(`${userId}_dislikedVideos`);
         this.likedVideos = [];
         this.dislikedVideos = [];
       }
     },
     updateCounts() {
-        if (this.likedVideos.includes(this.trealer.videoId)) {
-          this.trealer.likesCount = this.trealer.likesCount === 0 ? 1 : this.trealer.likesCount;
-        }
-        if (this.dislikedVideos.includes(this.trealer.videoId)) {
-          this.trealer.dislikesCount = this.trealer.dislikesCount === 0 ? 1 : this.trealer.dislikesCount;
-        }
+      if (this.likedVideos.includes(this.trealer.videoId)) {
+        this.trealer.likesCount = this.trealer.likesCount === 0 ? 1 : this.trealer.likesCount;
+      }
+      if (this.dislikedVideos.includes(this.trealer.videoId)) {
+        this.trealer.dislikesCount = this.trealer.dislikesCount === 0 ? 1 : this.trealer.dislikesCount;
+      }
     },
     likeIcon(videoId) {
       return this.likedVideos.includes(videoId)
@@ -995,7 +1007,7 @@ export default {
 .trealers-info-likes {
   display: flex;
 
-  img{
+  img {
     pointer-events: none;
   }
 }

@@ -7,7 +7,7 @@ import { onMounted, watch } from 'vue';
 
 const props = defineProps({
   kinopoiskId: {
-    type: Number,
+    type: String,
     required: true,
   },
 });

@@ -3,7 +3,7 @@
         <div class="main-content">
             <div class="actors">
                 <div class="actors-header">
-                    <BlockHeader :title="`${title}. Персонал`" :text="false" :link="false" />
+                    <BlockHeader :title="`Создатели фильма ${title}`" :text="false" :link="false" />
                 </div>
 
                 <div class="actors-cont">
@@ -68,6 +68,8 @@ export default {
         BlockHeader,
     },
     async mounted(){
+        window.scrollTo(0, 0);
+        document.title = `Создатели фильма ${this.title}`
         try {
         this.persons = await fetchActors(this.movieId);
         this.title = this.persons.docs[0].name
@@ -90,6 +92,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(5, 280px);
   justify-content: space-between;
+  margin-top: 40px;
 }
 
 .movie-cast__actor {

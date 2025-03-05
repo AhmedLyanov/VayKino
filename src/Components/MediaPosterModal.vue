@@ -29,10 +29,14 @@
         type: String,
         required: true,
       },
+      posterScale: {
+        type: Number,
+        required: true,
+      },
     },
     data() {
       return {
-        scale: 1.4,
+        scale: this.posterScale,
         translateX: 0,
         translateY: 0,
         isDragging: false,
@@ -105,7 +109,7 @@
         document.body.style.cursor = 'default';
       },
       resetModalState() {
-        this.scale = 1.4;
+        this.scale = this.posterScale;
         this.translateX = 0;
         this.translateY = 0;
         this.isDragging = false;
@@ -137,8 +141,6 @@
     align-items: center;
     transition: transform 0.1s ease-out;
     cursor: grab;
-    max-width: 90%;
-    max-height: 90%;
   }
   
   .modal img {

@@ -72,7 +72,7 @@
         </div>
 
         <MediaTrailerModal :is-open="isModalTrailerOpen" :videoId="videoId" @close="closeTrailerModal" />
-        <MediaPosterModal :is-open="isModalPosterOpen" :posterUrl="videoId" @close="closePosterModal" />
+        <MediaPosterModal :is-open="isModalPosterOpen" :posterUrl="videoId" @close="closePosterModal" :posterScale="1.4" />
         <UpArrow />
     </main>
 </template>

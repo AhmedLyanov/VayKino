@@ -21,7 +21,7 @@
 
                         <form class="email_mailing-cont-form" @submit.prevent="subscribe">
                 <div class="email_mailing-cont-form-cont">
-                    <input v-model="email" class="email_mailing-cont-form-input_text" type="email"
+                    <input class="email_mailing-cont-form-input_text" type="email"
                         placeholder="Введите свой E-mail адрес" required />
                     <input class="email_mailing-cont-form-input_submit" type="submit" value="Подписаться" />
                 </div>

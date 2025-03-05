@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                             <div class="trailers__item-name">{{ trailer.title.slice(0, trailer.title.indexOf('—') - 1)
-                            }}</div>
+                                }}</div>
                         </div>
                     </div>
                 </div>
@@ -273,47 +273,59 @@ export default {
             }
         },
         likeVideo(trailer) {
-            if (!this.likedVideos.includes(trailer.videoId)) {
-                this.likedVideos.push(trailer.videoId);
-                trailer.likesCount++;
+            if (JSON.parse(localStorage.getItem("currentUser"))) {
+                if (!this.likedVideos.includes(trailer.videoId)) {
+                    this.likedVideos.push(trailer.videoId);
+                    trailer.likesCount++;
 
-                if (this.dislikedVideos.includes(trailer.videoId)) {
-                    this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
-                    trailer.dislikesCount--;
-                }
+                    if (this.dislikedVideos.includes(trailer.videoId)) {
+                        this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
+                        trailer.dislikesCount--;
+                    }
 
-            } else {
-                this.likedVideos = this.likedVideos.filter(id => id !== trailer.videoId);
-                trailer.likesCount--;
-            }
-        },
-        dislikeVideo(trailer) {
-            if (!this.dislikedVideos.includes(trailer.videoId)) {
-                this.dislikedVideos.push(trailer.videoId);
-                trailer.dislikesCount++;
-
-                if (this.likedVideos.includes(trailer.videoId)) {
+                } else {
                     this.likedVideos = this.likedVideos.filter(id => id !== trailer.videoId);
                     trailer.likesCount--;
                 }
             } else {
-                this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
-                trailer.dislikesCount--;
+                console.log("Нужно быть зареганным для выполнения этого действия");
+            }
+        },
+        dislikeVideo(trailer) {
+            if (JSON.parse(localStorage.getItem("currentUser"))) {
+                if (!this.dislikedVideos.includes(trailer.videoId)) {
+                    this.dislikedVideos.push(trailer.videoId);
+                    trailer.dislikesCount++;
+
+                    if (this.likedVideos.includes(trailer.videoId)) {
+                        this.likedVideos = this.likedVideos.filter(id => id !== trailer.videoId);
+                        trailer.likesCount--;
+                    }
+                } else {
+                    this.dislikedVideos = this.dislikedVideos.filter(id => id !== trailer.videoId);
+                    trailer.dislikesCount--;
+                }
+            } else {
+                console.log("Нужно быть зареганным для выполнения этого действия");
             }
         },
         saveLocalStorage() {
-            localStorage.setItem('likedVideos', JSON.stringify(this.likedVideos));
-            localStorage.setItem('dislikedVideos', JSON.stringify(this.dislikedVideos));
+            const user = JSON.parse(localStorage.getItem("currentUser"))
+            const userId = user._id
+            localStorage.setItem(`${userId}_likedVideos`, JSON.stringify(this.likedVideos));
+            localStorage.setItem(`${userId}_dislikedVideos`, JSON.stringify(this.dislikedVideos));
         },
         loadLocalStorage() {
+            const user = JSON.parse(localStorage.getItem("currentUser"))
+            const userId = user._id
             try {
-                this.likedVideos = JSON.parse(localStorage.getItem('likedVideos')) || [];
-                this.dislikedVideos = JSON.parse(localStorage.getItem('dislikedVideos')) || [];
+                this.likedVideos = JSON.parse(localStorage.getItem(`${userId}_likedVideos`)) || [];
+                this.dislikedVideos = JSON.parse(localStorage.getItem(`${userId}_dislikedVideos`)) || [];
                 this.updateCounts();
             } catch (e) {
                 console.error('Ошибка при загрузке из localStorage:', e);
-                localStorage.removeItem('likedVideos');
-                localStorage.removeItem('dislikedVideos');
+                localStorage.removeItem(`${userId}_likedVideos`);
+                localStorage.removeItem(`${userId}_dislikedVideos`);
                 this.likedVideos = [];
                 this.dislikedVideos = [];
             }
@@ -547,23 +559,23 @@ export default {
 .trailers__active-socials {
     display: flex;
     margin-left: 30px;
-    
+
     a {
-    width: 20px;
-    opacity: 0.6;
-    transition: 0.3s;
-    user-select: none;
-    cursor: pointer;
-    filter: invert();
+        width: 20px;
+        opacity: 0.6;
+        transition: 0.3s;
+        user-select: none;
+        cursor: pointer;
+        filter: invert();
 
-    &:not(:first-child) {
-        margin-left: 25px;
-    }
+        &:not(:first-child) {
+            margin-left: 25px;
+        }
 
-    &:hover {
-        opacity: 1;
+        &:hover {
+            opacity: 1;
+        }
     }
-}
 }
 
 .trailers__active-likes {

@@ -16,7 +16,11 @@ import Lists from './Pages/Lists.vue'
 import List from './Pages/List.vue'
 import Media from './Pages/Media.vue'
 import Chat from './Pages/Chat.vue'
-import ActorsPage from './Pages/ActorsPage.vue'
+import Actors from './Pages/Actors.vue'
+import Posters from './Pages/Posters.vue'
+import Awards from './Pages/Awards.vue'
+import Stills from './Pages/Stills.vue'
+import Favourites from './Pages/Favourites.vue'
 
 
 const router = createRouter({
@@ -52,6 +56,11 @@ const router = createRouter({
             component: Media,
         },
         {
+            path: "/favourites",
+            name: "Favourites",
+            component: Favourites,
+        },
+        {
             path: "/movie/:id",
             name: "MoviePage",
             component: MoviePage,
@@ -69,9 +78,27 @@ const router = createRouter({
             props: true
         },
         {
-            path: "/actors/:movieId",
-            name: "ActorsPage",
-            component: ActorsPage,
+            path: "/cast/:movieId",
+            name: "Cast",
+            component: Actors,
+            props: true
+        },
+        {
+            path: "/posters/:movieId",
+            name: "Posters",
+            component: Posters,
+            props: true
+        },
+        {
+            path: "/awards/:movieId",
+            name: "Awards",
+            component: Awards,
+            props: true
+        },
+        {
+            path: "/stills/:movieId",
+            name: "Stills",
+            component: Stills,
             props: true
         },
         {
