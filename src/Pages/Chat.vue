@@ -26,12 +26,17 @@
         </div>
 
         <div class="message-content" :class="{ 'no-avatar': !shouldShowAvatar(index) }">
-  <div class="message-sender">
+  <div class="message-sender" v-if="shouldShowSender(index)">
     {{ message.sender }}
   </div>
   <div class="message-text">
     <span v-if="message.text">{{ message.text }}</span>
-    <audio v-if="message.audioUrl" :src="message.audioUrl" controls></audio>
+    <div class="audio_message" v-if="message.audioUrl">
+      <div class="message-avatar_audio ">
+          <img :src="message.avatarUrl || defaultAvatar" alt="Аватар" />
+      </div>
+      <audio controls :src="message.audioUrl" />
+    </div>
     <img v-if="message.imageUrl" :src="message.imageUrl" alt="Изображение" class="message-image" />
   </div>
   <div class="user-info">
@@ -106,10 +111,14 @@ export default {
       try {
         const response = await axios.get("http://91.197.96.204:3000/chat-messages");
         this.messages = response.data;
+        setTimeout(() => {
+            this.newMessageScroll();
+        }, 50);
       } catch (error) {
         console.error("Ошибка при получении сообщений:", error);
       }
     },
+
     async sendMessage() {
       if (!this.newMessage.trim()) return;
       try {
@@ -188,6 +197,14 @@ export default {
         await this.sendVoiceMessage(blob);
       });
     },
+    newMessageScroll() {
+    const chatMessages = this.$el.querySelector(".chat-messages");
+    if (chatMessages) {
+        setTimeout(() => {
+            chatMessages.scrollTop = chatMessages.scrollHeight - chatMessages.clientHeight;
+        }, 10);
+    }
+},
 
     
     async sendVoiceMessage(blob) {
@@ -213,6 +230,13 @@ export default {
       const previousMessage = this.messages[index - 1];
       return currentMessage.sender !== previousMessage.sender;
     },
+    shouldShowSender(index) {
+      if (index === 0) return true;
+      const currentMessage = this.messages[index];
+      const previousMessage = this.messages[index - 1];
+      return currentMessage.sender !== previousMessage.sender;
+    },
+  
   },
   beforeUnmount() {
     if (this.socket) {
@@ -266,11 +290,30 @@ export default {
   margin-top: 10px;
 }
 
+.audio_message{
+  display: flex;
+  align-items: center;
+}
+
 .message-avatar {
   width: 40px;
   height: 40px;
   margin-right: 10px;
 }
+
+.message-avatar_audio  {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+.message-avatar_audio img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+
 
 .message-avatar img {
   width: 100%;
@@ -283,7 +326,7 @@ export default {
 }
 
 .message-content {
-  max-width: 70%;
+  max-width: 45%;
   padding: 10px;
   border-radius: 10px;
   overflow-wrap: anywhere;
@@ -328,6 +371,9 @@ export default {
 
 .message-text {
   color: inherit;
+  font-size: 20px;
+  padding-inline: 10px;
+  font-weight: 500;
 }
 
 .chat-input {
