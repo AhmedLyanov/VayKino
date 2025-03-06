@@ -321,18 +321,20 @@ export default {
             localStorage.setItem(`${userId}_dislikedVideos`, JSON.stringify(this.dislikedVideos));
         },
         loadLocalStorage() {
-            const user = JSON.parse(localStorage.getItem("currentUser"))
-            const userId = user._id
-            try {
-                this.likedVideos = JSON.parse(localStorage.getItem(`${userId}_likedVideos`)) || [];
-                this.dislikedVideos = JSON.parse(localStorage.getItem(`${userId}_dislikedVideos`)) || [];
-                this.updateCounts();
-            } catch (e) {
-                console.error('Ошибка при загрузке из localStorage:', e);
-                localStorage.removeItem(`${userId}_likedVideos`);
-                localStorage.removeItem(`${userId}_dislikedVideos`);
-                this.likedVideos = [];
-                this.dislikedVideos = [];
+            if(JSON.parse(localStorage.getItem("currentUser"))){
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const userId = user._id
+                try {
+                    this.likedVideos = JSON.parse(localStorage.getItem(`${userId}_likedVideos`)) || [];
+                    this.dislikedVideos = JSON.parse(localStorage.getItem(`${userId}_dislikedVideos`)) || [];
+                    this.updateCounts();
+                } catch (e) {
+                    console.error('Ошибка при загрузке из localStorage:', e);
+                    localStorage.removeItem(`${userId}_likedVideos`);
+                    localStorage.removeItem(`${userId}_dislikedVideos`);
+                    this.likedVideos = [];
+                    this.dislikedVideos = [];
+                }
             }
         },
         updateCounts() {

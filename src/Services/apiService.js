@@ -12,7 +12,7 @@ const API_FETCH_ACTORS = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&s
 const API_200_REQUESTS_TOKEN = "5W6J03Z-ZNT4Y0V-MC7SVYX-WQS4ZEN";
 const API_200_REQUESTS_TOKEN2 = "25VQB0J-Y1ZMMET-GPVV75G-1R3Q8BZ";
 const API_200_REQUESTS_TOKEN3 = "RP2WK9M-GCAMZCQ-JTDB83C-9S0QAQ1";
-const API_500_REQUESTS_TOKEN = "f541243d-43ef-4e4e-a710-9d6a2eb02f26";
+const API_500_REQUESTS_TOKEN = "8e7d5861-a08e-425e-87a4-491474e5ce78";
 const API_YOUTUBE_TOKEN = "7c902ac83amshbb53ec6e3e93e16p1f2ea5jsnbd7787c7c777";
 const blackList = JSON.parse(localStorage.getItem("kinoareaBlackList"));
 

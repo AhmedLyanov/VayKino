@@ -135,7 +135,7 @@
               </div>
               <div class="profile-edit-field">
                 <div class="profile-edit-input">
-                  <input type="text" v-model="userProfile.birthdate" placeholder="2000.00.00" />
+                  <input type="date" v-model="userProfile.birthdate" placeholder="2000.00.00" />
                 </div>
               </div>
               <div class="genre_container">

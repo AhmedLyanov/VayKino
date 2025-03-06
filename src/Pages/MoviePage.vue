@@ -311,7 +311,8 @@
       </div>
 
       <div class="movie-awards" v-if="awards?.items?.length">
-        <BlockHeader :title="'Награды'" :text="awards?.items?.length > 4 ? 'Все награды' : false" :link="`/awards/${data.id}`" />
+        <BlockHeader :title="'Награды'" :text="awards?.items?.length > 4 ? 'Все награды' : false"
+          :link="`/awards/${data.id}`" />
 
         <div class="awards-main">
           <AwardCard v-for="(award, index) in awards.items.slice(0, 4)" :key="index" :award="award" />
@@ -330,7 +331,8 @@
       </div>
 
       <div class="movie-stills" v-if="stills && stills?.items?.length">
-        <BlockHeader :title="'Кадры из фильма'" :text="stills?.items?.length > 4 ? 'Все кадры' : false" :link="`/stills/${data.id}`" />
+        <BlockHeader :title="'Кадры из фильма'" :text="stills?.items?.length > 4 ? 'Все кадры' : false"
+          :link="`/stills/${data.id}`" />
 
         <div class="stills-main">
           <div v-for="(still, index) in stills?.items?.slice(0, 4)" :key="index" class="stills-img">
@@ -373,19 +375,35 @@
     </div>
 
     <UpArrow />
-    <div v-if="previews.length > 0">
-  <div v-for="(preview, index) in previews" :key="index">
-   
-    <p><strong>Автор:</strong> {{ preview.author }}</p>
-    <p><strong>Дата:</strong> {{ preview.date }}</p>
-    <h3>{{ preview.title }}</h3>
-    <p><strong>Комментарии:</strong> {{ preview.description }}</p>
+    <div class="reviews-container">
+      <div v-if="previews.length > 0">
+        <div v-for="(preview, index) in previews" :key="index">
 
-  </div>
-</div>
-<div v-else>
-  <p>Отзывы отсутствуют.</p>
-</div>
+          <div class="container_comment">
+            
+            <p><strong>Автор:</strong> {{ preview.author }}</p>
+            <Rating :rating="preview.rating" />
+
+            <div class="info-preview">
+              <div class="timeTitle-Box">
+                <h3>{{ preview.title }}</h3>
+                <p>{{ preview.date }}</p>
+              </div>
+              <p><strong>Комментарии:</strong> {{ preview.description }}</p>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+      <div v-else>
+        <p>Отзывы отсутствуют.</p>
+      </div>
+
+    </div>
+
+
   </main>
 </template>
 
@@ -492,7 +510,7 @@ export default {
       try {
         this.previews = await fetchPreviews(this.id);
         console.log(this.previews);
-     
+
       } catch (error) {
         console.error("Отзывы тупиты:", error);
         this.previews = [];
@@ -861,6 +879,12 @@ export default {
   }
 }
 
+.timeTitle-Box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
 
 .movie-info__social:not(:first-child) {
   margin-left: 20px;
