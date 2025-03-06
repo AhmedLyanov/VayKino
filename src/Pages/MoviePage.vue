@@ -341,7 +341,7 @@
 
       <div class="movie-watch" v-if="id">
         <BlockHeader :title="'Смотреть онлайн'" :text="false" :link="false" />
-        <div class="watch_movie-main" v-if="data.year < 2017 || isPremium">
+        <div class="watch_movie-main" v-if="data.year < 2023 || isPremium">
           <KiniboxWidget :kinopoiskId="id" />
         </div>
 
@@ -373,6 +373,19 @@
     </div>
 
     <UpArrow />
+    <div v-if="previews.length > 0">
+  <div v-for="(preview, index) in previews" :key="index">
+   
+    <p><strong>Автор:</strong> {{ preview.author }}</p>
+    <p><strong>Дата:</strong> {{ preview.date }}</p>
+    <h3>{{ preview.title }}</h3>
+    <p><strong>Комментарии:</strong> {{ preview.description }}</p>
+
+  </div>
+</div>
+<div v-else>
+  <p>Отзывы отсутствуют.</p>
+</div>
   </main>
 </template>
 
@@ -384,9 +397,9 @@ import KiniboxWidget from '@/Components/KiniboxWidget.vue';
 import AwardCard from '@/Components/AwardCard.vue';
 import Slider2 from '@/Components/Slider2.vue';
 import UpArrow from '@/Components/UpArrow.vue'
-import { fetchData, fetchAwards, fetchPosters, fetchStills, fetchSequels, fetchSimilars, searchTrailer } from '@/Services/apiService';
+import { fetchData, fetchAwards, fetchPosters, fetchStills, fetchSequels, fetchSimilars, searchTrailer, fetchPreviews } from '@/Services/apiService';
 import axios from 'axios';
-import { mapActions } from 'vuex';
+
 
 export default {
   data() {
@@ -395,6 +408,7 @@ export default {
       posters: {},
       stills: {},
       awards: {},
+      previews: [],
       sequels: {},
       similars: {},
       trealer: {},
@@ -448,14 +462,8 @@ export default {
     this.fetchMovieDataData();
     this.checkPremiumStatus();
     this.checkIfFavorite();
-    this.showEmailMailing()
   },
   methods: {
-    ...mapActions(['toggleEmailMailing']),
-
-    showEmailMailing(){
-      this.toggleEmailMailing(true)
-    },
     async fetchMovieDataData() {
       this.isLoading = true;
       try {
@@ -479,6 +487,15 @@ export default {
       } catch (error) {
         console.error("Ошибка при получении наград:", error);
         this.awards = [];
+      }
+
+      try {
+        this.previews = await fetchPreviews(this.id);
+        console.log(this.previews);
+     
+      } catch (error) {
+        console.error("Отзывы тупиты:", error);
+        this.previews = [];
       }
 
       try {
