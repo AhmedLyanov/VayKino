@@ -30,6 +30,7 @@ import { useRouter } from 'vue-router';
 import { mapGetters } from 'vuex';
 import BlockHeader from '@/Components/BlockHeader.vue';
 import UpArrow from '@/Components/UpArrow.vue';
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -60,6 +61,14 @@ export default {
         window.scrollTo(0, 0);
         this.listsCards = this.lists;
         document.title = 'Подборки'
+        this.showEmailMailing()
+      },
+      methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
       }
 }
 </script>

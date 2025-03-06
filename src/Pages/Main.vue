@@ -201,7 +201,7 @@ import { getLatestVideosFromChannel } from "@/Services/apiService";
 import { fetchFilmsByGenre } from "@/Services/apiService";
 import UpArrow from '@/Components/UpArrow.vue';
 import posts from "../assets/data/posts.json";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
     data() {
@@ -232,6 +232,11 @@ export default {
         ...mapGetters(['blackList']),
     },
     methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
         async setActiveYear(year) {
             this.activeYear = year;
             this.popularMovies = []
@@ -373,6 +378,7 @@ export default {
     async mounted() {
         window.scrollTo(0, 0);
         document.title = 'VayKino'
+        this.showEmailMailing()
         try {
             let nowPlayingMovies2025 = await fetchFreeAPI('&year=2025&limit=15&type=film');
             let nowPlayingMovies2024 = await fetchFreeAPI('&year=2024&limit=20&type=film');

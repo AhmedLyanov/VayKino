@@ -84,6 +84,7 @@ import MediaPosterModal from "@/Components/MediaPosterModal.vue";
 import UpArrow from "@/Components/UpArrow.vue";
 import { getLatestVideosFromChannel } from "@/Services/apiService";
 import { fetchLatestPosters } from "@/Services/apiService";
+import { mapActions } from "vuex";
 
 export default {
     data() {
@@ -106,6 +107,11 @@ export default {
         MediaPosterModal,
     },
     methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
         setActiveMedia(media) {
             this.activeMedia = media;
             this.trailersCount = 6;
@@ -147,6 +153,7 @@ export default {
     async mounted() {
         window.scrollTo(0, 0);
         document.title = "Медиа"
+        this.showEmailMailing()
         try {
             this.trailers = await getLatestVideosFromChannel();
             this.posters = await fetchLatestPosters();

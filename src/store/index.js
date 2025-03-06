@@ -131,11 +131,15 @@ const store = createStore({
           moviesCount: "50 фильмов",
           url: "theme_worlds_end",
       },
-  ]
+  ],
+    showEmailMailing: false
   },
   mutations: {
     SET_OVERLAY(state, value) {
       state.showOverlay = value
+    },
+    SET_EMAILMAILING(state, value) {
+      state.showEmailMailing = value
     },
     ADD_TO_BLACKLIST(state, newItem) {
       state.blackList.push(newItem);
@@ -162,9 +166,13 @@ const store = createStore({
     toggleOverlay({ commit }, value) {
       commit('SET_OVERLAY', value)
     },
+    toggleEmailMailing({ commit }, value) {
+      commit('SET_EMAILMAILING', value)
+    },
   },
   getters: {
     showOverlay: state => state.showOverlay,
+    showEmailMailing: state => state.showEmailMailing,
     blackList: (state) => {
         return [...state.blackList];
       },

@@ -341,7 +341,7 @@
 
       <div class="movie-watch" v-if="id">
         <BlockHeader :title="'Смотреть онлайн'" :text="false" :link="false" />
-        <div class="watch_movie-main" v-if="data.year < 2023 || isPremium">
+        <div class="watch_movie-main" v-if="data.year < 2017 || isPremium">
           <KiniboxWidget :kinopoiskId="id" />
         </div>
 
@@ -386,6 +386,7 @@ import Slider2 from '@/Components/Slider2.vue';
 import UpArrow from '@/Components/UpArrow.vue'
 import { fetchData, fetchAwards, fetchPosters, fetchStills, fetchSequels, fetchSimilars, searchTrailer } from '@/Services/apiService';
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -447,8 +448,14 @@ export default {
     this.fetchMovieDataData();
     this.checkPremiumStatus();
     this.checkIfFavorite();
+    this.showEmailMailing()
   },
   methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
     async fetchMovieDataData() {
       this.isLoading = true;
       try {

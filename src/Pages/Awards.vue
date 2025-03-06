@@ -22,6 +22,7 @@ import UpArrow from "@/Components/UpArrow.vue";
 import AwardCard from '@/Components/AwardCard.vue';
 import { fetchAwards } from '@/Services/apiService';
 import { fetchMovieToId } from '@/Services/apiService';
+import { mapActions } from 'vuex';
 
 export default{
     data(){
@@ -44,6 +45,7 @@ export default{
     async mounted(){
         window.scrollTo(0, 0);
         document.title = `Награды фильма ${this.title}`
+        this.showEmailMailing()
         try {
             this.awards = await fetchAwards(this.movieId);
             this.awards = this.awards.items
@@ -56,6 +58,13 @@ export default{
         } catch (error) {
             console.error(error);
         }
+    },
+    methods: {
+        ...mapActions(['toggleEmailMailing']),
+
+        showEmailMailing(){
+          this.toggleEmailMailing(true)
+    },
     }
 }
 </script>

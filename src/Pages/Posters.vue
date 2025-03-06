@@ -26,6 +26,7 @@ import MediaPosterModal from "@/Components/MediaPosterModal.vue";
 import UpArrow from "@/Components/UpArrow.vue";
 import { fetchPosters } from '@/Services/apiService';
 import { fetchMovieToId } from '@/Services/apiService';
+import { mapActions } from 'vuex';
 
 export default{
     data(){
@@ -48,6 +49,11 @@ export default{
         MediaPosterModal,
     },
     methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
         openPosterModal(poster) {
             this.poster = poster;
             this.isModalPosterOpen = true;
@@ -62,6 +68,7 @@ export default{
     },
     async mounted() {
         window.scrollTo(0, 0);
+        this.showEmailMailing()
         document.title = `Постеры к фильму ${this.title}`
         try {
             this.posters = await fetchPosters(this.movieId);

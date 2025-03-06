@@ -22,6 +22,7 @@ import { fetchMoviesToList } from '@/Services/apiService';
 import BlockHeader from '@/Components/BlockHeader.vue';
 import Card from '@/Components/Card.vue';
 import UpArrow from '@/Components/UpArrow.vue';
+import { mapActions } from 'vuex';
 
 export default {
     data(){
@@ -42,6 +43,7 @@ export default {
     },
     async mounted(){
         window.scrollTo(0, 0);
+        this.showEmailMailing()
         document.title = this.categoryTitle
         this.movies = await fetchMoviesToList(this.list)
     },
@@ -51,6 +53,13 @@ export default {
       return this.getCategoryTitleByUrl(this.list);
     },
   },
+  methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
+  }
 }
 </script>
 

@@ -50,6 +50,7 @@
 <script>
 import BlockHeader from '@/Components/BlockHeader.vue';
 import { fetchActors } from '@/Services/apiService';
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -67,9 +68,17 @@ export default {
     components: {
         BlockHeader,
     },
+    methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
+    },
     async mounted(){
         window.scrollTo(0, 0);
         document.title = `Создатели фильма ${this.title}`
+        this.showEmailMailing()
         try {
         this.persons = await fetchActors(this.movieId);
         this.title = this.persons.docs[0].name

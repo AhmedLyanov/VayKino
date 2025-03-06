@@ -20,7 +20,7 @@
 import BlockHeader from '@/Components/BlockHeader.vue';
 import { fetchFreeAPI2 } from '@/Services/apiService';
 import Card from '@/Components/Card.vue';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import UpArrow from '@/Components/UpArrow.vue';
 
 export default {
@@ -58,6 +58,7 @@ export default {
     async mounted() {
         window.scrollTo(0, 0);
         document.title = 'Фильмы'
+        this.showEmailMailing()
         this.allMovies = await fetchFreeAPI2(`&type=film&limit=40&page=${this.moviesPage}`)
         this.clearMovies = this.allMovies.filter(movie => {
             if (!movie.genre) {
@@ -66,7 +67,13 @@ export default {
             const hasErotica = Object.values(movie.genre).includes("Эротика");
             return !hasErotica && !this.blackList.includes(movie.name);
         });
+    },
+    methods: {
+    ...mapActions(['toggleEmailMailing']),
 
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
     }
 }
 </script>

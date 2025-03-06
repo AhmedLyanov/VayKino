@@ -25,6 +25,7 @@ import MediaPosterModal from "@/Components/MediaPosterModal.vue";
 import UpArrow from "@/Components/UpArrow.vue";
 import { fetchStills } from '@/Services/apiService';
 import { fetchMovieToId } from '@/Services/apiService';
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -47,6 +48,11 @@ export default {
         MediaPosterModal,
     },
     methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
         openPosterModal(still) {
             this.still = still;
             this.isModalPosterOpen = true;
@@ -62,6 +68,7 @@ export default {
     async mounted() {
         window.scrollTo(0, 0);
         document.title = `Кадры из фильма ${this.title}`
+        this.showEmailMailing()
         try {
             this.stills = await fetchStills(this.movieId);
             this.stills = this.stills.items

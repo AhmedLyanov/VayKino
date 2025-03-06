@@ -164,6 +164,7 @@
 import PersonMovieCard from "@/Components/PersonMovieCard.vue";
 import UpArrow from "@/Components/UpArrow.vue";
 import { fetchActor } from "@/Services/apiService";
+import { mapActions } from "vuex";
 
 export default {
     data() {
@@ -181,6 +182,11 @@ export default {
         }
     },
     methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
         getZodiacSign(date) {
             const day = date.getDate();
             const month = date.getMonth() + 1;
@@ -267,6 +273,7 @@ export default {
     },
     async mounted() {
         window.scrollTo(0, 0);
+        this.showEmailMailing()
         this.isLoading = true;
         this.person = await fetchActor(this.id);
         document.title = this.person.name || this.person.enName

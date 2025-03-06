@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer  v-if="showEmailMailing">
         <div class="email_mailing">
             <div class="email_mailing-img">
                 <img :src="`${linkToImg}/email_mailing.jpg`" alt="" />
@@ -68,11 +68,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     data() {
         return {
             linkToImg: "../src/assets/Media/Components"
-        }
+        } 
+    },
+    computed: {
+        ...mapGetters(['showEmailMailing']),
     }
 }
 </script>

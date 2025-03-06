@@ -33,6 +33,7 @@
 import posts from "../assets/data/posts.json";
 import BlockHeader from "@/Components/BlockHeader.vue";
 import UpArrow from "@/Components/UpArrow.vue";
+import { mapActions } from "vuex";
 
 export default {
     data() {
@@ -56,6 +57,11 @@ export default {
         };
     },
     methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
         getBlockNumber(rowIndex, blockIndex) {
             let count = 0;
             for (let i = 0; i < rowIndex; i++) {
@@ -70,6 +76,7 @@ export default {
     mounted() {
         window.scrollTo(0, 0);
         document.title = 'Новости'
+        this.showEmailMailing()
     },
     components: {
         BlockHeader,

@@ -25,6 +25,7 @@ import upcoming from '../assets/data/upcoming.json';
 import BlockHeader from '@/Components/BlockHeader.vue';
 import Card from '@/Components/Card.vue';
 import UpArrow from '@/Components/UpArrow.vue';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -42,9 +43,15 @@ export default {
   mounted() {
     window.scrollTo(0, 0);
     this.groupMoviesByDate();
+    this.showEmailMailing()
     document.title = 'Афиша'
   },
   methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
     groupMoviesByDate() {
       const grouped = {};
 

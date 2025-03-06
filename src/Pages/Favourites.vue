@@ -16,6 +16,7 @@
 <script>
 import BlockHeader from '@/Components/BlockHeader.vue';
 import Card from '@/Components/Card.vue';
+import { mapActions } from 'vuex';
 
 export default{
     data(){
@@ -28,11 +29,18 @@ export default{
         Card
     },
     mounted(){
+        this.showEmailMailing()
         const user = JSON.parse(localStorage.getItem("currentUser"))
         const userId = user._id
         this.favourites = JSON.parse(localStorage.getItem(`${userId}_favoriteMovies`))
         console.log(this.favourites);
-        
+    },
+    methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
     }
 }
 </script>

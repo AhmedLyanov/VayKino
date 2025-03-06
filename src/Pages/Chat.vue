@@ -56,7 +56,6 @@
       <input
         id="fileInput"
         type="file"
-        accept="image/*"
         style="display: none;"
         @change="handleFileUpload"
       />
@@ -77,6 +76,7 @@
 import axios from "axios";
 import defaultAvatar from "@/assets/Media/profile/default.png";
 import io from "socket.io-client";
+import { mapActions } from 'vuex'
 import RecordRTC from "recordrtc";
 
 export default {
@@ -107,6 +107,7 @@ export default {
   },
   methods: 
   {
+    ...mapActions(['toggleEmailMailing']),
     async fetchMessages() {
       try {
         const response = await axios.get("http://91.197.96.204:3000/chat-messages");
@@ -236,17 +237,24 @@ export default {
       const previousMessage = this.messages[index - 1];
       return currentMessage.sender !== previousMessage.sender;
     },
-  
+    hideEmailMailing(){
+      this.toggleEmailMailing(false)
+    }
   },
   beforeUnmount() {
     if (this.socket) {
       this.socket.disconnect();
     }
   },
+  mounted(){
+    this.toggleEmailMailing(false)
+  }
 }
 </script>
 
 <style scoped>
+footer ::v-deep .email_mailing { display: none; }
+
 .chat-container {
   display: flex;
   flex-direction: column;
