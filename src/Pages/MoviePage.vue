@@ -324,9 +324,11 @@
           :link="`/posters/${data.id}`" />
 
         <div class="posters-main">
-          <div v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index" class="posters-img">
+          <!-- <div v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index" class="posters-img">
             <img :src="poster.imageUrl" alt="poster" />
-          </div>
+          </div> -->
+          <Poster v-if="posters?.items?.length" v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index" :data="{imageUrl: poster.imageUrl}" :posterScale="0.3" />
+          <Poster v-else v-for="index in 4" :key="index + '_'" :data="{}" :posterScale="0.3" />
         </div>
       </div>
 
@@ -335,9 +337,10 @@
           :link="`/stills/${data.id}`" />
 
         <div class="stills-main">
-          <div v-for="(still, index) in stills?.items?.slice(0, 4)" :key="index" class="stills-img">
+          <!-- <div v-for="(still, index) in stills?.items?.slice(0, 4)" :key="index" class="stills-img">
             <img :src="still.previewUrl" alt="" />
-          </div>
+          </div> -->
+          <Still v-for="(still, index) in stills?.items?.slice(0, 4)" :key="index" :still="still" />
         </div>
       </div>
 
@@ -380,7 +383,7 @@
         <div v-for="(preview, index) in previews" :key="index">
 
           <div class="container_comment">
-            
+
             <p><strong>Автор:</strong> {{ preview.author }}</p>
             <Rating :rating="preview.rating" />
 
@@ -411,10 +414,12 @@
 import Rating from '@/Components/Rating.vue';
 import BlockHeader from '@/Components/BlockHeader.vue';
 import Cast from '@/Components/Cast.vue';
+import Still from '@/Components/Still.vue';
 import KiniboxWidget from '@/Components/KiniboxWidget.vue';
 import AwardCard from '@/Components/AwardCard.vue';
 import Slider2 from '@/Components/Slider2.vue';
-import UpArrow from '@/Components/UpArrow.vue'
+import UpArrow from '@/Components/UpArrow.vue';
+import Poster from '@/Components/Poster.vue';
 import { fetchData, fetchAwards, fetchPosters, fetchStills, fetchSequels, fetchSimilars, searchTrailer, fetchPreviews } from '@/Services/apiService';
 import axios from 'axios';
 
@@ -600,8 +605,6 @@ export default {
         } else {
           this.isFavorite = false;
         }
-      } else {
-        console.log("Нужно быть зареганным для выполнения этого действия");
       }
     },
     toggleFavorite() {
@@ -633,7 +636,11 @@ export default {
 
         localStorage.setItem(`${userId}_favoriteMovies`, JSON.stringify(favorites));
       } else {
-        console.log("Нужно быть зареганным для выполнения этого действия");
+        this.$toast.error('Нужно войти в аккаунт для выполнения этого действия!', {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false
+        });
       }
     },
     addLikesAndDislikes() {
@@ -656,7 +663,11 @@ export default {
           trailer.likesCount--;
         }
       } else {
-        console.log("Нужно быть зареганным для выполнения этого действия");
+        this.$toast.error('Нужно войти в аккаунт для выполнения этого действия!', {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false
+        });
       }
     },
     dislikeVideo(trailer) {
@@ -674,28 +685,36 @@ export default {
           trailer.dislikesCount--;
         }
       } else {
-        console.log("Нужно быть зареганным для выполнения этого действия");
+        this.$toast.error('Нужно войти в аккаунт для выполнения этого действия!', {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false
+        });
       }
     },
     saveLocalStorage() {
-      const user = JSON.parse(localStorage.getItem("currentUser"))
-      const userId = user._id
-      localStorage.setItem(`${userId}_likedVideos`, JSON.stringify(this.likedVideos));
-      localStorage.setItem(`${userId}_dislikedVideos`, JSON.stringify(this.dislikedVideos));
+      if (JSON.parse(localStorage.getItem("currentUser"))) {
+        const user = JSON.parse(localStorage.getItem("currentUser"))
+        const userId = user._id
+        localStorage.setItem(`${userId}_likedVideos`, JSON.stringify(this.likedVideos));
+        localStorage.setItem(`${userId}_dislikedVideos`, JSON.stringify(this.dislikedVideos));
+      }
     },
     loadLocalStorage() {
-      const user = JSON.parse(localStorage.getItem("currentUser"))
-      const userId = user._id
-      try {
-        this.likedVideos = JSON.parse(localStorage.getItem(`${userId}_likedVideos`)) || [];
-        this.dislikedVideos = JSON.parse(localStorage.getItem(`${userId}_dislikedVideos`)) || [];
-        this.updateCounts();
-      } catch (e) {
-        console.error('Ошибка при загрузке из localStorage:', e);
-        localStorage.removeItem(`${userId}_likedVideos`);
-        localStorage.removeItem(`${userId}_dislikedVideos`);
-        this.likedVideos = [];
-        this.dislikedVideos = [];
+      if (JSON.parse(localStorage.getItem("currentUser"))) {
+        const user = JSON.parse(localStorage.getItem("currentUser"))
+        const userId = user._id
+        try {
+          this.likedVideos = JSON.parse(localStorage.getItem(`${userId}_likedVideos`)) || [];
+          this.dislikedVideos = JSON.parse(localStorage.getItem(`${userId}_dislikedVideos`)) || [];
+          this.updateCounts();
+        } catch (e) {
+          console.error('Ошибка при загрузке из localStorage:', e);
+          localStorage.removeItem(`${userId}_likedVideos`);
+          localStorage.removeItem(`${userId}_dislikedVideos`);
+          this.likedVideos = [];
+          this.dislikedVideos = [];
+        }
       }
     },
     updateCounts() {
@@ -721,10 +740,12 @@ export default {
     Rating,
     BlockHeader,
     Cast,
+    Still,
     KiniboxWidget,
     AwardCard,
     Slider2,
-    UpArrow
+    UpArrow,
+    Poster
   }
 }
 </script>

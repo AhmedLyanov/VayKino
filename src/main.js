@@ -1,26 +1,29 @@
-import './assets/base.css'
-import { createApp } from 'vue'
-import App from './App.vue'
-import { createRouter, createWebHistory } from 'vue-router'
-import Main from './Pages/Main.vue'
-import MoviePage from './Pages/MoviePage.vue'
-import Login from './Pages/Login.vue'
-import Registration from './Pages/Registration.vue'
-import PersonPage from './Pages/PersonPage.vue'
-import Movies from './Pages/Movies.vue'
-import store from './store'
-import Profile from './Pages/Profile.vue'
-import Premiere from './Pages/Premiere.vue'
-import Posts from './Pages/Posts.vue'
-import Lists from './Pages/Lists.vue'
-import List from './Pages/List.vue'
-import Media from './Pages/Media.vue'
-import Chat from './Pages/Chat.vue'
-import Actors from './Pages/Actors.vue'
-import Posters from './Pages/Posters.vue'
-import Awards from './Pages/Awards.vue'
-import Stills from './Pages/Stills.vue'
-import Favourites from './Pages/Favourites.vue'
+import './assets/base.css';
+import { createApp } from 'vue';
+import App from './App.vue';
+import ToastPlugin from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-default.css'
+import 'vue-toast-notification/dist/theme-bootstrap.css';
+import { createRouter, createWebHistory } from 'vue-router';
+import Main from './Pages/Main.vue';
+import MoviePage from './Pages/MoviePage.vue';
+import Login from './Pages/Login.vue';
+import Registration from './Pages/Registration.vue';
+import PersonPage from './Pages/PersonPage.vue';
+import Movies from './Pages/Movies.vue';
+import store from './store';
+import Profile from './Pages/Profile.vue';
+import Premiere from './Pages/Premiere.vue';
+import Posts from './Pages/Posts.vue';
+import Lists from './Pages/Lists.vue';
+import List from './Pages/List.vue';
+import Media from './Pages/Media.vue';
+import Chat from './Pages/Chat.vue';
+import Actors from './Pages/Actors.vue';
+import Posters from './Pages/Posters.vue';
+import Awards from './Pages/Awards.vue';
+import Stills from './Pages/Stills.vue';
+import Favourites from './Pages/Favourites.vue';
 
 
 const router = createRouter({
@@ -123,13 +126,14 @@ const router = createRouter({
         },
     ],
     history: createWebHistory(),
-})
+});
 
 
 
-const app = createApp(App)
-app.use(router)
-app.use(store)
+const app = createApp(App);
+app.use(router);
+app.use(store);
+app.use(ToastPlugin);
 app.mount('#app')
 
 store.dispatch('updateBlackList');

@@ -55,12 +55,8 @@
                         <div class="media-mini_header">Постеры</div>
 
                         <div class="media-posters-cont">
-                            <div class="poster" v-for="poster in posters.slice(0, postersCount)" :key="poster.id" @click="openPosterModal(poster.poster.url)">
-                                <div class="poster-img">
-                                    <img :src="poster.poster.url" :alt="poster.name">
-                                </div>
-                                <div class="poster-title">{{ poster.name }}</div>
-                            </div>
+                            <Poster v-if="posters.length" v-for="(poster, index) in posters.slice(0, postersCount)" :key="index" :data="{imageUrl: poster.poster.url, name: poster.name}" :posterScale="1.4" />
+                            <Poster v-else v-for="index in 8" :key="index + '_'" :data="{}" :posterScale="1.4" />
                         </div>
 
                         <div class="loadMore" v-if="posters.length > postersCount" @click="loadMorePosters">
@@ -72,7 +68,6 @@
         </div>
 
         <MediaTrailerModal :is-open="isModalTrailerOpen" :videoId="videoId" @close="closeTrailerModal" />
-        <MediaPosterModal :is-open="isModalPosterOpen" :posterUrl="videoId" @close="closePosterModal" :posterScale="1.4" />
         <UpArrow />
     </main>
 </template>
@@ -80,7 +75,7 @@
 <script>
 import BlockHeader from "@/Components/BlockHeader.vue";
 import MediaTrailerModal from "@/Components/MediaTrailerModal.vue";
-import MediaPosterModal from "@/Components/MediaPosterModal.vue";
+import Poster from "@/Components/Poster.vue";
 import UpArrow from "@/Components/UpArrow.vue";
 import { getLatestVideosFromChannel } from "@/Services/apiService";
 import { fetchLatestPosters } from "@/Services/apiService";
@@ -104,7 +99,7 @@ export default {
         BlockHeader,
         MediaTrailerModal,
         UpArrow,
-        MediaPosterModal,
+        Poster
     },
     methods: {
     ...mapActions(['toggleEmailMailing']),
@@ -138,17 +133,6 @@ export default {
             this.videoId = '';
             document.body.classList.remove('no-scroll');
         },
-        openPosterModal(videoId) {
-            this.videoId = videoId;
-            this.isModalPosterOpen = true;
-            document.body.classList.add('no-scroll');
-
-        },
-        closePosterModal() {
-            this.isModalPosterOpen = false;
-            this.videoId = '';
-            document.body.classList.remove('no-scroll');
-        },
     },
     async mounted() {
         window.scrollTo(0, 0);
@@ -157,6 +141,8 @@ export default {
         try {
             this.trailers = await getLatestVideosFromChannel();
             this.posters = await fetchLatestPosters();
+            console.log(this.posters);
+            
         } catch (error) {
             console.error(error);
         }
@@ -310,25 +296,5 @@ export default {
     margin-top: 20px;
     user-select: none;
     cursor: pointer;
-}
-
-.poster-img {
-  width: 360px;
-  height: 540px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    border-radius: 10px;
-    min-width: 100%;
-    height: 100%;
-  }
-}
-
-.poster-title {
-    font-weight: 700;
-    font-size: 18px;
-    color: white;
 }
 </style>

@@ -7,22 +7,22 @@
                 </div>
 
                 <div class="stills-cont">
-                    <div v-for="(still, index) in stills" :key="index" class="stills-img">
+                    <!-- <div v-for="(still, index) in stills" :key="index" class="stills-img">
                         <img :src="still.previewUrl" :alt="index" @click="openPosterModal(still.imageUrl)" />
-                    </div>
+                    </div> -->
+                    <Still v-for="(still, index) in stills" :key="index" :still="still" />
                 </div>
             </div>
         </div>
 
-        <MediaPosterModal :is-open="isModalPosterOpen" :posterUrl="still" @close="closePosterModal" :posterScale="0.4" />
         <UpArrow />
     </main>
 </template>
 
 <script>
 import BlockHeader from '@/Components/BlockHeader.vue';
-import MediaPosterModal from "@/Components/MediaPosterModal.vue";
 import UpArrow from "@/Components/UpArrow.vue";
+import Still from '@/Components/Still.vue';
 import { fetchStills } from '@/Services/apiService';
 import { fetchMovieToId } from '@/Services/apiService';
 import { mapActions } from 'vuex';
@@ -32,8 +32,6 @@ export default {
         return {
             title: "",
             stills: [],
-            isModalPosterOpen: false,
-            still: ""
         }
     },
     props: {
@@ -45,7 +43,7 @@ export default {
     components: {
         BlockHeader,
         UpArrow,
-        MediaPosterModal,
+        Still
     },
     methods: {
     ...mapActions(['toggleEmailMailing']),
@@ -53,17 +51,6 @@ export default {
     showEmailMailing(){
       this.toggleEmailMailing(true)
     },
-        openPosterModal(still) {
-            this.still = still;
-            this.isModalPosterOpen = true;
-            document.body.classList.add('no-scroll');
-
-        },
-        closePosterModal() {
-            this.isModalPosterOpen = false;
-            this.still = '';
-            document.body.classList.remove('no-scroll');
-        },
     },
     async mounted() {
         window.scrollTo(0, 0);
@@ -95,22 +82,5 @@ export default {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     margin-top: 40px;
-}
-
-.stills-img {
-    user-select: none;
-    cursor: pointer;
-    width: 365px;
-    height: 245px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-
-    img {
-        width: 100%;
-        min-height: 100%;
-    }
 }
 </style>

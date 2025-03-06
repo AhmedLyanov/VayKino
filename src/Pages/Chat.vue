@@ -253,8 +253,6 @@ export default {
 </script>
 
 <style scoped>
-footer ::v-deep .email_mailing { display: none; }
-
 .chat-container {
   display: flex;
   flex-direction: column;

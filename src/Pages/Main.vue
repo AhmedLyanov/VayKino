@@ -293,7 +293,11 @@ export default {
                     trailer.likesCount--;
                 }
             } else {
-                console.log("Нужно быть зареганным для выполнения этого действия");
+                this.$toast.error('Нужно войти в аккаунт для выполнения этого действия!', {
+                position: 'top-right',
+                duration: 2000,
+                dismissible: false
+                });
             }
         },
         dislikeVideo(trailer) {
@@ -311,14 +315,20 @@ export default {
                     trailer.dislikesCount--;
                 }
             } else {
-                console.log("Нужно быть зареганным для выполнения этого действия");
+                this.$toast.error('Нужно войти в аккаунт для выполнения этого действия!', {
+                position: 'top-right',
+                duration: 2000,
+                dismissible: false
+                });
             }
         },
         saveLocalStorage() {
-            const user = JSON.parse(localStorage.getItem("currentUser"))
-            const userId = user._id
-            localStorage.setItem(`${userId}_likedVideos`, JSON.stringify(this.likedVideos));
-            localStorage.setItem(`${userId}_dislikedVideos`, JSON.stringify(this.dislikedVideos));
+            if(JSON.parse(localStorage.getItem("currentUser"))){
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const userId = user._id
+                localStorage.setItem(`${userId}_likedVideos`, JSON.stringify(this.likedVideos));
+                localStorage.setItem(`${userId}_dislikedVideos`, JSON.stringify(this.dislikedVideos));
+            }
         },
         loadLocalStorage() {
             if(JSON.parse(localStorage.getItem("currentUser"))){
