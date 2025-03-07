@@ -10,15 +10,15 @@
       </div>
 
       <div className="modal-input">
-        <input ref="searchInputField" type="text" placeholder="Введите название фильма" v-model="searchInput" @keyup.enter="searchMovie" />
-        <div className="modal-butts">
+        <input ref="searchInputField" type="text" placeholder="Введите название фильма" v-model="searchInput" @input="debouncedSearchMovie" />
+        <!-- <div className="modal-butts">
           <button className="modal-filter">
             <img :src="`${linkToImg}/filter.svg`" alt="filter" />
           </button>
           <button className="modal-search" @click="searchMovie">
             <img :src="`${linkToImg}/search.svg`" alt="search" />
           </button>
-        </div>
+        </div> -->
       </div>
 
       <div v-if="isLoading" class="modal-loading">
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { debounce } from 'lodash';
 import { fetchFreeAPI } from '@/Services/apiService';
 import SearchCard from './SearchCard.vue';
 
@@ -98,31 +99,38 @@ export default {
         try {
           this.isLoading = true;
           this.searchResults = [];
-          this.errorMessage = null
-           let a = await fetchFreeAPI(`&name=${this.searchInput}`);
-           if(a.length != 0){
-            this.errorMessage = null
-            this.searchResults = a
-           } else {
+          this.errorMessage = null;
+
+          let a = await fetchFreeAPI(`&name=${this.searchInput}`);
+          if (a.length !== 0) {
+            this.errorMessage = null;
+            this.searchResults = a;
+          } else {
             this.searchResults = [];
             this.errorMessage = 'Фильм не найден.';
-           }
-           this.isLoading = false
-         } catch (error) {
-           console.error("Component error", error)
-         }
+          }
+          this.isLoading = false;
+        } catch (error) {
+          console.error("Component error", error);
+          this.errorMessage = "Ошибка при выполнении запроса";
+          this.searchResults = [];
+          this.isLoading = false;
+        }
 
       } else {
         this.errorMessage = "Введите название фильма";
         this.searchResults = [];
+        this.isLoading = false;
       }
     },
-
     handleEsc(event) {
       if (event.key === 'Escape' || event.keyCode === 27) {
         this.closeModal();
       }
     },
+  },
+  mounted(){
+    this.debouncedSearchMovie = debounce(this.searchMovie, 600);
   }
 }
 </script>
@@ -274,8 +282,8 @@ export default {
 
 .modal-search_output {
   margin-top: 20px;
-  width: 100%;
-  /* background-color: rgba(255, 0, 0, 0.253); */
+  max-width: 700px;
+  width: 700px;
   max-height: 700px;
   overflow-y: scroll;
 

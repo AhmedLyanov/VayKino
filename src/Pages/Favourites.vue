@@ -6,7 +6,7 @@
                     <BlockHeader :title="'Избранное'" :text="false" :link="false" />
                 </div>
                 <div v-if="favourites.length" class="favourites-cont">
-                    <Card v-if="!isLoading" v-for="(favourite, index) in favourites" :key="index" :data="favourite" style="margin-top: 20px;" />
+                    <Card v-if="!isLoading" v-for="(favourite, index) in favourites" :key="index" :data="favourite" :contextMenu="false" style="margin-top: 20px;" />
                     <Card v-else v-for="key in 8" :key="key" :data="{}" style="margin-top: 20px;" />
                 </div>
 

@@ -12,6 +12,7 @@
     "axios": "^1.7.9",
     "crypto-js": "^4.2.0",
     "global": "^4.4.0",
+    "lodash": "^4.17.21",
     "recordrtc": "^5.6.2",
     "socket.io-client": "^4.8.1",
     "socketio": "^1.0.0",
