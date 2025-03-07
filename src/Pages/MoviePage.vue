@@ -434,6 +434,7 @@ import UpArrow from '@/Components/UpArrow.vue';
 import Poster from '@/Components/Poster.vue';
 import { fetchData, fetchAwards, fetchPosters, fetchStills, fetchSequels, fetchSimilars, searchTrailer, fetchPreviews } from '@/Services/apiService';
 import axios from 'axios';
+import { mapActions } from "vuex";
 
 
 export default {
@@ -511,10 +512,16 @@ export default {
     window.scrollTo(0, 0);
     this.fetchMovieDataData();
     this.checkPremiumStatus();
+    this.showEmailMailing()
     this.checkIfFavorite();
     this.loadFromLocalStorage();
   },
   methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing(){
+      this.toggleEmailMailing(true)
+    },
     async fetchMovieDataData() {
       this.isLoading = true;
       try {
