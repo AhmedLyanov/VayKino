@@ -24,6 +24,10 @@ import Posters from './Pages/Posters.vue';
 import Awards from './Pages/Awards.vue';
 import Stills from './Pages/Stills.vue';
 import Favourites from './Pages/Favourites.vue';
+import Series from './Pages/Series.vue';
+import Cartoons from './Pages/Cartoons.vue';
+import CartoonSeries from './Pages/CartoonSeries.vue';
+import Anime from './Pages/Anime.vue';
 
 
 const router = createRouter({
@@ -37,6 +41,26 @@ const router = createRouter({
             path: "/movies",
             name: "Movies",
             component: Movies,
+        },
+        {
+            path: "/series",
+            name: "Series",
+            component: Series,
+        },
+        {
+            path: "/cartoons",
+            name: "Cartoons",
+            component: Cartoons,
+        },
+        {
+            path: "/cartoon-series",
+            name: "CartoonSeries",
+            component: CartoonSeries,
+        },
+        {
+            path: "/animes",
+            name: "Anime",
+            component: Anime,
         },
         {
             path: "/premiere",

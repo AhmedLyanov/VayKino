@@ -71,11 +71,11 @@
 
         <div class="movie-info__interactions">
           <div class="movie-info__reactions">
-            <div class="movie-info__like">
-              <img :src="`${linkToImg}/like.svg`" alt="like" />
+            <div class="movie-info__like" @click="likeMovie">
+              <img :src="likeMovieIcon" alt="like" />
             </div>
-            <div class="movie-info__dislike">
-              <img :src="`${linkToImg}/dislike.svg`" alt="dislike" />
+            <div class="movie-info__dislike" @click="dislikeMovie">
+              <img :src="dislikeMovieIcon" alt="dislike" />
             </div>
           </div>
 
@@ -324,9 +324,6 @@
           :link="`/posters/${data.id}`" />
 
         <div class="posters-main">
-          <!-- <div v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index" class="posters-img">
-            <img :src="poster.imageUrl" alt="poster" />
-          </div> -->
           <Poster v-if="posters?.items?.length" v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index"
             :data="{ imageUrl: poster.imageUrl }" :posterScale="0.3" />
           <Poster v-else v-for="index in 4" :key="index + '_'" :data="{}" :posterScale="0.3" />
@@ -338,9 +335,6 @@
           :link="`/stills/${data.id}`" />
 
         <div class="stills-main">
-          <!-- <div v-for="(still, index) in stills?.items?.slice(0, 4)" :key="index" class="stills-img">
-            <img :src="still.previewUrl" alt="" />
-          </div> -->
           <Still v-for="(still, index) in stills?.items?.slice(0, 4)" :key="index" :still="still" />
         </div>
       </div>
@@ -359,6 +353,19 @@
         </div>
       </div>
 
+      <div class="movie-sequels" v-if="sequels.length">
+        <div class="sequels__header">Сиквелы и приквелы</div>
+        <div class="sequels__content">
+          <Slider2 :data="sequels" />
+        </div>
+      </div>
+
+      <div class="movie-similars" v-if="similars && similars?.items?.length">
+        <div class="similars__header">Похожие фильмы</div>
+        <div class="similars__content">
+          <Slider2 :data="similars.items" />
+        </div>
+      </div>
 
       <div class="reviews-container">
         <BlockHeader :title="'Рецензии к фильму'" :text="false" :link="false" />
@@ -403,22 +410,6 @@
 
       </div>
 
-
-
-      <div class="movie-sequels" v-if="sequels.length">
-        <div class="sequels__header">Сиквелы и приквелы</div>
-        <div class="sequels__content">
-          <Slider2 :data="sequels" />
-        </div>
-      </div>
-
-      <div class="movie-similars" v-if="similars && similars?.items?.length">
-        <div class="similars__header">Похожие фильмы</div>
-        <div class="similars__content">
-          <Slider2 :data="similars.items" />
-        </div>
-      </div>
-
       <div class="bg-movie_cadr" :style="{ backgroundImage: data ? `url(${data?.backdrop?.url})` : 'none' }">
         <div class="bg-movie_cadr-temnee"></div>
       </div>
@@ -449,6 +440,8 @@ export default {
   data() {
     return {
       data: {},
+      isLiked: false,
+      isDisliked: false,
       posters: {},
       stills: {},
       awards: {},
@@ -466,7 +459,7 @@ export default {
         "movie": { name: "Фильм", nameMnogo: "Фильмы", path: "movies" },
         "tv-series": { name: "Сериал", nameMnogo: "Сериалы", path: "series" },
         "cartoon": { name: "Мультфильм", nameMnogo: "Мультфильмы", path: "cartoons" },
-        "animated-series": { name: "Мультсериал", nameMnogo: "Мультсериалы", path: "animated-series" },
+        "animated-series": { name: "Мультсериал", nameMnogo: "Мультсериалы", path: "cartoon-series" },
         "anime": { name: "Аниме", nameMnogo: "Аниме", path: "anime" },
       }
     };
@@ -501,11 +494,25 @@ export default {
       deep: true,
     },
   },
+  computed: {
+    likeMovieIcon() {
+      return `${this.linkToImg}/${this.isLiked ? 'blue-like.svg' : 'like.svg'}`;
+    },
+    dislikeMovieIcon() {
+      return `${this.linkToImg}/${this.isDisliked ? 'blue-dislike.svg' : 'dislike.svg'}`;
+    },
+    localStorageKey() {
+      const user = JSON.parse(localStorage.getItem("currentUser"))
+      const userId = user?._id
+      return `${userId}_movie_${this.id}_reaction`;
+    }
+  },
   mounted() {
     window.scrollTo(0, 0);
     this.fetchMovieDataData();
     this.checkPremiumStatus();
     this.checkIfFavorite();
+    this.loadFromLocalStorage();
   },
   methods: {
     async fetchMovieDataData() {
@@ -755,7 +762,55 @@ export default {
       return this.dislikedVideos.includes(videoId)
         ? `${this.linkToImg}/blue-dislike.svg`
         : `${this.linkToImg}/dislike.svg`;
-    }
+    },
+    likeMovie() {
+      if (JSON.parse(localStorage.getItem("currentUser"))) {
+        if (this.isLiked) {
+          this.isLiked = false;
+          this.isDisliked = false;
+        } else {
+          this.isLiked = true;
+          this.isDisliked = false;
+        }
+        this.saveToLocalStorage();
+      } else {
+        this.$toast.error('Нужно войти в аккаунт для выполнения этого действия!', {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false
+        });
+      }
+    },
+    dislikeMovie() {
+      if (JSON.parse(localStorage.getItem("currentUser"))) {
+        if (this.isDisliked) {
+          this.isLiked = false;
+          this.isDisliked = false;
+        } else {
+          this.isDisliked = true;
+          this.isLiked = false;
+        }
+        this.saveToLocalStorage();
+      } else {
+        this.$toast.error('Нужно войти в аккаунт для выполнения этого действия!', {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false
+        });
+      }
+    },
+    loadFromLocalStorage() {
+      const storedReaction = localStorage.getItem(this.localStorageKey);
+      if (storedReaction) {
+        const reaction = JSON.parse(storedReaction);
+        this.isLiked = reaction.isLiked;
+        this.isDisliked = reaction.isDisliked;
+      }
+    },
+    saveToLocalStorage() {
+      const reaction = { isLiked: this.isLiked, isDisliked: this.isDisliked };
+      localStorage.setItem(this.localStorageKey, JSON.stringify(reaction));
+    },
   },
   components: {
     Rating,
@@ -1256,7 +1311,8 @@ export default {
 }
 
 .posters-main {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 360px);
   justify-content: space-between;
 }
 

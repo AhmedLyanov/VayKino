@@ -7,9 +7,6 @@
                 </div>
 
                 <div class="stills-cont">
-                    <!-- <div v-for="(still, index) in stills" :key="index" class="stills-img">
-                        <img :src="still.previewUrl" :alt="index" @click="openPosterModal(still.imageUrl)" />
-                    </div> -->
                     <Still v-for="(still, index) in stills" :key="index" :still="still" />
                 </div>
             </div>

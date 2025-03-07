@@ -109,7 +109,7 @@ export default {
         },
         ratingBackgroundColor() {
             const rating = Math.ceil(Number(this.ratingValue));
-            return this.colorScale[rating]?.color || 'transparent'; // Fallback to transparent if no color found
+            return this.colorScale[rating]?.color || 'transparent';
         },
         formattedRating() {
             if (this.ratingKp) {
