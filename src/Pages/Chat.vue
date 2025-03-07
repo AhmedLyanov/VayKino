@@ -387,6 +387,7 @@ export default {
   gap: 10px;
   user-select: none;
   align-items: center;
+  position: relative;
 }
 
 .chat-input input {
@@ -455,12 +456,20 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  right: 0px;
+  bottom: -20px;
   border-radius: 50%;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
 }
 
 .microphone-icon.recording {
-  background-color: #ff4d4d;
+    background-color: #ff4d4d;
+    width: 85px;
+    position: absolute;
+    right: 0px;
+    bottom: -35px;
+    height: 85px;
 }
 
 .microphone-icon img {
@@ -470,8 +479,8 @@ export default {
 
 .aura {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: 165px;
+  height: 165px;
   border-radius: 50%;
   background-color: rgba(255, 77, 77, 0.3);
   animation: pulse 1.5s infinite;

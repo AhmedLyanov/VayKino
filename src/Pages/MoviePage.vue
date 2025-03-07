@@ -327,7 +327,8 @@
           <!-- <div v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index" class="posters-img">
             <img :src="poster.imageUrl" alt="poster" />
           </div> -->
-          <Poster v-if="posters?.items?.length" v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index" :data="{imageUrl: poster.imageUrl}" :posterScale="0.3" />
+          <Poster v-if="posters?.items?.length" v-for="(poster, index) in posters?.items?.slice(0, 4)" :key="index"
+            :data="{ imageUrl: poster.imageUrl }" :posterScale="0.3" />
           <Poster v-else v-for="index in 4" :key="index + '_'" :data="{}" :posterScale="0.3" />
         </div>
       </div>
@@ -358,6 +359,52 @@
         </div>
       </div>
 
+
+      <div class="reviews-container">
+        <BlockHeader :title="'Рецензии к фильму'" :text="false" :link="false" />
+
+        <div class="comment-box" v-if="previews.length > 0">
+          <div v-for="(preview, index) in previews" :key="index">
+
+
+            <div class="container_comment">
+
+              <div class="account_comment">
+                <div class="avatar_box">
+                  <img src="../assets/Media/profile/default.png" />
+                </div>
+                <div class="info_account">
+                  <p class="name_user_text_comment">{{ preview.author }}</p>
+                  <Rating :rating="preview.rating" />
+                </div>
+
+              </div>
+
+
+              <div class="info-preview">
+                <div class="timeTitle-Box">
+                  <h3>{{ preview.title }}</h3>
+                  <p>{{ preview.date }}</p>
+                </div>
+                <p class="comment_user_description"> {{ preview.description }}</p>
+              </div>
+
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+        <div v-else>
+          <p>Отзывы отсутствуют.</p>
+        </div>
+
+      </div>
+
+
+
       <div class="movie-sequels" v-if="sequels.length">
         <div class="sequels__header">Сиквелы и приквелы</div>
         <div class="sequels__content">
@@ -378,33 +425,7 @@
     </div>
 
     <UpArrow />
-    <div class="reviews-container">
-      <div v-if="previews.length > 0">
-        <div v-for="(preview, index) in previews" :key="index">
 
-          <div class="container_comment">
-
-            <p><strong>Автор:</strong> {{ preview.author }}</p>
-            <Rating :rating="preview.rating" />
-
-            <div class="info-preview">
-              <div class="timeTitle-Box">
-                <h3>{{ preview.title }}</h3>
-                <p>{{ preview.date }}</p>
-              </div>
-              <p><strong>Комментарии:</strong> {{ preview.description }}</p>
-            </div>
-
-          </div>
-
-
-        </div>
-      </div>
-      <div v-else>
-        <p>Отзывы отсутствуют.</p>
-      </div>
-
-    </div>
 
 
   </main>
@@ -904,7 +925,7 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  gap: 10px;
+  gap: 50px;
 }
 
 .movie-info__social:not(:first-child) {
@@ -926,6 +947,80 @@ export default {
 
 .movie-info__favorites {
   margin-left: 35px;
+}
+
+.container_comment {
+  width: 100%;
+  margin: auto;
+  padding: 30px;
+  border: 5px solid wheat;
+  height: auto;
+  border-radius: 5px;
+  gap: 50px;
+  display: grid;
+}
+
+.account_comment {
+  display: flex;
+  gap: 25px;
+}
+
+.comment-box {
+  display: grid;
+  gap: 50px;
+}
+
+.info_account {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.timeTitle-Box h3 {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 100%;
+  color: #FFFFFF;
+  letter-spacing: 0%;
+}
+
+
+.info-preview .comment_user_description {
+  font-family: Qanelas;
+  font-weight: 200;
+  font-size: 20px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  color: #FFFFFF;
+
+}
+
+.timeTitle-Box p {
+  font-family: Qanelas;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #CBCBCB;
+}
+
+.info_account .name_user_text_comment {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 100%;
+  color: #FFFFFF;
+  letter-spacing: 0%;
+}
+
+.avatar_box {
+  width: 115px;
+  height: 115px;
+}
+
+.avatar_box img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
 
 .movie-info__like,

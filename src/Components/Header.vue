@@ -23,6 +23,7 @@
           <router-link to="/movies" active-class="active">Фильмы</router-link>
           <router-link to="/posts" active-class="active">Новости</router-link>
           <router-link to="/lists" active-class="active">Подборки</router-link>
+          <router-link to="/favourites" active-class="active">Избранное</router-link>
           <router-link to="/chat" active-class="active">Премиум-Чат</router-link>
         </nav>
       </div>
@@ -217,7 +218,7 @@ export default {
   transition: all 0.5s;
 }
 
-.header-center nav :nth-child(6){
+.header-center nav :nth-child(7){
   color: #f2f60f;
 }
 
