@@ -33,13 +33,15 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useToast } from "vue-toast-notification";
 
 const router = useRouter();
+const toast = useToast();
 const login = ref('');
 const password = ref('');
 const error = ref('');
 
-document.title = "Вход"
+document.title = "Вход";
 
 const onSubmit = async () => {
   try {
@@ -59,19 +61,25 @@ const onSubmit = async () => {
         window.location.reload(); 
       }, 100);
      
-     
     } else {
       const errorData = await response.json();
       error.value = errorData.error || 'Неверный логин или пароль';
-      alert(error.value);
+      toast.error(error.value, {
+        position: 'top-right',
+        duration: 2000,
+        dismissible: false
+      });
     }
   } catch (error) {
     console.error('Login error:', error);
-    alert('Ошибка сети. Попробуйте позже.');
+    toast.error('Ошибка сети. Попробуйте позже.', {
+      position: 'top-right',
+      duration: 2000,
+      dismissible: false
+    });
   }
 };
 </script>
-
 <style scoped>
 
 

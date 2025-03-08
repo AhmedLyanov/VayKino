@@ -64,7 +64,8 @@ import { ref, onMounted, onUpdated } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import defaultAvatar from '@/assets/Media/profile/default.png'; 
+import { useToast } from 'vue-toast-notification'; 
+import defaultAvatar from '@/assets/Media/profile/default.png';
 
 export default {
   components: {
@@ -73,6 +74,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const toast = useToast(); 
     const isLoggedIn = ref(false);
     const userBalance = ref(0);
     const userAvatar = ref('');
@@ -92,7 +94,7 @@ export default {
           if (user) {
             isLoggedIn.value = true;
             isPremium.value = user.premium || false;
-            userAvatar.value = user.avatarUrl || defaultAvatar; 
+            userAvatar.value = user.avatarUrl || defaultAvatar;
             await updateUserBalance(user.login);
           }
         } catch (error) {
@@ -108,7 +110,7 @@ export default {
         if (response.data) {
           userBalance.value = response.data.balance;
           isPremium.value = response.data.premium || false;
-          userAvatar.value = response.data.avatarUrl || defaultAvatar; 
+          userAvatar.value = response.data.avatarUrl || defaultAvatar;
           localStorage.setItem('currentUser', JSON.stringify(response.data));
         }
       } catch (error) {
@@ -131,13 +133,21 @@ export default {
         try {
           const response = await axios.post('http://91.197.96.204:3000/buy-premium', { login: user.login });
           if (response.data.message) {
-            alert(response.data.message);
+            toast.success(response.data.message, { 
+              position: 'top-right',
+              duration: 2000,
+              dismissible: false,
+            });
             await updateUserBalance(user.login);
             closePremiumModal();
           }
         } catch (error) {
           console.error('Ошибка при покупке премиум-подписки:', error);
-          alert(error.response?.data.error || 'Ошибка при покупке премиум-подписки');
+          toast.error(error.response?.data.error || 'Ошибка при покупке премиум-подписки', { 
+            position: 'top-right',
+            duration: 2000,
+            dismissible: false,
+          });
         }
       }
     };
@@ -201,7 +211,6 @@ export default {
   },
 }
 </script>
-
 <style scoped>
 .premium-button {
   display: flex;

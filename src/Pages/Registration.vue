@@ -109,9 +109,12 @@
 <script setup>
 import { ref, computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toast-notification';
 import axios from 'axios';
 
 const router = useRouter();
+const toast = useToast();
+
 const name = ref('');
 const surname = ref('');
 const login = ref('');
@@ -131,7 +134,7 @@ const errors = reactive({
 
 document.title = "Регистрация";
 
-// Валидация конкретного поля
+
 const validateField = (field) => {
   errors[field] = '';
   if (field === 'name' && !name.value.trim()) {
@@ -171,7 +174,7 @@ const validateField = (field) => {
   }
 };
 
-// Общая валидация формы
+
 const validate = () => {
   validateField('name');
   validateField('surname');
@@ -181,7 +184,7 @@ const validate = () => {
   validateField('email');
 };
 
-// Проверка, что форма валидна
+
 const isFormValid = computed(() => {
   return (
     agreementPolicy.value &&
@@ -190,10 +193,14 @@ const isFormValid = computed(() => {
   );
 });
 
-// Отправка формы
 const onSubmit = async () => {
   validate();
   if (Object.values(errors).some((error) => error)) {
+    toast.error('Пожалуйста, исправьте ошибки в форме.', {
+      position: 'top-right',
+      duration: 2000,
+      dismissible: false,
+    });
     return;
   }
   const userData = {
@@ -212,16 +219,24 @@ const onSubmit = async () => {
       });
       if (loginResponse.status === 200) {
         localStorage.setItem('currentUser', JSON.stringify(loginResponse.data));
+        toast.success('Регистрация прошла успешно!', {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false,
+        });
         router.push('/profile');
         setTimeout(() => {
           window.location.reload();
         }, 100);
-    
       }
     }
   } catch (error) {
     console.error('Ошибка при регистрации:', error);
-    alert('Ошибка при регистрации: ' + (error.response?.data.error || 'Попробуйте позже.'));
+    toast.error((error.response?.data.error || 'Попробуйте позже.'), {
+      position: 'top-right',
+      duration: 2000,
+      dismissible: false,
+    });
   }
 };
 </script>

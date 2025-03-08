@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-container">
+  <div class="chat-container" v-if="currentUser">
     <div class="chat-messages">
       <div class="hello_chat_table">
         <div class="hello-chat-header">
@@ -9,11 +9,7 @@
             Здесь, вы можете общаться с другими обладателями премиум-подписки, 
             посоветовать фильм, общаться с администратором, дурачиться с другими пользователями и в целом весело проводить время.
             Приятной беседы! :)
-
-            
           </div>
-            
-         
         </div>
       </div>
       <div v-for="(message, index) in messages" :key="index" class="message" :class="{ 'my-message': message.sender === currentUser.login, 'other-message': message.sender !== currentUser.login }">
@@ -26,49 +22,49 @@
         </div>
 
         <div class="message-content" :class="{ 'no-avatar': !shouldShowAvatar(index) }">
-  <div class="message-sender" v-if="shouldShowSender(index)">
-    {{ message.sender }}
-  </div>
-  <div class="message-text">
-    <span v-if="message.text">{{ message.text }}</span>
-    <div class="audio_message" v-if="message.audioUrl">
-      <div class="message-avatar_audio ">
-          <img :src="message.avatarUrl || defaultAvatar" alt="Аватар" />
-      </div>
-      <audio controls :src="message.audioUrl" />
-    </div>
-    <img v-if="message.imageUrl" :src="message.imageUrl" alt="Изображение" class="message-image" />
-  </div>
-  <div class="user-info">
-    <div class="message_time">
-      {{ formatTime(message.timestamp) }}
-    </div>
-  </div>
-</div>
+          <div class="message-sender" v-if="shouldShowSender(index)">
+            {{ message.sender }}
+          </div>
+          <div class="message-text">
+            <span v-if="message.text">{{ message.text }}</span>
+            <div class="audio_message" v-if="message.audioUrl">
+              <div class="message-avatar_audio">
+                <img :src="message.avatarUrl || defaultAvatar" alt="Аватар" />
+              </div>
+              <audio controls :src="message.audioUrl" />
+            </div>
+            <img v-if="message.imageUrl" :src="message.imageUrl" alt="Изображение" class="message-image" />
+          </div>
+          <div class="user-info">
+            <div class="message_time">
+              {{ formatTime(message.timestamp) }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="chat-input">
-  <div class="setBinaryFiles">
-    <div class="button_paperclip">
-      <label class="setImageOrVideo" for="fileInput">
-        <img src="../assets/Media/Components/paperclip.svg" alt="Прикрепить файл" />
-      </label>
-      <input
-        id="fileInput"
-        type="file"
-        style="display: none;"
-        @change="handleFileUpload"
-      />
+      <div class="setBinaryFiles">
+        <div class="button_paperclip">
+          <label class="setImageOrVideo" for="fileInput">
+            <img src="../assets/Media/Components/paperclip.svg" alt="Прикрепить файл" />
+          </label>
+          <input
+            id="fileInput"
+            type="file"
+            style="display: none;"
+            @change="handleFileUpload"
+          />
+        </div>
+      </div>
+      <input v-model="newMessage" @keyup.enter="sendMessage" placeholder="Введите сообщение..." />
+      <div class="record-button" @click="toggleRecording">
+        <div class="microphone-icon" :class="{ 'recording': isRecording }">
+          <img src="../assets/Media/Components/audio.svg" alt="Запись" />
+          <div class="aura" v-if="isRecording"></div>
+        </div>
+      </div>
     </div>
-  </div>
-  <input v-model="newMessage" @keyup.enter="sendMessage" placeholder="Введите сообщение..." />
-  <div class="record-button" @click="toggleRecording">
-    <div class="microphone-icon" :class="{ 'recording': isRecording }">
-      <img src="../assets/Media/Components/audio.svg" alt="Запись" />
-      <div class="aura" v-if="isRecording"></div>
-    </div>
-  </div>
-</div>
   </div>
 </template>
 
@@ -76,8 +72,9 @@
 import axios from "axios";
 import defaultAvatar from "@/assets/Media/profile/default.png";
 import io from "socket.io-client";
-import { mapActions } from 'vuex'
+import { mapActions } from 'vuex';
 import RecordRTC from "recordrtc";
+import { useToast } from 'vue-toast-notification'; 
 
 export default {
   data() {
@@ -94,7 +91,12 @@ export default {
   async created() {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (!this.currentUser || !this.currentUser.premium) {
-      alert("Только пользователи с премиум-подпиской могут использовать чат.");
+      const toast = useToast();
+      toast.error("Только пользователи с премиум-подпиской могут использовать чат.", {
+        position: 'top-right',
+        duration: 2000,
+        dismissible: false,
+      });
       this.$router.push("/");
       return;
     }
@@ -105,15 +107,14 @@ export default {
       this.newMessageScroll();
     });
   },
-  methods: 
-  {
+  methods: {
     ...mapActions(['toggleEmailMailing']),
     async fetchMessages() {
       try {
         const response = await axios.get("http://91.197.96.204:3000/chat-messages");
         this.messages = response.data;
         setTimeout(() => {
-            this.newMessageScroll();
+          this.newMessageScroll();
         }, 50);
       } catch (error) {
         console.error("Ошибка при получении сообщений:", error);
@@ -136,42 +137,45 @@ export default {
       }
     },
     formatTime(timestamp) {
-    const date = new Date(timestamp);
-    const options = {
+      const date = new Date(timestamp);
+      const options = {
+        hour: "2-digit",
+        minute: "2-digit",
+      };
+      return date.toLocaleString("ru", options);
+    },
 
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return date.toLocaleString("ru", options);
-  },
-
-
-  async handleFileUpload(event) {
-       const file = event.target.files[0];
-       if (!file) return;
-       if (!file.type.startsWith("image/")) {
-           alert("Пожалуйста, выберите изображение.");
-           return;
-       }
-       const formData = new FormData();
-       formData.append("file", file);
-       formData.append("sender", this.currentUser.login);
-       formData.append("avatarUrl", this.currentUser.avatarUrl);
-       try {
-           const response = await axios.post("http://91.197.96.204:3000/upload-image-message", formData, {
-               headers: {
-                   "Content-Type": "multipart/form-data",
-               },
-           });
-           console.log("Ответ от сервера:", response.data);
-           event.target.value = "";
-           this.$nextTick(() => {
-               this.scrollToBottom();
-           });
-       } catch (error) {
-           console.error("Ошибка при отправке изображения:", error);
-       }
-   },
+    async handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith("image/")) {
+        const toast = useToast(); 
+        toast.error("Пожалуйста, выберите изображение.", {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false,
+        });
+        return;
+      }
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("sender", this.currentUser.login);
+      formData.append("avatarUrl", this.currentUser.avatarUrl);
+      try {
+        const response = await axios.post("http://91.197.96.204:3000/upload-image-message", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Ответ от сервера:", response.data);
+        event.target.value = "";
+        this.$nextTick(() => {
+          this.scrollToBottom();
+        });
+      } catch (error) {
+        console.error("Ошибка при отправке изображения:", error);
+      }
+    },
     toggleRecording() {
       if (this.isRecording) {
         this.stopRecording();
@@ -180,8 +184,8 @@ export default {
       }
     },
     newMessageScroll() {
-    const chatMessages = this.$el.querySelector(".chat-messages");
-       if(chatMessages){
+      const chatMessages = this.$el.querySelector(".chat-messages");
+      if (chatMessages) {
         chatMessages.scrollTop = chatMessages.scrollHeight;
       }
     },
@@ -198,33 +202,23 @@ export default {
         await this.sendVoiceMessage(blob);
       });
     },
-    newMessageScroll() {
-    const chatMessages = this.$el.querySelector(".chat-messages");
-    if (chatMessages) {
-        setTimeout(() => {
-            chatMessages.scrollTop = chatMessages.scrollHeight - chatMessages.clientHeight;
-        }, 10);
-    }
-},
-
-    
     async sendVoiceMessage(blob) {
-  const formData = new FormData();
-  formData.append("file", blob, "voice-message.webm");
-  formData.append("sender", this.currentUser.login);
-  formData.append("avatarUrl", this.currentUser.avatarUrl);
+      const formData = new FormData();
+      formData.append("file", blob, "voice-message.webm");
+      formData.append("sender", this.currentUser.login);
+      formData.append("avatarUrl", this.currentUser.avatarUrl);
 
-  try {
-    const response = await axios.post("http://91.197.96.204:3000/upload-voice-message", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+      try {
+        const response = await axios.post("http://91.197.96.204:3000/upload-voice-message", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
 
-  } catch (error) {
-    console.error("Ошибка при отправке голосового сообщения:", error);
-  }
-},
+      } catch (error) {
+        console.error("Ошибка при отправке голосового сообщения:", error);
+      }
+    },
     shouldShowAvatar(index) {
       if (index === 0) return true;
       const currentMessage = this.messages[index];
@@ -237,8 +231,8 @@ export default {
       const previousMessage = this.messages[index - 1];
       return currentMessage.sender !== previousMessage.sender;
     },
-    hideEmailMailing(){
-      this.toggleEmailMailing(false)
+    hideEmailMailing() {
+      this.toggleEmailMailing(false);
     }
   },
   beforeUnmount() {
@@ -246,12 +240,11 @@ export default {
       this.socket.disconnect();
     }
   },
-  mounted(){
-    this.toggleEmailMailing(false)
+  mounted() {
+    this.toggleEmailMailing(false);
   }
 }
 </script>
-
 <style scoped>
 .chat-container {
   display: flex;
