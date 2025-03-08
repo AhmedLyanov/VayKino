@@ -289,7 +289,7 @@ export default {
   position: absolute;
   top: 60px;
   right: 20px;
-  background: white;
+  background: #191e2e;
   border: 1px solid #ccc;
   padding: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -302,12 +302,13 @@ export default {
   background: none;
   border: none;
   cursor: pointer;
+  color: #f2f60f;
   padding: 5px;
   text-align: left;
 }
 
 .dropdown button:hover {
-  background: #f0f0f0;
+  background: #28304d;
 }
 
 header {
