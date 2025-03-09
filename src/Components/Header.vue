@@ -10,10 +10,30 @@
         </div>
         <div class="header-social_networks">
           <a href="https://vk.com/" target="_blank"><img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" /></a>
-          <a href="https://www.instagram.com/" target="_blank"><img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Facebook" /></a>
-          <a href="http://facebook.com/" target="_blank"><img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="Instagram" /></a>
-          <a href="https://x.com/" target="_blank"><img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="Twitter(X)" /></a>
+          <a href="https://www.instagram.com/" target="_blank"><img
+              :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Facebook" /></a>
+          <a href="http://facebook.com/" target="_blank"><img :src="`${linkToImg}/facebook_social_media_icon.svg`"
+              alt="Instagram" /></a>
+          <a href="https://x.com/" target="_blank"><img :src="`${linkToImg}/twitter_social_media_icon.svg`"
+              alt="Twitter(X)" /></a>
         </div>
+      </div>
+
+      <div class="genre_movies_list">
+        <input 
+          type="text" 
+          list="options" 
+          placeholder="Выберите жанр"
+          v-model="selectedGenre"
+          @change="redirectToGenre"
+        >
+        <datalist id="options">
+          <option value="Фильмы"></option>
+          <option value="Мультфильмы"></option>
+          <option value="Мультсериалы"></option>
+          <option value="Сериалы"></option>
+          <option value="Аниме"></option>
+        </datalist>
       </div>
 
       <div class="header-center">
@@ -64,7 +84,7 @@ import { ref, onMounted, onUpdated } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import { useToast } from 'vue-toast-notification'; 
+import { useToast } from 'vue-toast-notification';
 import defaultAvatar from '@/assets/Media/profile/default.png';
 
 export default {
@@ -74,7 +94,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const toast = useToast(); 
+    const toast = useToast();
     const isLoggedIn = ref(false);
     const userBalance = ref(0);
     const userAvatar = ref('');
@@ -83,8 +103,25 @@ export default {
     const isPremium = ref(false);
     const route = useRoute();
     const pathSegment = ref('');
+    const selectedGenre = ref(''); 
 
     const linkToImg = "../src/assets/Media/Components";
+
+    const genreRoutes = { 
+      'Фильмы': '/movies',
+      'Мультфильмы': '/cartoons',
+      'Мультсериалы': '/cartoon-series',
+      'Сериалы':'/series',
+      'Аниме':'/animes',
+    };
+
+    const redirectToGenre = () => { 
+      const route = genreRoutes[selectedGenre.value];
+      if (route) {
+        router.push(route);
+      } else {
+      }
+    };
 
     const checkAuth = async () => {
       const userString = localStorage.getItem('currentUser');
@@ -133,7 +170,7 @@ export default {
         try {
           const response = await axios.post('http://91.197.96.204:3000/buy-premium', { login: user.login });
           if (response.data.message) {
-            toast.success(response.data.message, { 
+            toast.success(response.data.message, {
               position: 'top-right',
               duration: 2000,
               dismissible: false,
@@ -143,7 +180,7 @@ export default {
           }
         } catch (error) {
           console.error('Ошибка при покупке премиум-подписки:', error);
-          toast.error(error.response?.data.error || 'Ошибка при покупке премиум-подписки', { 
+          toast.error(error.response?.data.error || 'Ошибка при покупке премиум-подписки', {
             position: 'top-right',
             duration: 2000,
             dismissible: false,
@@ -201,7 +238,9 @@ export default {
       pathSegment,
       showPremiumModal,
       closePremiumModal,
-      buyPremium
+      buyPremium,
+      selectedGenre, 
+      redirectToGenre
     };
   },
   methods: {
@@ -227,11 +266,11 @@ export default {
   transition: all 0.5s;
 }
 
-.header-center nav :nth-child(7){
+.header-center nav :nth-child(7) {
   color: #f2f60f;
 }
 
-.premium-button:hover{
+.premium-button:hover {
   background: #19255c;
   box-shadow: 1px 1px 20px #f2f60f;
 }
@@ -264,9 +303,11 @@ export default {
   0% {
     box-shadow: 0 0 5px #ffd700;
   }
+
   50% {
     box-shadow: 0 0 20px #ffd700;
   }
+
   100% {
     box-shadow: 0 0 5px #ffd700;
   }
@@ -394,7 +435,7 @@ header {
 }
 
 
-.balance_container .balance_number{
+.balance_container .balance_number {
   font-size: 15px;
   font-weight: 300;
   line-height: 17.85px;
@@ -404,7 +445,7 @@ header {
   color: #f2f60f;
 }
 
-.balance_container .balance{
+.balance_container .balance {
   font-size: 17px;
   font-weight: 700;
   line-height: 21.06px;
@@ -432,7 +473,7 @@ header {
     cursor: pointer;
     text-decoration: none;
 
-    &.active{
+    &.active {
       color: #3657cb;
       text-shadow: 0 0 15px rgba(54, 87, 203, .7);
     }
