@@ -39,7 +39,7 @@ export default{
             this.isLoading = true
             const user = JSON.parse(localStorage.getItem("currentUser"))
             const userId = user._id
-            this.favourites = JSON.parse(localStorage.getItem(`${userId}_favoriteMovies`))
+            this.favourites = JSON.parse(localStorage.getItem(`${userId}_favoriteMovies`)) || []
             this.isLoading = false
         } else{
             this.$router.push({ path: "/login" })

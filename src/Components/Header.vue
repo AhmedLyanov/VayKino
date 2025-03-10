@@ -38,7 +38,6 @@
         <nav>
           <router-link to="/premiere" active-class="active">Афиша</router-link>
           <router-link to="/media" active-class="active">Медиа</router-link>
-          <router-link to="/movies" active-class="active">Фильмы</router-link>
           <router-link to="/posts" active-class="active">Новости</router-link>
           <router-link to="/lists" active-class="active">Подборки</router-link>
           <router-link to="/favourites" active-class="active">Избранное</router-link>
@@ -263,7 +262,7 @@ export default {
   transition: all 0.5s;
 }
 
-.header-center nav :nth-child(7) {
+.header-center nav :nth-child(6) {
   color: #f2f60f;
 }
 
