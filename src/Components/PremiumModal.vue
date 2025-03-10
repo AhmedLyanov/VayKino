@@ -16,7 +16,7 @@
                     </ul>
                 </div>
                 <div class="button_buy">
-                    <button class="buy-button" @click="buyPremium">Купить за 5000 баллов</button>
+                    <button class="buy-button" @click="buyPremium">Купить за 50 000 баллов</button>
                 </div>
                
             </div>

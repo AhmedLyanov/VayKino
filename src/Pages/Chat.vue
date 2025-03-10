@@ -101,7 +101,7 @@ export default {
       return;
     }
     await this.fetchMessages();
-    this.socket = io("http://91.197.96.204:3000");
+    this.socket = io("https://dreamfood.space:3000/");
     this.socket.on("newMessage", (message) => {
       this.messages.push(message);
       this.newMessageScroll();
@@ -111,7 +111,7 @@ export default {
     ...mapActions(['toggleEmailMailing']),
     async fetchMessages() {
       try {
-        const response = await axios.get("http://91.197.96.204:3000/chat-messages");
+        const response = await axios.get("https://dreamfood.space:3000/chat-messages");
         this.messages = response.data;
         setTimeout(() => {
           this.newMessageScroll();
@@ -130,7 +130,7 @@ export default {
           avatarUrl: this.currentUser.avatarUrl,
           role: this.currentUser.role,
         };
-        await axios.post("http://91.197.96.204:3000/chat-messages", message);
+        await axios.post("https://dreamfood.space:3000/chat-messages", message);
         this.newMessage = "";
       } catch (error) {
         console.error("Ошибка при отправке сообщения:", error);
@@ -162,7 +162,7 @@ export default {
       formData.append("sender", this.currentUser.login);
       formData.append("avatarUrl", this.currentUser.avatarUrl);
       try {
-        const response = await axios.post("http://91.197.96.204:3000/upload-image-message", formData, {
+        const response = await axios.post("https://dreamfood.space:3000/upload-image-message", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -209,7 +209,7 @@ export default {
       formData.append("avatarUrl", this.currentUser.avatarUrl);
 
       try {
-        const response = await axios.post("http://91.197.96.204:3000/upload-voice-message", formData, {
+        const response = await axios.post("https://dreamfood.space:3000/upload-voice-message", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

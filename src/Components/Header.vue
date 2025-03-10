@@ -4,18 +4,16 @@
       <div class="header-left">
         <div class="header-logo" @click="this.$router.replace('/')">
           <div class="header-logo-img">
-            <img :src="`${linkToImg}/logo.svg`" alt="" />
+            <img src="../assets/Media/Components/logo.svg" alt="" />
           </div>
           <div class="header-logo-title">Vay<mark>Kino</mark></div>
         </div>
         <div class="header-social_networks">
-          <a href="https://vk.com/" target="_blank"><img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" /></a>
-          <a href="https://www.instagram.com/" target="_blank"><img
-              :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Facebook" /></a>
-          <a href="http://facebook.com/" target="_blank"><img :src="`${linkToImg}/facebook_social_media_icon.svg`"
-              alt="Instagram" /></a>
-          <a href="https://x.com/" target="_blank"><img :src="`${linkToImg}/twitter_social_media_icon.svg`"
-              alt="Twitter(X)" /></a>
+          <a href="https://vk.com/" target="_blank"> <img src="../assets/Media/Components/vk_social_media_icon.svg" alt="" /></a>
+          <a href="https://www.instagram.com/" target="_blank">
+            <img src="../assets/Media/Components/instagram_social_media_icon.svg" alt="" /></a>
+          <a href="http://facebook.com/" target="_blank"> <img src="../assets/Media/Components/facebook_social_media_icon.svg" alt="" /></a>
+          <a href="https://x.com/" target="_blank"> <img src="../assets/Media/Components/twitter_social_media_icon.svg" alt="" /></a>
         </div>
       </div>
 
@@ -50,7 +48,7 @@
 
       <div class="header-right">
         <div class="header-search_btn" @click="showModal">
-          <img :src="`${linkToImg}/search.svg`" alt="" />
+          <img src="../assets/Media/Components/search.svg" alt="" />
         </div>
         <div v-if="!isLoggedIn" class="header-login" @click="this.$router.replace('/login')">Войти</div>
         <div v-else class="user-info">
@@ -59,7 +57,7 @@
             <span class="balance_number">{{ userBalance }}</span>
           </div>
           <div v-if="!isPremium" class="premium-button" @click="showPremiumModal">
-            <img :src="`${linkToImg}/GoldCrown.svg`" alt="Premium" />
+            <img src="../assets/Media/Components/GoldCrown.svg" alt="">
           </div>
           <div class="avatar-container" @click="toggleDropdown" :class="{ 'premium-glow': isPremium }">
             <img :src="userAvatar || defaultAvatar" alt="Аватар" class="avatar" />
@@ -105,7 +103,6 @@ export default {
     const pathSegment = ref('');
     const selectedGenre = ref(''); 
 
-    const linkToImg = "../src/assets/Media/Components";
 
     const genreRoutes = { 
       'Фильмы': '/movies',
@@ -143,7 +140,7 @@ export default {
 
     const updateUserBalance = async (login) => {
       try {
-        const response = await axios.get(`http://91.197.96.204:3000/user/${login}`);
+        const response = await axios.get(`https://dreamfood.space:3000/user/${login}`);
         if (response.data) {
           userBalance.value = response.data.balance;
           isPremium.value = response.data.premium || false;
@@ -168,7 +165,7 @@ export default {
       if (userString) {
         const user = JSON.parse(userString);
         try {
-          const response = await axios.post('http://91.197.96.204:3000/buy-premium', { login: user.login });
+          const response = await axios.post('https://dreamfood.space:3000/buy-premium', { login: user.login });
           if (response.data.message) {
             toast.success(response.data.message, {
               position: 'top-right',
@@ -224,7 +221,7 @@ export default {
     });
 
     return {
-      linkToImg,
+
       isLoggedIn,
       userBalance,
       userAvatar,
@@ -347,7 +344,61 @@ export default {
   flex-direction: column;
   gap: 5px;
 }
+.genre_movies_list {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
+.genre_movies_list input {
+  width: 200px;
+  height: 40px;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  background-color: #191e2e;
+  border: 2px solid #3657cb;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.genre_movies_list input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.genre_movies_list input:focus {
+  border-color: #f2f60f;
+  box-shadow: 0 0 10px rgba(242, 246, 15, 0.5);
+}
+
+.genre_movies_list datalist {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #191e2e;
+  border: 2px solid #3657cb;
+  border-radius: 10px;
+  margin-top: 5px;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.genre_movies_list option {
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.genre_movies_list option:hover {
+  background-color: #28304d;
+}
 .dropdown button {
   background: none;
   border: none;

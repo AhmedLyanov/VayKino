@@ -5,8 +5,7 @@
         <div class="movie-info__main">
           <div class="movie-info__left">
             <div class="movie-info__image">
-              <img v-if="!isLoading" :src="data?.poster?.url || '../src/assets/Media/Components/PosterDefault.jpg'"
-                alt="" />
+              <img v-if="!isLoading" :src="data?.poster?.url || '/src/assets/Media/Components/PosterDefault.jpg'" alt="" />
               <div v-else class="loading" style="width: 100%; height: 100%"></div>
             </div>
           </div>
@@ -14,12 +13,12 @@
             <div class="movie-info__path">
               <span @click="this.$router.replace('/')" style="cursor: pointer; user-select: none;">Главная</span>
               <span style="margin-left: 7px; margin-right: 7px; user-select: none;">
-                <img width="7" :src="`${linkToImg}/arrow_mini.svg`" alt="arrow" />
+                <img width="7" src="/src/assets/Media/MoviePage/arrow_mini.svg" alt="arrow" />
               </span>
               <span @click="this.$router.replace(`/${movieTypes[data?.type]?.path}`)"
                 style="cursor: pointer; user-select: none;">{{ movieTypes[data?.type]?.nameMnogo }}</span>
               <span style="margin-left: 7px; margin-right: 7px; user-select: none;">
-                <img width="7" :src="`${linkToImg}/arrow_mini.svg`" alt="arrow" />
+                <img width="7" src="/src/assets/Media/MoviePage/arrow_mini.svg" alt="arrow" />
               </span>
               <span v-if="!isLoading">{{ data.name ? data.name : data.alternativeName }}</span>
               <div v-else class="loading" style="width: 200px; height: 75%; margin-left: 3px;"></div>
@@ -46,22 +45,22 @@
               </div>
               <div class="movie-info__actions">
                 <div class="movie-info__watch-trailer" @click="scrollToTrailer">
-                  <img :src="`${linkToImg}/play.svg`" alt="" />
+                  <img src="/src/assets/Media/MoviePage/play.svg" alt="" />
                   Смотреть трейлер
                 </div>
 
                 <div class="movie-info__socials">
                   <a href="https://vk.com/" target="_blank">
-                    <img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" />
+                    <img src="/src/assets/Media/MoviePage/vk_social_media_icon.svg" alt="VK" />
                   </a>
                   <a href="https://www.instagram.com/" target="_blank">
-                    <img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="" />
+                    <img src="/src/assets/Media/MoviePage/instagram_social_media_icon.svg" alt="" />
                   </a>
                   <a href="https://facebook.com/" target="_blank">
-                    <img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="" />
+                    <img src="/src/assets/Media/MoviePage/facebook_social_media_icon.svg" alt="" />
                   </a>
                   <a href="https://x.com/" target="_blank">
-                    <img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="" />
+                    <img src="/src/assets/Media/MoviePage/twitter_social_media_icon.svg" alt="" />
                   </a>
                 </div>
               </div>
@@ -81,7 +80,7 @@
 
           <div class="movie-info__favorites">
             <div class="movie-info__favorite-icon" @click="toggleFavorite">
-              <img :src="`${linkToImg}/${isFavorite ? 'blue-heart.svg' : 'heart.svg'}`" alt="" />
+              <img :src="`/src/assets/Media/MoviePage/${isFavorite ? 'blue-heart.svg' : 'heart.svg'}`" alt="" />
             </div>
             <div class="movie-info__favorite-count">
               В избранном у {{ 9999 + isFavorite }} человек
@@ -150,7 +149,7 @@
 
           <div class="movie-table__row" v-if="data?.persons?.filter(item => item.enProfession === 'director').length">
             <div class="movie-table__cell--header">
-              Режисер:
+              Режиссер:
             </div>
             <div class="movie-table__cell">
               {{data?.persons?.filter(item => item.enProfession === 'director').slice(0, 2).map(item =>
@@ -273,16 +272,16 @@
 
             <div class="trealers-info-socail_networks">
               <a href="https://vk.com/" target="_blank">
-                <img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" />
+                <img src="/src/assets/Media/MoviePage/vk_social_media_icon.svg" alt="VK" />
               </a>
               <a href="https://www.instagram.com/" target="_blank">
-                <img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Instagram" />
+                <img src="/src/assets/Media/MoviePage/instagram_social_media_icon.svg" alt="Instagram" />
               </a>
               <a href="https://facebook.com/" target="_blank">
-                <img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="Facebook" />
+                <img src="/src/assets/Media/MoviePage/facebook_social_media_icon.svg" alt="Facebook" />
               </a>
               <a href="https://x.com/" target="_blank">
-                <img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="Twitter(X)" />
+                <img src="/src/assets/Media/MoviePage/twitter_social_media_icon.svg" alt="Twitter(X)" />
               </a>
             </div>
           </div>
@@ -372,22 +371,16 @@
 
         <div class="comment-box" v-if="previews.length > 0">
           <div v-for="(preview, index) in previews" :key="index">
-
-
             <div class="container_comment">
-
               <div class="account_comment">
                 <div class="avatar_box">
-                  <img src="../assets/Media/profile/default.png" />
+                  <img src="/src/assets/Media/profile/default.png" />
                 </div>
                 <div class="info_account">
                   <p class="name_user_text_comment">{{ preview.author }}</p>
                   <Rating :rating="preview.rating" />
                 </div>
-
               </div>
-
-
               <div class="info-preview">
                 <div class="timeTitle-Box">
                   <h3>{{ preview.title }}</h3>
@@ -395,19 +388,13 @@
                 </div>
                 <p class="comment_user_description"> {{ preview.description }}</p>
               </div>
-
             </div>
-
-
-
-
           </div>
         </div>
 
         <div v-else>
           <p>Отзывы отсутствуют.</p>
         </div>
-
       </div>
 
       <div class="bg-movie_cadr" :style="{ backgroundImage: data ? `url(${data?.backdrop?.url})` : 'none' }">
@@ -416,9 +403,6 @@
     </div>
 
     <UpArrow />
-
-
-
   </main>
 </template>
 
@@ -436,7 +420,6 @@ import { fetchData, fetchAwards, fetchPosters, fetchStills, fetchSequels, fetchS
 import axios from 'axios';
 import { mapActions } from "vuex";
 
-
 export default {
   data() {
     return {
@@ -450,7 +433,6 @@ export default {
       sequels: {},
       similars: {},
       trealer: {},
-      linkToImg: "../src/assets/Media/MoviePage",
       isLoading: false,
       isPremium: false,
       isFavorite: false,
@@ -497,10 +479,10 @@ export default {
   },
   computed: {
     likeMovieIcon() {
-      return `${this.linkToImg}/${this.isLiked ? 'blue-like.svg' : 'like.svg'}`;
+      return `/src/assets/Media/MoviePage/${this.isLiked ? 'blue-like.svg' : 'like.svg'}`;
     },
     dislikeMovieIcon() {
-      return `${this.linkToImg}/${this.isDisliked ? 'blue-dislike.svg' : 'dislike.svg'}`;
+      return `/src/assets/Media/MoviePage/${this.isDisliked ? 'blue-dislike.svg' : 'dislike.svg'}`;
     },
     localStorageKey() {
       const user = JSON.parse(localStorage.getItem("currentUser"))
@@ -665,7 +647,7 @@ export default {
           favorites.splice(index, 1);
           this.isFavorite = false;
         } else {
-          favorites.push({ id: this.id, name: this.data.name, enName: this.data.alternativeName, poster: this.data?.poster?.url || '../src/assets/Media/Components/PosterDefault.jpg', genres: this.data?.genres });
+          favorites.push({ id: this.id, name: this.data.name, enName: this.data.alternativeName, poster: this.data?.poster?.url || '/src/assets/Media/Components/PosterDefault.jpg', genres: this.data?.genres });
           this.isFavorite = true;
         }
 
@@ -762,13 +744,13 @@ export default {
     },
     likeIcon(videoId) {
       return this.likedVideos.includes(videoId)
-        ? `${this.linkToImg}/blue-like.svg`
-        : `${this.linkToImg}/like.svg`;
+        ? `/src/assets/Media/MoviePage/blue-like.svg`
+        : `/src/assets/Media/MoviePage/like.svg`;
     },
     dislikeIcon(videoId) {
       return this.dislikedVideos.includes(videoId)
-        ? `${this.linkToImg}/blue-dislike.svg`
-        : `${this.linkToImg}/dislike.svg`;
+        ? `/src/assets/Media/MoviePage/blue-dislike.svg`
+        : `/src/assets/Media/MoviePage/dislike.svg`;
     },
     likeMovie() {
       if (JSON.parse(localStorage.getItem("currentUser"))) {

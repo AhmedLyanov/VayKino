@@ -202,7 +202,7 @@ onMounted(async () => {
     const currentUser = JSON.parse(currentUserString);
     if (currentUser && currentUser.login) {
       try {
-        const response = await axios.get(`http://91.197.96.204:3000/user/${currentUser.login}`);
+        const response = await axios.get(`https://dreamfood.space:3000/user/${currentUser.login}`);
         if (response.data) {
           userProfile.value = response.data;
           avatarUrl.value = response.data.avatarUrl;
@@ -221,9 +221,9 @@ const saveProfile = async () => {
   if (currentUserString) {
     const currentUser = JSON.parse(currentUserString);
     try {
-      const response = await axios.put(`http://91.197.96.204:3000/user/${currentUser.login}`, userProfile.value);
+      const response = await axios.put(`https://dreamfood.space:3000/user/${currentUser.login}`, userProfile.value);
       if (response.data) {
-        const updatedResponse = await axios.get(`http://91.197.96.204:3000/user/${currentUser.login}`);
+        const updatedResponse = await axios.get(`https://dreamfood.space:3000/user/${currentUser.login}`);
         localStorage.setItem('currentUser', JSON.stringify(updatedResponse.data));
         isEditing.value = false;
         showNotification.value = true;
@@ -250,7 +250,7 @@ const handleFileUpload = async (event) => {
   const formData = new FormData();
   formData.append('avatar', file);
   try {
-    const response = await axios.post('http://91.197.96.204:3000/upload-avatar', formData, {
+    const response = await axios.post('https://dreamfood.space:3000/upload-avatar', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

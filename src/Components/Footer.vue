@@ -2,14 +2,14 @@
     <footer  v-if="showEmailMailing">
         <div class="email_mailing">
             <div class="email_mailing-img">
-                <img :src="`${linkToImg}/email_mailing.jpg`" alt="" />
+                <img src="../assets/Media/Components/email_mailing.jpg" alt="">
             </div>
 
             <div class="email_mailing-blue">
                 <div class="email_mailing-cont">
                     <div class="email_mailing-cont-logo" @click="this.$router.replace('/')">
                         <div class="email_mailing-cont-logo-img">
-                            <img :src="`${linkToImg}/logo.svg`" alt="" />
+                            <img src="../assets/Media/Components/logo.svg" alt="">
                         </div>
                         <div class="email_mailing-cont-logo-title">VayKino</div>
                     </div>
@@ -40,11 +40,11 @@
 
         <div class="footer-cont">
             <div class="footer-social_networks">
-                <a href="https://vk.com/" target="_blank"><img :src="`${linkToImg}/vk_social_media_icon.svg`" alt="VK" /></a>
-                <a href="https://www.instagram.com/" target="_blank"><img :src="`${linkToImg}/instagram_social_media_icon.svg`" alt="Instagram" /></a>
-                <a href="https://facebook.com/" target="_blank"><img :src="`${linkToImg}/facebook_social_media_icon.svg`" alt="Facebook" /></a>
-                <a href="https://x.com/" target="_blank"><img :src="`${linkToImg}/twitter_social_media_icon.svg`" alt="Twitter(X)" /></a>
-                <a href="https://youtube.com/" target="_blank"><img :src="`${linkToImg}/youtube_social_media_icon.svg`" alt="YouTube" /></a>
+                <a href="https://vk.com/" target="_blank"><img src="../assets/Media/Components/vk_social_media_icon.svg" alt=""></a>
+                <a href="https://www.instagram.com/" target="_blank"><img src="../assets/Media/Components/instagram_social_media_icon.svg" alt=""></a>
+                <a href="https://facebook.com/" target="_blank"><img src="../assets/Media/Components/facebook_social_media_icon.svg" alt=""></a>
+                <a href="https://x.com/" target="_blank"><img src="../assets/Media/Components/twitter_social_media_icon.svg" alt=""></a>
+                <a href="https://youtube.com/" target="_blank"><img src="../assets/Media/Components/youtube_social_media_icon.svg" alt=""></a>
             </div>
 
             <div class="footer-nav">

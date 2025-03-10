@@ -211,9 +211,9 @@ const onSubmit = async () => {
     email: email.value,
   };
   try {
-    const registerResponse = await axios.post('http://91.197.96.204:3000/register', userData);
+    const registerResponse = await axios.post('https://dreamfood.space:3000/register', userData);
     if (registerResponse.status === 201) {
-      const loginResponse = await axios.post('http://91.197.96.204:3000/login', {
+      const loginResponse = await axios.post('https://dreamfood.space:3000/login', {
         login: login.value,
         password: password.value,
       });

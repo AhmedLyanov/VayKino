@@ -45,7 +45,7 @@ document.title = "Вход";
 
 const onSubmit = async () => {
   try {
-    const response = await fetch('http://91.197.96.204:3000/login', {
+    const response = await fetch('https://dreamfood.space:3000/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +60,6 @@ const onSubmit = async () => {
       setTimeout(() => {
         window.location.reload(); 
       }, 100);
-     
     } else {
       const errorData = await response.json();
       error.value = errorData.error || 'Неверный логин или пароль';
