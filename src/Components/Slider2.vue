@@ -183,4 +183,14 @@ export default {
     justify-content: center;
     align-items: center;
 }
+
+@media (max-width: 1100px){
+    .slide[data-v-634aaec0] {
+    justify-content: center;
+    display: grid
+;
+    /* grid-template-columns: repeat(4, 340px); */
+    gap: 50px;
+}
+}
 </style>

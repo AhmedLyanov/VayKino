@@ -36,4 +36,5 @@ export default {
   -webkit-backdrop-filter: blur(1px); */
   z-index: 9998;
 }
+
 </style>

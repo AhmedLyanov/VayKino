@@ -2,37 +2,67 @@
   <header>
     <div class="header-cont">
       <div class="header-left">
-        <div class="header-logo" @click="this.$router.replace('/')">
-          <div class="header-logo-img">
-            <img src="../assets/Media/Components/logo.svg" alt="" />
+        <div class="logo_info">
+          <div class="header-logo" @click="this.$router.replace('/')">
+            <div class="header-logo-img">
+              <img src="../assets/Media/Components/logo.svg" alt="" />
+            </div>
+            <div class="header-logo-title">Vay<mark>Kino</mark></div>
           </div>
-          <div class="header-logo-title">Vay<mark>Kino</mark></div>
+          <div class="header-social_networks">
+            <a href="https://vk.com/" target="_blank"> <img src="../assets/Media/Components/vk_social_media_icon.svg"
+                alt="" /></a>
+            <a href="https://www.instagram.com/" target="_blank">
+              <img src="../assets/Media/Components/instagram_social_media_icon.svg" alt="" /></a>
+            <a href="http://facebook.com/" target="_blank"> <img
+                src="../assets/Media/Components/facebook_social_media_icon.svg" alt="" /></a>
+            <a href="https://x.com/" target="_blank"> <img
+                src="../assets/Media/Components/twitter_social_media_icon.svg" alt="" /></a>
+          </div>
         </div>
-        <div class="header-social_networks">
-          <a href="https://vk.com/" target="_blank"> <img src="../assets/Media/Components/vk_social_media_icon.svg" alt="" /></a>
-          <a href="https://www.instagram.com/" target="_blank">
-            <img src="../assets/Media/Components/instagram_social_media_icon.svg" alt="" /></a>
-          <a href="http://facebook.com/" target="_blank"> <img src="../assets/Media/Components/facebook_social_media_icon.svg" alt="" /></a>
-          <a href="https://x.com/" target="_blank"> <img src="../assets/Media/Components/twitter_social_media_icon.svg" alt="" /></a>
+
+        <div class="genre_movies_list">
+          <input type="text" list="options" placeholder="Выберите жанр" v-model="selectedGenre"
+            @change="redirectToGenre">
+          <datalist id="options">
+            <option value="Фильмы"></option>
+            <option value="Мультфильмы"></option>
+            <option value="Мультсериалы"></option>
+            <option value="Сериалы"></option>
+            <option value="Аниме"></option>
+          </datalist>
         </div>
       </div>
 
-      <div class="genre_movies_list">
-        <input 
-          type="text" 
-          list="options" 
-          placeholder="Выберите жанр"
-          v-model="selectedGenre"
-          @change="redirectToGenre"
-        >
-        <datalist id="options">
-          <option value="Фильмы"></option>
-          <option value="Мультфильмы"></option>
-          <option value="Мультсериалы"></option>
-          <option value="Сериалы"></option>
-          <option value="Аниме"></option>
-        </datalist>
+
+
+      <div class="dropdown-menu" :class="{ 'active': isBurgerMenuOpen }">
+        <div class="dropdown-header">
+          <div class="user-info-mobile">
+            <div class="avatar-container-mobile" @click="toggleDropdown" :class="{ 'premium-glow': isPremium }">
+              <img :src="userAvatar || defaultAvatar" alt="Аватар" class="avatar-mobile" />
+            </div>
+            <div class="balance-container-mobile">
+              <span class="balance-mobile">Баланс: </span>
+              <span class="balance-number-mobile">{{ userBalance }}</span>
+            </div>
+          </div>
+          <div class="header-search_btn-mobile" @click="showModal">
+            <img src="../assets/Media/Components/search.svg" alt="" />
+          </div>
+        </div>
+        <nav>
+          <router-link to="/premiere" active-class="active">Афиша</router-link>
+          <router-link to="/media" active-class="active">Медиа</router-link>
+          <router-link to="/posts" active-class="active">Новости</router-link>
+          <router-link to="/lists" active-class="active">Подборки</router-link>
+          <router-link to="/favourites" active-class="active">Избранное</router-link>
+          <router-link to="/chat" active-class="active">Премиум-Чат</router-link>
+        </nav>
       </div>
+
+
+
 
       <div class="header-center">
         <nav>
@@ -71,6 +101,12 @@
 
     <SearchModal ref="modal"></SearchModal>
     <PremiumModal v-if="showPremiumModalFlag" @close="closePremiumModal" @buy-premium="buyPremium" />
+    <div class="burger-menu" @click="toggleBurgerMenu">
+      <div class="burger-line"></div>
+      <div class="burger-line"></div>
+      <div class="burger-line"></div>
+    </div>
+
   </header>
 </template>
 
@@ -100,18 +136,22 @@ export default {
     const isPremium = ref(false);
     const route = useRoute();
     const pathSegment = ref('');
-    const selectedGenre = ref(''); 
+    const selectedGenre = ref('');
+    const isBurgerMenuOpen = ref(false);
 
+    const toggleBurgerMenu = () => {
+      isBurgerMenuOpen.value = !isBurgerMenuOpen.value;
+    };
 
-    const genreRoutes = { 
+    const genreRoutes = {
       'Фильмы': '/movies',
       'Мультфильмы': '/cartoons',
       'Мультсериалы': '/cartoon-series',
-      'Сериалы':'/series',
-      'Аниме':'/animes',
+      'Сериалы': '/series',
+      'Аниме': '/animes',
     };
 
-    const redirectToGenre = () => { 
+    const redirectToGenre = () => {
       const route = genreRoutes[selectedGenre.value];
       if (route) {
         router.push(route);
@@ -220,7 +260,6 @@ export default {
     });
 
     return {
-
       isLoggedIn,
       userBalance,
       userAvatar,
@@ -235,8 +274,10 @@ export default {
       showPremiumModal,
       closePremiumModal,
       buyPremium,
-      selectedGenre, 
-      redirectToGenre
+      selectedGenre,
+      redirectToGenre,
+      isBurgerMenuOpen,
+      toggleBurgerMenu
     };
   },
   methods: {
@@ -343,6 +384,7 @@ export default {
   flex-direction: column;
   gap: 5px;
 }
+
 .genre_movies_list {
   position: relative;
   display: flex;
@@ -398,6 +440,7 @@ export default {
 .genre_movies_list option:hover {
   background-color: #28304d;
 }
+
 .dropdown button {
   background: none;
   border: none;
@@ -427,8 +470,8 @@ header {
 
 .header-left {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  gap: 30px;
 }
 
 .header-logo {
@@ -541,6 +584,7 @@ header {
 .header-right {
   display: flex;
   gap: 30px;
+  align-items: center;
 }
 
 .header-search_btn {
@@ -578,6 +622,239 @@ header {
 
   &:hover {
     box-shadow: 0px 0px 15px 0px #3657cb;
+  }
+}
+
+
+
+
+
+
+
+
+.burger-menu {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  padding: 10px;
+}
+
+.burger-line {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+}
+
+.dropdown-menu {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 85px;
+  right: 20px;
+  background: #191e2e;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  gap: 10px;
+  z-index: 1000;
+}
+
+.dropdown-menu.active {
+  display: flex;
+  width: 100%;
+}
+
+/* Стили для заголовка выпадающего меню */
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #3657cb;
+}
+
+.user-info-mobile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-container-mobile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.avatar-mobile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.balance-container-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.balance-mobile {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+}
+
+.balance-number-mobile {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f2f60f;
+}
+
+.header-search_btn-mobile {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.header-search_btn-mobile:hover {
+  box-shadow: 0px 0px 15px 0px white;
+}
+
+/* Стили для навигации в выпадающем меню */
+.dropdown-menu nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.dropdown-menu nav a {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.dropdown-menu nav a:hover {
+  color: #3657cb;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 1100px) {
+  .burger-menu {
+    display: flex;
+  }
+
+  .header-right {
+    display: none;
+  }
+
+  .header-center nav {
+    display: none;
+  }
+
+  .dropdown-menu {
+    display: none;
+  }
+
+  .dropdown-menu.active {
+    display: flex;
+  }
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 1350px) {
+
+
+
+
+  .movie-card-img {
+    position: relative;
+    width: 300px;
+    height: 420px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .now-playing__title {
+    font-size: 25px;
+  }
+
+  .now-playing__header-line {
+    display: none;
+  }
+
+  .block_header-title {
+    font-size: 25px;
+  }
+}
+
+
+
+
+@media (max-width: 1550px) {
+  .header-center nav {
+    & a {
+      &[data-v-0e75f877]:not(:first-child) {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  .genre_movies_list input[data-v-0e75f877] {
+    width: 150px;
+    height: 30px;
+    padding: 8px 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+    background-color: #191e2e;
+    border: 2px solid #3657cb;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .header-center nav a {
+    font-size: 16px;
+  }
+
+  .balance_container {
+    display: none;
+  }
+
+
+  .header-search_btn {
+    &[data-v-0e75f877] {
+      width: 45px;
+      height: 47px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 10px;
+      user-select: none;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0px 0px 0px 0px white;
+    }
   }
 }
 </style>

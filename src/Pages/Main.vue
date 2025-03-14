@@ -58,13 +58,15 @@
                                         <img src="../assets/Media/Main/vk_social_media_icon.svg" alt="VK" />
                                     </a>
                                     <a href="https://www.instagram.com/" target="_blank">
-                                        <img src="../assets/Media/Main/instagram_social_media_icon.svg" alt="Instagram" />
+                                        <img src="../assets/Media/Main/instagram_social_media_icon.svg"
+                                            alt="Instagram" />
                                     </a>
                                     <a href="http://facebook.com/" target="_blank">
                                         <img src="../assets/Media/Main/facebook_social_media_icon.svg" alt="Facebook" />
                                     </a>
                                     <a href="https://x.com/" target="_blank">
-                                        <img src="../assets/Media/Main/twitter_social_media_icon.svg" alt="Twitter(X)" />
+                                        <img src="../assets/Media/Main/twitter_social_media_icon.svg"
+                                            alt="Twitter(X)" />
                                     </a>
                                 </div>
                             </div>
@@ -180,7 +182,7 @@
                                         {{ post.title.slice(0, 40) }}...
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -233,11 +235,11 @@ export default {
         ...mapGetters(['blackList']),
     },
     methods: {
-    ...mapActions(['toggleEmailMailing']),
+        ...mapActions(['toggleEmailMailing']),
 
-    showEmailMailing(){
-      this.toggleEmailMailing(true)
-    },
+        showEmailMailing() {
+            this.toggleEmailMailing(true)
+        },
         async setActiveYear(year) {
             this.activeYear = year;
             this.popularMovies = []
@@ -295,9 +297,9 @@ export default {
                 }
             } else {
                 this.$toast.error('Нужно войти в аккаунт для выполнения этого действия!', {
-                position: 'top-right',
-                duration: 2000,
-                dismissible: false
+                    position: 'top-right',
+                    duration: 2000,
+                    dismissible: false
                 });
             }
         },
@@ -317,14 +319,14 @@ export default {
                 }
             } else {
                 this.$toast.error('Нужно войти в аккаунт для выполнения этого действия!', {
-                position: 'top-right',
-                duration: 2000,
-                dismissible: false
+                    position: 'top-right',
+                    duration: 2000,
+                    dismissible: false
                 });
             }
         },
         saveLocalStorage() {
-            if(JSON.parse(localStorage.getItem("currentUser"))){
+            if (JSON.parse(localStorage.getItem("currentUser"))) {
                 const user = JSON.parse(localStorage.getItem("currentUser"))
                 const userId = user._id
                 localStorage.setItem(`${userId}_likedVideos`, JSON.stringify(this.likedVideos));
@@ -332,7 +334,7 @@ export default {
             }
         },
         loadLocalStorage() {
-            if(JSON.parse(localStorage.getItem("currentUser"))){
+            if (JSON.parse(localStorage.getItem("currentUser"))) {
                 const user = JSON.parse(localStorage.getItem("currentUser"))
                 const userId = user._id
                 try {
@@ -977,4 +979,241 @@ export default {
 
 /* upcoming-movies */
 /*****************************************************************************************************************************/
+
+
+
+
+
+
+@media (max-width: 1915px) {
+    .last-news__list {
+        height: 100%;
+        flex-direction: row;
+        display: flex;
+        overflow: auto;
+    }
+
+    .last-news__main {
+        display: block;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .last-news__item-large-img img {
+        width: 100%;
+    }
+}
+
+
+
+
+
+@media (max-width: 1805px) {
+    .now-playing__films {
+        display: grid;
+        grid-template-columns: repeat(3, 465px);
+        justify-content: center;
+        gap: 20px;
+        margin-top: 60px;
+        justify-items: center;
+    }
+
+
+
+
+}
+
+@media (max-width: 1650px) {
+    .now-playing__films {
+        display: grid;
+        grid-template-columns: repeat(3, 350px);
+        justify-content: center;
+        gap: 20px;
+        margin-top: 60px;
+        justify-items: center;
+
+    }
+
+    .now-playing__title {
+        font-size: 35px;
+        font-weight: 900;
+        line-height: 55.81px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        color: white;
+        height: 60px;
+    }
+
+    .popular-movies__title[data-v-2acfb07d] {
+        font-size: 35px;
+        font-weight: 900;
+        line-height: 55.81px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        color: white;
+        height: 100px;
+    }
+
+    .block_header-title[data-v-eceb0313] {
+        color: white;
+        font-size: 35px;
+        font-weight: 900;
+        line-height: 55.81px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+    }
+}
+
+
+
+
+
+
+@media (max-width: 1350px) {
+
+
+
+
+    .movie-card-img {
+        position: relative;
+        width: 300px;
+        height: 420px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .now-playing__films[data-v-2acfb07d] {
+        display: grid;
+        grid-template-columns: repeat(2, 350px);
+        justify-content: center;
+        gap: 20px;
+        margin-top: 60px;
+        justify-items: center;
+    }
+
+    .now-playing__title {
+        font-size: 25px;
+    }
+
+    .now-playing__header-line {
+        display: none;
+    }
+
+    .block_header-title {
+        font-size: 25px;
+    }
+}
+
+
+@media (max-width: 1100px) {
+    .last-news__item-large-description[data-v-2acfb07d] {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 34.04px;
+        text-align: left;
+        color: white;
+        width: auto;
+        margin-top: 15px;
+    }
+
+    .now-playing__header[data-v-2acfb07d] {
+        display: grid;
+        justify-content: center;
+        align-items: end;
+        justify-items: center;
+    }
+
+    .popular-movies__header[data-v-2acfb07d] {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .now-playing__films[data-v-2acfb07d][data-v-2acfb07d] {
+        display: grid;
+        grid-template-columns: repeat(1, 350px);
+        justify-content: center;
+        gap: 20px;
+        margin-top: 60px;
+        justify-items: center;
+    }
+
+    .last-news__item-large-description[data-v-2acfb07d][data-v-2acfb07d] {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 34.04px;
+        text-align: left;
+        color: white;
+        width: auto;
+        margin-top: 15px;
+    }
+
+    .last-news__item-large-title[data-v-2acfb07d] {
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 57.33px;
+        text-align: left;
+        color: white;
+    }
+
+   
+
+    .trailers__active-like-img[data-v-2acfb07d] {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1b2133;
+        border-radius: 10px;
+    }
+
+
+
+    .trailers__active-dislike-img {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1b2133;
+        border-radius: 10px;
+    }
+
+    .now-playing__genres {
+    & div {
+        &:not(:first-child) {
+           font-size: 15px;
+        }
+    }
+}
+
+    .trailers__active-name{
+        font-size: 25px;
+    }
+}
+
+
+
+@media (max-width: 600px){
+    .now-playing__genres {
+    & div {
+        &:not(:first-child) {
+           font-size: 10px;
+        }
+    }
+
+    .last-news__item-large-content{
+        display: none;
+    }
+}
+}
 </style>

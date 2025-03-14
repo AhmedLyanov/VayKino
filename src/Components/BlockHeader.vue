@@ -34,6 +34,7 @@ export default {
     margin-top: 60px;
 }
 
+
 .block_header-title {
     color: white;
     font-size: 65px;

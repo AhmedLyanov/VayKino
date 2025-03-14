@@ -335,4 +335,25 @@ footer {
     color: #e3e6f0b8;
     margin-top: 30px;
 }
+
+@media (max-width: 900px){
+    footer .email_mailing{
+        display: none;
+    }
+    .footer-nav a {
+    &[data-v-f6420dc9] {
+        text-decoration: none;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 21.06px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        color: white;
+        user-select: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+}
+}
 </style>

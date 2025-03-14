@@ -17,6 +17,7 @@
     "socket.io-client": "^4.8.1",
     "socketio": "^1.0.0",
     "vue": "^3.5.13",
+    "vue-burger-menu": "^2.0.5",
     "vue-progressbar": "^0.7.5",
     "vue-router": "^4.5.0",
     "vue-toast-notification": "^3.1.3",
