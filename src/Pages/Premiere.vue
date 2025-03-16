@@ -8,7 +8,7 @@
           <div class="premiere-date_title">{{ formatDate(group.date) }}</div>
           
           <div class="premiere-cont">
-              <Card v-for="(movie, index) in group.movies" :key="index" :data="movie" :contextMenu="false" />
+              <Card v-for="(movie, index) in group.movies" :key="index" :data="movie" :contextMenu="false" style="margin-top: 15px;" />
           </div>
         </div>
 
@@ -25,7 +25,7 @@ import upcoming from '../assets/data/upcoming.json';
 import BlockHeader from '@/Components/BlockHeader.vue';
 import Card from '@/Components/Card.vue';
 import UpArrow from '@/Components/UpArrow.vue';
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   data() {
@@ -35,6 +35,9 @@ export default {
       moviesCount: 8,
     };
   },
+  computed: {
+        ...mapGetters(['blackList']),
+    },
   components: {
     BlockHeader,
     Card,
@@ -43,7 +46,7 @@ export default {
   mounted() {
     window.scrollTo(0, 0);
     this.groupMoviesByDate();
-    this.showEmailMailing()
+    this.showEmailMailing();
     document.title = 'Афиша'
   },
   methods: {
@@ -53,6 +56,10 @@ export default {
       this.toggleEmailMailing(true)
     },
     groupMoviesByDate() {
+      this.upcoming = this.upcoming.filter(obj => !this.blackList.includes(obj.name))
+      console.log(this.blackList);
+      
+      
       const grouped = {};
 
       if (!this.upcoming || this.upcoming.length === 0) {
@@ -61,9 +68,9 @@ export default {
       }
 
       for (const movie of this.upcoming) {
-        if (movie && movie.premiere && movie.premiere.world) {
+        if (movie && movie.premiere && movie.premiere.russia) {
           try {
-            const premiereDateStr = movie.premiere.world;
+            const premiereDateStr = movie.premiere.russia;
             const premiereDate = new Date(premiereDateStr);
             const year = premiereDate.getFullYear();
             const month = String(premiereDate.getMonth() + 1).padStart(2, '0');
@@ -109,8 +116,8 @@ export default {
       return `${day} ${month} ${year}`;
     },
     moviesCountIncrement(){
-      if(this.moviesCount + 8 <= this.groupedMovies.length){
-        this.moviesCount += 8;        
+      if(this.moviesCount < this.groupedMovies.length){
+        this.moviesCount += 8;
       }
     }
   },

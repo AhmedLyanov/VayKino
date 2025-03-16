@@ -104,7 +104,9 @@ export default {
     this.socket = io("https://dreamfood.space:3000/");
     this.socket.on("newMessage", (message) => {
       this.messages.push(message);
-      this.newMessageScroll();
+      setTimeout(() => {
+        this.newMessageScroll();
+      }, 50);
     });
   },
   methods: {

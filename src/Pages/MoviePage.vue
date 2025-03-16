@@ -45,7 +45,7 @@
                 </div>
               </div>
               <div class="movie-info__actions">
-                <div class="movie-info__watch-trailer" @click="scrollToTrailer">
+                <div class="movie-info__watch-trailer" v-if="trealer.videoId" @click="scrollToTrailer">
                   <img src="/src/assets/Media/MoviePage/play.svg" alt="" />
                   Смотреть трейлер
                 </div>
@@ -257,7 +257,7 @@
 
       <Cast :data="data" />
 
-      <div class="movie-trealer" ref="treailer">
+      <div class="movie-trealer" ref="treailer" v-if="trealer.videoId">
         <BlockHeader :title="'Трейлер фильма'" :text="false" :link="false" />
 
         <div class="trealers-trealer">
@@ -367,11 +367,11 @@
         </div>
       </div>
 
-      <div class="reviews-container">
+      <div class="reviews-container" v-if="previews.length">
         <BlockHeader :title="'Рецензии к фильму'" :text="false" :link="false" />
 
-        <div class="comment-box" v-if="previews.length > 0">
-          <div v-for="(preview, index) in previews" :key="index">
+        <div class="comment-box">
+          <div v-for="(preview, index) in previews.slice(0, showPreviews)" :key="index">
             <div class="container_comment">
               <div class="account_comment">
                 <div class="avatar_box">
@@ -393,9 +393,7 @@
           </div>
         </div>
 
-        <div v-else>
-          <p>Отзывы отсутствуют.</p>
-        </div>
+        <div class="previews-loadmore" v-if="previews.length > showPreviews" @click="loadMorePreviews">Загрузить еще</div>
       </div>
 
       <div class="bg-movie_cadr" :style="{ backgroundImage: data ? `url(${data?.backdrop?.url})` : 'none' }">
@@ -431,6 +429,7 @@ export default {
       stills: {},
       awards: {},
       previews: [],
+      showPreviews: 4,
       sequels: {},
       similars: {},
       trealer: {},
@@ -809,6 +808,11 @@ export default {
       const reaction = { isLiked: this.isLiked, isDisliked: this.isDisliked };
       localStorage.setItem(this.localStorageKey, JSON.stringify(reaction));
     },
+    loadMorePreviews() {
+            if (this.previews.length >= this.showPreviews) {
+                this.showPreviews += 4
+            }
+        },
   },
   components: {
     Rating,
@@ -979,6 +983,19 @@ export default {
   align-items: center;
   margin-bottom: 10px;
   gap: 50px;
+}
+
+.previews-loadmore {
+    padding: 20px 25px;
+    border: 1px solid white;
+    color: white;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    cursor: pointer;
+    user-select: none;
+    width: fit-content;
 }
 
 .movie-info__social:not(:first-child) {
