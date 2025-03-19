@@ -1,7 +1,7 @@
 <template>
     <div class="slider-container" ref="container" v-if="data.length">
         <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * sWidth}px)` }">
-            <div class="slide" :style="{ minWidth: `${sWidth}px`, gridTemplateColumns: `repeat(${cardsPerPage}, 340px)` }" v-for="(slide, index) in slides" :key="index">
+            <div class="slide" :style="{ minWidth: `${sWidth}px`, gridTemplateColumns: `repeat(${cardsPerPage}, 280px)` }" v-for="(slide, index) in slides" :key="index">
                 <Card v-for="(cardData, cardIndex) in slide" :key="cardIndex" :data="cardData" :contextMenu="false" />
             </div>
         </div>
@@ -29,7 +29,7 @@
 
     <div class="slider-container" ref="container" v-else>
         <div class="slider-wrapper" :style="{ transform: `translateX(-${currentSlide * sWidth}px)` }">
-            <div class="slide" :style="{ minWidth: `${sWidth}px`, gridTemplateColumns: `repeat(${cardsPerPage}, 340px)` }">
+            <div class="slide" :style="{ minWidth: `${sWidth}px`, gridTemplateColumns: `repeat(${cardsPerPage}, 280px)` }">
                 <Card v-for="index in 4" :key="index" :data="{}" />
             </div>
         </div>
@@ -71,10 +71,10 @@ export default {
     },
     data() {
         return {
-            cardsPerPage: 4,
+            cardsPerPage: 5,
             currentSlide: 0,
             sliderWidthPercentage: 0.8,
-            cardWidth: 340,
+            cardWidth: 280,
             sWidth: null
         };
     },
@@ -123,7 +123,7 @@ export default {
         },
         screenWidth() {
             this.sWidth = this.$refs.container?.offsetWidth + 0.44;
-            this.cardsPerPage = Math.floor(this.sWidth / 340)
+            this.cardsPerPage = Math.floor(this.sWidth / 280)
         },
     },
     watch: {
@@ -152,7 +152,7 @@ export default {
 .slide {
     justify-content: space-between;
     display: grid;
-    /* grid-template-columns: repeat(4, 340px); */
+    /* grid-template-columns: repeat(4, 280px); */
 }
 
 .slider-controls {
@@ -189,7 +189,7 @@ export default {
     justify-content: center;
     display: grid
 ;
-    /* grid-template-columns: repeat(4, 340px); */
+    /* grid-template-columns: repeat(4, 280px); */
     gap: 50px;
 }
 }

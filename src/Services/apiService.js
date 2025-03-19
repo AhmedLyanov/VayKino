@@ -220,7 +220,7 @@ export const getLatestVideosFromChannel = async () => {
 
 export const fetchFilmsByGenre = async (genre, dopparams = "") => {
     try {
-        const response = await axios.get(`${FREE_API}&limit=80&type=film${dopparams}`);
+        const response = await axios.get(`${FREE_API}&limit=90&type=film${dopparams}`);
         if (!response.data || !response.data.results) {
             console.warn("No results found from API.");
             return [];
@@ -232,9 +232,9 @@ export const fetchFilmsByGenre = async (genre, dopparams = "") => {
                 return genres.some(g => g.toLowerCase() === lowerCaseGenre);
             });
             filteredFilms = filteredFilms.filter(obj => !blackList.includes(obj.name));
-            return filteredFilms.slice(0, 8);
+            return filteredFilms.slice(0, 10);
         } else {
-            let a = response.data.results.filter(obj => !blackList.includes(obj.name)).slice(0, 8);
+            let a = response.data.results.filter(obj => !blackList.includes(obj.name)).slice(0, 10);
             return a;
         }
     } catch (error) {

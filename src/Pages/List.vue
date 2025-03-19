@@ -70,7 +70,7 @@ export default {
 
 .list-cont{
     display: grid;
-    grid-template-columns: repeat(4, 340px);
+    grid-template-columns: repeat(5, 280px);
     justify-content: space-between;
     gap: 20px;
     margin-top: 50px;

@@ -28,6 +28,7 @@ import Series from './Pages/Series.vue';
 import Cartoons from './Pages/Cartoons.vue';
 import CartoonSeries from './Pages/CartoonSeries.vue';
 import Anime from './Pages/Anime.vue';
+import AdvancedSearch from './Pages/AdvancedSearch.vue';
 
 
 const router = createRouter({
@@ -86,6 +87,11 @@ const router = createRouter({
             path: "/favourites",
             name: "Favourites",
             component: Favourites,
+        },
+        {
+            path: "/search",
+            name: "Search",
+            component: AdvancedSearch,
         },
         {
             path: "/movie/:id",

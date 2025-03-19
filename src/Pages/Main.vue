@@ -23,9 +23,9 @@
 
                 <div class="now-playing__content">
                     <div class="now-playing__films">
-                        <Card v-if="nowPlayingMovies.length" v-for="(film, index) in nowPlayingMovies.slice(0, 8)"
+                        <Card v-if="nowPlayingMovies.length" v-for="(film, index) in nowPlayingMovies.slice(0, 10)"
                             :data="film" :contextMenu="false" :key="index" />
-                        <Card v-else v-for="key in 8" :key="key" :data="{}" />
+                        <Card v-else v-for="key in 10" :key="key" :data="{}" />
                     </div>
                 </div>
 
@@ -257,7 +257,7 @@ export default {
             this.activeGenre = genre;
             this.nowPlayingMovies = []
 
-            this.nowPlayingMovies = await fetchFilmsByGenre(genre.slice(0, genre.length - 1))
+            this.nowPlayingMovies = await fetchFilmsByGenre(genre.slice(0, genre.length - 1), "&year=2024")
         },
         setActivePost(index) {
             this.activePost = index;
@@ -413,7 +413,7 @@ export default {
             );
             this.popularMovies = popularMovies
                 .filter(obj => !this.blackList.includes(obj.name))
-                .slice(0, 20);
+                .slice(0, 25);
         } catch (error) {
             this.error = error;
             console.error("Component error", error)
@@ -505,7 +505,7 @@ export default {
 
 .now-playing__films {
     display: grid;
-    grid-template-columns: repeat(4, 340px);
+    grid-template-columns: repeat(5, 280px);
     justify-content: space-between;
     gap: 20px;
     margin-top: 60px;
@@ -542,6 +542,12 @@ export default {
 
 .trailers__main {
     margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.trailers__active{
+    width: calc(75% - 4px);
 }
 
 .trailers__active-media {
@@ -661,14 +667,15 @@ export default {
 
 .trailers__list {
     display: flex;
-    overflow-x: scroll;
-    margin-top: 50px;
-    padding-bottom: 25px;
-    transform: scale(-1, 1);
-    rotate: 180deg;
+    flex-direction: column;
+    overflow-y: scroll;
+    /* margin-top: 50px; */
+    /* padding-bottom: 25px; */
+    height: 740px;
 
     &::-webkit-scrollbar {
         height: 5px;
+        width: 5px;
     }
 
     &::-webkit-scrollbar-track {
@@ -689,16 +696,17 @@ export default {
 .trailers__item {
     user-select: none;
     cursor: pointer;
-    transform: scale(1, -1);
 
-    &:not(:first-child) {
-        margin-left: 20px;
+    &:not(:first-child){
+        margin-top: 10px;
     }
 }
 
 .trailers__item-media {
     position: relative;
     height: 198.63px;
+    overflow: hidden;
+    margin-right: 8px;
 
     div {
         width: 100%;
@@ -720,6 +728,7 @@ export default {
         img {
             width: 30px;
             border-radius: 0px;
+            display: block;
         }
     }
 

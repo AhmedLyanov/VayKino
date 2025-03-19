@@ -87,7 +87,7 @@ export default {
 
 .movies-cont {
     display: grid;
-    grid-template-columns: repeat(4, 340px);
+    grid-template-columns: repeat(5, 280px);
     justify-content: space-between;
     gap: 30px;
 }

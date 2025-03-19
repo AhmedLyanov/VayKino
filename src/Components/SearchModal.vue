@@ -12,7 +12,7 @@
       <div className="modal-input">
         <input ref="searchInputField" type="text" placeholder="Введите название фильма" v-model="searchInput" @keyup.enter="searchMovie" />
         <div className="modal-butts">
-          <button className="modal-filter">
+          <button className="modal-filter" @click="filterAction">
             <img :src="`${linkToImg}/filter.svg`" alt="filter" />
           </button>
           <button className="modal-search" @click="searchMovie">
@@ -89,6 +89,13 @@ export default {
       this.searchResults = [];
       this.searchInput = "";
       this.$router.replace('/');
+      this.show = false;
+      this.errorMessage = null;
+    },
+    filterAction(){
+      this.searchResults = [];
+      this.searchInput = "";
+      this.$router.replace('/search');
       this.show = false;
       this.errorMessage = null;
     },

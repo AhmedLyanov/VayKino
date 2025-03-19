@@ -63,7 +63,7 @@ export default{
 .favourites-cont{
     justify-content: space-between;
     display: grid;
-    grid-template-columns: repeat(4, 340px);
+    grid-template-columns: repeat(5, 280px);
 }
 
 .favourites-none{

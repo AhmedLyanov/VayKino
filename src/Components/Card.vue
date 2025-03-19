@@ -187,7 +187,7 @@ export default {
     cursor: pointer;
     padding-bottom: 10px;
     user-select: none;
-    width: 340px;
+    width: 280px;
     height: fit-content;
 
     &:hover {
@@ -199,8 +199,8 @@ export default {
 
 .movie-card-img {
     position: relative;
-    width: 340px;
-    height: 460px;
+    width: 280px;
+    height: 400px;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -212,8 +212,8 @@ export default {
 }
 
 .movie-card-title {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     line-height: 22.3px;
     text-align: left;
     text-underline-position: from-font;
@@ -223,7 +223,7 @@ export default {
 }
 
 .movie-card-genres {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 300;
     line-height: 17.85px;
     text-align: left;
