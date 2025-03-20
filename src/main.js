@@ -29,7 +29,7 @@ import Cartoons from './Pages/Cartoons.vue';
 import CartoonSeries from './Pages/CartoonSeries.vue';
 import Anime from './Pages/Anime.vue';
 import AdvancedSearch from './Pages/AdvancedSearch.vue';
-
+import Kinoneiro from './Components/Kinoneiro.vue';
 
 const router = createRouter({
     routes: [
@@ -154,6 +154,11 @@ const router = createRouter({
             name: "Chat",
             component: Chat,
         },
+        {
+            path: "/kinoneiro",
+            name: "Kinoneiro",
+            component: Kinoneiro,
+        }
     ],
     history: createWebHistory(),
 });

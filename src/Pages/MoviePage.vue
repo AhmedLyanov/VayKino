@@ -402,6 +402,7 @@
     </div>
 
     <UpArrow />
+    <Kinoneiro v-if="data" :name="`Что скажешь о фильме ${data.name}?`"></Kinoneiro>
   </main>
 </template>
 
@@ -415,6 +416,7 @@ import AwardCard from '@/Components/AwardCard.vue';
 import Slider2 from '@/Components/Slider2.vue';
 import UpArrow from '@/Components/UpArrow.vue';
 import Poster from '@/Components/Poster.vue';
+import Kinoneiro from '@/Components/Kinoneiro.vue';
 import { fetchData, fetchAwards, fetchPosters, fetchStills, fetchSequels, fetchSimilars, searchTrailer, fetchPreviews } from '@/Services/apiService';
 import axios from 'axios';
 import { mapActions } from "vuex";
@@ -823,7 +825,8 @@ export default {
     AwardCard,
     Slider2,
     UpArrow,
-    Poster
+    Poster,
+    Kinoneiro
   }
 }
 </script>
