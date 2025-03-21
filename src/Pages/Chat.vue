@@ -111,33 +111,93 @@ export default {
   },
   methods: {
     ...mapActions(['toggleEmailMailing']),
+
+    
     async fetchMessages() {
+      const token = localStorage.getItem('token');
       try {
-        const response = await axios.get("https://dreamfood.space:3000/chat-messages");
-        this.messages = response.data;
-        setTimeout(() => {
-          this.newMessageScroll();
-        }, 50);
+        const response = await fetch('https://dreamfood.space:3000/chat-messages', {
+          headers: {
+            'Authorization': token,
+          },
+        });
+        if (response.ok) {
+          this.messages = await response.json(); 
+        } else if (response.status === 401) {
+          await this.refreshToken();
+          await this.fetchMessages();
+        }
       } catch (error) {
-        console.error("Ошибка при получении сообщений:", error);
+        console.error('Ошибка при получении сообщений:', error);
       }
     },
 
-    async sendMessage() {
-      if (!this.newMessage.trim()) return;
+    
+    async refreshToken() {
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!refreshToken) {
+        this.logout();
+        return;
+      }
       try {
-        const message = {
-          sender: this.currentUser.login,
-          text: this.newMessage,
-          avatarUrl: this.currentUser.avatarUrl,
-          role: this.currentUser.role,
-        };
-        await axios.post("https://dreamfood.space:3000/chat-messages", message);
-        this.newMessage = "";
+        const response = await fetch('https://dreamfood.space:3000/refresh-token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ refreshToken }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          localStorage.setItem('token', data.token); 
+        } else {
+          this.logout();
+        }
       } catch (error) {
-        console.error("Ошибка при отправке сообщения:", error);
+        console.error('Ошибка при обновлении токена:', error);
+        this.logout();
       }
     },
+
+    
+    logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('currentUser');
+      this.$router.push('/login');
+    },
+
+  
+    async sendMessage() {
+      if (!this.newMessage.trim()) return;
+      const token = localStorage.getItem('token');
+      try {
+        const response = await fetch('https://dreamfood.space:3000/chat-messages', {
+          method: 'POST',
+          headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sender: this.currentUser.login,
+            text: this.newMessage,
+            avatarUrl: this.currentUser.avatarUrl,
+            role: this.currentUser.role,
+          }),
+        });
+        if (response.ok) {
+          this.newMessage = ""; 
+          await this.fetchMessages(); 
+        } else if (response.status === 401) {
+        
+          await this.refreshToken();
+          await this.sendMessage();
+        }
+      } catch (error) {
+        console.error('Ошибка при отправке сообщения:', error);
+      }
+    },
+
     formatTime(timestamp) {
       const date = new Date(timestamp);
       const options = {
@@ -178,6 +238,7 @@ export default {
         console.error("Ошибка при отправке изображения:", error);
       }
     },
+
     toggleRecording() {
       if (this.isRecording) {
         this.stopRecording();
@@ -185,18 +246,21 @@ export default {
         this.startRecording();
       }
     },
+
     newMessageScroll() {
       const chatMessages = this.$el.querySelector(".chat-messages");
       if (chatMessages) {
         chatMessages.scrollTop = chatMessages.scrollHeight;
       }
     },
+
     async startRecording() {
       this.isRecording = true;
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       this.recorder = new RecordRTC(stream, { type: "audio" });
       this.recorder.startRecording();
     },
+
     async stopRecording() {
       this.isRecording = false;
       this.recorder.stopRecording(async () => {
@@ -204,6 +268,7 @@ export default {
         await this.sendVoiceMessage(blob);
       });
     },
+
     async sendVoiceMessage(blob) {
       const formData = new FormData();
       formData.append("file", blob, "voice-message.webm");
@@ -216,23 +281,25 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         });
-
       } catch (error) {
         console.error("Ошибка при отправке голосового сообщения:", error);
       }
     },
+
     shouldShowAvatar(index) {
       if (index === 0) return true;
       const currentMessage = this.messages[index];
       const previousMessage = this.messages[index - 1];
       return currentMessage.sender !== previousMessage.sender;
     },
+
     shouldShowSender(index) {
       if (index === 0) return true;
       const currentMessage = this.messages[index];
       const previousMessage = this.messages[index - 1];
       return currentMessage.sender !== previousMessage.sender;
     },
+
     hideEmailMailing() {
       this.toggleEmailMailing(false);
     }

@@ -192,7 +192,6 @@ const isFormValid = computed(() => {
     Object.values(errors).every((error) => !error)
   );
 });
-
 const onSubmit = async () => {
   validate();
   if (Object.values(errors).some((error) => error)) {
@@ -211,23 +210,26 @@ const onSubmit = async () => {
     email: email.value,
   };
   try {
-    const registerResponse = await axios.post('https://dreamfood.space:3000/register', userData);
+    const registerResponse = await axios.post('https://dreamfood.space:3000/register', userData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     if (registerResponse.status === 201) {
       const loginResponse = await axios.post('https://dreamfood.space:3000/login', {
         login: login.value,
         password: password.value,
       });
       if (loginResponse.status === 200) {
-        localStorage.setItem('currentUser', JSON.stringify(loginResponse.data));
+        localStorage.setItem('token', loginResponse.data.token);
+        localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
+        localStorage.setItem('currentUser', JSON.stringify(loginResponse.data.user));
         toast.success('Регистрация прошла успешно!', {
           position: 'top-right',
           duration: 2000,
           dismissible: false,
         });
         router.push('/profile');
-        setTimeout(() => {
-          window.location.reload();
-        }, 100);
       }
     }
   } catch (error) {

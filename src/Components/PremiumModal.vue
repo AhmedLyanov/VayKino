@@ -1,43 +1,96 @@
 <template>
-    <div class="modal-overlay" @click.self="close">
-      <div class="modal-content">
-        <div class="modal-body">
-            <div class="modal-header">
-                <h2>Премиум подписка</h2>
-                <button class="close-button" @click="close">×</button>
-            </div>
-            <div class="buy_container">
-                <div class="attributes_premium_subscribe">
-                    <ul>
-                        <li>Бесплатный доступ ко всем фильмам</li>
-                        <li>Свечение аватара</li>
-                        <li>Премиум Беседа</li>
-                        <li>50 баллов за КТ</li>
-                    </ul>
-                </div>
-                <div class="button_buy">
-                    <button class="buy-button" @click="buyPremium">Купить за 8000 баллов</button>
-                </div>
-               
-            </div>
-         
+  <div class="modal-overlay" @click.self="close">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-header">
+          <h2>Премиум подписка</h2>
+          <button class="close-button" @click="close">×</button>
+        </div>
+        <div class="buy_container">
+          <div class="attributes_premium_subscribe">
+            <ul>
+              <li>Бесплатный доступ ко всем фильмам</li>
+              <li>Свечение аватара</li>
+              <li>Премиум Беседа</li>
+              <li>50 баллов за КТ</li>
+            </ul>
+          </div>
+          <div class="button_buy">
+            <button class="buy-button" @click="buyPremium">Купить за 8000 баллов</button>
+          </div>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    methods: {
-      close() {
-        this.$emit('close');
-      },
-      buyPremium() {
-        this.$emit('buy-premium');
+  </div>
+</template>
+
+<script>
+import axios from 'axios'; 
+import { useToast } from 'vue-toast-notification'; 
+import 'vue-toast-notification/dist/theme-sugar.css'; 
+
+export default {
+  methods: {
+    close() {
+      this.$emit('close');
+    },
+    async buyPremium() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        this.$toast.error('Токен авторизации отсутствует', {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false,
+        });
+        return;
       }
-    }
-  }
-  </script>
+
+      try {
+        const response = await axios.post('https://dreamfood.space:3000/buy-premium', {}, {
+          headers: {
+            'Authorization': token, 
+          },
+        });
+
+
+        if (response.data.message) {
+          this.$toast.success(response.data.message, {
+            position: 'top-right',
+            duration: 2000,
+            dismissible: false,
+          });
+
+    
+          this.close();
+
+        
+          this.$emit('update-user');
+        }
+      } catch (error) {
+
+        if (error.response?.status === 400) {
+          this.$toast.error(error.response.data.error, {
+            position: 'top-right',
+            duration: 2000,
+            dismissible: false,
+          });
+        } else {
+          this.$toast.error('Ошибка при покупке премиум-подписки', {
+            position: 'top-right',
+            duration: 2000,
+            dismissible: false,
+          });
+        }
+        console.error('Ошибка при покупке премиум-подписки:', error);
+      }
+    },
+  },
+  created() {
+
+    this.$toast = useToast();
+  },
+};
+</script>
   
   <style scoped>
 

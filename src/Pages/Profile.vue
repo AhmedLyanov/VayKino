@@ -155,8 +155,6 @@
                   <option value="Ужасы">Ужасы</option>
                   <option value="Криминал">Криминал</option>
                   <option value="Аниме">Аниме</option>
-
-                  
                 </select>
               </div>
             </div>
@@ -174,10 +172,13 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
+import { useToast } from 'vue-toast-notification';
 import defaultAvatar from '../assets/Media/profile/default.png';
+
 const userProfile = ref({
   name: '',
   surname: '',
@@ -196,54 +197,96 @@ const fileInput = ref(null);
 const avatarSrc = computed(() => {
   return avatarUrl.value || defaultAvatar;
 });
-onMounted(async () => {
-  const currentUserString = localStorage.getItem('currentUser');
-  if (currentUserString) {
-    const currentUser = JSON.parse(currentUserString);
-    if (currentUser && currentUser.login) {
-      try {
-        const response = await axios.get(`https://dreamfood.space:3000/user/${currentUser.login}`);
-        if (response.data) {
-          userProfile.value = response.data;
-          avatarUrl.value = response.data.avatarUrl;
-          localStorage.setItem('currentUser', JSON.stringify(response.data));
-        }
-      } catch (error) {
-        console.error('Ошибка при получении данных пользователя:', error);
-      }
-    } else {
-      console.error('Пользователь не найден в localStorage');
-    }
+const toast = useToast();
+const fetchUserProfile = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('Токен отсутствует');
+    return;
   }
-});
-const saveProfile = async () => {
-  const currentUserString = localStorage.getItem('currentUser');
-  if (currentUserString) {
-    const currentUser = JSON.parse(currentUserString);
-    try {
-      const response = await axios.put(`https://dreamfood.space:3000/user/${currentUser.login}`, userProfile.value);
-      if (response.data) {
-        const updatedResponse = await axios.get(`https://dreamfood.space:3000/user/${currentUser.login}`);
-        localStorage.setItem('currentUser', JSON.stringify(updatedResponse.data));
-        isEditing.value = false;
-        showNotification.value = true;
-        setTimeout(() => {
-          showNotification.value = false;
-        }, 3000);
-      }
-    } catch (error) {
-      console.error('Ошибка при сохранении данных пользователя:', error);
+  try {
+    const response = await axios.get('https://dreamfood.space:3000/user/me', {
+      headers: {
+        'Authorization': token,
+      },
+    });
+    if (response.data) {
+      userProfile.value = response.data;
+      avatarUrl.value = response.data.avatarUrl;
     }
-  } else {
-    console.error('Пользователь не найден в localStorage');
+  } catch (error) {
+    if (error.response?.status === 401) {
+      await refreshToken();
+      await fetchUserProfile();
+    } else {
+      console.error('Ошибка при получении данных пользователя:', error);
+    }
   }
 };
+const saveProfile = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('Токен отсутствует');
+    return;
+  }
+  try {
+    const response = await axios.put('https://dreamfood.space:3000/user/me', userProfile.value, {
+      headers: {
+        'Authorization': token,
+      },
+    });
+    if (response.data) {
+      isEditing.value = false;
+      showNotification.value = true;
+      setTimeout(() => {
+        showNotification.value = false;
+      }, 3000);
+      await fetchUserProfile();
+    }
+  } catch (error) {
+    if (error.response?.status === 401) {
+      await refreshToken();
+      await saveProfile();
+    } else {
+      console.error('Ошибка при сохранении данных пользователя:', error);
+    }
+  }
+};
+
+const refreshToken = async () => {
+  const refreshToken = localStorage.getItem('refreshToken');
+  if (!refreshToken) {
+    logout();
+    return;
+  }
+  try {
+    const response = await axios.post('https://dreamfood.space:3000/refresh-token', { refreshToken });
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+    } else {
+      logout();
+    }
+  } catch (error) {
+    console.error('Ошибка при обновлении токена:', error);
+    logout();
+  }
+};
+
+const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('currentUser');
+  window.location.href = '/login';
+};
+
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;
 };
+
 const triggerFileInput = () => {
   fileInput.value.click();
 };
+
 const handleFileUpload = async (event) => {
   const file = event.target.files[0];
   if (!file) return;
@@ -261,6 +304,10 @@ const handleFileUpload = async (event) => {
     console.error('Ошибка при загрузке аватара:', error);
   }
 };
+
+onMounted(() => {
+  fetchUserProfile();
+});
 </script>
 <style scoped>
 .container_profile_box {
