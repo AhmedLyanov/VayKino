@@ -42,7 +42,6 @@ const password = ref('');
 const error = ref('');
 
 document.title = "Вход";
-
 const onSubmit = async () => {
   try {
     const response = await fetch('https://dreamfood.space:3000/login', {
@@ -58,7 +57,7 @@ const onSubmit = async () => {
       localStorage.setItem('token', data.token); 
       localStorage.setItem('refreshToken', data.refreshToken); 
       localStorage.setItem('currentUser', JSON.stringify(data.user)); 
-      router.push('/profile');
+      router.push('/profile'); 
     } else {
       const errorData = await response.json();
       error.value = errorData.error || 'Неверный логин или пароль';
@@ -77,7 +76,6 @@ const onSubmit = async () => {
     });
   }
 };
-
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');

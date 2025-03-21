@@ -198,7 +198,6 @@ const avatarSrc = computed(() => {
   return avatarUrl.value || defaultAvatar;
 });
 const toast = useToast();
-
 const fetchUserProfile = async () => {
   const token = localStorage.getItem('token');
   if (!token) {
