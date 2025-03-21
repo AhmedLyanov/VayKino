@@ -34,8 +34,6 @@
         </div>
       </div>
 
-
-
       <div class="dropdown-menu" :class="{ 'active': isBurgerMenuOpen }">
         <div class="dropdown-header">
           <div class="user-info-mobile">
@@ -60,9 +58,6 @@
           <router-link to="/chat" active-class="active">Премиум-Чат</router-link>
         </nav>
       </div>
-
-
-
 
       <div class="header-center">
         <nav>
@@ -106,7 +101,6 @@
       <div class="burger-line"></div>
       <div class="burger-line"></div>
     </div>
-
   </header>
 </template>
 
@@ -114,8 +108,7 @@
 import SearchModal from './SearchModal.vue';
 import PremiumModal from './PremiumModal.vue';
 import { ref, onMounted, onUpdated } from 'vue';
-import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import { useToast } from 'vue-toast-notification';
 import defaultAvatar from '@/assets/Media/profile/default.png';
@@ -155,40 +148,62 @@ export default {
       const route = genreRoutes[selectedGenre.value];
       if (route) {
         router.push(route);
-      } else {
       }
     };
 
     const checkAuth = async () => {
-      const userString = localStorage.getItem('currentUser');
-      if (userString) {
-        try {
-          const user = JSON.parse(userString);
-          if (user) {
-            isLoggedIn.value = true;
-            isPremium.value = user.premium || false;
-            userAvatar.value = user.avatarUrl || defaultAvatar;
-            await updateUserBalance(user.login);
-          }
-        } catch (error) {
-          console.error('Ошибка при парсинге данных пользователя:', error);
-          localStorage.removeItem('currentUser');
+  const token = localStorage.getItem('token');
+  if (!token) {
+    isLoggedIn.value = false;
+    return;
+  }
+  try {
+    const response = await axios.get('https://dreamfood.space:3000/user/me', {
+      headers: {
+        'Authorization': token,
+      },
+    });
+    if (response.data) {
+      isLoggedIn.value = true;
+      isPremium.value = response.data.premium || false;
+      userAvatar.value = response.data.avatarUrl || defaultAvatar;
+      userBalance.value = response.data.balance;
+      localStorage.setItem('currentUser', JSON.stringify(response.data));
+    }
+  } catch (error) {
+    if (error.response?.status === 401) {
+      await refreshToken();
+      await checkAuth();
+    } else {
+      console.error('Ошибка при проверке авторизации:', error);
+    }
+  }
+};
+    const refreshToken = async () => {
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!refreshToken) {
+        logout();
+        return;
+      }
+      try {
+        const response = await axios.post('https://dreamfood.space:3000/refresh-token', { refreshToken });
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        } else {
+          logout();
         }
+      } catch (error) {
+        console.error('Ошибка при обновлении токена:', error);
+        logout();
       }
     };
 
-    const updateUserBalance = async (login) => {
-      try {
-        const response = await axios.get(`https://dreamfood.space:3000/user/${login}`);
-        if (response.data) {
-          userBalance.value = response.data.balance;
-          isPremium.value = response.data.premium || false;
-          userAvatar.value = response.data.avatarUrl || defaultAvatar;
-          localStorage.setItem('currentUser', JSON.stringify(response.data));
-        }
-      } catch (error) {
-        console.error('Ошибка при обновлении баланса:', error);
-      }
+    const logout = () => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('currentUser');
+      isLoggedIn.value = false;
+      router.push('/login');
     };
 
     const showPremiumModal = () => {
@@ -200,28 +215,29 @@ export default {
     };
 
     const buyPremium = async () => {
-      const userString = localStorage.getItem('currentUser');
-      if (userString) {
-        const user = JSON.parse(userString);
-        try {
-          const response = await axios.post('https://dreamfood.space:3000/buy-premium', { login: user.login });
-          if (response.data.message) {
-            toast.success(response.data.message, {
-              position: 'top-right',
-              duration: 2000,
-              dismissible: false,
-            });
-            await updateUserBalance(user.login);
-            closePremiumModal();
-          }
-        } catch (error) {
-          console.error('Ошибка при покупке премиум-подписки:', error);
-          toast.error(error.response?.data.error || 'Ошибка при покупке премиум-подписки', {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await axios.post('https://dreamfood.space:3000/buy-premium', {}, {
+          headers: {
+            'Authorization': token,
+          },
+        });
+        if (response.data.message) {
+          toast.success(response.data.message, {
             position: 'top-right',
             duration: 2000,
             dismissible: false,
           });
+          await checkAuth();
+          closePremiumModal();
         }
+      } catch (error) {
+        console.error('Ошибка при покупке премиум-подписки:', error);
+        toast.error(error.response?.data.error || 'Ошибка при покупке премиум-подписки', {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false,
+        });
       }
     };
 
@@ -234,25 +250,9 @@ export default {
       showDropdown.value = false;
     };
 
-    const logout = () => {
-      localStorage.removeItem('currentUser');
-      isLoggedIn.value = false;
-      router.push('/login');
-    };
-
     onMounted(() => {
       checkAuth();
-      setInterval(() => {
-        const userString = localStorage.getItem('currentUser');
-        if (userString) {
-          const user = JSON.parse(userString);
-          if (user) {
-            updateUserBalance(user.login);
-          }
-        }
-      }, 300000);
-
-      pathSegment.value = route.path.split('/').pop();
+      setInterval(checkAuth, 5000); 
     });
 
     onUpdated(() => {
@@ -665,7 +665,7 @@ header {
   width: 100%;
 }
 
-/* Стили для заголовка выпадающего меню */
+
 .dropdown-header {
   display: flex;
   justify-content: space-between;
@@ -728,7 +728,7 @@ header {
   box-shadow: 0px 0px 15px 0px white;
 }
 
-/* Стили для навигации в выпадающем меню */
+
 .dropdown-menu nav {
   display: flex;
   flex-direction: column;
@@ -748,7 +748,7 @@ header {
   color: #3657cb;
 }
 
-/* Адаптация для мобильных устройств */
+
 @media (max-width: 1100px) {
   .burger-menu {
     display: flex;

@@ -54,12 +54,11 @@ const onSubmit = async () => {
     });
     
     if (response.ok) {
-      const userData = await response.json();
-      localStorage.setItem('currentUser', JSON.stringify(userData)); 
+      const data = await response.json();
+      localStorage.setItem('token', data.token); 
+      localStorage.setItem('refreshToken', data.refreshToken); 
+      localStorage.setItem('currentUser', JSON.stringify(data.user)); 
       router.push('/profile');
-      setTimeout(() => {
-        window.location.reload(); 
-      }, 100);
     } else {
       const errorData = await response.json();
       error.value = errorData.error || 'Неверный логин или пароль';
@@ -78,6 +77,35 @@ const onSubmit = async () => {
     });
   }
 };
+
+
+const refreshToken = async () => {
+  const refreshToken = localStorage.getItem('refreshToken');
+  if (!refreshToken) {
+    logout();
+    return;
+  }
+  try {
+    const response = await fetch('https://dreamfood.space:3000/refresh-token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ refreshToken }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem('token', data.token); 
+    } else {
+      logout();
+    }
+  } catch (error) {
+    console.error('Refresh token error:', error);
+    logout();
+  }
+};
+
+
 </script>
 <style scoped>
 
