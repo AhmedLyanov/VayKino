@@ -402,7 +402,7 @@
     </div>
 
     <UpArrow />
-    <Kinoneiro v-if="data" :name="`Что скажешь о фильме ${data.name}?`"></Kinoneiro>
+    <Kinoneiro v-if="data?.name" :name="`Что скажешь о фильме ${data.name}?`"></Kinoneiro>
   </main>
 </template>
 
@@ -460,7 +460,7 @@ export default {
       if (newId !== oldId) {
         window.scrollTo(0, 0);
         this.data = {}
-        this.fetchMovieDataData();
+        this.fetchMovieData();
         this.checkIfFavorite()
       }
     },
@@ -502,7 +502,7 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
-    this.fetchMovieDataData();
+    this.fetchMovieData();
     this.checkPremiumStatus();
     this.showEmailMailing()
     this.checkIfFavorite();
@@ -514,7 +514,7 @@ export default {
     showEmailMailing() {
       this.toggleEmailMailing(true)
     },
-    async fetchMovieDataData() {
+    async fetchMovieData() {
       this.isLoading = true;
       try {
         this.data = await fetchData(this.id);
@@ -522,6 +522,8 @@ export default {
       } catch (error) {
         console.error("Ошибка при получении данных фильма:", error);
       }
+
+this.isLoading = false;
 
       try {
         this.trealer = await searchTrailer(`${this.movieTypes[this.data.type].name} ${this.data.name} ${this.data.year}`);
@@ -575,8 +577,6 @@ export default {
         console.error("Ошибка при получении похожих фильмов:", error);
         this.similars = [];
       }
-
-      this.isLoading = false;
     },
     async checkPremiumStatus() {
       const userString = localStorage.getItem('currentUser');

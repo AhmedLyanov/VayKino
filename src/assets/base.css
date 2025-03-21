@@ -76,6 +76,7 @@ main {
 .vue-select {
   .value-container {
     padding: 22px 0 22px 27px !important;
+    user-select: none;
   }
 
   .search-input {
@@ -93,6 +94,7 @@ main {
   .control {
     background-color: #1e2538 !important;
     border: none !important;
+    height: 73px !important;
   }
 
   .clear-button {
@@ -107,11 +109,17 @@ main {
     }
   }
 
+  .no-results{
+    color: white !important;
+  }
+
   .menu {
     border: none !important;
     outline: none !important;
     border-radius: 10px !important;
     max-height: 300px !important;
+    background-color: #1e2538 !important;
+    user-select: none;
     
 
     &::-webkit-scrollbar {
@@ -147,7 +155,31 @@ main {
     background-color: #3657cb !important;
   }
 
+  .multi-value{
+    background-color: transparent !important;
+  }
+
+  .multi-value-remove{
+    background-color: transparent !important;
+    /* margin-left: 5px !important; */
+
+    svg{
+      fill: white !important;
+    }
+
+    &:hover{
+      background-color: red !important;
+    }
+  }
+
   .multi-value-label{
-    background-color: red !important;
+    background-color: transparent !important;
+    color: white !important;
+    font-weight: 500 !important;
+    font-size: 17px !important;
+  }
+
+  .value-container.multi.has-value{
+    gap: 5px !important;
   }
 }

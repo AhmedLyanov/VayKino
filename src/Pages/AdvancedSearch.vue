@@ -8,58 +8,105 @@
 
                 <div class="filter-main">
                     <div class="filter-row">
-                        <div class="filter-name">
+                        <div class="filter-collumn">
                             <div class="filter-title">Название фильма:</div>
 
                             <div class="filter-input">
-                                <input type="text" placeholder="Полное или частичное название" v-model="name">
+                                <input type="text" placeholder="Полное или частичное название" v-model="name"
+                                    class="filter-name">
                             </div>
                         </div>
 
-                        <div class="filter-year">
+                        <div class="filter-collumn">
                             <div class="filter-title">Год:</div>
 
                             <div class="filter-input">
-                                <VueSelect v-model="selectedYear" :options="optionsYear" :placeholder="'Год'"
-                                    :isSearchable="false" :class="'input'" />
+                                <div class="filter-year">
+                                    <VueSelect v-model="selectedYear" :options="optionsYear" :placeholder="'Год'"
+                                        :isSearchable="false" />
+                                </div>
                             </div>
                         </div>
 
-                        <div class="filter-interval">
+                        <div class="filter-collumn">
                             <div class="filter-title">Интервал:</div>
 
-                            <div style="display: flex;">
-                                <div class="filter-input">
-                                    <span>С</span>
+                            <div class="filter-input">
+                                <span>С</span>
+
+                                <div class="filter-year">
                                     <VueSelect v-model="selectedFromYear" :options="optionsYear" :placeholder="'Год'"
-                                        :isSearchable="false" :class="'input'" />
+                                        :isSearchable="false" />
                                 </div>
 
-                                <div class="filter-input" style="margin-left: 20px;">
-                                    <span>По</span>
+                                <span>По</span>
+
+                                <div class="filter-year">
                                     <VueSelect v-model="selectedToYear" :options="optionsYear" :placeholder="'Год'"
-                                        :isSearchable="false" :class="'input'" />
+                                        :isSearchable="false" />
                                 </div>
                             </div>
                         </div>
 
-<div class="filter-genre">
-    <div class="filter-title">Жанр фильма:</div>
-
-    <div class="filter-input">
-        <VueSelect v-model="selectedGenre" :options="optionsGenre" :placeholder="'Жанр'"
-            :is-multi="true" :isSearchable="false" :class="'input'" />
-    </div>
-</div>
-
-<div class="filter-country">
+<div class="filter-collumn">
     <div class="filter-title">Страна фильма:</div>
 
     <div class="filter-input">
-        <VueSelect v-model="selectedGenre" :options="optionsCountry" :placeholder="'Страна'"
-            :isSearchable="false" :class="'input'" />
+        <div class="filter-country">
+            <VueSelect v-model="selectedCountry" :options="optionsCountry"
+                :placeholder="'Страна'" />
+        </div>
     </div>
 </div>
+
+                        <div class="filter-collumn">
+                            <div class="filter-title">Жанр фильма:</div>
+
+                            <div class="filter-input">
+                                <div class="filter-genre">
+                                    <VueSelect v-model="selectedGenre" :options="optionsGenre" :placeholder="'Жанр'"
+                                        :is-multi="true" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-collumn">
+                            <div class="filter-title">Премьера:</div>
+
+                            <div class="filter-input">
+                                <div class="filter-month">
+                                    <VueSelect v-model="selectedMonth" :options="optionsMonth" :placeholder="'Месяц'" />
+                                </div>
+                                <span></span>
+                                <div class="filter-year">
+                                    <VueSelect v-model="selectedPremiereYear" :options="optionsYear"
+                                        :placeholder="'Год'" :isSearchable="false" />
+                                </div>
+                                <span></span>
+                                <div class="filter-premiereIn">
+                                    <VueSelect v-model="selectedPremiereIn" :options="optionsPremiereIn"
+                                        :placeholder="'Выходит в'" :isSearchable="false" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="filter-collumn">
+                            <div class="filter-title">Бюджет:</div>
+
+                            <div class="filter-input">
+                                <span>От</span>
+                                <span class="budget-currency">$</span>
+                                <input v-model="budgetFrom" @input="formatBudgetFrom" type="text" placeholder="Бюджет" class="filter-budget" maxlength="11">
+                                
+                                <span>До</span>
+                                <span class="budget-currency">$</span>
+                                <input v-model="budgetFrom" @input="formatBudgetFrom" type="text" placeholder="Бюджет" class="filter-budget" maxlength="11">
+                            </div>
+                        </div> -->
+
+                        <div class="filter-collumn">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,6 +119,10 @@
                 <li>Год с: {{ selectedFromYear }}</li>
                 <li>Год по: {{ selectedToYear }}</li>
                 <li>Жанр: {{ selectedGenre }}</li>
+                <li>Страна: {{ selectedCountry }}</li>
+                <li>Месяц: {{ selectedMonth }}</li>
+                <li>Год премьеры: {{ selectedPremiereYear }}</li>
+                <li>Премьера в: {{ selectedPremiereIn }}</li>
             </ul>
         </div>
     </main>
@@ -80,6 +131,7 @@
 <script>
 import BlockHeader from '@/Components/BlockHeader.vue';
 import VueSelect from "vue3-select-component";
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -351,16 +403,63 @@ export default {
                 "Ямайка",
                 "Япония"
             ].map(country => ({ label: country, value: country })),
+            optionsMonth: [
+                "Январь",
+                "Февраль",
+                "Март",
+                "Апрель",
+                "Май",
+                "Июнь",
+                "Июль",
+                "Август",
+                "Сентябрь",
+                "Октябрь",
+                "Ноябрь",
+                "Декабрь"
+            ].map(month => ({ label: month, value: month })),
+            optionsPremiereIn: [
+                "В мире",
+                "В России",
+                "В Америке",
+                "В стриминговых сервисах",
+                "В кинотеатрах",
+            ].map(premiereIn => ({ label: premiereIn, value: premiereIn })),
             name: '',
             selectedYear: 0,
             selectedFromYear: 0,
             selectedToYear: 0,
-            selectedGenre: ''
+            selectedGenre: [],
+            selectedCountry: '',
+            selectedMonth: '',
+            selectedPremiereYear: 0,
+            selectedPremiereIn: '',
+            budgetFrom: '',
+            budgetTo: '',
         }
     },
     components: {
         VueSelect,
         BlockHeader
+    },
+    mounted() {
+        window.scrollTo(0, 0);
+        document.title = 'Расширенный поиск';
+        this.showEmailMailing()
+    },
+    methods: {
+    ...mapActions(['toggleEmailMailing']),
+
+    showEmailMailing() {
+      this.toggleEmailMailing(true)
+    },
+        formatBudgetFrom(){
+            let value = this.budgetFrom.replace(/[^0-9]/g, '');
+
+            // Форматируем число с разделением тысяч пробелами
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            this.budgetFrom = value;
+            this.amount = value.replace(/\s/g, '');
+        }
     }
 }
 </script>
@@ -376,6 +475,24 @@ export default {
     border-radius: 10px;
 }
 
+.filter-row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-collumn{
+    margin-top: 20px;
+    
+    &:not(:first-child){
+        margin-left: 62px;
+    }
+
+    &:nth-child(5){
+        margin-left: 0;
+    }
+}
+
 .filter-title {
     font-weight: 700;
     font-size: 25px;
@@ -384,6 +501,11 @@ export default {
 }
 
 .filter-input {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 500;
+    font-size: 17px;
 
     input {
         background-color: #1E2538;
@@ -394,25 +516,55 @@ export default {
         color: white;
         font-weight: 400;
         font-size: 17px;
+
+        &.filter-name {
+            width: 450px;
+        }
+
+        &.filter-budget{
+            padding: 22px 27px 22px 18px;
+            border-radius: 0 10px 10px 0;
+            width: 150px;
+        }
     }
+
+    span {
+        margin-right: 10px;
+
+        &:not(:first-child) {
+            margin-left: 15px;
+        }
+    }
+
+    .budget-currency {
+        margin-right: 0;
+        margin-left: 0 !important;
+        padding: 22px 0 22px 27px;
+        background-color: #1E2538;
+        user-select: none;
+        border-radius: 10px 0 0 10px;
+        color: #FFFFFF99;
+    }
+
 }
 
 .filter-year {
     width: 130px;
 }
 
-.filter-interval {
-    .filter-input {
-        width: 150px;
-        display: flex;
-        align-items: center;
+.filter-genre {
+    width: 860px;
+}
 
-        span {
-            font-weight: 500;
-            font-size: 17px;
-            color: white;
-            margin-right: 10px;
-        }
-    }
+.filter-country {
+    width: 340px;
+}
+
+.filter-month {
+    width: 163px;
+}
+
+.filter-premiereIn {
+    min-width: 170px;
 }
 </style>
