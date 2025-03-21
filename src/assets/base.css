@@ -94,7 +94,7 @@ main {
   .control {
     background-color: #1e2538 !important;
     border: none !important;
-    height: 73px !important;
+    min-height: 73px !important;
   }
 
   .clear-button {
@@ -120,6 +120,7 @@ main {
     max-height: 300px !important;
     background-color: #1e2538 !important;
     user-select: none;
+    z-index: 40;
     
 
     &::-webkit-scrollbar {
