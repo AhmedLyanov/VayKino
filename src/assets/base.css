@@ -120,8 +120,7 @@ main {
     max-height: 300px !important;
     background-color: #1e2538 !important;
     user-select: none;
-    z-index: 40;
-    
+    z-index: 80;
 
     &::-webkit-scrollbar {
       height: 5px;

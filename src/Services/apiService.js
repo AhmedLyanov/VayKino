@@ -2,7 +2,7 @@ import axios from "axios";
 
 const FREE_API = "https://api1650820663.bhcesh.me/list?token=3794a7638b5863cc60d7b2b9274fa32e&sort=-views";
 const FREE_API2 = "https://api.bhcesh.me/list?token=eedefb541aeba871dcfc756e6b31c02e&sort=-views";
-const API_200_REQUESTS = "https://api.kinopoisk.dev/v1.4/movie/";
+const API_200_REQUESTS = "https://api.kinopoisk.dev/v1.4/movie";
 const API_500_REQUESTS_VERSION1 = "https://kinopoiskapiunofficial.tech/api/v2.1/films/";
 const API_500_REQUESTS_VERSION2 = "https://kinopoiskapiunofficial.tech/api/v2.2/films/";
 const API_FETCH_ACTOR = "https://api.kinopoisk.dev/v1.4/person/";
@@ -38,7 +38,7 @@ export const fetchFreeAPI2 = async (dopparams = "") => {
 
 export const fetchData = async (id) => {
     try {
-        const response = await axios.get(`${API_200_REQUESTS}${id}`, {
+        const response = await axios.get(`${API_200_REQUESTS}/${id}`, {
             headers: {
                 Accept: "application/json",
                 "X-API-KEY": API_200_REQUESTS_TOKEN,
@@ -307,6 +307,24 @@ export const fetchActors = async (id) => {
             },
         });
         return response.data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+};
+
+export const fetchAdvancedSearch = async (params) => {
+    console.log(123);
+    
+    try {
+        const response = await axios.get(`${API_200_REQUESTS}${params}`, {
+            headers: {
+                Accept: "application/json",
+                "X-API-KEY": API_200_REQUESTS_TOKEN3,
+            },
+        });
+        console.log(response);
+        return response.data.docs;
     } catch (error) {
         console.error("Error fetching data:", error);
         throw error;

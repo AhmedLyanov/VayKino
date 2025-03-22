@@ -8,91 +8,112 @@
 
                 <div class="filter-main">
                     <div class="filter-row">
-                        <div class="filter-collumn">
-                            <div class="filter-title">Название фильма:</div>
+                        <div class="filter-collumn" :class="{ disabled2: isFilterNameActive }"
+                            @click="isFilterNameActive ? setErrorNotificarion('Поиск по названию не совместим с другими фильтрами!') : null">
+                            <div :class="{ disabled1: isFilterNameActive }">
+                                <div class="filter-title">Название фильма:</div>
 
-                            <div class="filter-input">
-                                <input type="text" placeholder="Полное или частичное название" v-model="name"
-                                    class="filter-name">
-                            </div>
-                        </div>
-
-                        <div class="filter-collumn" :class="{ disabled: (selectedFromYear || selectedToYear) }"
-                            @click="(selectedFromYear || selectedToYear) ? this.$toast.error('Год и интервал - несовместимые фильтры!', { position: 'top-right', duration: 2000, dismissible: false }) : null">
-                            <div class="filter-title">Год:</div>
-
-                            <div class="filter-input">
-                                <div class="filter-year">
-                                    <VueSelect v-model="selectedYear" :options="optionsYear" :placeholder="'Год'"
-                                        :isSearchable="false" :is-disabled="!!selectedFromYear || !!selectedToYear" />
+                                <div class="filter-input">
+                                    <input type="text" placeholder="Полное или частичное название" v-model="name"
+                                        class="filter-name">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="filter-collumn" :class="{ disabled: selectedYear }"
-                            @click="selectedYear ? this.$toast.error('Год и интервал - несовместимые фильтры!', { position: 'top-right', duration: 2000, dismissible: false }) : null">
-                            <div class="filter-title">Интервал:</div>
+                        <div class="filter-collumn"
+                            :class="{ disabled2: (!!selectedFromYear || !!selectedToYear || name) }"
+                            @click="(!!selectedFromYear || !!selectedToYear) ? setErrorNotificarion('Год и интервал - несовместимые фильтры!') : name ? setErrorNotificarion('Этот фильтр не совместим с поиском по названию!') : null">
+                            <div :class="{ disabled1: !!selectedFromYear || !!selectedToYear || name }">
+                                <div class="filter-title">Год:</div>
 
-                            <div class="filter-input">
-                                <span>С</span>
-
-                                <div class="filter-year">
-                                    <VueSelect v-model="selectedFromYear" :options="optionsFromYear"
-                                        :placeholder="'Год'" :isSearchable="false" :is-disabled="!!selectedYear" />
-                                </div>
-
-                                <span>По</span>
-
-                                <div class="filter-year">
-                                    <VueSelect v-model="selectedToYear" :options="optionsToYear" :placeholder="'Год'"
-                                        :isSearchable="false" :is-disabled="!!selectedYear"
-                                        :no-options="{ text: 'Нет годов выше' }">
-                                        <template #no-options>
-                                            Нет годов выше {{ selectedFromYear }}
-                                        </template>
-                                    </VueSelect>
+                                <div class="filter-input">
+                                    <div class="filter-year">
+                                        <VueSelect v-model="selectedYear" :options="optionsYear" :placeholder="'Год'"
+                                            :isSearchable="false"
+                                            :is-disabled="!!selectedFromYear || !!selectedToYear || !!name" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="filter-collumn">
-                            <div class="filter-title">Страна фильма:</div>
+                        <div class="filter-collumn" :class="{ disabled2: !!selectedYear || !!name }"
+                            @click="selectedYear ? setErrorNotificarion('Год и интервал - несовместимые фильтры!') : name ? setErrorNotificarion('Этот фильтр не совместим с поиском по названию!') : null">
+                            <div :class="{ disabled1: !!selectedYear || !!name }">
+                                <div class="filter-title">Интервал:</div>
 
-                            <div class="filter-input">
-                                <div class="filter-country">
-                                    <VueSelect v-model="selectedCountry" :options="optionsCountry"
-                                        :placeholder="'Страна'" />
+                                <div class="filter-input">
+                                    <span>С</span>
+
+                                    <div class="filter-year">
+                                        <VueSelect v-model="selectedFromYear" :options="optionsFromYear"
+                                            :placeholder="'Год'" :isSearchable="false"
+                                            :is-disabled="!!selectedYear || !!name" />
+                                    </div>
+
+                                    <span>По</span>
+
+                                    <div class="filter-year">
+                                        <VueSelect v-model="selectedToYear" :options="optionsToYear"
+                                            :placeholder="'Год'" :isSearchable="false"
+                                            :is-disabled="!!selectedYear || !!name"
+                                            :no-options="{ text: 'Нет годов выше' }">
+                                            <template #no-options>
+                                                Нет годов выше {{ selectedFromYear }}
+                                            </template>
+                                        </VueSelect>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="filter-collumn">
-                            <div class="filter-title">Жанр фильма:</div>
+                        <div class="filter-collumn" :class="{ disabled2: !!name }"
+                            @click="name ? setErrorNotificarion('Этот фильтр не совместим с поиском по названию!') : null">
+                            <div :class="{ disabled1: !!name }">
+                                <div class="filter-title">Страна фильма:</div>
 
-                            <div class="filter-input">
-                                <div class="filter-genre">
-                                    <VueSelect v-model="selectedGenre" :options="optionsGenre" :placeholder="'Жанр'"
-                                        :is-multi="true" />
+                                <div class="filter-input">
+                                    <div class="filter-country">
+                                        <VueSelect v-model="selectedCountry" :options="optionsCountry"
+                                            :placeholder="'Страна'" :is-disabled="!!name" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="filter-collumn">
-                            <div class="filter-title">Премьера:</div>
+                        <div class="filter-collumn" :class="{ disabled2: !!name }"
+                            @click="name ? setErrorNotificarion('Этот фильтр не совместим с поиском по названию!') : null">
+                            <div :class="{ disabled1: !!name }">
+                                <div class="filter-title">Жанр фильма:</div>
 
-                            <div class="filter-input">
-                                <div class="filter-month">
-                                    <VueSelect v-model="selectedMonth" :options="optionsMonth" :placeholder="'Месяц'" />
+                                <div class="filter-input">
+                                    <div class="filter-genre">
+                                        <VueSelect v-model="selectedGenre" :options="optionsGenre" :placeholder="'Жанр'"
+                                            :is-multi="true" :is-disabled="!!name" />
+                                    </div>
                                 </div>
-                                <span></span>
-                                <div class="filter-year">
-                                    <VueSelect v-model="selectedPremiereYear" :options="optionsYear"
-                                        :placeholder="'Год'" :isSearchable="false" />
-                                </div>
-                                <span></span>
-                                <div class="filter-premiereIn">
-                                    <VueSelect v-model="selectedPremiereIn" :options="optionsPremiereIn"
-                                        :placeholder="'Выходит в'" :isSearchable="false" />
+                            </div>
+                        </div>
+
+                        <div class="filter-collumn" :class="{ disabled2: !!name }"
+                            @click="name ? setErrorNotificarion('Этот фильтр не совместим с поиском по названию!') : null">
+                            <div :class="{ disabled1: !!name }">
+                                <div class="filter-title">Премьера:</div>
+
+                                <div class="filter-input">
+                                    <div class="filter-month">
+                                        <VueSelect v-model="selectedMonth" :options="optionsMonth"
+                                            :placeholder="'Месяц'" :is-disabled="!!name" />
+                                    </div>
+                                    <span></span>
+                                    <div class="filter-year">
+                                        <VueSelect v-model="selectedPremiereYear" :options="optionsYear"
+                                            :placeholder="'Год'" :isSearchable="false" :is-disabled="!!name" />
+                                    </div>
+                                    <span></span>
+                                    <div class="filter-premiereIn">
+                                        <VueSelect v-model="selectedPremiereIn" :options="optionsPremiereIn"
+                                            :placeholder="'Выходит в'" :isSearchable="false" :is-disabled="!!name" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,108 +133,117 @@
                         </div> -->
                     </div>
 
-                    <div class="filter-ratings">
-                        <div class="filter-rating">
-                            <div class="rating-header">
-                                <label class="radio-container">
-                                    <input type="radio" name="gender" value="male" @click="selectedRating = 'kp'"
-                                        :checked="selectedRating === 'kp'"> Оценка Кинопоиск
-                                    <span class="radio-custom"></span>
-                                </label>
-                            </div>
-                            <div class="rating-main">
-                                <VueDoubleRangeInput step="1" color="#3657CB" track-color="#1E2538" track-radius="5px"
-                                    track-height="8px" handler-color="#3657CB" handler-width="24px"
-                                    handler-height="24px" :push-on-touch="false" :show-numbers="true" :min="10"
-                                    :max="100" v-model:minValue="minRatingKP" v-model:maxValue="maxRatingKP">
-                                    <template #from="{ minValueRef }">
-                                        <div class="rating">
-                                            От
+                    <div class="filter-ratings" :class="{ disabled2: !!name }"
+                        @click="name ? setErrorNotificarion('Этот фильтр не совместим с поиском по названию!') : null">
+                        <div :class="{ disabled1: !!name }">
+                            <div class="filter-rating">
+                                <div class="rating-header">
+                                    <label class="radio-container">
+                                        <input type="radio" name="gender" value="male" @click="selectedRating = 'kp'"
+                                            :checked="selectedRating === 'kp'"> Оценка Кинопоиск
+                                        <span class="radio-custom"></span>
+                                    </label>
+                                </div>
+                                <div class="rating-main">
+                                    <VueDoubleRangeInput step="1" color="#3657CB" track-color="#1E2538"
+                                        track-radius="5px" track-height="8px" handler-color="#3657CB"
+                                        handler-width="24px" handler-height="24px" :push-on-touch="false"
+                                        :show-numbers="true" :min="10" :max="100" v-model:minValue="minRatingKP"
+                                        v-model:maxValue="maxRatingKP">
+                                        <template #from="{ minValueRef }">
+                                            <div class="rating">
+                                                От
 
-                                            <span>{{ (minValueRef / 10).toFixed(1) }}</span>
-                                        </div>
-                                        <!-- <input type="text" :value="(minValueRef/10).toFixed(1)" style="margin-top: 40px;"> -->
-                                    </template>
-                                    <template #to="{ maxValueRef }">
-                                        <div class="rating">
-                                            До
+                                                <span>{{ (minValueRef / 10).toFixed(1) }}</span>
+                                            </div>
+                                            <!-- <input type="text" :value="(minValueRef/10).toFixed(1)" style="margin-top: 40px;"> -->
+                                        </template>
+                                        <template #to="{ maxValueRef }">
+                                            <div class="rating">
+                                                До
 
-                                            <span>{{ (maxValueRef / 10).toFixed(1) }}</span>
-                                        </div>
-                                        <!-- <input type="text" :value="(maxValueRef/10).toFixed(1)" style="margin-top: 40px;"> -->
-                                    </template>
-                                </VueDoubleRangeInput>
+                                                <span>{{ (maxValueRef / 10).toFixed(1) }}</span>
+                                            </div>
+                                            <!-- <input type="text" :value="(maxValueRef/10).toFixed(1)" style="margin-top: 40px;"> -->
+                                        </template>
+                                    </VueDoubleRangeInput>
 
-                                <div class="rating-numbers">
-                                    <div><span @click="setRating('Кинопоиск', 1)">1</span></div>
-                                    <div><span @click="setRating('Кинопоиск', 2)">2</span></div>
-                                    <div><span @click="setRating('Кинопоиск', 3)">3</span></div>
-                                    <div><span @click="setRating('Кинопоиск', 4)">4</span></div>
-                                    <div><span @click="setRating('Кинопоиск', 5)">5</span></div>
-                                    <div><span @click="setRating('Кинопоиск', 6)">6</span></div>
-                                    <div><span @click="setRating('Кинопоиск', 7)">7</span></div>
-                                    <div><span @click="setRating('Кинопоиск', 8)">8</span></div>
-                                    <div><span @click="setRating('Кинопоиск', 9)">9</span></div>
-                                    <div><span @click="setRating('Кинопоиск', 10)">10</span></div>
+                                    <div class="rating-numbers">
+                                        <div><span @click="setRating('Кинопоиск', 1)">1</span></div>
+                                        <div><span @click="setRating('Кинопоиск', 2)">2</span></div>
+                                        <div><span @click="setRating('Кинопоиск', 3)">3</span></div>
+                                        <div><span @click="setRating('Кинопоиск', 4)">4</span></div>
+                                        <div><span @click="setRating('Кинопоиск', 5)">5</span></div>
+                                        <div><span @click="setRating('Кинопоиск', 6)">6</span></div>
+                                        <div><span @click="setRating('Кинопоиск', 7)">7</span></div>
+                                        <div><span @click="setRating('Кинопоиск', 8)">8</span></div>
+                                        <div><span @click="setRating('Кинопоиск', 9)">9</span></div>
+                                        <div><span @click="setRating('Кинопоиск', 10)">10</span></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <div class="filter-rating">
-                            <div class="rating-header">
-                                <label class="radio-container">
-                                    <input type="radio" @click="selectedRating = 'imdb'"
-                                        :checked="selectedRating == 'imdb'"> Оценка IMDb
-                                    <span class="radio-custom"></span>
-                                </label>
-                            </div>
-                            <div class="rating-main">
-                                <VueDoubleRangeInput step="1" color="#3657CB" track-color="#1E2538" track-radius="5px"
-                                    track-height="8px" handler-color="#3657CB" handler-width="24px"
-                                    handler-height="24px" :push-on-touch="false" :show-numbers="true" :min="10"
-                                    :max="100" v-model:minValue="minRatingIMDb" v-model:maxValue="maxRatingIMDb">
-                                    <template #from="{ minValueRef }">
-                                        <div class="rating">
-                                            От
+                            <div class="filter-rating">
+                                <div class="rating-header">
+                                    <label class="radio-container">
+                                        <input type="radio" @click="selectedRating = 'imdb'"
+                                            :checked="selectedRating == 'imdb'"> Оценка
+                                        IMDb
+                                        <span class="radio-custom"></span>
+                                    </label>
+                                </div>
+                                <div class="rating-main">
+                                    <VueDoubleRangeInput step="1" color="#3657CB" track-color="#1E2538"
+                                        track-radius="5px" track-height="8px" handler-color="#3657CB"
+                                        handler-width="24px" handler-height="24px" :push-on-touch="false"
+                                        :show-numbers="true" :min="10" :max="100" v-model:minValue="minRatingIMDb"
+                                        v-model:maxValue="maxRatingIMDb">
+                                        <template #from="{ minValueRef }">
+                                            <div class="rating">
+                                                От
 
-                                            <span>{{ (minValueRef / 10).toFixed(1) }}</span>
-                                        </div>
-                                        <!-- <input type="text" :value="(minValueRef/10).toFixed(1)" style="margin-top: 40px;"> -->
-                                    </template>
-                                    <template #to="{ maxValueRef }">
-                                        <div class="rating">
-                                            До
+                                                <span>{{ (minValueRef / 10).toFixed(1) }}</span>
+                                            </div>
+                                            <!-- <input type="text" :value="(minValueRef/10).toFixed(1)" style="margin-top: 40px;"> -->
+                                        </template>
+                                        <template #to="{ maxValueRef }">
+                                            <div class="rating">
+                                                До
 
-                                            <span>{{ (maxValueRef / 10).toFixed(1) }}</span>
-                                        </div>
-                                        <!-- <input type="text" :value="(maxValueRef/10).toFixed(1)" style="margin-top: 40px;"> -->
-                                    </template>
-                                </VueDoubleRangeInput>
+                                                <span>{{ (maxValueRef / 10).toFixed(1) }}</span>
+                                            </div>
+                                            <!-- <input type="text" :value="(maxValueRef/10).toFixed(1)" style="margin-top: 40px;"> -->
+                                        </template>
+                                    </VueDoubleRangeInput>
 
-                                <div class="rating-numbers">
-                                    <div><span @click="setRating('IMDb', 1)">1</span></div>
-                                    <div><span @click="setRating('IMDb', 2)">2</span></div>
-                                    <div><span @click="setRating('IMDb', 3)">3</span></div>
-                                    <div><span @click="setRating('IMDb', 4)">4</span></div>
-                                    <div><span @click="setRating('IMDb', 5)">5</span></div>
-                                    <div><span @click="setRating('IMDb', 6)">6</span></div>
-                                    <div><span @click="setRating('IMDb', 7)">7</span></div>
-                                    <div><span @click="setRating('IMDb', 8)">8</span></div>
-                                    <div><span @click="setRating('IMDb', 9)">9</span></div>
-                                    <div><span @click="setRating('IMDb', 10)">10</span></div>
+                                    <div class="rating-numbers">
+                                        <div><span @click="setRating('IMDb', 1)">1</span></div>
+                                        <div><span @click="setRating('IMDb', 2)">2</span></div>
+                                        <div><span @click="setRating('IMDb', 3)">3</span></div>
+                                        <div><span @click="setRating('IMDb', 4)">4</span></div>
+                                        <div><span @click="setRating('IMDb', 5)">5</span></div>
+                                        <div><span @click="setRating('IMDb', 6)">6</span></div>
+                                        <div><span @click="setRating('IMDb', 7)">7</span></div>
+                                        <div><span @click="setRating('IMDb', 8)">8</span></div>
+                                        <div><span @click="setRating('IMDb', 9)">9</span></div>
+                                        <div><span @click="setRating('IMDb', 10)">10</span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="filter-type">
-                        <label v-for="(type, index) in types" :key="index" class="checkbox-label">
-                            <input type="checkbox" :id="'type-' + index" :value="type" v-model="selectedTypes"
-                                class="checkbox-input">
-                            <span class="checkbox-custom"></span>
-                            {{ type }}
-                        </label>
+                    <div class="filter-type" :class="{ disabled2: !!name }"
+                        @click="name ? setErrorNotificarion('Этот фильтр не совместим с поиском по названию!') : null">
+                        <div :class="{ disabled1: !!name }">
+                            <label v-for="(type, index) in types" :key="index" class="checkbox-label">
+                                <input type="checkbox" :id="'type-' + index" :value="type" v-model="selectedTypes"
+                                    class="checkbox-input">
+                                <span class="checkbox-custom"></span>
+                                {{ type }}
+                            </label>
+                        </div>
                     </div>
 
                     <div class="filter-button">
@@ -221,37 +251,27 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div style="color: white;">
-            <h1>Итог:</h1>
-            <ul>
-                <li>Название: {{ name }} {{ typeof name }}</li>
-                <li>Год: {{ selectedYear }} {{ typeof selectedYear }}</li>
-                <li>Год с: {{ selectedFromYear }}</li>
-                <li>Год по: {{ selectedToYear }}</li>
-                <li>Жанр: {{ selectedGenre }}</li>
-                <li>Страна: {{ selectedCountry }}</li>
-                <li>Месяц: {{ selectedMonth }}</li>
-                <li>Год премьеры: {{ selectedPremiereYear }}</li>
-                <li>Премьера в: {{ selectedPremiereIn }}</li>
-                <li>Минимальная оценка: {{ selectedRating }} {{ selectedRating === "kp" ? minRatingKP / 10 :
-                    minRatingIMDb / 10
-                    }}</li>
-                <li>Максимальная оценка: {{ selectedRating }} {{ selectedRating === "kp" ? maxRatingKP / 10 :
-                    maxRatingIMDb / 10
-                    }}</li>
-                <li>Типы медиа: {{ selectedTypes }}</li>
-            </ul>
+
+            <div class="search-output" v-if="endRequest">
+                <BlockHeader :title="'Результаты поиска'" />
+
+                <div class="movies">
+                    <Card v-if="movies.length" v-for="(film, index) in movies" :contextMenu="false" :data="film" :key="index" />
+                    <Card v-else v-for="key in 16" :key="key" :data="{}" />
+                </div>
+            </div>
         </div>
     </main>
 </template>
 
 <script>
 import BlockHeader from '@/Components/BlockHeader.vue';
+import Card from '@/Components/Card.vue';
 import VueSelect from "vue3-select-component";
 import { mapActions } from 'vuex';
 import VueDoubleRangeInput from 'vue-double-range-input';
 import 'vue-double-range-input/dist/style.css';
+import { fetchAdvancedSearch } from '@/Services/apiService';
 
 export default {
     data() {
@@ -576,10 +596,13 @@ export default {
             minRatingIMDb: 10,
             maxRatingIMDb: 100,
             selectedTypes: ['Фильм'],
+            movies: [],
+            endRequest: ''
         }
     },
     components: {
         BlockHeader,
+        Card,
         VueSelect,
         VueDoubleRangeInput
     },
@@ -622,6 +645,18 @@ export default {
 
             return allOptions.filter(option => parseInt(option.value) < this.selectedToYear);
         },
+        isFilterNameActive() {
+            return (
+                this.selectedYear ||
+                this.selectedFromYear ||
+                this.selectedToYear ||
+                this.selectedCountry ||
+                this.selectedGenre.length > 0 ||
+                this.selectedMonth ||
+                this.selectedPremiereYear ||
+                this.selectedPremiereIn
+            );
+        },
         hasAtLeastOneField() {
             const result = (
                 this.name !== undefined && this.name !== '' ||
@@ -659,52 +694,192 @@ export default {
         //     this.amount = value.replace(/\s/g, '');
         // }
         setRating(ratingName, ratingValue) {
-            if (ratingName === "Кинопоиск") {
-                if (ratingValue <= 5) {
-                    this.minRatingKP = ratingValue * 10
-                } else {
-                    this.maxRatingKP = ratingValue * 10
-                }
+            const ratingScaled = ratingValue * 10;
+            const isKinopoisk = ratingName === "Кинопоиск";
+            const ratingType = isKinopoisk ? "KP" : "IMDb";
+            const minRatingKey = `minRating${ratingType}`;
+            const maxRatingKey = `maxRating${ratingType}`;
+
+            const currentMinRating = this[minRatingKey] ?? 10;
+            const currentMaxRating = this[maxRatingKey] ?? 100;
+
+            const distanceToMin = Math.abs(ratingScaled - currentMinRating);
+            const distanceToMax = Math.abs(ratingScaled - currentMaxRating);
+
+            if (distanceToMin < distanceToMax) {
+                this[minRatingKey] = ratingScaled;
             } else {
-                if (ratingValue <= 5) {
-                    this.minRatingIMDb = ratingValue * 10
-                } else {
-                    this.maxRatingIMDb = ratingValue * 10
-                }
+                this[maxRatingKey] = ratingScaled;
             }
         },
-        search() {
+        async search() {
             if (!this.hasAtLeastOneField) {
-                this.$toast.error('Необходимо заполнить хотя бы одно поле', { position: 'top-right', duration: 2000, dismissible: false, });
+                this.$toast.error('Необходимо заполнить хотя бы одно поле', { position: 'top-right', duration: 2000, dismissible: false });
                 return;
             }
-            
-            if (this.isYearRangeActive) {
-                const isFromYearSelected = !!this.selectedFromYear;
-                const isToYearSelected = !!this.selectedToYear;
-                
-                if ((isFromYearSelected || isToYearSelected) && !(isFromYearSelected && isToYearSelected)) {
-                    this.$toast.error('Вы заполнили не все поля для фильтрации по интервалу.', {position: 'top-right', duration: 2000, dismissible: false,});
-                    return;
-                }
-            }
-            
-            if (this.isPremiereFilterActive) {
-                const isMonthSelected = !!this.selectedMonth;
-                const isYearSelected = !!this.selectedPremiereYear;
-                const isInSelected = !!this.selectedPremiereIn;
-                
-                if ((isMonthSelected || isYearSelected || isInSelected) && !(isMonthSelected && isYearSelected && isInSelected)) {
-                    this.$toast.error( 'Вы заполнили не все поля для фильтрации по премьере.', { position: 'top-right', duration: 2000, dismissible: false, }
-                    );
-                    return;
-                }
+
+            if (this.isYearRangeActive && ((!!this.selectedFromYear) !== (!!this.selectedToYear))) {
+                this.$toast.error('Вы заполнили не все поля для фильтрации по интервалу.', { position: 'top-right', duration: 2000, dismissible: false });
+                return;
             }
 
-            this.$toast.success('Все четко', { position: 'top-right', duration: 2000, dismissible: false, });
-            console.log();
-            
+            if (this.isPremiereFilterActive && !((!!this.selectedMonth) && (!!this.selectedPremiereYear))) {
+                this.$toast.error('Вы заполнили не все поля для фильтрации по премьере.', { position: 'top-right', duration: 2000, dismissible: false });
+                return;
+            }
+
+            if (this.selectedTypes.length === 0) {
+                this.$toast.error('Необходимо выбрать хотя бы одит типа фильма.', { position: 'top-right', duration: 2000, dismissible: false });
+                return;
+            }
+
+            this.$toast.success('Все четко', { position: 'top-right', duration: 2000, dismissible: false });
+
+            if (!this.name) {
+                let params = {};
+
+                if (this.name) params.name = this.name;
+                if (this.selectedYear) params.year = this.selectedYear;
+                if (this.selectedFromYear && this.selectedToYear) params.year = `${this.selectedFromYear}-${this.selectedToYear}`;
+
+                if (this.selectedCountry) params['countries.name'] = this.selectedCountry;
+
+                if (this.selectedMonth && this.selectedPremiereYear && this.selectedPremiereIn) {
+                    const monthNameToNumber = {
+                        "Январь": 1,
+                        "Февраль": 2,
+                        "Март": 3,
+                        "Апрель": 4,
+                        "Май": 5,
+                        "Июнь": 6,
+                        "Июль": 7,
+                        "Август": 8,
+                        "Сентябрь": 9,
+                        "Октябрь": 10,
+                        "Ноябрь": 11,
+                        "Декабрь": 12,
+                        "В мире": undefined,
+                        "В России": undefined,
+                        "В Америке": undefined,
+                        "В стриминговых сервисах": undefined,
+                        "В кинотеатрах": undefined
+                    };
+
+                    const monthNumber = monthNameToNumber[this.selectedMonth];
+
+                    if (monthNumber) {
+                        const monthIndex = monthNumber - 1;
+                        const lastDayOfMonth = new Date(this.selectedPremiereYear, monthIndex + 1, 0).getDate();
+                        const month = String(monthIndex + 1).padStart(2, '0');
+                        const startDate = `01.${month}.${this.selectedPremiereYear}`;
+                        const endDate = `${lastDayOfMonth}.${month}.${this.selectedPremiereYear}`;
+
+                        let premiereType = '';
+                        switch (this.selectedPremiereIn) {
+                            case "В мире":
+                                premiereType = 'premiere.world';
+                                break;
+                            case "В России":
+                                premiereType = 'premiere.russia';
+                                break;
+                            case "В Америке":
+                                premiereType = 'premiere.usa';
+                                break;
+                            case "В стриминговых сервисах":
+                                premiereType = 'premiere.digital';
+                                break;
+                            case "В кинотеатрах":
+                                premiereType = 'premiere.cinema';
+                                break;
+                            default:
+                                console.warn("Неизвестный тип премьеры:", this.selectedPremiereIn);
+                                break;
+                        }
+
+                        if (premiereType) {
+                            params[premiereType] = `${startDate}-${endDate}`;
+                        }
+                    } else {
+                        console.error("Неверное название месяца:", this.selectedMonth);
+                    }
+                }
+
+                if (this.selectedRating && (this.minRatingKP !== undefined && this.maxRatingKP !== undefined) || (this.minRatingIMDb !== undefined && this.maxRatingIMDb !== undefined)) {
+                    let ratingType = `rating.${this.selectedRating}`;
+
+                    if (this.selectedRating === 'kp') {
+                        params[ratingType] = `${this.minRatingKP / 10}-${this.maxRatingKP / 10}`;
+                    } else {
+                        params[ratingType] = `${this.minRatingIMDb / 10}-${this.maxRatingIMDb / 10}`;
+                    }
+                }
+
+                if (this.selectedGenre.length > 0) {
+                    this.selectedGenre.forEach(genre => {
+                        if (!params['genres.name']) {
+                            params['genres.name'] = [];
+                        }
+                        params['genres.name'].push(genre);
+                    });
+                }
+
+                const englishMoviesTypes = {
+                    'Фильм': "movie",
+                    'Сериал': "tv-series",
+                    'Мультфильм': "cartoon",
+                    'Мультсериал': "animated-series",
+                    'Аниме': "anime",
+                }
+
+                if (this.selectedTypes.length > 0) {
+                    this.selectedTypes.forEach(type => {
+                        if (!params['type']) {
+                            params['type'] = [];
+                        }
+                        params['type'].push(englishMoviesTypes[type]);
+                    });
+                }
+
+                let queryString = Object.entries(params)
+                    .map(([key, value]) => {
+                        if (Array.isArray(value)) {
+                            return value.map(item => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`).join('&');
+                        } else {
+                            return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+                        }
+                    })
+                    .filter(Boolean)
+                    .join('&');
+
+                if (queryString) {
+                    queryString = `?page=1&limit=80&sortField=rating.${this.selectedRating}&sortType=-1&` + queryString;
+                } else {
+                    queryString = `?page=1&limit=80&sortField=rating.${this.selectedRating}&sortType=-1&`;
+                }
+
+                console.log("Строка запроса:", queryString);
+                try {
+                    this.movies = await fetchAdvancedSearch(queryString)
+                    this.endRequest = queryString
+                    console.log(this.movies);
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                console.log("Строка запроса:", `movie/search?page=1&limit=80&query=${encodeURIComponent(this.name)}`);
+                try {
+                    this.movies = await fetchAdvancedSearch(`/search?page=1&limit=80&query=${encodeURIComponent(this.name)}`)
+                    this.endRequest = `/search?page=1&limit=80&query=${encodeURIComponent(this.name)}`;
+                    console.log(this.movies.docs);
+                    
+                } catch (error) {
+                    console.error(error);
+                }
+            }
         },
+        setErrorNotificarion(text) {
+            this.$toast.error(text, { position: 'top-right', duration: 2000, dismissible: false })
+        }
     },
 }
 </script>
@@ -770,11 +945,11 @@ export default {
             color: #52525b;
         }
 
-        /* &.filter-budget {
-            padding: 22px 27px 22px 18px;
-            border-radius: 0 10px 10px 0;
-            width: 150px;
-        } */
+
+        padding: 22px 27px 22px 18px;
+        border-radius: 0 10px 10px 0;
+        width: 150px;
+
     }
 
     span {
@@ -819,10 +994,14 @@ export default {
 
 .filter-ratings {
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     margin-top: 40px;
+
+    &>div {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 
 .filter-rating {
@@ -848,14 +1027,14 @@ export default {
     user-select: none;
 }
 
-/* Скрываем стандартный radio button */
+
 .radio-container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
 }
 
-/* Создаем кастомный radio button */
+
 .radio-custom {
     position: absolute;
     top: 0;
@@ -865,34 +1044,34 @@ export default {
     background-color: transparent;
     border: 1px solid #838488;
     border-radius: 50%;
-    /* Круглый вид */
+
 }
 
-/* При наведении курсора меняем фон */
+
 .radio-container:hover input~.radio-custom {
     border: 1px solid #696a6d;
 }
 
-/* Добавляем стили при выборе (checked) */
+
 .radio-container input:checked~.radio-custom {
     background-color: #F2F60F;
-    /* Основной цвет */
+
     border: 1px solid #F2F60F;
 }
 
-/* Создаем внутренний круг для индикации выбранного состояния */
+
 .radio-custom:after {
     content: "";
     position: absolute;
     display: none;
 }
 
-/* Показываем внутренний круг при выборе */
+
 .radio-container input:checked~.radio-custom:after {
     display: block;
 }
 
-/* Стилизуем внутренний круг */
+
 .radio-container .radio-custom:after {
     top: 3px;
     left: 3px;
@@ -900,7 +1079,7 @@ export default {
     height: 11px;
     border-radius: 50%;
     background: #151A26;
-    /* Цвет внутреннего круга */
+
 }
 
 .rating-main {
@@ -1011,16 +1190,14 @@ export default {
 .checkbox-group {
     display: flex;
     flex-direction: column;
-    /* Или row, если хотите в строку */
+
 }
 
 .checkbox-label {
-    /* display: flex;
-  align-items: center; */
     margin-bottom: 10px;
     position: relative;
     padding-left: 25px;
-    /* Отступ для кастомного чекбокса */
+
     cursor: pointer;
     user-select: none;
 }
@@ -1049,7 +1226,7 @@ export default {
     transition: background-color 0.2s, border-color 0.2s;
 }
 
-/* Галочка */
+
 .checkbox-custom::after {
     content: "";
     position: absolute;
@@ -1063,7 +1240,7 @@ export default {
     transform: rotate(45deg);
 }
 
-/* Показываем галочку когда чекбокс выбран */
+
 .checkbox-input:checked+.checkbox-custom::after {
     display: block;
 }
@@ -1091,9 +1268,24 @@ export default {
     }
 }
 
-.disabled {
+.search-output{
+    width: 100%;
+}
+
+.movies {
+    display: grid;
+    grid-template-columns: repeat(5, 280px);
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.disabled1 {
     opacity: 0.3;
-    cursor: not-allowed;
     user-select: none;
+    pointer-events: none;
+}
+
+.disabled2 {
+    cursor: not-allowed;
 }
 </style>
