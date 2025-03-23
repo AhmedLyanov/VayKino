@@ -33,7 +33,7 @@
               </div>
               <audio controls :src="message.audioUrl" />
             </div>
-            <img v-if="message.imageUrl" :src="message.imageUrl" alt="Изображение" class="message-image" />
+            <img v-if="message.imageUrl" :src="message.imageUrl" alt="Изображение" class="message-image"  @click="openPosterModal(message.imageUrl)" />
           </div>
           <div class="user-info">
             <div class="message_time">
@@ -66,6 +66,8 @@
       </div>
     </div>
   </div>
+
+  <MediaPosterModal :is-open="isModalPosterOpen" :posterUrl="poster" @close="closePosterModal" :posterScale="0.7" />
 </template>
 
 <script>
@@ -74,7 +76,8 @@ import defaultAvatar from "@/assets/Media/profile/default.png";
 import io from "socket.io-client";
 import { mapActions } from 'vuex';
 import RecordRTC from "recordrtc";
-import { useToast } from 'vue-toast-notification'; 
+import { useToast } from 'vue-toast-notification';
+import MediaPosterModal from "@/Components/MediaPosterModal.vue";
 
 export default {
   data() {
@@ -86,7 +89,12 @@ export default {
       socket: null,
       isRecording: false,
       recorder: null,
+      isModalPosterOpen: false,
+      poster: ""
     };
+  },
+  components: {
+    MediaPosterModal
   },
   async created() {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -302,7 +310,19 @@ export default {
 
     hideEmailMailing() {
       this.toggleEmailMailing(false);
-    }
+    },
+
+    openPosterModal(poster) {
+        this.poster = poster;
+        this.isModalPosterOpen = true;
+        document.body.classList.add('no-scroll');
+    },
+    
+    closePosterModal() {
+        this.isModalPosterOpen = false;
+        this.poster = '';
+        document.body.classList.remove('no-scroll');
+    },
   },
   beforeUnmount() {
     if (this.socket) {
@@ -356,6 +376,7 @@ export default {
   max-height: 300px;
   border-radius: 10px;
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .audio_message{
