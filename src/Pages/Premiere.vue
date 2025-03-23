@@ -2,7 +2,7 @@
   <main>
     <div class="main-content">
       <div class="premiere">
-        <BlockHeader :title="'График премьер фильмов'" :text="false" :link="false" />
+        <BlockHeader :title="'График премьер фильмов в России'" :text="false" :link="false" />
 
         <div v-for="group in groupedMovies.slice(0, moviesCount)" :key="group.date">
           <div class="premiere-date_title">{{ formatDate(group.date) }}</div>
@@ -57,8 +57,6 @@ export default {
     },
     groupMoviesByDate() {
       this.upcoming = this.upcoming.filter(obj => !this.blackList.includes(obj.name))
-      console.log(this.blackList);
-      
       
       const grouped = {};
 

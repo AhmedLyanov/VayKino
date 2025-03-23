@@ -141,7 +141,6 @@ export default {
         try {
             this.trailers = await getLatestVideosFromChannel();
             this.posters = await fetchLatestPosters();
-            console.log(this.posters);
             
         } catch (error) {
             console.error(error);

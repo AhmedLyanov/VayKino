@@ -179,6 +179,7 @@ export const searchTrailer = async (movieTitle) => {
         const data = response.data;
         if (data.data && data.data.length > 0) {
             const preferredChannelIds = [
+                "UCBlRG_dAK4Vbjwtq7Yiv0IA",
                 "UCDgVWEC93NuidEeDxWHAIFg",
                 "UC6A-Z0jDKemh9-CwGbj5yog",
                 "UCh9gYjgnUB1BRY0-LYJXKRg",
@@ -314,8 +315,6 @@ export const fetchActors = async (id) => {
 };
 
 export const fetchAdvancedSearch = async (params) => {
-    console.log(123);
-    
     try {
         const response = await axios.get(`${API_200_REQUESTS}${params}`, {
             headers: {
@@ -323,7 +322,6 @@ export const fetchAdvancedSearch = async (params) => {
                 "X-API-KEY": API_200_REQUESTS_TOKEN3,
             },
         });
-        console.log(response);
         return response.data.docs;
     } catch (error) {
         console.error("Error fetching data:", error);

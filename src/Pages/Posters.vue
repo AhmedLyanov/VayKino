@@ -55,10 +55,8 @@ export default {
         try {
             this.posters = await fetchPosters(this.movieId);
             this.posters = this.posters.items
-            console.log(this.posters);
 
             this.title = await fetchMovieToId(this.movieId)
-            console.log(this.title);
 
             this.title = this.title[0].name
         } catch (error) {

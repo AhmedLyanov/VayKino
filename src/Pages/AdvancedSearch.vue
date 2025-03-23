@@ -252,13 +252,21 @@
                 </div>
             </div>
 
-            <div class="search-output" v-if="endRequest">
-                <BlockHeader :title="'Результаты поиска'" />
+            <div class="search-output" v-if="endRequest" ref="searchOutput">
+                <BlockHeader :title="'Результаты поиска'" :text="false" :link="false" />
 
-                <div class="movies">
-                    <Card v-if="movies.length" v-for="(film, index) in movies" :contextMenu="false" :data="film" :key="index" />
-                    <Card v-else v-for="key in 16" :key="key" :data="{}" />
+                <div class="search-loading" v-if="isLoading">
+                  <span class="loader"></span>
                 </div>
+            
+                <div class="search-error" v-if="errorMessage">
+                  {{ errorMessage }}
+                </div>
+
+                <div class="movies" v-if="movies.length">
+                    <Card v-for="(film, index) in movies" :contextMenu="false" :data="film" :key="index" />
+                </div>
+                <div class="movies-loadmore" v-if="movies.length" @click="searchPage++">Загрузить еще</div>
             </div>
         </div>
     </main>
@@ -597,7 +605,10 @@ export default {
             maxRatingIMDb: 100,
             selectedTypes: ['Фильм'],
             movies: [],
-            endRequest: ''
+            endRequest: '',
+            isLoading: false,
+            errorMessage: '',
+            searchPage: 1,
         }
     },
     components: {
@@ -624,6 +635,12 @@ export default {
                 }
             },
             deep: true
+        },
+        async searchPage(){
+            let searchParams = this.endRequest
+            searchParams = searchParams.replace(/page=\d+/, `page=${this.searchPage}`)
+            let newSearch = await fetchAdvancedSearch(searchParams)
+            this.movies = this.movies.concat(newSearch)
         }
     },
     computed: {
@@ -729,11 +746,9 @@ export default {
             }
 
             if (this.selectedTypes.length === 0) {
-                this.$toast.error('Необходимо выбрать хотя бы одит типа фильма.', { position: 'top-right', duration: 2000, dismissible: false });
+                this.$toast.error('Необходимо выбрать хотя бы один типа фильма.', { position: 'top-right', duration: 2000, dismissible: false });
                 return;
             }
-
-            this.$toast.success('Все четко', { position: 'top-right', duration: 2000, dismissible: false });
 
             if (!this.name) {
                 let params = {};
@@ -852,26 +867,46 @@ export default {
                     .join('&');
 
                 if (queryString) {
-                    queryString = `?page=1&limit=80&sortField=rating.${this.selectedRating}&sortType=-1&` + queryString;
+                    queryString = `?page=1&limit=40&sortField=rating.${this.selectedRating}&sortType=-1&` + queryString;
                 } else {
-                    queryString = `?page=1&limit=80&sortField=rating.${this.selectedRating}&sortType=-1&`;
+                    queryString = `?page=1&limit=40&sortField=rating.${this.selectedRating}&sortType=-1&`;
                 }
-
-                console.log("Строка запроса:", queryString);
                 try {
-                    this.movies = await fetchAdvancedSearch(queryString)
                     this.endRequest = queryString
-                    console.log(this.movies);
+                    this.isLoading = true
+                    this.$nextTick(() => {
+                      const searchOutputElement = this.$refs.searchOutput;
+                      if (searchOutputElement) {
+                        searchOutputElement.scrollIntoView({ behavior: 'smooth' });
+                      } else {
+                        console.error('Элемент trailer не найден!');
+                      }
+                    });
+                    this.movies = await fetchAdvancedSearch(queryString)
+                    if (!this.movies.length) {
+                        this.errorMessage = 'Ничего не найдено, измените фильтры и попробуйте заново'
+                    }
+                    this.isLoading = false
                 } catch (error) {
                     console.error(error);
                 }
             } else {
-                console.log("Строка запроса:", `movie/search?page=1&limit=80&query=${encodeURIComponent(this.name)}`);
                 try {
-                    this.movies = await fetchAdvancedSearch(`/search?page=1&limit=80&query=${encodeURIComponent(this.name)}`)
-                    this.endRequest = `/search?page=1&limit=80&query=${encodeURIComponent(this.name)}`;
-                    console.log(this.movies.docs);
-                    
+                    this.endRequest = `/search?page=1&limit=40&query=${encodeURIComponent(this.name)}`;
+                    this.isLoading = true
+                    this.$nextTick(() => {
+                      const searchOutputElement = this.$refs.searchOutput;
+                      if (searchOutputElement) {
+                        searchOutputElement.scrollIntoView({ behavior: 'smooth' });
+                      } else {
+                        console.error('Элемент trailer не найден!');
+                      }
+                    });
+                    this.movies = await fetchAdvancedSearch(`/search?page=1&limit=40&query=${encodeURIComponent(this.name)}`)
+                    if (!this.movies.length) {
+                        this.errorMessage = 'Ничего не найдено, измените фильтры и попробуйте заново'
+                    }
+                    this.isLoading = false
                 } catch (error) {
                     console.error(error);
                 }
@@ -1277,6 +1312,7 @@ export default {
     grid-template-columns: repeat(5, 280px);
     justify-content: space-between;
     gap: 30px;
+    margin-top: 60px;
 }
 
 .disabled1 {
@@ -1287,5 +1323,68 @@ export default {
 
 .disabled2 {
     cursor: not-allowed;
+}
+
+.search-loading{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 330px;
+    margin-bottom: 330px;
+}
+
+.loader {
+  width: 96px;
+  height: 96px;
+  background: #FFF;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 12px;
+  top: 20px;
+  width: 24px;
+  height: 24px;
+  color: #3657cb;
+  background: currentColor;
+  border-radius: 50%;
+  box-shadow: 50px 4px, 20px 44px;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.search-error{
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-size: 23px;
+    margin-top: 350px;
+    margin-bottom: 350px;
+}
+
+.movies-loadmore {
+    padding: 20px 25px;
+    border: 1px solid white;
+    color: white;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    cursor: pointer;
+    user-select: none;
+    width: fit-content;
 }
 </style>

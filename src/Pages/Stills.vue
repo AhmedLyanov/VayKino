@@ -56,10 +56,8 @@ export default {
         try {
             this.stills = await fetchStills(this.movieId);
             this.stills = this.stills.items
-            console.log(this.stills);
 
             this.title = await fetchMovieToId(this.movieId)
-            console.log(this.title);
 
             this.title = this.title[0].name
         } catch (error) {

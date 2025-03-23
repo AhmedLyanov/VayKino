@@ -27,8 +27,8 @@ export default {
     data() {
         return {
             moviesPage: 1,
-            allAnimes: [],
             allAnimeSeries: [],
+            allAnimes: [],
             clearAnimes: [],
         }
     },
@@ -43,33 +43,41 @@ export default {
     watch: {
         async moviesPage() {
             let allAnimeSeries = await fetchFreeAPI2(`&type=anime-series&limit=30&page=${this.moviesPage}`);
-            let allAnimes = await fetchFreeAPI2(`&type=anime&limit=10&page=${this.moviesPage}`);
+            let allAnimeMovies = await fetchFreeAPI2(`&type=anime&limit=10&page=${this.moviesPage}`);
 
             let combinedAnimes = [];
             let seriesIndex = 0;
             let moviesIndex = 0;
 
-            while (seriesIndex < allAnimeSeries.length || moviesIndex < allAnimes.length) {
+            while (seriesIndex < allAnimeSeries.length && moviesIndex < allAnimeMovies.length) {
                 for (let i = 0; i < 5 && seriesIndex < allAnimeSeries.length; i++) {
                     combinedAnimes.push(allAnimeSeries[seriesIndex]);
                     seriesIndex++;
                 }
-                if (moviesIndex < allAnimes.length) {
-                    combinedAnimes.push(allAnimes[moviesIndex]);
+                if (moviesIndex < allAnimeMovies.length) {
+                    combinedAnimes.push(allAnimeMovies[moviesIndex]);
                     moviesIndex++;
                 }
             }
-            this.clearAnimes = combinedAnimes.filter(movie => {
+            this.allAnimes = this.allAnimes.concat(combinedAnimes);
+            this.clearAnimes = this.allAnimes.filter(movie => {
                 if (!movie.genre) {
                     return true;
                 }
                 const hasErotica = Object.values(movie.genre).includes("Эротика");
                 return !hasErotica && !this.blackList.includes(movie.name);
             });
-            this.allAnimes = this.clearAnimes;
+
+
         },
         blackList() {
-            this.clearAnimes = this.allAnimes.filter(obj => !this.blackList.includes(obj.name))
+            this.clearAnimes = this.allAnimes.filter(obj => {
+                if (!obj.genre) {
+                    return true;
+                }
+                const hasErotica = Object.values(obj.genre).includes("Эротика");
+                return !hasErotica && !this.blackList.includes(obj.name);
+            });
         }
     },
     async mounted() {
@@ -77,30 +85,32 @@ export default {
         document.title = 'Аниме'
         this.showEmailMailing()
         let allAnimeSeries = await fetchFreeAPI2(`&type=anime-series&limit=22&page=${this.moviesPage}`);
-            let allAnimes = await fetchFreeAPI2(`&type=anime&limit=10&page=${this.moviesPage}`);
+        let allAnimeMovies = await fetchFreeAPI2(`&type=anime&limit=10&page=${this.moviesPage}`);
 
-            let combinedAnimes = [];
-            let seriesIndex = 0;
-            let moviesIndex = 0;
+        let combinedAnimes = [];
+        let seriesIndex = 0;
+        let moviesIndex = 0;
 
-            while (seriesIndex < allAnimeSeries.length || moviesIndex < allAnimes.length) {
-                for (let i = 0; i < 5 && seriesIndex < allAnimeSeries.length; i++) {
-                    combinedAnimes.push(allAnimeSeries[seriesIndex]);
-                    seriesIndex++;
-                }
-                if (moviesIndex < allAnimes.length) {
-                    combinedAnimes.push(allAnimes[moviesIndex]);
-                    moviesIndex++;
-                }
+        while (seriesIndex < allAnimeSeries.length && moviesIndex < allAnimeMovies.length) {
+            for (let i = 0; i < 5 && seriesIndex < allAnimeSeries.length; i++) {
+                combinedAnimes.push(allAnimeSeries[seriesIndex]);
+                seriesIndex++;
             }
-            this.clearAnimes = combinedAnimes.filter(movie => {
-                if (!movie.genre) {
-                    return true;
-                }
-                const hasErotica = Object.values(movie.genre).includes("Эротика");
-                return !hasErotica && !this.blackList.includes(movie.name);
-            });
-            this.allAnimes = this.clearAnimes;
+            if (moviesIndex < allAnimeMovies.length) {
+                combinedAnimes.push(allAnimeMovies[moviesIndex]);
+                moviesIndex++;
+            }
+        }
+
+        this.allAnimes = combinedAnimes;
+
+        this.clearAnimes = this.allAnimes.filter(movie => {
+            if (!movie.genre) {
+                return true;
+            }
+            const hasErotica = Object.values(movie.genre).includes("Эротика");
+            return !hasErotica && !this.blackList.includes(movie.name);
+        });
     },
     methods: {
         ...mapActions(['toggleEmailMailing']),

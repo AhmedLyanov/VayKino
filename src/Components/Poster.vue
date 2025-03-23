@@ -51,10 +51,6 @@ export default {
             document.body.classList.remove('no-scroll');
         },
     },
-    mounted(){
-        console.log(this.data);
-        
-    }
 }
 </script>
 

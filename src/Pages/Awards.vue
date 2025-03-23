@@ -49,10 +49,8 @@ export default{
         try {
             this.awards = await fetchAwards(this.movieId);
             this.awards = this.awards.items
-            console.log(this.awards);
             
             this.title = await fetchMovieToId(this.movieId)
-            console.log(this.title);
             
             this.title = this.title[0].name
         } catch (error) {

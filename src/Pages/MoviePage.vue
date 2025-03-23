@@ -105,7 +105,7 @@
             </div>
             <div class="movie-table__cell">
               {{data?.persons?.filter(item => item.enProfession === 'designer').slice(0, 2).map(item =>
-                item.name).join(', ')}}
+                item.name ? item.name : item.enName).join(', ')}}
             </div>
           </div>
 
@@ -124,8 +124,7 @@
               Монтаж:
             </div>
             <div class="movie-table__cell">
-              {{data?.persons?.filter(item => item.enProfession === 'editor').slice(0, 2).map(item =>
-                item.name).join(', ')}}
+              {{data?.persons?.filter(item => item.enProfession === 'editor').slice(0, 2).map(item => item.name ? item.name : item.enName).join(', ')}}
             </div>
           </div>
 
@@ -154,11 +153,11 @@
             </div>
             <div class="movie-table__cell">
               {{data?.persons?.filter(item => item.enProfession === 'director').slice(0, 2).map(item =>
-                item.name).join(', ')}}
+                item.name ? item.name : item.enName).join(', ')}}
             </div>
           </div>
 
-          <div class="movie-table__row" v-if="data?.fees?.world">
+          <div class="movie-table__row" v-if="data?.fees?.world.value">
             <div class="movie-table__cell--header">
               Сборы в мире:
             </div>
@@ -175,7 +174,7 @@
             </div>
             <div class="movie-table__cell">
               {{data?.persons?.filter(item => item.enProfession === 'writer').slice(0, 2).map(item =>
-                item.name).join(', ')}}
+                item.name ? item.name : item.enName).join(', ')}}
             </div>
           </div>
 
@@ -198,7 +197,7 @@
             </div>
             <div class="movie-table__cell">
               {{data?.persons?.filter(item => item.enProfession === 'producer').slice(0, 2).map(item =>
-                item.name).join(', ')}}
+                item.name ? item.name : item.enName).join(', ')}}
             </div>
           </div>
 
@@ -220,7 +219,7 @@
             </div>
             <div class="movie-table__cell">
               {{data?.persons?.filter(item => item.enProfession === 'operator').slice(0, 2).map(item =>
-                item.name).join(', ')}}
+                item.name ? item.name : item.enName).join(', ')}}
             </div>
           </div>
 
@@ -239,7 +238,7 @@
             </div>
             <div class="movie-table__cell">
               {{data?.persons?.filter(item => item.enProfession === 'composer').slice(0, 2).map(item =>
-                item.name).join(', ')}}
+                item.name ? item.name : item.enName).join(', ')}}
             </div>
           </div>
 
@@ -258,7 +257,7 @@
       <Cast :data="data" />
 
       <div class="movie-trealer" ref="treailer" v-if="trealer.videoId">
-        <BlockHeader :title="'Трейлер фильма'" :text="false" :link="false" />
+        <BlockHeader :title="`Трейлер ${movieTypes[data?.type]?.nameRodPadej1}`" :text="false" :link="false" />
 
         <div class="trealers-trealer">
           <iframe width="100%" height="auto" :src="`https://www.youtube.com/embed/${trealer.videoId}`"
@@ -320,7 +319,7 @@
       </div>
 
       <div class="movie-posters" v-if="posters?.items?.length">
-        <BlockHeader :title="'Постеры к фильму'" :text="posters?.items?.length > 4 ? 'Все постеры' : false"
+        <BlockHeader :title="`Постеры к ${movieTypes[data?.type]?.nameRodPadej2}`" :text="posters?.items?.length > 4 ? 'Все постеры' : false"
           :link="`/posters/${data.id}`" />
 
         <div class="posters-main">
@@ -331,7 +330,7 @@
       </div>
 
       <div class="movie-stills" v-if="stills && stills?.items?.length">
-        <BlockHeader :title="'Кадры из фильма'" :text="stills?.items?.length > 4 ? 'Все кадры' : false"
+        <BlockHeader :title="`Кадры из ${movieTypes[data?.type]?.nameRodPadej1}`" :text="stills?.items?.length > 4 ? 'Все кадры' : false"
           :link="`/stills/${data.id}`" />
 
         <div class="stills-main">
@@ -347,7 +346,7 @@
 
         <div class="movie-buy" v-else>
           <div>
-            Для просмотра этого фильма, потребуется приобрести подписку.
+            Для просмотра этого {{ movieTypes[data?.type]?.nameRodPadej1 }}, потребуется приобрести подписку.
             <div class="movie-buy-but" @click="buyPremium">Перейти к покупке</div>
           </div>
         </div>
@@ -361,14 +360,14 @@
       </div>
 
       <div class="movie-similars" v-if="similars && similars?.items?.length">
-        <div class="similars__header">Похожие фильмы</div>
+        <div class="similars__header">Похожие {{ movieTypes[data?.type]?.nameMnogo.toLowerCasetoLowerCase() }}</div>
         <div class="similars__content">
           <Slider2 :data="similars.items" />
         </div>
       </div>
 
       <div class="reviews-container" v-if="previews.length">
-        <BlockHeader :title="'Рецензии к фильму'" :text="false" :link="false" />
+        <BlockHeader :title="`Рецензии к ${movieTypes[data?.type]?.nameRodPadej2}`" :text="false" :link="false" />
 
         <div class="comment-box">
           <div v-for="(preview, index) in previews.slice(0, showPreviews)" :key="index">
@@ -402,7 +401,7 @@
     </div>
 
     <UpArrow />
-    <Kinoneiro v-if="data?.name" :name="`Что скажешь о фильме ${data.name}?`"></Kinoneiro>
+    <Kinoneiro v-if="data?.name" :name="`Что скажешь о ${movieTypes[data?.type]?.nameRodPadej2.slice(0, movieTypes[data?.type]?.nameRodPadej2.length-1)}е ${data.name}?`"></Kinoneiro>
   </main>
 </template>
 
@@ -441,11 +440,11 @@ export default {
       likedVideos: [],
       dislikedVideos: [],
       movieTypes: {
-        "movie": { name: "Фильм", nameMnogo: "Фильмы", path: "movies" },
-        "tv-series": { name: "Сериал", nameMnogo: "Сериалы", path: "series" },
-        "cartoon": { name: "Мультфильм", nameMnogo: "Мультфильмы", path: "cartoons" },
-        "animated-series": { name: "Мультсериал", nameMnogo: "Мультсериалы", path: "cartoon-series" },
-        "anime": { name: "Аниме", nameMnogo: "Аниме", path: "anime" },
+        "movie": { name: "Фильм", nameMnogo: "Фильмы", nameRodPadej1: "фильма", nameRodPadej2: "фильму", path: "movies" },
+        "tv-series": { name: "Сериал", nameMnogo: "Сериалы", nameRodPadej1: "сериала", nameRodPadej2: "сериалу", path: "series" },
+        "cartoon": { name: "Мультфильм", nameMnogo: "Мультфильмы", nameRodPadej1: "мультфильма", nameRodPadej2: "мультфильму", path: "cartoons" },
+        "animated-series": { name: "Мультсериал", nameMnogo: "Мультсериалы", nameRodPadej1: "мультсериала", nameRodPadej2: "мультсериалу", path: "cartoon-series" },
+        "anime": { name: "Аниме", nameMnogo: "Аниме", nameRodPadej1: "аниме", nameRodPadej2: "аниме", path: "anime" },
       }
     };
   },
