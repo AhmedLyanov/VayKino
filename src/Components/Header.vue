@@ -2,10 +2,11 @@
   <header>
     <div class="header-cont">
       <div class="header-left">
+      
         <div class="logo_info">
-          <div class="header-logo" @click="this.$router.replace('/')">
+          <div class="header-logo" @click="$router.replace('/')">
             <div class="header-logo-img">
-              <img src="../assets/Media/Components/logo.svg" alt="" />
+              <img src="../assets/Media/Components/logo.svg" alt="Logo">
             </div>
             <div class="header-logo-title">Vay<mark>Kino</mark></div>
           </div>
@@ -21,9 +22,15 @@
           </div>
         </div>
 
+ 
         <div class="genre_movies_list">
-          <input type="text" list="options" placeholder="Выберите жанр" v-model="selectedGenre"
-            @change="redirectToGenre">
+          <input 
+            type="text" 
+            list="options" 
+            placeholder="Выберите жанр" 
+            v-model="selectedGenre"
+            @change="redirectToGenre"
+          >
           <datalist id="options">
             <option value="Фильмы"></option>
             <option value="Мультфильмы"></option>
@@ -33,87 +40,80 @@
           </datalist>
         </div>
       </div>
-      <PremiumModal v-if="showPremiumModalFlag" :userAvatar="userAvatar" @close="closePremiumModal"
-        @buy-premium="buyPremium" />
-
-      <div class="dropdown-menu" :class="{ 'active': isBurgerMenuOpen }">
-        <div class="dropdown-header">
-          <div class="user-info-mobile">
-            <div class="avatar-container-mobile" @click="toggleDropdown" :class="{ 'premium-glow': isPremium }">
-              <img :src="userAvatar || defaultAvatar" alt="Аватар" class="avatar-mobile" />
-            </div>
-            <div class="balance-container-mobile">
-              <span class="balance-mobile">Баланс: </span>
-              <span class="balance-number-mobile">{{ userBalance }}</span>
-            </div>
-          </div>
-          <div class="header-search_btn-mobile" @click="showModal">
-            <img src="../assets/Media/Components/search.svg" alt="" />
-          </div>
-        </div>
-        <nav>
-          <router-link to="/premiere" active-class="active">Афиша</router-link>
-          <router-link to="/media" active-class="active">Медиа</router-link>
-          <router-link to="/posts" active-class="active">Новости</router-link>
-          <router-link to="/lists" active-class="active">Подборки</router-link>
-          <router-link to="/favourites" active-class="active">Избранное</router-link>
-          <router-link to="/chat" active-class="active">Премиум-Чат</router-link>
-        </nav>
-      </div>
 
       <div class="header-center">
         <nav>
-          <router-link to="/premiere" active-class="active">Афиша</router-link>
-          <router-link to="/media" active-class="active">Медиа</router-link>
-          <router-link to="/posts" active-class="active">Новости</router-link>
-          <router-link to="/lists" active-class="active">Подборки</router-link>
-          <router-link to="/favourites" active-class="active">Избранное</router-link>
-          <router-link to="/chat" active-class="active">Премиум-Чат</router-link>
+          <router-link to="/premiere">Афиша</router-link>
+          <router-link to="/media">Медиа</router-link>
+          <router-link to="/posts">Новости</router-link>
+          <router-link to="/lists">Подборки</router-link>
+          <router-link to="/favourites">Избранное</router-link>
+          <router-link to="/chat">Премиум-Чат</router-link>
         </nav>
       </div>
 
+    
       <div class="header-right">
         <div class="header-search_btn" @click="showModal">
-          <img src="../assets/Media/Components/search.svg" alt="" />
+          <img src="../assets/Media/Components/search.svg" alt="Search">
         </div>
-        <div v-if="!isLoggedIn" class="header-login" @click="this.$router.replace('/login')">Войти</div>
+
+        <div v-if="!isLoggedIn" class="header-login" @click="$router.replace('/login')">
+          Войти
+        </div>
+
         <div v-else class="user-info">
           <div class="balance_container">
             <span class="balance">Баланс: </span>
             <span class="balance_number">{{ userBalance }}</span>
           </div>
+
           <div v-if="!isPremium" class="premium-button" @click="showPremiumModal">
-            <img src="../assets/Media/Components/GoldCrown.svg" alt="">
+            <img src="../assets/Media/Components/GoldCrown.svg" alt="Premium">
           </div>
-          <div class="avatar-container" @click="toggleDropdown" :class="{ 'premium-glow': isPremium }">
-            <img :src="userAvatar || defaultAvatar" alt="Аватар" class="avatar" />
+
+          <div 
+            class="avatar-container" 
+            @click="toggleDropdown" 
+            :class="{ 'premium-glow': isPremium }"
+          >
+            <img :src="userAvatar || defaultAvatar" alt="Аватар" class="avatar">
           </div>
+
           <div v-if="showDropdown" class="dropdown">
             <button @click="goToProfile">Профиль</button>
             <button @click="logout">Выйти</button>
           </div>
         </div>
       </div>
+
+  
+      <div class="burger-menu" @click="toggleBurgerMenu">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+      </div>
     </div>
 
+
     <SearchModal ref="modal"></SearchModal>
-    <PremiumModal v-if="showPremiumModalFlag" @close="closePremiumModal" @buy-premium="buyPremium" />
-    <div class="burger-menu" @click="toggleBurgerMenu">
-      <div class="burger-line"></div>
-      <div class="burger-line"></div>
-      <div class="burger-line"></div>
-    </div>
+    <PremiumModal 
+      v-if="showPremiumModalFlag" 
+      :userAvatar="userAvatar" 
+      @close="closePremiumModal"
+      @update-user="checkAuth"
+    />
   </header>
 </template>
 
 <script>
-import SearchModal from './SearchModal.vue';
-import PremiumModal from './PremiumModal.vue';
-import { ref, onMounted, onUpdated } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { useToast } from 'vue-toast-notification';
 import defaultAvatar from '@/assets/Media/profile/default.png';
+import SearchModal from './SearchModal.vue';
+import PremiumModal from './PremiumModal.vue';
 
 export default {
   components: {
@@ -125,25 +125,74 @@ export default {
     const toast = useToast();
     const isLoggedIn = ref(false);
     const userBalance = ref(0);
-    const userAvatar = ref('');
+    const userAvatar = ref(defaultAvatar);
     const showDropdown = ref(false);
     const showPremiumModalFlag = ref(false);
     const isPremium = ref(false);
-    const route = useRoute();
-    const pathSegment = ref('');
-    const selectedGenre = ref('');
     const isBurgerMenuOpen = ref(false);
-
-    const toggleBurgerMenu = () => {
-      isBurgerMenuOpen.value = !isBurgerMenuOpen.value;
-    };
+    const selectedGenre = ref('');
 
     const genreRoutes = {
       'Фильмы': '/movies',
       'Мультфильмы': '/cartoons',
       'Мультсериалы': '/cartoon-series',
       'Сериалы': '/series',
-      'Аниме': '/animes',
+      'Аниме': '/animes'
+    };
+
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        isLoggedIn.value = false;
+        return;
+      }
+
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
+          headers: { 'Authorization': token }
+        });
+
+        if (response.data) {
+          isLoggedIn.value = true;
+          isPremium.value = response.data.premium || false;
+          userAvatar.value = response.data.avatarUrl || defaultAvatar;
+          userBalance.value = response.data.balance;
+          console.log('Текущий аватар:', userAvatar.value);
+        }
+      } catch (error) {
+        console.error('Ошибка проверки авторизации:', error);
+      }
+    };
+
+    const refreshToken = async () => {
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!refreshToken) {
+        logout();
+        return;
+      }
+
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/refresh-token`, { 
+          refreshToken 
+        });
+        
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+          await checkAuth();
+        } else {
+          logout();
+        }
+      } catch (error) {
+        console.error('Ошибка обновления токена:', error);
+        logout();
+      }
+    };
+
+    const logout = () => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      isLoggedIn.value = false;
+      router.push('/login');
     };
 
     const redirectToGenre = () => {
@@ -153,112 +202,13 @@ export default {
       }
     };
 
-    const checkAuth = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        isLoggedIn.value = false;
-        return;
-      }
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
-          headers: {
-            'Authorization': token,
-          },
-        });
-        if (response.data) {
-          isLoggedIn.value = true;
-          isPremium.value = response.data.premium || false;
-          userAvatar.value = response.data.avatarUrl || defaultAvatar;
-          userBalance.value = response.data.balance;
-          localStorage.setItem('currentUser', JSON.stringify(response.data));
-        }
-      } catch (error) {
-        if (error.response?.status === 401) {
-          await refreshToken();
-          await checkAuth();
-        } else {
-          console.error('Ошибка при проверке авторизации:', error);
-        }
-      }
-    };
-    const refreshToken = async () => {
-      const refreshToken = localStorage.getItem('refreshToken');
-      if (!refreshToken) {
-        logout();
-        return;
-      }
-      try {
-        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/refresh-token`, { refreshToken });
-        if (response.data.token) {
-          localStorage.setItem('token', response.data.token);
-        } else {
-          logout();
-        }
-      } catch (error) {
-        console.error('Ошибка при обновлении токена:', error);
-        logout();
-      }
-    };
-
-    const logout = () => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('currentUser');
-      isLoggedIn.value = false;
-      router.push('/login');
-    };
-
-    const showPremiumModal = () => {
-      showPremiumModalFlag.value = true;
-    };
-
-    const closePremiumModal = () => {
-      showPremiumModalFlag.value = false;
-    };
-
-    const buyPremium = async () => {
-      const token = localStorage.getItem('token');
-      try {
-        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/buy-premium`, {}, {
-          headers: {
-            'Authorization': token,
-          },
-        });
-        if (response.data.message) {
-          toast.success(response.data.message, {
-            position: 'top-right',
-            duration: 2000,
-            dismissible: false,
-          });
-          await checkAuth();
-          closePremiumModal();
-        }
-      } catch (error) {
-        console.error('Ошибка при покупке премиум-подписки:', error);
-        toast.error(error.response?.data.error || 'Ошибка при покупке премиум-подписки', {
-          position: 'top-right',
-          duration: 2000,
-          dismissible: false,
-        });
-      }
-    };
-
-    const toggleDropdown = () => {
-      showDropdown.value = !showDropdown.value;
-    };
-
-    const goToProfile = () => {
-      router.push('/profile');
-      showDropdown.value = false;
+    const toggleBurgerMenu = () => {
+      isBurgerMenuOpen.value = !isBurgerMenuOpen.value;
     };
 
     onMounted(() => {
       checkAuth();
       setInterval(checkAuth, 5000);
-    });
-
-    onUpdated(() => {
-      checkAuth();
     });
 
     return {
@@ -269,24 +219,57 @@ export default {
       showPremiumModalFlag,
       isPremium,
       defaultAvatar,
-      toggleDropdown,
-      goToProfile,
-      logout,
-      pathSegment,
-      showPremiumModal,
-      closePremiumModal,
-      buyPremium,
       selectedGenre,
-      redirectToGenre,
       isBurgerMenuOpen,
+      checkAuth,
+      logout,
+      redirectToGenre,
       toggleBurgerMenu
     };
   },
   methods: {
-    showModal: function () {
+    showPremiumModal() {
+      this.showPremiumModalFlag = true;
+    },
+    closePremiumModal() {
+      this.showPremiumModalFlag = false;
+    },
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown;
+    },
+    goToProfile() {
+      this.$router.push('/profile');
+      this.showDropdown = false;
+    },
+    showModal() {
       this.$refs.modal.show = true;
+    },
+    async buyPremium() {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/buy-premium`, 
+          {},
+          { headers: { 'Authorization': token } }
+        );
+        
+        this.$toast.success(response.data.message, {
+          position: 'top-right',
+          duration: 2000
+        });
+        await this.checkAuth();
+        this.closePremiumModal();
+      } catch (error) {
+        this.$toast.error(
+          error.response?.data?.error || 'Ошибка покупки премиума', 
+          { position: 'top-right', duration: 2000 }
+        );
+      }
     }
   },
+  created() {
+    this.$toast = useToast();
+  }
 }
 </script>
 <style scoped>
