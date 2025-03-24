@@ -44,7 +44,7 @@ const error = ref('');
 document.title = "Вход";
 const onSubmit = async () => {
   try {
-    const response = await fetch('https://dreamfood.space:3000/login', {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const refreshToken = async () => {
     return;
   }
   try {
-    const response = await fetch('https://dreamfood.space:3000/refresh-token', {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/refresh-token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

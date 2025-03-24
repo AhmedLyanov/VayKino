@@ -46,7 +46,7 @@ export default {
         return;
       }
       try {
-        const response = await axios.post('https://dreamfood.space:3000/buy-premium', {}, {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/buy-premium`, {}, {
           headers: {
             'Authorization': token, 
           },

@@ -109,7 +109,8 @@ export default {
       return;
     }
     await this.fetchMessages();
-    this.socket = io("https://dreamfood.space:3000/");
+    
+    this.socket = io(`${import.meta.env.VITE_API_BASE_URL}/`);
     this.socket.on("newMessage", (message) => {
       this.messages.push(message);
       setTimeout(() => {
@@ -124,7 +125,7 @@ export default {
     async fetchMessages() {
       const token = localStorage.getItem('token');
       try {
-        const response = await fetch('https://dreamfood.space:3000/chat-messages', {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/chat-messages`, {
           headers: {
             'Authorization': token,
           },
@@ -148,7 +149,7 @@ export default {
         return;
       }
       try {
-        const response = await fetch('https://dreamfood.space:3000/refresh-token', {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/refresh-token`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -180,7 +181,7 @@ export default {
       if (!this.newMessage.trim()) return;
       const token = localStorage.getItem('token');
       try {
-        const response = await fetch('https://dreamfood.space:3000/chat-messages', {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/chat-messages`, {
           method: 'POST',
           headers: {
             'Authorization': token,
@@ -232,7 +233,7 @@ export default {
       formData.append("sender", this.currentUser.login);
       formData.append("avatarUrl", this.currentUser.avatarUrl);
       try {
-        const response = await axios.post("https://dreamfood.space:3000/upload-image-message", formData, {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/upload-image-message`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -284,7 +285,7 @@ export default {
       formData.append("avatarUrl", this.currentUser.avatarUrl);
 
       try {
-        const response = await axios.post("https://dreamfood.space:3000/upload-voice-message", formData, {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/upload-voice-message`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

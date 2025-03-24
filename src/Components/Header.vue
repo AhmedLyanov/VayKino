@@ -33,12 +33,8 @@
           </datalist>
         </div>
       </div>
-      <PremiumModal
-  v-if="showPremiumModalFlag"
-  :userAvatar="userAvatar"
-  @close="closePremiumModal"
-  @buy-premium="buyPremium"
-/>
+      <PremiumModal v-if="showPremiumModalFlag" :userAvatar="userAvatar" @close="closePremiumModal"
+        @buy-premium="buyPremium" />
 
       <div class="dropdown-menu" :class="{ 'active': isBurgerMenuOpen }">
         <div class="dropdown-header">
@@ -158,33 +154,33 @@ export default {
     };
 
     const checkAuth = async () => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    isLoggedIn.value = false;
-    return;
-  }
-  try {
-    const response = await axios.get('https://dreamfood.space:3000/user/me', {
-      headers: {
-        'Authorization': token,
-      },
-    });
-    if (response.data) {
-      isLoggedIn.value = true;
-      isPremium.value = response.data.premium || false;
-      userAvatar.value = response.data.avatarUrl || defaultAvatar;
-      userBalance.value = response.data.balance;
-      localStorage.setItem('currentUser', JSON.stringify(response.data));
-    }
-  } catch (error) {
-    if (error.response?.status === 401) {
-      await refreshToken();
-      await checkAuth();
-    } else {
-      console.error('Ошибка при проверке авторизации:', error);
-    }
-  }
-};
+      const token = localStorage.getItem('token');
+      if (!token) {
+        isLoggedIn.value = false;
+        return;
+      }
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
+          headers: {
+            'Authorization': token,
+          },
+        });
+        if (response.data) {
+          isLoggedIn.value = true;
+          isPremium.value = response.data.premium || false;
+          userAvatar.value = response.data.avatarUrl || defaultAvatar;
+          userBalance.value = response.data.balance;
+          localStorage.setItem('currentUser', JSON.stringify(response.data));
+        }
+      } catch (error) {
+        if (error.response?.status === 401) {
+          await refreshToken();
+          await checkAuth();
+        } else {
+          console.error('Ошибка при проверке авторизации:', error);
+        }
+      }
+    };
     const refreshToken = async () => {
       const refreshToken = localStorage.getItem('refreshToken');
       if (!refreshToken) {
@@ -192,7 +188,7 @@ export default {
         return;
       }
       try {
-        const response = await axios.post('https://dreamfood.space:3000/refresh-token', { refreshToken });
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/refresh-token`, { refreshToken });
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
         } else {
@@ -223,7 +219,7 @@ export default {
     const buyPremium = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await axios.post('https://dreamfood.space:3000/buy-premium', {}, {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/buy-premium`, {}, {
           headers: {
             'Authorization': token,
           },
@@ -258,7 +254,7 @@ export default {
 
     onMounted(() => {
       checkAuth();
-      setInterval(checkAuth, 5000); 
+      setInterval(checkAuth, 5000);
     });
 
     onUpdated(() => {

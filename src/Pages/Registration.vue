@@ -210,13 +210,13 @@ const onSubmit = async () => {
     email: email.value,
   };
   try {
-    const registerResponse = await axios.post('https://dreamfood.space:3000/register', userData, {
+    const registerResponse = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/register`, userData, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
     if (registerResponse.status === 201) {
-      const loginResponse = await axios.post('https://dreamfood.space:3000/login', {
+      const loginResponse = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, {
         login: login.value,
         password: password.value,
       });

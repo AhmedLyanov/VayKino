@@ -205,7 +205,7 @@ const fetchUserProfile = async () => {
     return;
   }
   try {
-    const response = await axios.get('https://dreamfood.space:3000/user/me', {
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
       headers: {
         'Authorization': token,
       },
@@ -230,7 +230,7 @@ const saveProfile = async () => {
     return;
   }
   try {
-    const response = await axios.put('https://dreamfood.space:3000/user/me', userProfile.value, {
+    const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/user/me`, userProfile.value, {
       headers: {
         'Authorization': token,
       },
@@ -260,7 +260,7 @@ const refreshToken = async () => {
     return;
   }
   try {
-    const response = await axios.post('https://dreamfood.space:3000/refresh-token', { refreshToken });
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/refresh-token`, { refreshToken });
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
     } else {
@@ -293,7 +293,7 @@ const handleFileUpload = async (event) => {
   const formData = new FormData();
   formData.append('avatar', file);
   try {
-    const response = await axios.post('https://dreamfood.space:3000/upload-avatar', formData, {
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/upload-avatar`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

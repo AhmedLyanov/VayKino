@@ -83,8 +83,8 @@ export default {
 
 
         async getDeepseekResponse(userInput) {
-            const url = "https://chatgpt-42.p.rapidapi.com/deepseekai";
-            const apiKey = "61fb2087b2mshc543546ea2cfc36p1f8913jsn7c09ef8df0fb";
+            const url = `${import.meta.env.VITE_API_NEIRO_KINO_URL}`;
+            const apiKey = `${import.meta.env.VITE_API_NEIRO_KINO_KEY}`;
 
             const data = JSON.stringify({
                 messages: [
