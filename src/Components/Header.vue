@@ -33,6 +33,12 @@
           </datalist>
         </div>
       </div>
+      <PremiumModal
+  v-if="showPremiumModalFlag"
+  :userAvatar="userAvatar"
+  @close="closePremiumModal"
+  @buy-premium="buyPremium"
+/>
 
       <div class="dropdown-menu" :class="{ 'active': isBurgerMenuOpen }">
         <div class="dropdown-header">

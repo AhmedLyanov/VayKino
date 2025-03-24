@@ -3,18 +3,14 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="modal-header">
-          <h2>Премиум подписка</h2>
           <button class="close-button" @click="close">×</button>
         </div>
-        <div class="buy_container">
-          <div class="attributes_premium_subscribe">
-            <ul>
-              <li>Бесплатный доступ ко всем фильмам</li>
-              <li>Свечение аватара</li>
-              <li>Премиум Беседа</li>
-              <li>50 баллов за КТ</li>
-            </ul>
+        <div class="container_avatarUrl">
+          <div class="user_avatar">
+            <img :src="userAvatar" alt="Аватар" class="avatar" />
           </div>
+        </div>
+        <div class="buy_container">
           <div class="button_buy">
             <button class="buy-button" @click="buyPremium">Купить за 8000 баллов</button>
           </div>
@@ -23,13 +19,18 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios'; 
 import { useToast } from 'vue-toast-notification'; 
 import 'vue-toast-notification/dist/theme-sugar.css'; 
-
+import defaultAvatar from '@/assets/Media/profile/default.png';
 export default {
+  props: {
+    userAvatar: {
+      type: String,
+      default: defaultAvatar,
+    }
+  },
   methods: {
     close() {
       this.$emit('close');
@@ -44,30 +45,22 @@ export default {
         });
         return;
       }
-
       try {
         const response = await axios.post('https://dreamfood.space:3000/buy-premium', {}, {
           headers: {
             'Authorization': token, 
           },
         });
-
-
         if (response.data.message) {
           this.$toast.success(response.data.message, {
             position: 'top-right',
             duration: 2000,
             dismissible: false,
           });
-
-    
           this.close();
-
-        
           this.$emit('update-user');
         }
       } catch (error) {
-
         if (error.response?.status === 400) {
           this.$toast.error(error.response.data.error, {
             position: 'top-right',
@@ -82,11 +75,11 @@ export default {
           });
         }
         console.error('Ошибка при покупке премиум-подписки:', error);
+        console.log(response.data.avatarUrl);
       }
     },
   },
   created() {
-
     this.$toast = useToast();
   },
 };
@@ -111,13 +104,13 @@ export default {
   .modal-content {
     background: #1e1e1e;
     border-radius: 10px;
-    max-width: 750px;
+    width: 70%;
+    height: 90%;
     position: relative;
-    height: 315px;
-    background-image: url(../assets/Media/Main/premium_banner.png);
+    background-image: url(../assets/Media/Main/PremiumModalNew.png);
     background-position: center;
     background-size: cover;
-    width: 100%;
+    max-height: 585px;
     text-align: center;
   }
 
@@ -128,6 +121,20 @@ export default {
     display: grid;
     padding: 10px;
     width: 100%;
+  }
+
+  .container_avatarUrl{
+    height: 100%;
+    display: grid;
+    justify-items: flex-end;
+    padding-right: 150px ;
+  }
+
+  .user_avatar{
+    width: 300px;
+    height: 300px;
+    border-radius: 100%;
+    background-color: red;
   }
   .buy_container{
     display: flex;
@@ -184,6 +191,11 @@ export default {
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
+  }
+  
+  .user_avatar img{
+    width: 100%;
+    border-radius: 100%;
   }
   
   .buy-button:hover {

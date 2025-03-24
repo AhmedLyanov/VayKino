@@ -360,7 +360,7 @@
       </div>
 
       <div class="movie-similars" v-if="similars && similars?.items?.length">
-        <div class="similars__header">Похожие {{ movieTypes[data?.type]?.nameMnogo.toLowerCasetoLowerCase() }}</div>
+        <div class="similars__header">Похожие {{ movieTypes[data?.type]?.nameMnogo.toLowerCase() }}</div>
         <div class="similars__content">
           <Slider2 :data="similars.items" />
         </div>
