@@ -16,19 +16,23 @@
                     </div>
                     <div class="chat_box">
                         <div class="messages__box">
+
                             <div v-for="(message, index) in messages" :key="index" :class="['message', message.sender]">
-                                
-                                {{ message.text }}
+                                <span v-html="message.text"></span>
                             </div>
+                           <div class="load__message">
+                             <span  v-if="isLoading" class="loader"></span>
+                           </div>
                         </div>
-                        
+
                         <div class="chat_input">
-                            <input type="text" v-model="userInput" placeholder="Введите сообщение" @keyup.enter="sendMessage">
+                            <input type="text" v-model="userInput" placeholder="Введите сообщение"
+                                @keyup.enter="sendMessage">
                             <button @click="sendMessage" title="Отправить"></button>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -39,8 +43,9 @@ export default {
     data() {
         return {
             chatActive: false,
-            messages: [], 
-            userInput: this.name || '', 
+            isLoading: false,
+            messages: [],
+            userInput: this.name || '',
         };
     },
     props: {
@@ -56,30 +61,30 @@ export default {
         chatDeactive() {
             this.chatActive = false;
         },
+
         async sendMessage() {
             if (this.userInput.trim() === '') return;
 
             console.log(this.userInput);
-            
-          
+
             this.messages.push({ text: this.userInput, sender: 'user' });
 
-          
             const userMessage = this.userInput;
             this.userInput = '';
 
-            
             try {
-                const response = await this.getGptResponse(userMessage);
+                const response = await this.getDeepseekResponse(userMessage);
                 this.messages.push({ text: response, sender: 'bot' });
             } catch (error) {
-                console.error('Ошибка при получении ответа от GPT:', error);
+                console.error('Ошибка при получении ответа от Deepseek GPT:', error);
                 this.messages.push({ text: 'Произошла ошибка при обработке запроса.', sender: 'bot' });
             }
         },
-        async getGptResponse(userInput) {
-            const url = "https://cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com/v1/chat/completions";
-            const apiKey = "61fb2087b2mshc543546ea2cfc36p1f8913jsn7c09ef8df0fb"; 
+
+
+        async getDeepseekResponse(userInput) {
+            const url = "https://chatgpt-42.p.rapidapi.com/deepseekai";
+            const apiKey = "61fb2087b2mshc543546ea2cfc36p1f8913jsn7c09ef8df0fb";
 
             const data = JSON.stringify({
                 messages: [
@@ -88,37 +93,49 @@ export default {
                         content: userInput
                     }
                 ],
-                model: 'gpt-4', 
-                max_tokens: 1000,
-                temperature: 0.9
+                web_access: false
             });
 
+            
+
             try {
+                this.isLoading = true;
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'x-rapidapi-key': apiKey,
-                        'x-rapidapi-host': url.split('/')[2],
+                        'x-rapidapi-host': 'chatgpt-42.p.rapidapi.com',
                         'Content-Type': 'application/json'
                     },
                     body: data
                 });
+                this.isLoading = false;
 
                 if (!response.ok) {
                     throw new Error('Ошибка при обращении к API');
                 }
 
                 const result = await response.json();
-                return result.choices[0].message.content; 
+                console.log("Ответ от API:", result); 
+             
+                if (result.result) {
+                    
+                    const formattedText = this.formatBoldText(result.result);
+                    return formattedText;
+                } else {
+                    throw new Error('Неверная структура ответа от API: отсутствует поле "result"');
+                }
             } catch (error) {
                 console.error('Ошибка при запросе к API:', error);
                 throw error;
             }
+        },
+        formatBoldText(text) {
+            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         }
     }
 }
 </script>
-
 <style scoped>
 .chat_open_button {
     position: fixed;
@@ -138,11 +155,12 @@ export default {
 
 
 }
+
 .message {
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
-    max-width: 70%;
+    min-width: 70%;
 }
 
 .user {
@@ -153,6 +171,9 @@ export default {
 .bot {
     background-color: #f5f5f5;
     align-self: flex-start;
+}
+.chat_open_button{
+    z-index: 5;
 }
 .chat_open_button img {
     width: 100%;
@@ -220,63 +241,90 @@ export default {
     top: 1%;
     right: 2%;
     bottom: 0;
+    z-index: 5;
     display: flex;
     justify-content: center;
     align-items: center;
     min-width: 400px;
     min-height: 100px;
     animation: animationChat 0.5s;
-    
+
 }
-@keyframes animationChat{
+
+@keyframes animationChat {
     0% {
         opacity: 0;
         transform: translateY(100%);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
 
-.main_chat__box{
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } 
+.main_chat__box {
     display: grid;
     align-content: space-between;
 
 }
 
-.chat_input{
+.load__message{
+    display: flex;
+    justify-content: center;
+}
+
+.chat_input {
     border-top: 1px solid white;
 }
 
 .messages__box {
-    overflow-y: auto; 
-    max-height: 460px; 
-    padding: 10px; 
+    overflow-y: auto;
+    max-height: 460px;
+    padding: 10px;
 }
 
 .messages__box::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 .messages__box::-webkit-scrollbar-track {
-  background: #2a324b;
-  border-radius: 4px;
+    background: #2a324b;
+    border-radius: 4px;
 }
 
 .messages__box::-webkit-scrollbar-thumb {
-  background: #3657cb;
-  border-radius: 4px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  transition: background 0.3s ease;
+    background: #3657cb;
+    border-radius: 4px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease;
 }
 
 .messages__box::-webkit-scrollbar-thumb:hover {
-  background: #1f4ae6;
+    background: #1f4ae6;
 }
+
 .chat-input button:hover {
-  background-color: #1f4ae6;
+    background-color: #1f4ae6;
 }
 
 
