@@ -30,6 +30,8 @@ import CartoonSeries from './Pages/CartoonSeries.vue';
 import Anime from './Pages/Anime.vue';
 import AdvancedSearch from './Pages/AdvancedSearch.vue';
 import Kinoneiro from './Components/Kinoneiro.vue';
+import Kinoroom from './Pages/kinoroom.vue';
+
 
 const router = createRouter({
     routes: [
@@ -155,9 +157,9 @@ const router = createRouter({
             component: Chat,
         },
         {
-            path: "/kinoneiro",
-            name: "Kinoneiro",
-            component: Kinoneiro,
+            path: "/kinoroom",
+            name: "kinoroom",
+            component: Kinoroom,
         }
     ],
     history: createWebHistory(),
