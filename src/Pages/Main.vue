@@ -400,7 +400,7 @@ export default {
             this.nowPlayingMovies = nowPlayingMovies2025.filter(obj => !this.blackList.includes(obj.name)).slice(0, 2).concat(nowPlayingMovies2024);
             this.nowPlayingMovies = this.nowPlayingMovies.filter(obj => !this.blackList.includes(obj.name))
 
-            this.trailers = await getLatestVideosFromChannel();
+            // this.trailers = await getLatestVideosFromChannel();
 
             this.addLikesAndDislikes();
 

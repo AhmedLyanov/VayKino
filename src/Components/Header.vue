@@ -49,7 +49,15 @@
           <router-link to="/lists">Подборки</router-link>
           <router-link to="/favourites">Избранное</router-link>
           <router-link to="/chat">Премиум-Чат</router-link>
-          <router-link to="/kinoroom">Кинотеатр</router-link>
+          <router-link to="/kinoroom" class="cosmic-link" @mouseenter="activateStars" @mouseleave="resetStars">
+    <span class="cosmic-text">Кинотеатр</span>
+    <span 
+      v-for="(star, index) in stars" 
+      :key="index" 
+      class="cosmic-star"
+      :style="star.style"
+    ></span>
+  </router-link>
         </nav>
       </div>
 
@@ -123,6 +131,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const stars = ref([]);
     const toast = useToast();
     const isLoggedIn = ref(false);
     const userBalance = ref(0);
@@ -139,6 +148,25 @@ export default {
       'Мультсериалы': '/cartoon-series',
       'Сериалы': '/series',
       'Аниме': '/animes'
+    };
+
+    
+    const createStars = () => {
+      const newStars = [];
+      for (let i = 0; i < 12; i++) {
+        newStars.push({
+          style: {
+            width: `${Math.random() * 3 + 1}px`,
+            height: `${Math.random() * 3 + 1}px`,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDuration: `${Math.random() * 3 + 2}s`,
+            animationDelay: `${Math.random() * 2}s`,
+            opacity: '0'
+          }
+        });
+      }
+      stars.value = newStars;
     };
 
     const checkAuth = async () => {
@@ -189,6 +217,21 @@ export default {
       }
     };
 
+
+    
+    const activateStars = () => {
+      stars.value.forEach(star => {
+        star.style.opacity = '0.8';
+      });
+    };
+
+    const resetStars = () => {
+      stars.value.forEach(star => {
+        star.style.opacity = '0';
+      });
+    };
+
+
     const logout = () => {
       localStorage.removeItem('currentUser');
       localStorage.removeItem('token');
@@ -210,6 +253,7 @@ export default {
 
     onMounted(() => {
       checkAuth();
+      createStars();
       setInterval(checkAuth, 5000);
     });
 
@@ -225,8 +269,11 @@ export default {
       isBurgerMenuOpen,
       checkAuth,
       logout,
+      stars,
+      activateStars,
+      resetStars,
       redirectToGenre,
-      toggleBurgerMenu
+      toggleBurgerMenu,
     };
   },
   methods: {
@@ -358,7 +405,59 @@ export default {
   height: 100%;
   object-fit: cover;
 }
+.cosmic-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  overflow: hidden;
+  padding: 0.2rem 0.5rem;
+  z-index: 1;
+}
 
+.cosmic-text {
+  position: relative;
+  color: #8a2be2;
+  font-weight: 600;
+  z-index: 2;
+  text-shadow: 
+    0 0 5px rgba(138, 43, 226, 0.7),
+    0 0 10px rgba(138, 43, 226, 0.5);
+  transition: text-shadow 0.3s ease;
+}
+
+.cosmic-link:hover .cosmic-text {
+  text-shadow: 
+    0 0 10px rgba(138, 43, 226, 0.9),
+    0 0 20px rgba(138, 43, 226, 0.7),
+    0 0 30px rgba(138, 43, 226, 0.5);
+}
+
+.cosmic-star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 
+    0 0 3px 1px white,
+    0 0 5px 2px rgba(138, 43, 226, 0.5);
+  animation: floatStar linear infinite;
+  transform: translateY(0) translateX(0) scale(0.5);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+@keyframes floatStar {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-60px) translateX(20px) scale(1.2);
+    opacity: 0;
+  }
+}
 .dropdown {
   position: absolute;
   top: 60px;
@@ -539,6 +638,7 @@ header {
 
 .header-center nav {
   display: flex;
+  align-items: center;
 
   a {
     font-size: 17px;
