@@ -6,26 +6,30 @@
                     <div class="board_server_list">
                         <div class="search_container">
                             <div class="search_icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M21 21L16.65 16.65" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                                        stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M21 21L16.65 16.65" stroke="#9CA3AF" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </div>
                             <div class="search_input">
-                                <input 
-                                    type="text" 
-                                    placeholder="Введите название комнаты" 
-                                    v-model="searchTerm"
-                                >
+                                <input type="text" placeholder="Введите название комнаты" v-model="searchTerm">
                             </div>
                         </div>
-                        
+
                         <div class="add_new_server">
-                            <button class="new_server_button" @click="createNewServer">
+                            <button class="new_server_button" @click="showCreateModal = true">
                                 <span class="button_icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
                                     </svg>
                                 </span>
                                 <span class="button_text">Новая комната</span>
@@ -33,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="attributes_servers">
                     <div class="server___placeholder">
                         <span>НАЗВАНИЕ</span>
@@ -48,19 +52,15 @@
                         <span>ЛИМИТ</span>
                     </div>
                 </div>
-                
+
                 <div class="server__box">
-                    <div 
-                        class="server__information_box"
-                        v-for="(server, index) in filteredServers"
-                        :key="index"
-                        @click="joinServer(server)"
-                    >
+                    <div class="server__information_box" v-for="(server, index) in filteredServers" :key="index"
+                        @click="joinServer(server)">
                         <div class="server__name">
                             <span class="attribute_server_box">{{ server.name }}</span>
                         </div>
                         <div class="leader__element">
-                            <span class="attribute_server_box">{{ server.leader }}</span>
+                            <span class="attribute_server_box">{{ server.leader.login }}</span>
                         </div>
                         <div class="movie_name">
                             <span class="attribute_server_box">{{ server.movie }}</span>
@@ -72,6 +72,45 @@
                 </div>
             </div>
         </div>
+
+
+        <div v-if="showCreateModal" class="modal-overlay" @click.self="showCreateModal = false">
+            <div class="modal-content">
+                <h2>Создать новую комнату</h2>
+                <form @submit.prevent="createNewServer">
+                    <div class="form-group">
+                        <label for="roomName">Название комнаты</label>
+                        <input id="roomName" type="text" v-model="newRoom.name" required
+                            placeholder="Уникальное название">
+                    </div>
+                    <div class="form-group">
+                        <label for="movieName">Название фильма</label>
+                        <input id="movieName" type="text" v-model="newRoom.movie" required
+                            placeholder="Какой фильм будете смотреть?">
+                    </div>
+                    <div class="form-group">
+                        <label for="videoUrl">Ссылка на видео</label>
+                        <input id="videoUrl" type="text" v-model="newRoom.videoUrl" required placeholder="URL видео">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxUsers">Максимальное количество пользователей</label>
+                        <input id="maxUsers" type="number" v-model="newRoom.maxUsers" min="1" max="20" required>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input id="isPrivate" type="checkbox" v-model="newRoom.isPrivate">
+                        <label for="isPrivate">Приватная комната</label>
+                    </div>
+                    <div class="form-group" v-if="newRoom.isPrivate">
+                        <label for="password">Пароль</label>
+                        <input id="password" type="password" v-model="newRoom.password" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" @click="showCreateModal = false">Отмена</button>
+                        <button type="submit">Создать</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </main>
 </template>
 
@@ -80,55 +119,219 @@ export default {
     data() {
         return {
             searchTerm: '',
-            servers: [
-                {
-                    name: 'vaykinoTop',
-                    leader: 'DevAhmed',
-                    movie: 'Соник 3 в кино',
-                    users: 4,
-                    limit: 4
-                },
-                {
-                    name: 'FilmLovers',
-                    leader: 'CinemaPro',
-                    movie: 'Дюна: Часть вторая',
-                    users: 2,
-                    limit: 6
-                },
-                {
-                    name: 'AnimeWorld',
-                    leader: 'Sakura',
-                    movie: 'Наруто: Фильм',
-                    users: 3,
-                    limit: 5
-                }
-            ]
+            servers: [],
+            showCreateModal: false,
+            newRoom: {
+                name: '',
+                movie: '',
+                videoUrl: '',
+                maxUsers: 10,
+                isPrivate: false,
+                password: ''
+            }
         }
     },
     computed: {
         filteredServers() {
-            return this.servers.filter(server => 
+            return this.servers.filter(server =>
                 server.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
                 server.movie.toLowerCase().includes(this.searchTerm.toLowerCase())
             );
         }
     },
+    async created() {
+        await this.fetchServers();
+    },
     methods: {
-        createNewServer() {
-          
-            console.log('Создание новой комнаты');
+        async fetchServers() {
+            try {
+                const response = await fetch('https://dreamfood.space:3000/rooms');
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    this.$toast.error(
+                        errorData.error || 'Ошибка загрузки серверов',
+                        { position: 'top-right', duration: 2000 }
+                    );
+                    return;
+                }
+                this.servers = await response.json();
+            } catch (error) {
+                console.error('Ошибка при загрузке серверов:', error);
+                this.$toast.error(
+                    'Не удалось загрузить серверы',
+                    { position: 'top-right', duration: 2000 }
+                );
+            }
         },
-        joinServer(server) {
-            console.log('Подключение к комнате:', server.name);
+        async createNewServer() {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('https://dreamfood.space:3000/rooms', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token
+                    },
+                    body: JSON.stringify(this.newRoom)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    this.$toast.error(
+                        errorData.error || 'Ошибка создания комнаты',
+                        { position: 'top-right', duration: 2000 }
+                    );
+                    return; 
+                }
+                const newServer = await response.json();
+                this.servers.push(newServer);
+                this.showCreateModal = false;
+                this.resetNewRoomForm();
+                this.$toast.success(
+                    'Комната успешно создана',
+                    { position: 'top-right', duration: 2000 }
+                );
+
+            } catch (error) {
+                console.error('Ошибка при создании комнаты:', error);
+                this.$toast.error(
+                    'Ошибка при создании комнаты',
+                    { position: 'top-right', duration: 2000 }
+                );
+            }
+        },
+        async joinServer(server) {
+            try {
+                const token = localStorage.getItem('token');
+                let password = '';
+
+                if (server.isPrivate) {
+                    password = prompt('Введите пароль для комнаты:');
+                    if (!password) return;
+                }
+
+                const response = await fetch(`https://dreamfood.space:3000/rooms/${server._id}/join`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token
+                    },
+                    body: JSON.stringify({ password })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    this.$toast.error(
+                        errorData.error || 'Ошибка входа в комнату',
+                        { position: 'top-right', duration: 2000 }
+                    );
+                    return;
+                }
+
+                const result = await response.json();
+                this.$toast.success(
+                    'Успешный вход в комнату',
+                    { position: 'top-right', duration: 2000 }
+                );
+
+            } catch (error) {
+                console.error('Ошибка при входе в комнату:', error);
+                this.$toast.error(
+                    error.message || 'Ошибка при входе в комнату',
+                    { position: 'top-right', duration: 2000 }
+                );
+            }
+        },
+        resetNewRoomForm() {
+            this.newRoom = {
+                name: '',
+                movie: '',
+                videoUrl: '',
+                maxUsers: 10,
+                isPrivate: false,
+                password: ''
+            };
         }
     }
 }
 </script>
+
 <style scoped>
 .main-content {
     width: 100%;
     height: 100%;
     background-color: #1b2133;
+    color: white;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group input {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.modal-actions button {
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-actions button:first-child {
+    background-color: #f0f0f0;
+}
+
+.modal-actions button:last-child {
+    background-color: #4CAF50;
     color: white;
 }
 
@@ -305,6 +508,7 @@ export default {
 }
 
 @media (max-width: 1200px) {
+
     .server__information_box,
     .attributes_servers {
         padding: 15px 20px;
@@ -313,6 +517,7 @@ export default {
 }
 
 @media (max-width: 992px) {
+
     .attributes_servers,
     .server__information_box {
         grid-template-columns: 2fr 1.5fr 2fr 1fr;
@@ -324,23 +529,23 @@ export default {
         flex-direction: column;
         gap: 15px;
     }
-    
+
     .search_container {
         width: 100%;
     }
-    
+
     .new_server_button {
         width: 100%;
     }
-    
+
     .server___placeholder {
         font-size: 14px;
     }
-    
+
     .attribute_server_box {
         font-size: 16px;
     }
-    
+
     .attributes_servers,
     .server__information_box {
         grid-template-columns: 2fr 1.5fr 1.5fr 1fr;
@@ -349,12 +554,13 @@ export default {
 }
 
 @media (max-width: 576px) {
+
     .attributes_servers,
     .server__information_box {
         grid-template-columns: 2fr 1.2fr 1.2fr 0.8fr;
         font-size: 12px;
     }
-    
+
     .attribute_server_box {
         font-size: 14px;
     }
