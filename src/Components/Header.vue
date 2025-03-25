@@ -2,7 +2,7 @@
   <header>
     <div class="header-cont">
       <div class="header-left">
-      
+
         <div class="logo_info">
           <div class="header-logo" @click="$router.replace('/')">
             <div class="header-logo-img">
@@ -22,15 +22,10 @@
           </div>
         </div>
 
- 
+
         <div class="genre_movies_list">
-          <input 
-            type="text" 
-            list="options" 
-            placeholder="Выберите жанр" 
-            v-model="selectedGenre"
-            @change="redirectToGenre"
-          >
+          <input type="text" list="options" placeholder="Выберите жанр" v-model="selectedGenre"
+            @change="redirectToGenre">
           <datalist id="options">
             <option value="Фильмы"></option>
             <option value="Мультфильмы"></option>
@@ -49,10 +44,16 @@
           <router-link to="/lists">Подборки</router-link>
           <router-link to="/favourites">Избранное</router-link>
           <router-link to="/chat">Премиум-Чат</router-link>
+          <router-link to="/kinoroom" class="cosmic-link">
+            <span class="cosmic-text">Кинотеатр</span>
+            <div class="cosmic-stars-container">
+              <span v-for="(star, index) in stars" :key="index" class="cosmic-star" :style="star.style"></span>
+            </div>
+          </router-link>
         </nav>
       </div>
 
-    
+
       <div class="header-right">
         <div class="header-search_btn" @click="showModal">
           <img src="../assets/Media/Components/search.svg" alt="Search">
@@ -72,11 +73,7 @@
             <img src="../assets/Media/Components/GoldCrown.svg" alt="Premium">
           </div>
 
-          <div 
-            class="avatar-container" 
-            @click="toggleDropdown" 
-            :class="{ 'premium-glow': isPremium }"
-          >
+          <div class="avatar-container" @click="toggleDropdown" :class="{ 'premium-glow': isPremium }">
             <img :src="userAvatar || defaultAvatar" alt="Аватар" class="avatar">
           </div>
 
@@ -87,7 +84,7 @@
         </div>
       </div>
 
-  
+
       <div class="burger-menu" @click="toggleBurgerMenu">
         <div class="burger-line"></div>
         <div class="burger-line"></div>
@@ -97,15 +94,10 @@
 
 
     <SearchModal ref="modal"></SearchModal>
-    <PremiumModal 
-      v-if="showPremiumModalFlag" 
-      :userAvatar="userAvatar" 
-      @close="closePremiumModal"
-      @update-user="checkAuth"
-    />
+    <PremiumModal v-if="showPremiumModalFlag" :userAvatar="userAvatar" @close="closePremiumModal"
+      @update-user="checkAuth" />
   </header>
 </template>
-
 <script>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -131,6 +123,7 @@ export default {
     const isPremium = ref(false);
     const isBurgerMenuOpen = ref(false);
     const selectedGenre = ref('');
+    const stars = ref([]);
 
     const genreRoutes = {
       'Фильмы': '/movies',
@@ -138,6 +131,37 @@ export default {
       'Мультсериалы': '/cartoon-series',
       'Сериалы': '/series',
       'Аниме': '/animes'
+    };
+
+    const createStars = () => {
+      const newStars = [];
+      for (let i = 0; i < 12; i++) {
+        newStars.push({
+          style: {
+            width: `${Math.random() * 3 + 1}px`,
+            height: `${Math.random() * 3 + 1}px`,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDuration: `${Math.random() * 3 + 2}s`,
+            animationDelay: `${Math.random() * 2}s`,
+            opacity: '0',
+            transform: 'translateY(0) translateX(0) scale(0.5)'
+          }
+        });
+      }
+      stars.value = newStars;
+    };
+
+    const activateStars = () => {
+      stars.value.forEach(star => {
+        star.style.opacity = '0.8';
+      });
+    };
+
+    const resetStars = () => {
+      stars.value.forEach(star => {
+        star.style.opacity = '0';
+      });
     };
 
     const checkAuth = async () => {
@@ -157,7 +181,6 @@ export default {
           isPremium.value = response.data.premium || false;
           userAvatar.value = response.data.avatarUrl || defaultAvatar;
           userBalance.value = response.data.balance;
-          console.log('Текущий аватар:', userAvatar.value);
         }
       } catch (error) {
         console.error('Ошибка проверки авторизации:', error);
@@ -208,7 +231,8 @@ export default {
 
     onMounted(() => {
       checkAuth();
-      setInterval(checkAuth, 5000);
+      createStars();
+      setInterval(checkAuth, 300000); // Проверка каждые 5 минут
     });
 
     return {
@@ -221,10 +245,13 @@ export default {
       defaultAvatar,
       selectedGenre,
       isBurgerMenuOpen,
+      stars,
       checkAuth,
       logout,
       redirectToGenre,
-      toggleBurgerMenu
+      toggleBurgerMenu,
+      activateStars,
+      resetStars
     };
   },
   methods: {
@@ -334,7 +361,72 @@ export default {
     box-shadow: 0 0 5px #ffd700;
   }
 }
+.cosmic-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+}
 
+.cosmic-text {
+  position: relative;
+  color: #8a2be2;
+  font-weight: 600;
+  z-index: 2;
+  text-shadow: 
+    0 0 5px rgba(138, 43, 226, 0.7),
+    0 0 10px rgba(138, 43, 226, 0.5);
+  transition: color 0.3s ease;
+}
+
+.cosmic-link:hover .cosmic-text {
+  color: #bb7df5;
+}
+
+
+.cosmic-stars-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+.cosmic-star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 
+    0 0 3px 1px white,
+    0 0 5px 2px rgba(138, 43, 226, 0.5);
+  animation: floatStar linear infinite;
+  transform: translateY(0) translateX(0) scale(0.5);
+  opacity: 0;
+}
+
+
+@keyframes floatStar {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-60px) translateX(20px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+
+.cosmic-link:hover .cosmic-star {
+  opacity: 0.8;
+}
 
 .user-info {
   display: flex;
