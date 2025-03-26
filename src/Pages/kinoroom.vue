@@ -46,9 +46,6 @@
                         <span>ЛИДЕР</span>
                     </div>
                     <div class="server___placeholder">
-                        <span>ФИЛЬМ</span>
-                    </div>
-                    <div class="server___placeholder">
                         <span>ЛИМИТ</span>
                     </div>
                 </div>
@@ -62,9 +59,6 @@
                         <div class="leader__element">
                             <span class="attribute_server_box">{{ server.leader.login }}</span>
                         </div>
-                        <div class="movie_name">
-                            <span class="attribute_server_box">{{ server.movie }}</span>
-                        </div>
                         <div class="users_limit_list">
                             <span class="attribute_server_box">{{ server.users }}/{{ server.limit }}</span>
                         </div>
@@ -72,7 +66,6 @@
                 </div>
             </div>
         </div>
-
 
         <div v-if="showCreateModal" class="modal-overlay" @click.self="showCreateModal = false">
             <div class="modal-content">
@@ -82,15 +75,6 @@
                         <label for="roomName">Название комнаты</label>
                         <input id="roomName" type="text" v-model="newRoom.name" required
                             placeholder="Уникальное название">
-                    </div>
-                    <div class="form-group">
-                        <label for="movieName">Название фильма</label>
-                        <input id="movieName" type="text" v-model="newRoom.movie" required
-                            placeholder="Какой фильм будете смотреть?">
-                    </div>
-                    <div class="form-group">
-                        <label for="videoUrl">Ссылка на видео</label>
-                        <input id="videoUrl" type="text" v-model="newRoom.videoUrl" required placeholder="URL видео">
                     </div>
                     <div class="form-group">
                         <label for="maxUsers">Максимальное количество пользователей</label>
@@ -123,8 +107,6 @@ export default {
             showCreateModal: false,
             newRoom: {
                 name: '',
-                movie: '',
-                videoUrl: '',
                 maxUsers: 10,
                 isPrivate: false,
                 password: ''
@@ -134,8 +116,7 @@ export default {
     computed: {
         filteredServers() {
             return this.servers.filter(server =>
-                server.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-                server.movie.toLowerCase().includes(this.searchTerm.toLowerCase())
+                server.name.toLowerCase().includes(this.searchTerm.toLowerCase())
             );
         }
     },
@@ -201,85 +182,50 @@ export default {
             }
         },
         async joinServer(server) {
-  try {
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
-    
-    if (!token || !user) {
-      throw new Error('Требуется авторизация');
-    }
+            try {
+                const token = localStorage.getItem('token');
+                const currentUser = JSON.parse(localStorage.getItem('user'));
+                
+                if (!token || !currentUser) {
+                    throw new Error('Требуется авторизация');
+                }
 
-  
-    if (user.currentRoom && user.currentRoom !== server._id) {
-      const confirmLeave = confirm(`Вы уже находитесь в другой комнате. Хотите покинуть её и перейти в новую?`);
-      
-      if (!confirmLeave) return;
-      
+                let password = '';
+                if (server.isPrivate) {
+                    password = prompt('Введите пароль для комнаты:');
+                    if (!password) return;
+                }
 
-      const leaveResponse = await fetch(
-        `https://dreamfood.space:3000/rooms/${user.currentRoom}/leave`, 
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': token,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-      
-      if (!leaveResponse.ok) {
-        throw new Error('Не удалось покинуть предыдущую комнату');
-      }
-      
- 
-      user.currentRoom = null;
-      localStorage.setItem('user', JSON.stringify(user));
-    }
+                const response = await fetch(`https://dreamfood.space:3000/rooms/${server._id}/join`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token
+                    },
+                    body: JSON.stringify({ password })
+                });
 
-    if (user.currentRoom === server._id) {
-      this.$router.push(`/room/${server._id}`);
-      return;
-    }
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Ошибка входа в комнату');
+                }
 
-    let password = '';
-    if (server.isPrivate) {
-      password = prompt('Введите пароль для комнаты:');
-      if (!password) return;
-    }
+                currentUser.currentRoom = server._id;
+                localStorage.setItem('user', JSON.stringify(currentUser));
 
-    const response = await fetch(`https://dreamfood.space:3000/rooms/${server._id}/join`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token
-      },
-      body: JSON.stringify({ password })
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Ошибка входа в комнату');
-    }
-
-
-    user.currentRoom = server._id;
-    localStorage.setItem('user', JSON.stringify(user));
-
-    this.$router.push(`/room/${server._id}`);
-    
-  } catch (error) {
-    console.error('Ошибка при входе в комнату:', error);
-    this.$toast.error(
-      error.message || 'Ошибка при входе в комнату',
-      { position: 'top-right', duration: 2000 }
-    );
-  }
-},
+                this.$router.push(`/room/${server._id}`);
+                
+            } catch (error) {
+                console.error('Ошибка при входе в комнату:', error);
+                this.$toast.error(
+                    error.message || 'Ошибка при входе в комнату',
+                    { position: 'top-right', duration: 2000 }
+                );
+            }
+        },
         resetNewRoomForm() {
             this.newRoom = {
                 name: '',
-                movie: '',
-                videoUrl: '',
                 maxUsers: 10,
                 isPrivate: false,
                 password: ''
@@ -296,6 +242,9 @@ export default {
     background-color: #1b2133;
     color: white;
 }
+
+
+
 
 .modal-overlay {
     position: fixed;
