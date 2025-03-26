@@ -169,53 +169,68 @@ export default {
     };
 
     const checkAuth = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        isLoggedIn.value = false;
-        return;
+  try {
+    const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
+    
+    if (!token) {
+      isLoggedIn.value = false;
+      return;
+    }
+
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
+      headers: { 
+        'Authorization': `Bearer ${token}` 
       }
+    });
 
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
-          headers: { 'Authorization': token }
-        });
+    if (response.data) {
+      isLoggedIn.value = true;
+      isPremium.value = response.data.premium || false;
+      userAvatar.value = response.data.avatarUrl || defaultAvatar;
+      userBalance.value = response.data.balance;
+    }
+  } catch (error) {
+    if (error.response?.status === 401) {
+  
+      await refreshToken();
+    } else {
+      console.error('Ошибка проверки авторизации:', error);
+      logout();
+    }
+  }
+};
 
-        if (response.data) {
-          isLoggedIn.value = true;
-          isPremium.value = response.data.premium || false;
-          userAvatar.value = response.data.avatarUrl || defaultAvatar;
-          userBalance.value = response.data.balance;
-          console.log('Текущий аватар:', userAvatar.value);
+const refreshToken = async () => {
+  const refreshToken = localStorage.getItem('refreshToken');
+  if (!refreshToken) {
+    logout();
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/refresh-token`, 
+      { refreshToken },
+      {
+        headers: {
+          'Content-Type': 'application/json'
         }
-      } catch (error) {
-        console.error('Ошибка проверки авторизации:', error);
       }
-    };
-
-    const refreshToken = async () => {
-      const refreshToken = localStorage.getItem('refreshToken');
-      if (!refreshToken) {
-        logout();
-        return;
-      }
-
-      try {
-        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/refresh-token`, { 
-          refreshToken 
-        });
-        
-        if (response.data.token) {
-          localStorage.setItem('token', response.data.token);
-          await checkAuth();
-        } else {
-          logout();
-        }
-      } catch (error) {
-        console.error('Ошибка обновления токена:', error);
-        logout();
-      }
-    };
-
+    );
+    
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+      return true; 
+    }
+  } catch (error) {
+    console.error('Ошибка обновления токена:', error);
+    if (error.response?.status === 401) {
+      logout(); 
+    }
+  }
+  return false;
+};
 
     
     const activateStars = () => {

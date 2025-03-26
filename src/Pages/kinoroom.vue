@@ -151,7 +151,7 @@ export default {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': token
+                        'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify(this.newRoom)
                 });
@@ -162,7 +162,7 @@ export default {
                         errorData.error || 'Ошибка создания комнаты',
                         { position: 'top-right', duration: 2000 }
                     );
-                    return; 
+                    return;
                 }
                 const newServer = await response.json();
                 this.servers.push(newServer);
@@ -184,8 +184,8 @@ export default {
         async joinServer(server) {
             try {
                 const token = localStorage.getItem('token');
-                const currentUser = JSON.parse(localStorage.getItem('user'));
-                
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
                 if (!token || !currentUser) {
                     throw new Error('Требуется авторизация');
                 }
@@ -214,7 +214,7 @@ export default {
                 localStorage.setItem('user', JSON.stringify(currentUser));
 
                 this.$router.push(`/room/${server._id}`);
-                
+
             } catch (error) {
                 console.error('Ошибка при входе в комнату:', error);
                 this.$toast.error(
