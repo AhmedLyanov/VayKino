@@ -201,47 +201,80 @@ export default {
             }
         },
         async joinServer(server) {
-            try {
-                const token = localStorage.getItem('token');
-                let password = '';
+  try {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+    
+    if (!token || !user) {
+      throw new Error('Требуется авторизация');
+    }
 
-                if (server.isPrivate) {
-                    password = prompt('Введите пароль для комнаты:');
-                    if (!password) return;
-                }
+  
+    if (user.currentRoom && user.currentRoom !== server._id) {
+      const confirmLeave = confirm(`Вы уже находитесь в другой комнате. Хотите покинуть её и перейти в новую?`);
+      
+      if (!confirmLeave) return;
+      
 
-                const response = await fetch(`https://dreamfood.space:3000/rooms/${server._id}/join`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': token
-                    },
-                    body: JSON.stringify({ password })
-                });
+      const leaveResponse = await fetch(
+        `https://dreamfood.space:3000/rooms/${user.currentRoom}/leave`, 
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      
+      if (!leaveResponse.ok) {
+        throw new Error('Не удалось покинуть предыдущую комнату');
+      }
+      
+ 
+      user.currentRoom = null;
+      localStorage.setItem('user', JSON.stringify(user));
+    }
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    this.$toast.error(
-                        errorData.error || 'Ошибка входа в комнату',
-                        { position: 'top-right', duration: 2000 }
-                    );
-                    return;
-                }
+    if (user.currentRoom === server._id) {
+      this.$router.push(`/room/${server._id}`);
+      return;
+    }
 
-                const result = await response.json();
-                this.$toast.success(
-                    'Успешный вход в комнату',
-                    { position: 'top-right', duration: 2000 }
-                );
+    let password = '';
+    if (server.isPrivate) {
+      password = prompt('Введите пароль для комнаты:');
+      if (!password) return;
+    }
 
-            } catch (error) {
-                console.error('Ошибка при входе в комнату:', error);
-                this.$toast.error(
-                    error.message || 'Ошибка при входе в комнату',
-                    { position: 'top-right', duration: 2000 }
-                );
-            }
-        },
+    const response = await fetch(`https://dreamfood.space:3000/rooms/${server._id}/join`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify({ password })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Ошибка входа в комнату');
+    }
+
+
+    user.currentRoom = server._id;
+    localStorage.setItem('user', JSON.stringify(user));
+
+    this.$router.push(`/room/${server._id}`);
+    
+  } catch (error) {
+    console.error('Ошибка при входе в комнату:', error);
+    this.$toast.error(
+      error.message || 'Ошибка при входе в комнату',
+      { position: 'top-right', duration: 2000 }
+    );
+  }
+},
         resetNewRoomForm() {
             this.newRoom = {
                 name: '',

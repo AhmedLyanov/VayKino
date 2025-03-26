@@ -44,7 +44,6 @@
       <div class="header-center">
         <nav>
           <router-link to="/premiere">Афиша</router-link>
-          <router-link to="/media">Медиа</router-link>
           <router-link to="/posts">Новости</router-link>
           <router-link to="/lists">Подборки</router-link>
           <router-link to="/favourites">Избранное</router-link>
@@ -337,7 +336,7 @@ export default {
   transition: all 0.5s;
 }
 
-.header-center nav :nth-child(6) {
+.header-center nav :nth-child(5) {
   color: #f2f60f;
 }
 

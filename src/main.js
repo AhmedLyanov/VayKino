@@ -160,7 +160,13 @@ const router = createRouter({
             path: "/kinoroom",
             name: "kinoroom",
             component: Kinoroom,
-        }
+        },
+        {
+            path: '/room/:id',
+            name: 'Room',
+            component: () => import('./Pages/room.vue'),
+            meta: { requiresAuth: true }
+          }
     ],
     history: createWebHistory(),
 });
