@@ -12,7 +12,7 @@
           </div>
         </div>
       </div>
-      <div v-for="(message, index) in messages" :key="index" class="message" :class="{ 'my-message': message.sender === currentUser.login, 'other-message': message.sender !== currentUser.login }">
+      <div v-for="(message, index) in messages" :key="message._id" class="message" :class="{ 'my-message': message.sender === currentUser.login, 'other-message': message.sender !== currentUser.login }">
         <div
           class="message-avatar"
           :class="{ 'admin-avatar': message.role === 'admin' }"
@@ -33,7 +33,9 @@
               </div>
               <audio controls :src="message.audioUrl" />
             </div>
-            <img v-if="message.imageUrl" :src="message.imageUrl" alt="Изображение" class="message-image"  @click="openPosterModal(message.imageUrl)" />
+            <div v-if="message.imageUrl" class="image-container">
+              <img :src="message.imageUrl" alt="Изображение" class="message-image" @click="openPosterModal(message.imageUrl)" />
+            </div>
           </div>
           <div class="user-info">
             <div class="message_time">
@@ -53,6 +55,7 @@
             id="fileInput"
             type="file"
             style="display: none;"
+            accept="image/*,audio/*"
             @change="handleFileUpload"
           />
         </div>
@@ -90,7 +93,8 @@ export default {
       isRecording: false,
       recorder: null,
       isModalPosterOpen: false,
-      poster: ""
+      poster: "",
+      pendingFiles: new Map()
     };
   },
   components: {
@@ -108,20 +112,49 @@ export default {
       this.$router.push("/");
       return;
     }
-    await this.fetchMessages();
     
-    this.socket = io(`${import.meta.env.VITE_API_BASE_URL}/`);
-    this.socket.on("newMessage", (message) => {
-      this.messages.push(message);
-      setTimeout(() => {
-        this.newMessageScroll();
-      }, 50);
-    });
+    await this.fetchMessages();
+    this.setupSocketConnection();
   },
   methods: {
     ...mapActions(['toggleEmailMailing']),
 
-    
+    setupSocketConnection() {
+      this.socket = io(`${import.meta.env.VITE_API_BASE_URL}/`, {
+        auth: {
+          token: localStorage.getItem('token')
+        },
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000
+      });
+
+      this.socket.on("connect", () => {
+        console.log("WebSocket connected");
+      });
+
+      this.socket.on("newMessage", (message) => {
+        if (!this.pendingFiles.has(message._id)) {
+          this.addMessage(message);
+        } else {
+          this.messages = this.messages.map(m => 
+            m._id === message._id ? message : m
+          );
+          this.pendingFiles.delete(message._id);
+        }
+        this.scrollToBottom();
+      });
+
+      this.socket.on("connect_error", (error) => {
+        console.error("WebSocket connection error:", error);
+      });
+    },
+
+    addMessage(message) {
+      this.messages.push(message);
+      this.scrollToBottom();
+    },
+
     async fetchMessages() {
       const token = localStorage.getItem('token');
       try {
@@ -131,7 +164,8 @@ export default {
           },
         });
         if (response.ok) {
-          this.messages = await response.json(); 
+          this.messages = await response.json();
+          this.scrollToBottom();
         } else if (response.status === 401) {
           await this.refreshToken();
           await this.fetchMessages();
@@ -141,46 +175,82 @@ export default {
       }
     },
 
-    
-    async refreshToken() {
-      const refreshToken = localStorage.getItem('refreshToken');
-      if (!refreshToken) {
-        this.logout();
+    async handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      if (!file.type.startsWith("image/") && !file.type.startsWith("audio/")) {
+        const toast = useToast();
+        toast.error("Пожалуйста, выберите изображение или аудио файл.", {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false,
+        });
         return;
       }
+
+      const tempId = Date.now().toString();
+      const tempMessage = {
+        _id: tempId,
+        sender: this.currentUser.login,
+        avatarUrl: this.currentUser.avatarUrl,
+        timestamp: new Date()
+      };
+
+      if (file.type.startsWith("image/")) {
+        tempMessage.imageUrl = URL.createObjectURL(file);
+      } else if (file.type.startsWith("audio/")) {
+        tempMessage.audioUrl = URL.createObjectURL(file);
+      }
+
+      this.pendingFiles.set(tempId, tempMessage);
+      this.addMessage(tempMessage);
+      
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("sender", this.currentUser.login);
+      formData.append("avatarUrl", this.currentUser.avatarUrl);
+      formData.append("roomId", "global");
+
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/refresh-token`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ refreshToken }),
-        });
-        if (response.ok) {
-          const data = await response.json();
-          localStorage.setItem('token', data.token); 
-        } else {
-          this.logout();
-        }
+        const endpoint = file.type.startsWith("image/") 
+          ? "upload-image-message" 
+          : "upload-voice-message";
+        
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/${endpoint}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            }
+          }
+        );
+
+        const savedMessage = response.data;
+        this.socket.emit("confirmUpload", { tempId, savedMessage });
+        
+        event.target.value = "";
       } catch (error) {
-        console.error('Ошибка при обновлении токена:', error);
-        this.logout();
+        console.error("Ошибка при отправке файла:", error);
+        
+        this.messages = this.messages.filter(m => m._id !== tempId);
+        this.pendingFiles.delete(tempId);
+        
+        const toast = useToast();
+        toast.error("Ошибка при загрузке файла. Попробуйте еще раз.", {
+          position: 'top-right',
+          duration: 2000,
+          dismissible: false,
+        });
       }
     },
 
-    
-    logout() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('currentUser');
-      this.$router.push('/login');
-    },
-
-  
     async sendMessage() {
       if (!this.newMessage.trim()) return;
-      const token = localStorage.getItem('token');
+      
       try {
+        const token = localStorage.getItem('token');
         const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/chat-messages`, {
           method: 'POST',
           headers: {
@@ -194,17 +264,25 @@ export default {
             role: this.currentUser.role,
           }),
         });
+
         if (response.ok) {
-          this.newMessage = ""; 
-          await this.fetchMessages(); 
+          this.newMessage = "";
         } else if (response.status === 401) {
-        
           await this.refreshToken();
           await this.sendMessage();
         }
       } catch (error) {
         console.error('Ошибка при отправке сообщения:', error);
       }
+    },
+
+    scrollToBottom() {
+      this.$nextTick(() => {
+        const chatMessages = this.$el.querySelector(".chat-messages");
+        if (chatMessages) {
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+      });
     },
 
     formatTime(timestamp) {
@@ -216,38 +294,6 @@ export default {
       return date.toLocaleString("ru", options);
     },
 
-    async handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      if (!file.type.startsWith("image/")) {
-        const toast = useToast(); 
-        toast.error("Пожалуйста, выберите изображение.", {
-          position: 'top-right',
-          duration: 2000,
-          dismissible: false,
-        });
-        return;
-      }
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("sender", this.currentUser.login);
-      formData.append("avatarUrl", this.currentUser.avatarUrl);
-      try {
-        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/upload-image-message`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        console.log("Ответ от сервера:", response.data);
-        event.target.value = "";
-        this.$nextTick(() => {
-          this.scrollToBottom();
-        });
-      } catch (error) {
-        console.error("Ошибка при отправке изображения:", error);
-      }
-    },
-
     toggleRecording() {
       if (this.isRecording) {
         this.stopRecording();
@@ -256,42 +302,72 @@ export default {
       }
     },
 
-    newMessageScroll() {
-      const chatMessages = this.$el.querySelector(".chat-messages");
-      if (chatMessages) {
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
-    },
-
     async startRecording() {
-      this.isRecording = true;
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      this.recorder = new RecordRTC(stream, { type: "audio" });
-      this.recorder.startRecording();
+      try {
+        this.isRecording = true;
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        this.recorder = new RecordRTC(stream, { 
+          type: "audio",
+          mimeType: "audio/webm",
+          recorderType: RecordRTC.StereoAudioRecorder
+        });
+        this.recorder.startRecording();
+      } catch (error) {
+        console.error("Ошибка при записи:", error);
+        this.isRecording = false;
+      }
     },
 
     async stopRecording() {
       this.isRecording = false;
-      this.recorder.stopRecording(async () => {
-        const blob = this.recorder.getBlob();
-        await this.sendVoiceMessage(blob);
+      return new Promise(resolve => {
+        this.recorder.stopRecording(async () => {
+          const blob = this.recorder.getBlob();
+          await this.sendVoiceMessage(blob);
+          this.recorder.getDataURL().then(dataURL => {
+            URL.revokeObjectURL(dataURL);
+          });
+          resolve();
+        });
       });
     },
 
     async sendVoiceMessage(blob) {
+      const tempId = Date.now().toString();
+      const tempMessage = {
+        _id: tempId,
+        sender: this.currentUser.login,
+        avatarUrl: this.currentUser.avatarUrl,
+        audioUrl: URL.createObjectURL(blob),
+        timestamp: new Date()
+      };
+
+      this.pendingFiles.set(tempId, tempMessage);
+      this.addMessage(tempMessage);
+
       const formData = new FormData();
       formData.append("file", blob, "voice-message.webm");
       formData.append("sender", this.currentUser.login);
       formData.append("avatarUrl", this.currentUser.avatarUrl);
+      formData.append("roomId", "global");
 
       try {
-        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/upload-voice-message`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/upload-voice-message`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            }
+          }
+        );
+
+        const savedMessage = response.data;
+        this.socket.emit("confirmUpload", { tempId, savedMessage });
       } catch (error) {
         console.error("Ошибка при отправке голосового сообщения:", error);
+        this.messages = this.messages.filter(m => m._id !== tempId);
+        this.pendingFiles.delete(tempId);
       }
     },
 
@@ -309,25 +385,73 @@ export default {
       return currentMessage.sender !== previousMessage.sender;
     },
 
-    hideEmailMailing() {
-      this.toggleEmailMailing(false);
-    },
-
     openPosterModal(poster) {
-        this.poster = poster;
-        this.isModalPosterOpen = true;
-        document.body.classList.add('no-scroll');
+      this.poster = poster;
+      this.isModalPosterOpen = true;
+      document.body.classList.add('no-scroll');
     },
     
     closePosterModal() {
-        this.isModalPosterOpen = false;
-        this.poster = '';
-        document.body.classList.remove('no-scroll');
+      this.isModalPosterOpen = false;
+      this.poster = '';
+      document.body.classList.remove('no-scroll');
     },
+
+    async refreshToken() {
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!refreshToken) {
+        this.logout();
+        return false;
+      }
+
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/refresh-token`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ refreshToken }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          localStorage.setItem('token', data.token);
+          return true;
+        }
+        return false;
+      } catch (error) {
+        console.error('Ошибка при обновлении токена:', error);
+        this.logout();
+        return false;
+      }
+    },
+
+    logout() {
+      if (this.socket) {
+        this.socket.disconnect();
+      }
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('currentUser');
+      this.$router.push('/login');
+    }
   },
   beforeUnmount() {
     if (this.socket) {
       this.socket.disconnect();
+    }
+    
+    this.pendingFiles.forEach(message => {
+      if (message.imageUrl && message.imageUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(message.imageUrl);
+      }
+      if (message.audioUrl && message.audioUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(message.audioUrl);
+      }
+    });
+    
+    if (this.recorder) {
+      this.recorder.destroy();
     }
   },
   mounted() {
@@ -358,7 +482,40 @@ export default {
   background-size: 50%;
   border-radius: 10px;
 }
+.upload-progress {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
 
+.image-container {
+  position: relative;
+}
+
+.message-image {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.message-image:hover {
+  transform: scale(1.02);
+}
+
+.audio_message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.message-avatar_audio img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 .message {
   display: flex;
   margin-bottom: 15px;
