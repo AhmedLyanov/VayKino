@@ -1,3 +1,5 @@
+html
+Copy
 <template>
     <main>
         <div class="main-content">
@@ -51,17 +53,40 @@
                 </div>
 
                 <div class="server__box">
-                    <div class="server__information_box" v-for="(server, index) in filteredServers" :key="index"
-                        @click="joinServer(server)">
-                        <div class="server__name">
-                            <span class="attribute_server_box">{{ server.name }}</span>
+                    <template v-if="filteredServers.length > 0">
+                        <div class="server__information_box" v-for="(server, index) in filteredServers" :key="index"
+                            @click="joinServer(server)">
+                            <div class="server__name">
+                                <span class="attribute_server_box">{{ server.name }}</span>
+                            </div>
+                            <div class="leader__element">
+                                <span class="attribute_server_box">{{ server.leader.login }}</span>
+                            </div>
+                            <div class="users_limit_list">
+                                <span class="attribute_server_box">{{ server.users.length }}/{{ server.maxUsers
+                                    }}</span>
+                            </div>
                         </div>
-                        <div class="leader__element">
-                            <span class="attribute_server_box">{{ server.leader.login }}</span>
+                    </template>
+
+                    <div v-else class="no-servers-message">
+                        <div class="no-servers-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
+                                <path fill="white"
+                                    d="M20 3H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM4 9V5h16v4zm16 4H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2zM4 19v-4h16v4z" />
+                                <path fill="white" d="M17 6h2v2h-2zm-3 0h2v2h-2zm3 10h2v2h-2zm-3 0h2v2h-2z" />
+                            </svg>
+
                         </div>
-                        <div class="users_limit_list">
-                            <span class="attribute_server_box">{{ server.users }}/{{ server.limit }}</span>
+                        <div class="no-servers-text">
+                            Нет доступных серверов
                         </div>
+                        <div class="no-servers-hint">
+                            Попробуйте изменить параметры поиска или создайте новый сервер
+                        </div>
+                        <button class="no-servers-button" @click="showCreateModal = true">
+                            Создать новую комнату
+                        </button>
                     </div>
                 </div>
             </div>
@@ -99,6 +124,7 @@
 </template>
 
 <script>
+import server from "../assets/Media/Components/server.svg"
 export default {
     data() {
         return {
@@ -235,6 +261,7 @@ export default {
 }
 </script>
 
+
 <style scoped>
 .main-content {
     width: 100%;
@@ -356,6 +383,57 @@ export default {
 .search_container:hover {
     background-color: rgba(255, 255, 255, 0.12);
 }
+
+.no-servers-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: transparent;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.no-servers-icon {
+    margin-bottom: 20px;
+}
+
+.no-servers-icon svg {
+    width: 64px;
+    height: 64px;
+}
+
+.no-servers-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.no-servers-hint {
+    font-size: 14px;
+    color: #b9bbbe;
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+
+.no-servers-button {
+    padding: 10px 20px;
+    background-color: #5865f2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.no-servers-button:hover {
+    background-color: #4752c4;
+}
+
 
 .search_icon {
     margin-right: 12px;
