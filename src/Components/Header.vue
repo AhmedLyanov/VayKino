@@ -178,8 +178,6 @@ export default {
           isPremium.value = response.data.premium || false;
           userAvatar.value = response.data.avatarUrl || defaultAvatar;
           userBalance.value = response.data.balance;
-
-          // Сохраняем обновленные данные в localStorage
           localStorage.setItem('currentUser', JSON.stringify(response.data));
         }
       } catch (error) {
@@ -306,7 +304,6 @@ export default {
           {},
           { headers: { 'Authorization': token } }
         );
-
         this.$toast.success(response.data.message, {
           position: 'top-right',
           duration: 2000

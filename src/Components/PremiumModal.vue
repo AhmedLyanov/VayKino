@@ -77,21 +77,19 @@ export default {
       { headers: { 'Authorization': token } }
     );
     
-    // Получаем обновленные данные пользователя
+
     const userResponse = await axios.get(
       `${import.meta.env.VITE_API_BASE_URL}/user/me`,
       { headers: { 'Authorization': token } }
     );
     
-    // Обновляем данные в localStorage
     localStorage.setItem('currentUser', JSON.stringify(userResponse.data));
     
     this.$toast.success(response.data.message, {
       position: 'top-right',
       duration: 2000
     });
-    
-    // Отправляем обновленные данные в родительский компонент
+  
     this.$emit('update-user', userResponse.data);
     this.close();
   } catch (error) {
