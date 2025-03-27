@@ -19,7 +19,7 @@ Copy
                                 </svg>
                             </div>
                             <div class="search_input">
-                                <input type="text" placeholder="Введите название комнаты" v-model="searchTerm">
+                                <input type="text" placeholder="Введите название сервера" v-model="searchTerm">
                             </div>
                         </div>
 
@@ -34,7 +34,7 @@ Copy
                                             stroke-linejoin="round" />
                                     </svg>
                                 </span>
-                                <span class="button_text">Новая комната</span>
+                                <span class="button_text">Новый сервер</span>
                             </button>
                         </div>
                     </div>
@@ -85,7 +85,7 @@ Copy
                             Попробуйте изменить параметры поиска или создайте новый сервер
                         </div>
                         <button class="no-servers-button" @click="showCreateModal = true">
-                            Создать новую комнату
+                            Создать новый сервер
                         </button>
                     </div>
                 </div>
@@ -94,7 +94,7 @@ Copy
 
         <div v-if="showCreateModal" class="modal-overlay" @click.self="showCreateModal = false">
             <div class="modal-content">
-                <h2>Создать новую комнату</h2>
+                <h2>Создать новый сервер</h2>
                 <form @submit.prevent="createNewServer">
                     <div class="form-group">
                         <label for="roomName">Название комнаты</label>
