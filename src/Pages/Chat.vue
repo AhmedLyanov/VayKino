@@ -247,34 +247,43 @@ export default {
     },
 
     async sendMessage() {
-      if (!this.newMessage.trim()) return;
-      
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/chat-messages`, {
-          method: 'POST',
-          headers: {
-            'Authorization': token,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            sender: this.currentUser.login,
-            text: this.newMessage,
-            avatarUrl: this.currentUser.avatarUrl,
-            role: this.currentUser.role,
-          }),
-        });
+  if (!this.newMessage.trim()) return;
+  
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/chat-messages`, {
+      method: 'POST',
+      headers: {
+        'Authorization': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        sender: this.currentUser.login,
+        text: this.newMessage,
+        avatarUrl: this.currentUser.avatarUrl,
+        role: this.currentUser.role,
+        roomId: "global" // Добавляем roomId для совместимости с сервером
+      }),
+    });
 
-        if (response.ok) {
-          this.newMessage = "";
-        } else if (response.status === 401) {
-          await this.refreshToken();
-          await this.sendMessage();
-        }
-      } catch (error) {
-        console.error('Ошибка при отправке сообщения:', error);
-      }
-    },
+    if (response.ok) {
+      this.newMessage = "";
+    } else if (response.status === 401) {
+      await this.refreshToken();
+      await this.sendMessage();
+    } else {
+      console.error('Ошибка при отправке сообщения:', await response.text());
+    }
+  } catch (error) {
+    console.error('Ошибка при отправке сообщения:', error);
+    const toast = useToast();
+    toast.error("Ошибка при отправке сообщения", {
+      position: 'top-right',
+      duration: 2000,
+      dismissible: false,
+    });
+  }
+},
 
     scrollToBottom() {
       this.$nextTick(() => {
