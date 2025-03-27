@@ -2,7 +2,7 @@
   <header>
     <div class="header-cont">
       <div class="header-left">
-      
+
         <div class="logo_info">
           <div class="header-logo" @click="$router.replace('/')">
             <div class="header-logo-img">
@@ -22,15 +22,10 @@
           </div>
         </div>
 
- 
+
         <div class="genre_movies_list">
-          <input 
-            type="text" 
-            list="options" 
-            placeholder="Выберите жанр" 
-            v-model="selectedGenre"
-            @change="redirectToGenre"
-          >
+          <input type="text" list="options" placeholder="Выберите жанр" v-model="selectedGenre"
+            @change="redirectToGenre">
           <datalist id="options">
             <option value="Фильмы"></option>
             <option value="Мультфильмы"></option>
@@ -49,18 +44,13 @@
           <router-link to="/favourites">Избранное</router-link>
           <router-link to="/chat">Премиум-Чат</router-link>
           <router-link to="/kinoroom" class="cosmic-link" @mouseenter="activateStars" @mouseleave="resetStars">
-    <span class="cosmic-text">Кинотеатр</span>
-    <span 
-      v-for="(star, index) in stars" 
-      :key="index" 
-      class="cosmic-star"
-      :style="star.style"
-    ></span>
-  </router-link>
+            <span class="cosmic-text">Кинотеатр</span>
+            <span v-for="(star, index) in stars" :key="index" class="cosmic-star" :style="star.style"></span>
+          </router-link>
         </nav>
       </div>
 
-    
+
       <div class="header-right">
         <div class="header-search_btn" @click="showModal">
           <img src="../assets/Media/Components/search.svg" alt="Search">
@@ -80,11 +70,7 @@
             <img src="../assets/Media/Components/GoldCrown.svg" alt="Premium">
           </div>
 
-          <div 
-            class="avatar-container" 
-            @click="toggleDropdown" 
-            :class="{ 'premium-glow': isPremium }"
-          >
+          <div class="avatar-container" @click="toggleDropdown" :class="{ 'premium-glow': isPremium }">
             <img :src="userAvatar || defaultAvatar" alt="Аватар" class="avatar">
           </div>
 
@@ -95,7 +81,7 @@
         </div>
       </div>
 
-  
+
       <div class="burger-menu" @click="toggleBurgerMenu">
         <div class="burger-line"></div>
         <div class="burger-line"></div>
@@ -105,12 +91,8 @@
 
 
     <SearchModal ref="modal"></SearchModal>
-    <PremiumModal 
-      v-if="showPremiumModalFlag" 
-      :userAvatar="userAvatar" 
-      @close="closePremiumModal"
-      @update-user="checkAuth"
-    />
+    <PremiumModal v-if="showPremiumModalFlag" :userAvatar="userAvatar" @close="closePremiumModal"
+      @update-user="handleUserUpdate" />
   </header>
 </template>
 
@@ -149,7 +131,7 @@ export default {
       'Аниме': '/animes'
     };
 
-    
+
     const createStars = () => {
       const newStars = [];
       for (let i = 0; i < 12; i++) {
@@ -168,71 +150,80 @@ export default {
       stars.value = newStars;
     };
 
+
+    const handleUserUpdate = (updatedUser) => {
+      isPremium.value = updatedUser.premium || false;
+      userBalance.value = updatedUser.balance;
+      userAvatar.value = updatedUser.avatarUrl || defaultAvatar;
+      localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+    };
     const checkAuth = async () => {
-  try {
-    const token = localStorage.getItem('token');
-    const refreshToken = localStorage.getItem('refreshToken');
-    
-    if (!token) {
-      isLoggedIn.value = false;
-      return;
-    }
+      try {
+        const token = localStorage.getItem('token');
+        const refreshToken = localStorage.getItem('refreshToken');
 
-    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
-      headers: { 
-        'Authorization': `Bearer ${token}` 
-      }
-    });
+        if (!token) {
+          isLoggedIn.value = false;
+          return;
+        }
 
-    if (response.data) {
-      isLoggedIn.value = true;
-      isPremium.value = response.data.premium || false;
-      userAvatar.value = response.data.avatarUrl || defaultAvatar;
-      userBalance.value = response.data.balance;
-    }
-  } catch (error) {
-    if (error.response?.status === 401) {
-  
-      await refreshToken();
-    } else {
-      console.error('Ошибка проверки авторизации:', error);
-      logout();
-    }
-  }
-};
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
 
-const refreshToken = async () => {
-  const refreshToken = localStorage.getItem('refreshToken');
-  if (!refreshToken) {
-    logout();
-    return;
-  }
+        if (response.data) {
+          isLoggedIn.value = true;
+          isPremium.value = response.data.premium || false;
+          userAvatar.value = response.data.avatarUrl || defaultAvatar;
+          userBalance.value = response.data.balance;
 
-  try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL}/refresh-token`, 
-      { refreshToken },
-      {
-        headers: {
-          'Content-Type': 'application/json'
+          // Сохраняем обновленные данные в localStorage
+          localStorage.setItem('currentUser', JSON.stringify(response.data));
+        }
+      } catch (error) {
+        if (error.response?.status === 401) {
+          await refreshToken();
+        } else {
+          console.error('Ошибка проверки авторизации:', error);
+          logout();
         }
       }
-    );
-    
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
-      return true; 
-    }
-  } catch (error) {
-    console.error('Ошибка обновления токена:', error);
-    if (error.response?.status === 401) {
-      logout(); 
-    }
-  }
-  return false;
-};
+    };
 
-    
+    const refreshToken = async () => {
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!refreshToken) {
+        logout();
+        return;
+      }
+
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/refresh-token`,
+          { refreshToken },
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+          return true;
+        }
+      } catch (error) {
+        console.error('Ошибка обновления токена:', error);
+        if (error.response?.status === 401) {
+          logout();
+        }
+      }
+      return false;
+    };
+
+
     const activateStars = () => {
       stars.value.forEach(star => {
         star.style.opacity = '0.8';
@@ -311,11 +302,11 @@ const refreshToken = async () => {
       const token = localStorage.getItem('token');
       try {
         const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/buy-premium`, 
+          `${import.meta.env.VITE_API_BASE_URL}/buy-premium`,
           {},
           { headers: { 'Authorization': token } }
         );
-        
+
         this.$toast.success(response.data.message, {
           position: 'top-right',
           duration: 2000
@@ -324,7 +315,7 @@ const refreshToken = async () => {
         this.closePremiumModal();
       } catch (error) {
         this.$toast.error(
-          error.response?.data?.error || 'Ошибка покупки премиума', 
+          error.response?.data?.error || 'Ошибка покупки премиума',
           { position: 'top-right', duration: 2000 }
         );
       }
@@ -419,6 +410,7 @@ const refreshToken = async () => {
   height: 100%;
   object-fit: cover;
 }
+
 .cosmic-link {
   position: relative;
   display: inline-block;
@@ -433,14 +425,14 @@ const refreshToken = async () => {
   color: #8a2be2;
   font-weight: 600;
   z-index: 2;
-  text-shadow: 
+  text-shadow:
     0 0 5px rgba(138, 43, 226, 0.7),
     0 0 10px rgba(138, 43, 226, 0.5);
   transition: text-shadow 0.3s ease;
 }
 
 .cosmic-link:hover .cosmic-text {
-  text-shadow: 
+  text-shadow:
     0 0 10px rgba(138, 43, 226, 0.9),
     0 0 20px rgba(138, 43, 226, 0.7),
     0 0 30px rgba(138, 43, 226, 0.5);
@@ -450,7 +442,7 @@ const refreshToken = async () => {
   position: absolute;
   background: white;
   border-radius: 50%;
-  box-shadow: 
+  box-shadow:
     0 0 3px 1px white,
     0 0 5px 2px rgba(138, 43, 226, 0.5);
   animation: floatStar linear infinite;
@@ -464,14 +456,17 @@ const refreshToken = async () => {
     transform: translateY(0) translateX(0) scale(0.5);
     opacity: 0;
   }
+
   20% {
     opacity: 0.8;
   }
+
   100% {
     transform: translateY(-60px) translateX(20px) scale(1.2);
     opacity: 0;
   }
 }
+
 .dropdown {
   position: absolute;
   top: 60px;

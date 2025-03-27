@@ -61,36 +61,47 @@ export default {
       this.$emit('close');
     },
     async buyPremium() {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        this.$toast.error('Требуется авторизация', {
-          position: 'top-right',
-          duration: 2000
-        });
-        return;
-      }
+  const token = localStorage.getItem('token');
+  if (!token) {
+    this.$toast.error('Требуется авторизация', {
+      position: 'top-right',
+      duration: 2000
+    });
+    return;
+  }
 
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/buy-premium`, 
-          {},
-          { headers: { 'Authorization': token } }
-        );
-        
-        this.$toast.success(response.data.message, {
-          position: 'top-right',
-          duration: 2000
-        });
-        this.$emit('update-user');
-        this.close();
-      } catch (error) {
-        const message = error.response?.data?.error || 'Ошибка сервера';
-        this.$toast.error(message, {
-          position: 'top-right',
-          duration: 2000
-        });
-      }
-    }
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/buy-premium`, 
+      {},
+      { headers: { 'Authorization': token } }
+    );
+    
+    // Получаем обновленные данные пользователя
+    const userResponse = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/user/me`,
+      { headers: { 'Authorization': token } }
+    );
+    
+    // Обновляем данные в localStorage
+    localStorage.setItem('currentUser', JSON.stringify(userResponse.data));
+    
+    this.$toast.success(response.data.message, {
+      position: 'top-right',
+      duration: 2000
+    });
+    
+    // Отправляем обновленные данные в родительский компонент
+    this.$emit('update-user', userResponse.data);
+    this.close();
+  } catch (error) {
+    const message = error.response?.data?.error || 'Ошибка сервера';
+    this.$toast.error(message, {
+      position: 'top-right',
+      duration: 2000
+    });
+  }
+}
   },
   created() {
     this.$toast = useToast();
