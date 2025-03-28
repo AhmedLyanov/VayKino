@@ -15,6 +15,46 @@
     </div>
 
     <div class="room-content">
+      <div class="room-main">
+          <div class="room-search">
+          <input ref="searchInputField" type="text" placeholder="Введите название фильма" v-model="searchInput" @keyup.enter="searchMovie" />
+          <div className="modal-butts">
+            <button class="modal-clear" @click="clearSearch">
+              <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 94.926 94.926" style="enable-background:new 0 0 94.926 94.926;" xml:space="preserve"><g><path d="M55.931,47.463L94.306,9.09c0.826-0.827,0.826-2.167,0-2.994L88.833,0.62C88.436,0.224,87.896,0,87.335,0 c-0.562,0-1.101,0.224-1.498,0.62L47.463,38.994L9.089,0.62c-0.795-0.795-2.202-0.794-2.995,0L0.622,6.096 c-0.827,0.827-0.827,2.167,0,2.994l38.374,38.373L0.622,85.836c-0.827,0.827-0.827,2.167,0,2.994l5.473,5.476 c0.397,0.396,0.936,0.62,1.498,0.62s1.1-0.224,1.497-0.62l38.374-38.374l38.374,38.374c0.397,0.396,0.937,0.62,1.498,0.62 s1.101-0.224,1.498-0.62l5.473-5.476c0.826-0.827,0.826-2.167,0-2.994L55.931,47.463z"/></g></svg>
+            </button>
+            <button className="modal-search" @click="searchMovie">
+              <img :src="`data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTciIHZpZXdCb3g9IjAgMCAxNyAxNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCjxwYXRoIGQ9Ik0xMS4xMDg3IDExLjEwODdMMTYgMTZNMTIuNzM5MSA2Ljg2OTU3QzEyLjczOTEgMTAuMTExMiAxMC4xMTEyIDEyLjczOTEgNi44Njk1NyAxMi43MzkxQzMuNjI3ODkgMTIuNzM5MSAxIDEwLjExMTIgMSA2Ljg2OTU3QzEgMy42Mjc4OSAzLjYyNzg5IDEgNi44Njk1NyAxQzEwLjExMTIgMSAxMi43MzkxIDMuNjI3ODkgMTIuNzM5MSA2Ljg2OTU3WiIgc3Ryb2tlPSIjMzY1N0NCIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+DQo8L3N2Zz4NCg==`" alt="search" />
+            </button>
+          </div>
+          </div>
+
+          <div v-if="isLoading" class="modal-loading">
+          <span class="loader"></span>
+          </div>
+
+          <div v-if="errorMessage" class="modal-error">
+          {{ errorMessage }}
+          </div>
+
+          <div v-if="searchResults.length" className="modal-search_output">
+          <div className='search_movie_card' v-for="result in searchResults" :key="result.id" @click="setMovie(result?.kinopoisk_id)">
+          <div className="search_movie_card-img"><img :src="result?.poster" :alt="result?.name" /></div>
+          <div className="search_movie_card-info">
+              <span className='search_movie_card-title'>{{result?.name}} ({{movieTypes[result?.type]}} {{result.year}})</span>
+              <span className='search_movie_card-en_title'>{{result?.origin_name}}</span>
+              <span className='search_movie_card-genres' v-if="result?.genre">
+                  <span v-for="(genre, index) in Object.values(result?.genre)" :key="index">{{ genre }}<span v-if="index < Object.values(result?.genre).length - 1">, </span></span>
+              </span>
+          </div>
+          <div className="search_movie_card-rating" v-if="result?.imdb || result?.kinopoisk">{{ result?.imdb || result?.kinopoisk }}</div>
+        </div>
+          </div>
+
+          <div class="room-movie" v-if="currentMovieId">
+            <KiniboxWidget :kinopoiskId="currentMovieId" :key="currentMovieId" />
+          </div>
+      </div>
+
       <div class="sidebar">
         <div class="users-section">
           <h2 class="section-title">
@@ -70,6 +110,9 @@
 <script>
 import { io } from 'socket.io-client';
 import defaultAvatar from '../assets/Media/profile/default.png';
+import SearchCard from '@/Components/SearchCard.vue';
+import { fetchFreeAPI } from '@/Services/apiService';
+import KiniboxWidget from '@/Components/KiniboxWidget.vue';
 
 export default {
   data() {
@@ -85,8 +128,25 @@ export default {
           socket: null,
           isLeader: false,
           defaultAvatar,
-          user: null
+          user: null,
+          searchInput: "",
+          searchResults: [],
+          errorMessage: null,
+          isLoading: false,
+          movieTypes: {
+                film: "Фильм",
+                "series": "Сериал",
+                cartoon: "Мультфильм",
+                "cartoon-series": "Мультсериал",
+                "anime-series": "Аниме",
+                "anime-film": "Аниме",
+            },
+            currentMovieId: null
       };
+  },
+  components: {
+    SearchCard,
+    KiniboxWidget
   },
   async created() {
       try {
@@ -270,7 +330,44 @@ export default {
                   container.scrollTop = container.scrollHeight;
               }
           });
+      },
+      async searchMovie() {
+      if (this.searchInput !== '') {
+        try {
+          this.isLoading = true;
+          this.searchResults = [];
+          this.errorMessage = null;
+
+          let a = await fetchFreeAPI(`&name=${this.searchInput}`);
+          if (a.length !== 0) {
+            this.errorMessage = null;
+            this.searchResults = a;
+          } else {
+            this.searchResults = [];
+            this.errorMessage = 'Фильм не найден.';
+          }
+          this.isLoading = false;
+        } catch (error) {
+          console.error("Component error", error);
+          this.errorMessage = "Ошибка при выполнении запроса";
+          this.searchResults = [];
+          this.isLoading = false;
+        }
+
+      } else {
+        this.errorMessage = "Введите название фильма";
+        this.searchResults = [];
+        this.isLoading = false;
       }
+    },
+    clearSearch(){
+      this.searchInput = ''
+      this.searchResults = []
+    },
+    setMovie(movieId){
+      this.currentMovieId = movieId
+      this.searchResults = []
+    }
   }
 };
 </script>
@@ -342,9 +439,262 @@ export default {
 
 .room-content {
   display: flex;
+  justify-content: space-between;
   flex: 1;
   overflow: hidden;
   background-color: #1e2538;
+}
+
+.room-main{
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding-top: 40px;
+  background-color: #1b2133;
+  position: relative;
+}
+
+.room-search {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+    min-height: 55px;
+    border-radius: 10px;
+
+  input {
+    width: 700px;
+    min-height: 55px;
+    border: 1px solid #fff;
+    outline: none;
+    padding-left: 15px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+}
+
+.modal-butts {
+  background-color: #fff;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  padding-right: 5px;
+  border: 1px solid #fff;
+
+  button {
+    width: 50px;
+    height: 50px;
+    border: 1px solid white;
+    outline: none;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.4s;
+
+    &:hover {
+      border: 1px solid #3657cb;
+    }
+
+    img {
+      pointer-events: none;
+    }
+  }
+}
+
+.modal-search {
+  border-radius: 10px;
+  background-color: #f2f60f;
+}
+
+.modal-clear {
+  margin-right: 10px;
+  border-radius: 10px;
+  background-color: transparent;
+
+  svg{
+    width: 15px;
+  }
+}
+
+.modal-error{
+  width: 825px;
+  min-height: 173px;
+  margin-top: 20px;
+  background-color: #1e2538;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+  position: absolute;
+  z-index: 120;
+  top: 90px;
+}
+
+.modal-loading{
+  width: 825px;
+  min-height: 173px;
+  margin-top: 20px;
+  background-color: #1e2538;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 120;
+  top: 90px;
+}
+
+.modal-search_output {
+  margin-top: 20px;
+  width: 825px;
+  max-height: 500px;
+  overflow-y: scroll;
+  position: absolute;
+  z-index: 120;
+  top: 90px;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #1e2538;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #3657cb;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #1f4ae6;
+  }
+}
+
+.search_movie_card {
+  width: calc(100% - 7px);
+  background-color: #1e2538;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 13px;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+
+  &:not(:first-child){
+    margin-top: 10px;
+  }
+}
+
+.search_movie_card-img {
+  width: 100px;
+  display: flex;
+
+  img {
+    width: 100%;
+    border-radius: 5px;
+  }
+}
+
+.search_movie_card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.search_movie_card-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24.78px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: white;
+  max-width: 600px;
+}
+
+.search_movie_card-en_title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.9px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #ffffffb2;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.search_movie_card-genres {
+  font-family: Qanelas;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.28px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #f2f60f;
+}
+
+.search_movie_card-rating {
+  margin-left: auto;
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #4bcb36;
+  color: white;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 22.3px;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  background: #FFF;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 6px;
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  color: #3657cb;
+  background: currentColor;
+  border-radius: 50%;
+  box-shadow: 25px 2px, 10px 22px;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.room-movie{
+  width: 90%;
+  margin-top: auto;
+  aspect-ratio: 16 / 9;
 }
 
 .sidebar {
@@ -353,7 +703,8 @@ export default {
   flex-direction: column;
   background-color: #1b2133;
   border-left: 1px solid #2a3657;
-  min-width: 350px;
+  width: 25%;
+  /* min-width: 350px; */
 }
 
 .users-section,

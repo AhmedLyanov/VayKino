@@ -257,7 +257,7 @@ export default {
     onMounted(() => {
       checkAuth();
       createStars();
-      setInterval(checkAuth, 100);
+      setInterval(checkAuth, 5000);
     });
 
     return {
