@@ -44,13 +44,15 @@
                         <span>ЛИМИТ</span>
                     </div>
                 </div>
-
                 <div class="server__box">
                     <template v-if="filteredServers.length > 0">
                         <div class="server__information_box" v-for="(server, index) in filteredServers" :key="index" @click="joinServer(server)">
                             <div class="private_system">
                                 <span class="private_system_icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" :fill="server.isPrivate ? 'red' : 'green'">
+                                    <svg v-if="!server.isPrivate" width="24" height="24" viewBox="0 0 24 24" fill="green">
+                                        <path d="M17 8V7c0-2.757-2.243-5-5-5S7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2H9V7c0-1.654 1.346-3 3-3s3 1.346 3 3v1h2zm1 4 .002 8H6v-8h12z"/>
+                                    </svg>
+                                    <svg  v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red">
                                         <path d="M12 2C9.243 2 7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5zm6 10 .002 8H6v-8h12zm-9-2V7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9z"/>
                                     </svg>
                                 </span>
@@ -134,12 +136,12 @@ export default {
         }
     },
     computed: {
-    filteredServers() {
-        return this.servers.filter(server =>
-            server.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-        );
-    }
-},
+        filteredServers() {
+            return this.servers.filter(server =>
+                server.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+            );
+        }
+    },
     async created() {
         await this.fetchServers();
     },
