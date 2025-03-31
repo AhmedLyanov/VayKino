@@ -150,7 +150,7 @@ export default {
   },
   async created() {
       try {
-          const userData = localStorage.getItem('user');
+          const userData = localStorage.getItem('currentUser');
           if (!userData) {
               throw new Error('Пользователь не авторизован');
           }
@@ -271,7 +271,7 @@ export default {
                   throw new Error('Ошибка при выходе из комнаты');
               }
 
-              const user = JSON.parse(localStorage.getItem('user'));
+              const user = JSON.parse(localStorage.getItem('currentUser'));
               user.currentRoom = null;
               localStorage.setItem('user', JSON.stringify(user));
 

@@ -75,6 +75,33 @@
               </div>
             </div>
           </div>
+          <div class="achievements_container">
+    <div class="achievements_wrapper">
+      <div class="title_achievments">
+        <span>Достижения</span>
+      </div>
+      <div class="achievements_grid">
+        <div 
+          v-for="achievement in achievements" 
+          :key="achievement.id" 
+          class="achievement_item"
+        >
+          <div class="achievement_icon">
+            <img 
+              :src="getAchievementIconUrl(achievement.iconUrl)" 
+              :alt="achievement.name" 
+            />
+          </div>
+          <div class="achievement_name">
+            {{ achievement.name }}
+          </div>
+        </div>
+        <div v-if="achievements.length === 0" class="no-achievements">
+          <span>У вас пока нет достижений</span>
+        </div>
+      </div>
+    </div>
+  </div>
         </div>
       </div>
     </div>
@@ -179,6 +206,8 @@ import axios from 'axios';
 import { useToast } from 'vue-toast-notification';
 import defaultAvatar from '../assets/Media/profile/default.png';
 
+
+const achievements = ref([]);
 const userProfile = ref({
   name: '',
   surname: '',
@@ -222,6 +251,22 @@ const fetchUserProfile = async () => {
       console.error('Ошибка при получении данных пользователя:', error);
     }
   }
+};
+const fetchAchievements = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+  
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/achievements`, {
+      headers: { 'Authorization': token }
+    });
+    achievements.value = response.data;
+  } catch (error) {
+    console.error('Ошибка при получении достижений:', error);
+  }
+};
+const getAchievementIconUrl = (iconUrl) => {
+  return `${import.meta.env.VITE_API_BASE_URL}${iconUrl}`;
 };
 const saveProfile = async () => {
   const token = localStorage.getItem('token');
@@ -271,7 +316,13 @@ const refreshToken = async () => {
     logout();
   }
 };
-
+const startPeriodicUpdate = () => {
+  fetchUserProfile();
+  setInterval(() => {
+   
+    fetchAchievements();
+  }, 1000); 
+};
 const logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('refreshToken');
@@ -307,6 +358,9 @@ const handleFileUpload = async (event) => {
 
 onMounted(() => {
   fetchUserProfile();
+  fetchAchievements();
+  startPeriodicUpdate();
+ 
 });
 </script>
 <style scoped>
@@ -380,6 +434,19 @@ onMounted(() => {
   padding: 40px;
 }
 
+.achievement_box{
+  display: grid;
+  height: 100%;
+  padding-top: 20px;
+}
+
+.title_achievments{
+  font-weight: 600;
+  font-size: 1.5em;
+  line-height: 22.01px;
+  color: #ffffff;
+}
+
 .description_box_user {
   font-weight: 100;
   font-size: 17px;
@@ -407,6 +474,7 @@ onMounted(() => {
   z-index: 1000;
 }
 
+
 @keyframes fadeInOut {
   0% { opacity: 0; }
   10% { opacity: 1; }
@@ -432,7 +500,74 @@ onMounted(() => {
   align-items: center;
   gap: 5px;
 }
+.achievements_container {
+  margin-top: 30px;
+}
 
+
+.achievements_grid {
+  display: flex;
+  gap: 25px;
+}
+.achievements_container {
+  margin-top: 30px;
+}
+
+.achievements_wrapper {
+  background: transparent;
+  padding: 10px 0;
+}
+
+.title_achievments {
+  font-weight: 600;
+  font-size: 2.0em;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+
+.achievement_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  width: 160px;
+}
+
+.achievement_icon {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.achievement_icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+}
+
+.achievement_name {
+  margin-top: 5px;
+  font-size: 1.0em;
+  text-align: center;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.no-achievements {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 20px;
+  color: #777;
+  font-style: italic;
+  background: transparent;
+}
 .profile_settings_button_container {
   width: 147px;
   height: 51px;
@@ -504,7 +639,6 @@ onMounted(() => {
   color: #ffffff;
   min-height: 70px;
 }
-
 .profile-edit-input input {
   width: 100%;
   height: 100%;
