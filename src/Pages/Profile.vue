@@ -508,6 +508,7 @@ onMounted(() => {
 .achievements_grid {
   display: flex;
   gap: 25px;
+  flex-wrap: wrap;
 }
 .achievements_container {
   margin-top: 30px;
@@ -531,35 +532,39 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   background: transparent;
-  width: 160px;
+  margin-bottom: 20px; 
 }
 
+
 .achievement_icon {
-  width: 150px;
+  width: 150px; 
   height: 150px;
+  border-radius: 50%; 
+  overflow: hidden; 
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #2A3348; 
+  border: 3px solid #F2F60F; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 
 .achievement_icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  object-position: center; 
 }
 
 .achievement_name {
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 1.0em;
   text-align: center;
   color: #ffffff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal; 
+  word-wrap: break-word; 
   max-width: 100%;
 }
-
 .no-achievements {
   grid-column: 1 / -1;
   text-align: center;
