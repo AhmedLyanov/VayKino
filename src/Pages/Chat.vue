@@ -1,6 +1,6 @@
 <template>
   <div class="chat-container" v-if="currentUser">
-    <div class="chat-messages">
+    <div class="chat-messages" ref="messagesContainer">
       <div class="hello_chat_table">
         <div class="hello-chat-header">
           <div class="hello-chat-title">Привествуем и поздравляем вас, {{ currentUser.name }}!</div>
@@ -94,7 +94,6 @@ export default {
       recorder: null,
       isModalPosterOpen: false,
       poster: "",
-      pendingFiles: new Map()
     };
   },
   components: {
@@ -120,35 +119,28 @@ export default {
     ...mapActions(['toggleEmailMailing']),
 
     setupSocketConnection() {
-      this.socket = io(`${import.meta.env.VITE_API_BASE_URL}/`, {
-        auth: {
-          token: localStorage.getItem('token')
-        },
-        reconnection: true,
-        reconnectionAttempts: 5,
-        reconnectionDelay: 1000
-      });
-
-      this.socket.on("connect", () => {
-        console.log("WebSocket connected");
-      });
-
-      this.socket.on("newMessage", (message) => {
-        if (!this.pendingFiles.has(message._id)) {
-          this.addMessage(message);
-        } else {
-          this.messages = this.messages.map(m => 
-            m._id === message._id ? message : m
-          );
-          this.pendingFiles.delete(message._id);
-        }
-        this.scrollToBottom();
-      });
-
-      this.socket.on("connect_error", (error) => {
-        console.error("WebSocket connection error:", error);
-      });
+  this.socket = io(`${import.meta.env.VITE_API_BASE_URL}/`, {
+    auth: {
+      token: localStorage.getItem('token')
     },
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000
+  });
+
+  this.socket.on("connect", () => {
+    console.log("WebSocket connected");
+  });
+
+  this.socket.on("newMessage", (message) => {
+    this.addMessage(message);
+    this.scrollToBottom();
+  });
+
+  this.socket.on("connect_error", (error) => {
+    console.error("WebSocket connection error:", error);
+  });
+},
 
     addMessage(message) {
       this.messages.push(message);
@@ -176,75 +168,54 @@ export default {
     },
 
     async handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      
-      if (!file.type.startsWith("image/") && !file.type.startsWith("audio/")) {
-        const toast = useToast();
-        toast.error("Пожалуйста, выберите изображение или аудио файл.", {
-          position: 'top-right',
-          duration: 2000,
-          dismissible: false,
-        });
-        return;
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  if (!file.type.startsWith("image/") && !file.type.startsWith("audio/")) {
+    const toast = useToast();
+    toast.error("Пожалуйста, выберите изображение или аудио файл.", {
+      position: 'top-right',
+      duration: 2000,
+      dismissible: false,
+    });
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("sender", this.currentUser.login);
+  formData.append("avatarUrl", this.currentUser.avatarUrl);
+  formData.append("roomId", "global");
+
+  try {
+    const token = localStorage.getItem('token');
+    const endpoint = file.type.startsWith("image/") 
+      ? "upload-image-message" 
+      : "upload-voice-message";
+    
+    await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/${endpoint}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${token}`
+        }
       }
+    );
+    
+    event.target.value = "";
+  } catch (error) {
+    console.error("Ошибка при отправке файла:", error);
+    const toast = useToast();
+    toast.error("Ошибка при загрузке файла. Попробуйте еще раз.", {
+      position: 'top-right',
+      duration: 2000,
+      dismissible: false,
+    });
+  }
+},
 
-      const tempId = Date.now().toString();
-      const tempMessage = {
-        _id: tempId,
-        sender: this.currentUser.login,
-        avatarUrl: this.currentUser.avatarUrl,
-        timestamp: new Date()
-      };
-
-      if (file.type.startsWith("image/")) {
-        tempMessage.imageUrl = URL.createObjectURL(file);
-      } else if (file.type.startsWith("audio/")) {
-        tempMessage.audioUrl = URL.createObjectURL(file);
-      }
-
-      this.pendingFiles.set(tempId, tempMessage);
-      this.addMessage(tempMessage);
-      
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("sender", this.currentUser.login);
-      formData.append("avatarUrl", this.currentUser.avatarUrl);
-      formData.append("roomId", "global");
-
-      try {
-        const endpoint = file.type.startsWith("image/") 
-          ? "upload-image-message" 
-          : "upload-voice-message";
-        
-        const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/${endpoint}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            }
-          }
-        );
-
-        const savedMessage = response.data;
-        this.socket.emit("confirmUpload", { tempId, savedMessage });
-        
-        event.target.value = "";
-      } catch (error) {
-        console.error("Ошибка при отправке файла:", error);
-        
-        this.messages = this.messages.filter(m => m._id !== tempId);
-        this.pendingFiles.delete(tempId);
-        
-        const toast = useToast();
-        toast.error("Ошибка при загрузке файла. Попробуйте еще раз.", {
-          position: 'top-right',
-          duration: 2000,
-          dismissible: false,
-        });
-      }
-    },
 
     async sendMessage() {
   if (!this.newMessage.trim()) return;
@@ -262,7 +233,7 @@ export default {
         text: this.newMessage,
         avatarUrl: this.currentUser.avatarUrl,
         role: this.currentUser.role,
-        roomId: "global" // Добавляем roomId для совместимости с сервером
+        roomId: "global" 
       }),
     });
 
@@ -285,14 +256,13 @@ export default {
   }
 },
 
-    scrollToBottom() {
-      this.$nextTick(() => {
-        const chatMessages = this.$el.querySelector(".chat-messages");
-        if (chatMessages) {
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-      });
-    },
+scrollToBottom() {
+  this.$nextTick(() => {
+    if (this.$refs.messagesContainer) {
+      this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
+    }
+  });
+},
 
     formatTime(timestamp) {
       const date = new Date(timestamp);
@@ -328,57 +298,42 @@ export default {
     },
 
     async stopRecording() {
-      this.isRecording = false;
-      return new Promise(resolve => {
-        this.recorder.stopRecording(async () => {
-          const blob = this.recorder.getBlob();
-          await this.sendVoiceMessage(blob);
-          this.recorder.getDataURL().then(dataURL => {
-            URL.revokeObjectURL(dataURL);
-          });
-          resolve();
-        });
+  this.isRecording = false;
+  return new Promise((resolve) => {
+    this.recorder.stopRecording(() => {
+      const blob = this.recorder.getBlob();
+      this.sendVoiceMessage(blob).then(resolve);
+      
+  
+      this.recorder.getDataURL((dataURL) => {
+        URL.revokeObjectURL(dataURL);
       });
-    },
-
+    });
+  });
+},
     async sendVoiceMessage(blob) {
-      const tempId = Date.now().toString();
-      const tempMessage = {
-        _id: tempId,
-        sender: this.currentUser.login,
-        avatarUrl: this.currentUser.avatarUrl,
-        audioUrl: URL.createObjectURL(blob),
-        timestamp: new Date()
-      };
+  const formData = new FormData();
+  formData.append("file", blob, "voice-message.webm");
+  formData.append("sender", this.currentUser.login);
+  formData.append("avatarUrl", this.currentUser.avatarUrl);
+  formData.append("roomId", "global");
 
-      this.pendingFiles.set(tempId, tempMessage);
-      this.addMessage(tempMessage);
-
-      const formData = new FormData();
-      formData.append("file", blob, "voice-message.webm");
-      formData.append("sender", this.currentUser.login);
-      formData.append("avatarUrl", this.currentUser.avatarUrl);
-      formData.append("roomId", "global");
-
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/upload-voice-message`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            }
-          }
-        );
-
-        const savedMessage = response.data;
-        this.socket.emit("confirmUpload", { tempId, savedMessage });
-      } catch (error) {
-        console.error("Ошибка при отправке голосового сообщения:", error);
-        this.messages = this.messages.filter(m => m._id !== tempId);
-        this.pendingFiles.delete(tempId);
+  try {
+    const token = localStorage.getItem('token');
+    await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/upload-voice-message`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${token}`
+        }
       }
-    },
+    );
+  } catch (error) {
+    console.error("Ошибка при отправке голосового сообщения:", error);
+  }
+},
 
     shouldShowAvatar(index) {
       if (index === 0) return true;
@@ -446,26 +401,14 @@ export default {
     }
   },
   beforeUnmount() {
-    if (this.socket) {
-      this.socket.disconnect();
-    }
-    
-    this.pendingFiles.forEach(message => {
-      if (message.imageUrl && message.imageUrl.startsWith('blob:')) {
-        URL.revokeObjectURL(message.imageUrl);
-      }
-      if (message.audioUrl && message.audioUrl.startsWith('blob:')) {
-        URL.revokeObjectURL(message.audioUrl);
-      }
-    });
-    
-    if (this.recorder) {
-      this.recorder.destroy();
-    }
-  },
-  mounted() {
-    this.toggleEmailMailing(false);
+  if (this.socket) {
+    this.socket.disconnect();
   }
+  
+  if (this.recorder) {
+    this.recorder.destroy();
+  }
+}
 }
 </script>
 <style scoped>
