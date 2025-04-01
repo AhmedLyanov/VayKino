@@ -6,13 +6,18 @@
           <button class="close-button" @click="close">×</button>
         </div>
         <div class="container_avatarUrl">
-          <div class="user_avatar">
-            <img 
-              :src="effectiveAvatar" 
-              @error="handleImageError"
-              alt="Аватар" 
-              class="avatar" 
-            />
+          <div class="pc_with_avatar">
+            <div class="container_pc">
+              <img src="../assets/Media/Components/PC.png" alt="Компьютер" class="pc-image">
+            </div>
+            <div class="user_avatar">
+              <img 
+                :src="effectiveAvatar" 
+                @error="handleImageError"
+                alt="Аватар" 
+                class="avatar" 
+              />
+            </div>
           </div>
         </div>
         <div class="buy_container">
@@ -61,45 +66,44 @@ export default {
       this.$emit('close');
     },
     async buyPremium() {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    this.$toast.error('Требуется авторизация', {
-      position: 'top-right',
-      duration: 2000
-    });
-    return;
-  }
+      const token = localStorage.getItem('token');
+      if (!token) {
+        this.$toast.error('Требуется авторизация', {
+          position: 'top-right',
+          duration: 2000
+        });
+        return;
+      }
 
-  try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL}/buy-premium`, 
-      {},
-      { headers: { 'Authorization': token } }
-    );
-    
-
-    const userResponse = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/user/me`,
-      { headers: { 'Authorization': token } }
-    );
-    
-    localStorage.setItem('currentUser', JSON.stringify(userResponse.data));
-    
-    this.$toast.success(response.data.message, {
-      position: 'top-right',
-      duration: 2000
-    });
-  
-    this.$emit('update-user', userResponse.data);
-    this.close();
-  } catch (error) {
-    const message = error.response?.data?.error || 'Ошибка сервера';
-    this.$toast.error(message, {
-      position: 'top-right',
-      duration: 2000
-    });
-  }
-}
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/buy-premium`, 
+          {},
+          { headers: { 'Authorization': token } }
+        );
+        
+        const userResponse = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/user/me`,
+          { headers: { 'Authorization': token } }
+        );
+        
+        localStorage.setItem('currentUser', JSON.stringify(userResponse.data));
+        
+        this.$toast.success(response.data.message, {
+          position: 'top-right',
+          duration: 2000
+        });
+      
+        this.$emit('update-user', userResponse.data);
+        this.close();
+      } catch (error) {
+        const message = error.response?.data?.error || 'Ошибка сервера';
+        this.$toast.error(message, {
+          position: 'top-right',
+          duration: 2000
+        });
+      }
+    }
   },
   created() {
     this.$toast = useToast();
@@ -107,6 +111,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .modal-overlay {
   position: fixed;
@@ -134,7 +139,7 @@ export default {
   text-align: center;
 }
 
-.modal-body{
+.modal-body {
   position: absolute;
   height: 100%;
   align-content: space-between;
@@ -143,42 +148,65 @@ export default {
   width: 100%;
 }
 
-.container_avatarUrl{
+.container_avatarUrl {
   height: 100%;
-  display: grid;
-  justify-items: flex-end;
-  padding-right: 150px ;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.user_avatar{
-  width: 300px;
-  height: 300px;
-  border-radius: 100%;
-  background-color: #ccc;
+.pc_with_avatar {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+}
+
+.container_pc {
+  position: relative;
+  z-index: 1;
+}
+
+.pc-image {
+  max-width: 75%;
+  height: auto;
+}
+
+.user_avatar {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 23%;
+  height: 45%;
+  border-radius: 100%; 
+  overflow: hidden;
+  z-index: 2;
+  border: 2px solid rgba(255, 215, 0, 0.3); 
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); 
 }
 
 .user_avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 100%;
 }
 
-.buy_container{
+.buy_container {
   display: flex;
   width: 100%;
   color: #ffd700;
-  justify-content: space-between;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-.button_buy{
+.button_buy {
   display: grid;
   align-items: center;
 }
 
 .modal-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -196,14 +224,18 @@ export default {
   background: #ffd700;
   color: #000;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 30px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
 }
 
 .buy-button:hover {
   background: #ffc107;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
 }
 </style>
