@@ -6,7 +6,7 @@
 
                 <div class="list-cont">
                     <Card v-if="movies.length" v-for="(film, index) in movies" :data="film" :contextMenu="false" :key="index" />
-                    <Card v-else v-for="key in 16" :key="key" :data="{}" />
+                    <Card v-else v-for="key in 20" :key="key" :data="{}" />
                 </div>
             </div>
         </div>

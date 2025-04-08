@@ -340,7 +340,7 @@
 
       <div class="movie-watch" v-if="id">
         <BlockHeader :title="'Смотреть онлайн'" :text="false" :link="false" />
-        <div class="watch_movie-main" v-if="data.year < 2023 || isPremium">
+        <div class="watch_movie-main" v-if="data.year < 2025 || isPremium">
           <KiniboxWidget :kinopoiskId="id" />
         </div>
 

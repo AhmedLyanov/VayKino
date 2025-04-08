@@ -38,12 +38,12 @@
 
       <div class="header-center">
         <nav>
-          <router-link to="/premiere">Афиша</router-link>
-          <router-link to="/posts">Новости</router-link>
-          <router-link to="/lists">Подборки</router-link>
-          <router-link to="/favourites">Избранное</router-link>
-          <router-link to="/chat">Премиум-Чат</router-link>
-          <router-link to="/kinoroom" class="cosmic-link" @mouseenter="activateStars" @mouseleave="resetStars">
+          <router-link to="/premiere" active-class="active">Афиша</router-link>
+          <router-link to="/posts" active-class="active">Новости</router-link>
+          <router-link to="/lists" active-class="active">Подборки</router-link>
+          <router-link to="/favourites" active-class="active">Избранное</router-link>
+          <router-link to="/chat" active-class="active">Премиум-Чат</router-link>
+          <router-link to="/kinoroom" active-class="active" class="cosmic-link" @mouseenter="activateStars" @mouseleave="resetStars">
             <span class="cosmic-text">Кинотеатр</span>
             <span v-for="(star, index) in stars" :key="index" class="cosmic-star" :style="star.style"></span>
           </router-link>

@@ -5,6 +5,7 @@
             <div class="movie-card-img">
                 <div v-if="hasRating" class="movie-card-rating" :style="{ backgroundColor: ratingBackgroundColor }">{{ formattedRating }}</div>
                 <div v-if="cardInfo?.relationType" class="movie-card-relationType">{{ relationTypeText }}</div>
+                <div v-if="cardInfo?.year === 2025 && !cardInfo?.relationType" class="movie-card-isNew">Новинка</div>
                 <img :src="posterUrl" :alt="filmTitle" />
             </div>
             <div class="movie-card-title">{{ filmTitle }}</div>
@@ -54,7 +55,7 @@ export default {
                 7: { color: "#99CC00" },
                 8: { color: "#66CC00" },
                 9: { color: "#33CC00" },
-                10: { color: "#00CC00" },
+               10: { color: "#00CC00" },
             },
             showMenu: false,
             menuX: 0,
@@ -194,6 +195,10 @@ export default {
         img {
             scale: 1.02;
         }
+
+        .movie-card-isNew{
+            color: rgb(34, 26, 26);
+        }
     }
 }
 
@@ -259,6 +264,25 @@ export default {
     left: 15px;
     background-color: #3657cb;
     z-index: 9;
+
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 18.58px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.movie-card-isNew{
+    padding: 5px 13px;
+    border-radius: 5px;
+    position: absolute;
+    color: rgb(34, 26, 26);
+    top: 15px;
+    left: 15px;
+    background-color: #f2f60f;
+    z-index: 9;
+    box-shadow: 0 0 10px 3px rgba(242, 246, 15, 0.7);
 
     font-size: 15px;
     font-weight: 700;

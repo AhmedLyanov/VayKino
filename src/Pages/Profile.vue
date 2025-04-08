@@ -344,12 +344,14 @@ const handleFileUpload = async (event) => {
   const formData = new FormData();
   formData.append('avatar', file);
   try {
+    const token = localStorage.getItem('token');
     const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/upload-avatar`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        'Authorization': token
       },
     });
-    avatarUrl.value = response.data.url;
+    avatarUrl.value = response.data.url; 
     userProfile.value.avatarUrl = response.data.url;
   } catch (error) {
     console.error('Ошибка при загрузке аватара:', error);
