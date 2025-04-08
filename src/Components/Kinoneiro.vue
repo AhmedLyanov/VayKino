@@ -136,6 +136,7 @@ export default {
     }
 }
 </script>
+
 <style scoped>
 .chat_open_button {
     position: fixed;
@@ -177,6 +178,16 @@ export default {
 }
 .chat_open_button img {
     width: 100%;
+}
+
+.chat_open_button {
+  animation: pulse 1.5s linear infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); rotate: 0deg; }
+  50% { transform: scale(1.06); rotate: 30deg; }
+  100% { transform: scale(1); rotate: 0deg; }
 }
 
 

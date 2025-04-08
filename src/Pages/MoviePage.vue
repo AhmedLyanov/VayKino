@@ -378,7 +378,6 @@
                 </div>
                 <div class="info_account">
                   <p class="name_user_text_comment">{{ preview.author }}</p>
-                  <Rating :rating="preview.rating" />
                 </div>
               </div>
               <div class="info-preview">
