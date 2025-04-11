@@ -12,14 +12,14 @@ body {
 
   &.no-scroll {
     overflow: hidden;
-    padding-right: 17px;
+    padding-right: 7px;
 
     .bg-joker {
-      width: calc(100% - 17px);
+      width: calc(100% - 7px);
     }
 
     .bg-movie_cadr {
-      width: calc(100% - 17px);
+      width: calc(100% - 7px);
     }
   }
 

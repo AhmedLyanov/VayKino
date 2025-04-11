@@ -31,6 +31,7 @@ import Anime from './Pages/Anime.vue';
 import AdvancedSearch from './Pages/AdvancedSearch.vue';
 import Kinoneiro from './Components/Kinoneiro.vue';
 import Kinoroom from './Pages/kinoroom.vue';
+import Notifications from './Pages/Notifications.vue';
 
 
 const router = createRouter({
@@ -145,6 +146,11 @@ const router = createRouter({
             path: "/profile",
             name: "profile",
             component: Profile,
+        },
+        {
+            path: "/notifications",
+            name: "Notifications",
+            component: Notifications,
         },
         {
             path: "/registration",

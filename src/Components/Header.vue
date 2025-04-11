@@ -78,6 +78,7 @@
           </div> -->
           <div v-if="showDropdown" class="dropdown">
             <button @click="goToProfile">Профиль</button>
+            <button @click="goToNotifacations">Уведомления</button>
             <button @click="logout">Выйти</button>
           </div>
         </div>
@@ -293,6 +294,10 @@ export default {
     },
     goToProfile() {
       this.$router.push('/profile');
+      this.showDropdown = false;
+    },
+    goToNotifacations() {
+      this.$router.push('/notifications');
       this.showDropdown = false;
     },
     showModal() {
