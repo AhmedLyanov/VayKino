@@ -266,7 +266,7 @@
                 <div class="movies" v-if="movies.length">
                     <Card v-for="(film, index) in movies" :contextMenu="false" :data="film" :key="index" />
                 </div>
-                <div class="movies-loadmore" v-if="movies.length" @click="searchPage++">Загрузить еще</div>
+                <div class="movies-loadmore" v-if="movies.length && !(movies.length < 40)" @click="searchPage++">Загрузить еще</div>
             </div>
         </div>
     </main>

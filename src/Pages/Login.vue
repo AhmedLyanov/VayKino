@@ -34,12 +34,24 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from "vue-toast-notification";
+import { onMounted } from 'vue';
+import { useStore } from 'vuex';
 
 const router = useRouter();
 const toast = useToast();
 const login = ref('');
 const password = ref('');
 const error = ref('');
+
+const store = useStore();
+
+onMounted(() => {
+  hideEmailMailing();
+});
+
+const hideEmailMailing = () => {
+  store.dispatch('toggleEmailMailing', false);
+};
 
 document.title = "Вход";
 const onSubmit = async () => {

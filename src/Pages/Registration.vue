@@ -107,7 +107,8 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from 'vue';
+import { ref, computed, reactive, onMounted } from 'vue';
+import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 import axios from 'axios';
@@ -130,6 +131,16 @@ const errors = reactive({
   password: '',
   passwordCheck: '',
   email: '',
+});
+
+const store = useStore();
+
+const hideEmailMailing = () => {
+  store.dispatch('toggleEmailMailing', false);
+};
+
+onMounted(() => {
+  hideEmailMailing();
 });
 
 document.title = "Регистрация";

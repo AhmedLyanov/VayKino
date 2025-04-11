@@ -6,7 +6,7 @@ const API_200_REQUESTS = "https://api.kinopoisk.dev/v1.4/movie";
 const API_500_REQUESTS_VERSION1 = "https://kinopoiskapiunofficial.tech/api/v2.1/films/";
 const API_500_REQUESTS_VERSION2 = "https://kinopoiskapiunofficial.tech/api/v2.2/films/";
 const API_FETCH_ACTOR = "https://api.kinopoisk.dev/v1.4/person/";
-const API_FETCH_TO_LISTS = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=50&selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=rating&selectFields=genres&selectFields=poster&sortField=rating.kp&sortType=-1&lists=";
+const API_FETCH_TO_LISTS = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=40&selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=rating&selectFields=genres&selectFields=poster&sortField=rating.kp&sortType=-1&lists=";
 const API_FETCH_POSTERS = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=128&selectFields=id&selectFields=name&selectFields=poster&notNullFields=name&notNullFields=poster.url&lists=planned-to-watch-films";
 const API_FETCH_ACTORS = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&selectFields=name&selectFields=alternativeName&selectFields=persons&notNullFields=persons.id&notNullFields=persons.name&notNullFields=persons.photo&notNullFields=persons.description&notNullFields=persons.profession&notNullFields=persons.enProfession&id=";
 const API_200_REQUESTS_TOKEN = "5W6J03Z-ZNT4Y0V-MC7SVYX-WQS4ZEN";

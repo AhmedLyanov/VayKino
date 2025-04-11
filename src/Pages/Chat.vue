@@ -99,6 +99,9 @@ export default {
   components: {
     MediaPosterModal
   },
+  mounted(){
+    this.hideEmailMailing()
+  },
   async created() {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (!this.currentUser || !this.currentUser.premium) {
@@ -117,6 +120,10 @@ export default {
   },
   methods: {
     ...mapActions(['toggleEmailMailing']),
+
+    hideEmailMailing() {
+        this.toggleEmailMailing(false)
+    },
 
     setupSocketConnection() {
   this.socket = io(`${import.meta.env.VITE_API_BASE_URL}/`, {
