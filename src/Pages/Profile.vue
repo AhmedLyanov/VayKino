@@ -39,7 +39,7 @@
                 <span>Пол:</span>
               </div>
               <div class="value_parameter">
-                <span>{{ userProfile.gender || "Не определено" }}</span>
+                <span>{{ userProfile.gender || "Не указан" }}</span>
               </div>
             </div>
             <div class="parameter_user">
@@ -47,7 +47,7 @@
                 <span>День рождения:</span>
               </div>
               <div class="value_parameter">
-                <span>{{ userProfile.birthdate || "Не определено" }}</span>
+                <span>{{ userProfile.birthdate || "Не указан" }}</span>
               </div>
             </div>
             <div class="parameter_user">
@@ -55,7 +55,7 @@
                 <span>Страна:</span>
               </div>
               <div class="value_parameter">
-                <span>{{ userProfile.country || "Не определено" }}</span>
+                <span>{{ userProfile.country || "Не указана" }}</span>
               </div>
             </div>
             <div class="parameter_user">
@@ -63,7 +63,7 @@
                 <span>Город:</span>
               </div>
               <div class="value_parameter">
-                <span>{{ userProfile.city || "Не определено" }}</span>
+                <span>{{ userProfile.city || "Не указан" }}</span>
               </div>
             </div>
             <div class="parameter_user">
@@ -71,7 +71,7 @@
                 <span>Любимые жанры:</span>
               </div>
               <div class="value_parameter">
-                <span>{{ userProfile.genre || "Не определено" }}</span>
+                <span>{{ userProfile.genre || "Не указаны" }}</span>
               </div>
             </div>
           </div>
