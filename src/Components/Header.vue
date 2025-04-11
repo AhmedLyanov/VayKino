@@ -73,7 +73,9 @@
           <div class="avatar-container" @click="toggleDropdown" :class="{ 'premium-glow': isPremium }">
             <img :src="userAvatar || defaultAvatar" alt="Аватар" class="avatar">
           </div>
-
+          <!-- <div class="notifications">
+              <h1>{{ currentUser.notifications.title }}</h1>
+          </div> -->
           <div v-if="showDropdown" class="dropdown">
             <button @click="goToProfile">Профиль</button>
             <button @click="logout">Выйти</button>
