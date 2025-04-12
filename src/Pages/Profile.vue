@@ -539,8 +539,8 @@ onMounted(() => {
 
 
 .achievement_icon {
-  width: 150px; 
-  height: 150px;
+  width: 110px; 
+  height: 110px;
   border-radius: 50%; 
   overflow: hidden; 
   display: flex;
