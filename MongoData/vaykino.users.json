@@ -1,0 +1,1634 @@
+[{
+  "_id": {
+    "$oid": "67ce86f72a53c4ad201aff7a"
+  },
+  "name": "Адам",
+  "surname": "Аушев",
+  "login": "Nays06",
+  "password": "$2b$10$pJszECX.5uKxfNmrYTtUPeCiJ9iVOmTfSo2jwYsWbybP/XGnUMCfe",
+  "email": "AushevAM23@magas.ithub.ru",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1744310732894.gif",
+  "balance": 999999999,
+  "premium": true,
+  "__v": 5,
+  "birthdate": "2006-06-20",
+  "city": "Малгобек",
+  "country": "Россия",
+  "description": "Один из создателей сайта.",
+  "gender": "Мужской",
+  "genre": "Фэнтези",
+  "lastSeen": {
+    "$date": "2025-04-13T16:32:13.233Z"
+  },
+  "role": "user",
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T14:30:09.905Z"
+      },
+      "_id": {
+        "$oid": "67eaa6f1925f39816fc03950"
+      }
+    },
+    {
+      "achievementId": {
+        "$oid": "67eaafea4a354b9bd11af46c"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T16:26:58.039Z"
+      },
+      "_id": {
+        "$oid": "67eac252e4defe0ed21317be"
+      }
+    }
+  ],
+  "currentRoom": {
+    "$oid": "67fa44d19b48e416d8a498a9"
+  },
+  "notifications": [
+    {
+      "_id": {
+        "$oid": "67f937a69b48e416d89cfe4c"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "DevAhmed пригласил вас в комнату \"Шрек 3\"",
+      "roomId": {
+        "$oid": "67f91dafe71feead72458734"
+      },
+      "inviterId": {
+        "$oid": "67cf3a28b019d6e62e91b853"
+      },
+      "inviterLogin": "DevAhmed",
+      "roomName": "Шрек 3",
+      "link": "https://vaykino.ru/room/67f91dafe71feead72458734?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-11T15:39:18.641Z"
+      }
+    },
+    {
+      "_id": {
+        "$oid": "67fa444e9b48e416d8a44b1a"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "DevAhmed пригласил вас в комнату \"123\"",
+      "roomId": {
+        "$oid": "67fa44129b48e416d8a41410"
+      },
+      "inviterId": {
+        "$oid": "67cf3a28b019d6e62e91b853"
+      },
+      "inviterLogin": "DevAhmed",
+      "roomName": "123",
+      "link": "https://vaykino.ru/room/67fa44129b48e416d8a41410?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-12T10:45:34.026Z"
+      }
+    },
+    {
+      "_id": {
+        "$oid": "67fa44989b48e416d8a48f49"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "DevAhmed пригласил вас в комнату \"123\"",
+      "roomId": {
+        "$oid": "67fa44129b48e416d8a41410"
+      },
+      "inviterId": {
+        "$oid": "67cf3a28b019d6e62e91b853"
+      },
+      "inviterLogin": "DevAhmed",
+      "roomName": "123",
+      "link": "https://vaykino.ru/room/67fa44129b48e416d8a41410?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-12T10:46:48.716Z"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "67cf3a28b019d6e62e91b853"
+  },
+  "name": "Ахмед",
+  "surname": "Льянов",
+  "login": "DevAhmed",
+  "password": "$2b$10$NOoxR1F3SAFyLwEN1JGdI../iRRad4eXSJT3uIm.jsWb7FsrFFhuu",
+  "email": "LyanovAB23@magas.ithub.ru",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1741634146510.jpg",
+  "balance": 999951999,
+  "premium": true,
+  "__v": 5,
+  "birthdate": "2007-06-07",
+  "city": "Сунжа",
+  "country": "Россия",
+  "description": "Обычный парень, 17 лет, устал...очень...",
+  "gender": "Мужской",
+  "genre": "Фэнтези",
+  "premiumExpiresAt": {
+    "$date": "2025-05-06T14:00:32.133Z"
+  },
+  "lastSeen": {
+    "$date": "2025-04-14T07:25:45.214Z"
+  },
+  "role": "user",
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T14:30:09.932Z"
+      },
+      "_id": {
+        "$oid": "67eaa6f1925f39816fc03953"
+      }
+    },
+    {
+      "achievementId": {
+        "$oid": "67eaafea4a354b9bd11af46c"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T15:41:15.764Z"
+      },
+      "_id": {
+        "$oid": "67eab79bbd434b61eb0611a6"
+      }
+    }
+  ],
+  "currentRoom": {
+    "$oid": "67fa44129b48e416d8a41410"
+  },
+  "activityLevel": 0,
+  "notifications": [
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T11:57:28.426Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f903a864604d19e35ae49f"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T11:59:43.491Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9042f64604d19e35aebc3"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T11:59:54.184Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9043a64604d19e35aed12"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:00:06.899Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9044664604d19e35aeec7"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:04:51.062Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9056364604d19e35b034f"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:11.612Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9079364604d19e35b0e49"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:15.020Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9079764604d19e35b0e69"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:15.179Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9079764604d19e35b0e82"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:15.337Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9079764604d19e35b0e9d"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:15.523Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9079764604d19e35b0eba"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:15.694Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9079764604d19e35b0ed9"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:20:35.995Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9091364604d19e35b209f"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:20:37.258Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9091564604d19e35b20d7"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:20:37.416Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9091564604d19e35b2105"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:20:37.541Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9091564604d19e35b212c"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:20:37.679Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9091564604d19e35b215c"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:20:37.820Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9091564604d19e35b2187"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:20:38.058Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9091664604d19e35b21bb"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:20:38.191Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9091664604d19e35b21ea"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:24:22.101Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f909f664604d19e35b33f2"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:58:28.122Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f911f464604d19e35d1646"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T13:04:08.618Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f91348fcc8fcbf456175cd"
+      }
+    },
+    {
+      "_id": {
+        "$oid": "67f91512e7f233307031d01e"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "roomId": {
+        "$oid": "67f9039b64604d19e35ae43f"
+      },
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-11T13:11:46.435Z"
+      }
+    },
+    {
+      "_id": {
+        "$oid": "67f91597e7f233307031f00d"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "roomId": {
+        "$oid": "67f9039b64604d19e35ae43f"
+      },
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-11T13:13:59.610Z"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "67cfebc6a6a3f080df4d2d9d"
+  },
+  "name": "Aloha",
+  "surname": "Sweet",
+  "login": "Aloha",
+  "password": "$2b$10$IOj9fQ4gNXd38SJvZP19e.0Je/hVUs4PeGZts/W9lGlKK1RLSjxm6",
+  "email": "leshkaalb@gmail.com",
+  "avatarUrl": "",
+  "balance": 999999999,
+  "premium": true,
+  "__v": 3,
+  "birthdate": "2004-01-10",
+  "city": "Маями",
+  "country": "Африка",
+  "description": "Продаю бананы, людей, шучу не бананы:))",
+  "gender": "Женский",
+  "genre": "Аниме",
+  "lastSeen": {
+    "$date": "2025-04-12T10:38:22.918Z"
+  },
+  "role": "user",
+  "currentRoom": null,
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T14:30:09.938Z"
+      },
+      "_id": {
+        "$oid": "67eaa6f1925f39816fc03955"
+      }
+    },
+    {
+      "achievementId": {
+        "$oid": "67eaafea4a354b9bd11af46c"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T16:57:32.273Z"
+      },
+      "_id": {
+        "$oid": "67eac97c36339aeb168199dc"
+      }
+    }
+  ],
+  "notifications": [
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:16.946Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9079864604d19e35b0ef9"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:24.355Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f907a064604d19e35b0f2a"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:32.379Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f907a864604d19e35b0f56"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:36.104Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f907ac64604d19e35b0f70"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:26.993Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a7264604d19e35b40b1"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:45.197Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8564604d19e35b4340"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:45.603Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8564604d19e35b4358"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:45.870Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8564604d19e35b4380"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:46.221Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8664604d19e35b43aa"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:46.729Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8664604d19e35b43d6"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:47.016Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8764604d19e35b43f6"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:47.275Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8764604d19e35b4426"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:47.762Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8764604d19e35b4461"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:48.081Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8864604d19e35b448e"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:48.251Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8864604d19e35b44bd"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:29:14.745Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90b1a64604d19e35bacdc"
+      }
+    },
+    {
+      "_id": {
+        "$oid": "67fa1ecc9b48e416d8a2b63c"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "DevAhmed пригласил вас в комнату \"тест\"",
+      "roomId": {
+        "$oid": "67fa05479b48e416d89f1482"
+      },
+      "inviterId": {
+        "$oid": "67cf3a28b019d6e62e91b853"
+      },
+      "inviterLogin": "DevAhmed",
+      "roomName": "тест",
+      "link": "https://vaykino.ru/room/67fa05479b48e416d89f1482?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-12T08:05:32.370Z"
+      }
+    },
+    {
+      "_id": {
+        "$oid": "67fa201e9b48e416d8a317f8"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "DevAhmed пригласил вас в комнату \"тест\"",
+      "roomId": {
+        "$oid": "67fa05479b48e416d89f1482"
+      },
+      "inviterId": {
+        "$oid": "67cf3a28b019d6e62e91b853"
+      },
+      "inviterLogin": "DevAhmed",
+      "roomName": "тест",
+      "link": "https://vaykino.ru/room/67fa05479b48e416d89f1482?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-12T08:11:10.703Z"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "67d13cd1276434eb86808306"
+  },
+  "name": "Ivan",
+  "surname": "Ivanov",
+  "login": "ivanov",
+  "password": "$2b$10$9afWzYEu8s3WI8o1kRTmc.F3pbZOmkkxGtn1nxWlW7GT4cXAGGlN2",
+  "email": "aaasaaaasa@mail.ru",
+  "avatarUrl": "",
+  "balance": 0,
+  "premium": true,
+  "__v": 3,
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T14:30:09.945Z"
+      },
+      "_id": {
+        "$oid": "67eaa6f1925f39816fc03957"
+      }
+    }
+  ],
+  "lastSeen": {
+    "$date": "2025-04-08T07:42:47.072Z"
+  },
+  "role": "user",
+  "currentRoom": null,
+  "description": "zfaffafa",
+  "notifications": []
+},
+{
+  "_id": {
+    "$oid": "67d13cfb276434eb86808311"
+  },
+  "name": "Muslim",
+  "surname": "Berikhanov",
+  "login": "berikhanovw",
+  "password": "$2b$10$bQB49LETCcUO7AQn2mYhXenq75R/U2HAXpiNM0NnPvDtHraw3lawa",
+  "email": "BerikhanovMA24@magas.ithub.ru",
+  "avatarUrl": "",
+  "balance": 5000,
+  "premium": true,
+  "__v": 3,
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T14:30:09.951Z"
+      },
+      "_id": {
+        "$oid": "67eaa6f1925f39816fc03959"
+      }
+    }
+  ],
+  "lastSeen": {
+    "$date": "2025-03-31T12:07:02.489Z"
+  },
+  "role": "user",
+  "notifications": []
+},
+{
+  "_id": {
+    "$oid": "67d13de449fe07245bbca114"
+  },
+  "name": "Azrail",
+  "surname": "Tsuroev",
+  "login": "Ts_A",
+  "password": "$2b$10$z3vYjnEg0l1O0TD3VkxitOxqiEnke5IcK0lWQGjwyu57OcYTzVrZO",
+  "email": "azrailcuroev@gmail.com",
+  "avatarUrl": "",
+  "balance": 5000,
+  "premium": true,
+  "__v": 3,
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T14:30:09.956Z"
+      },
+      "_id": {
+        "$oid": "67eaa6f1925f39816fc0395b"
+      }
+    }
+  ],
+  "lastSeen": {
+    "$date": "2025-03-31T12:07:02.489Z"
+  },
+  "role": "user",
+  "notifications": []
+},
+{
+  "_id": {
+    "$oid": "67d13eac49fe07245bbca141"
+  },
+  "name": "mg",
+  "surname": "kh",
+  "login": "mgkh",
+  "password": "$2b$10$uIQoEIhnMT6dupgBXtRpiu/4iVrChjk9DvgZXdO.XY8kKNFebnvha",
+  "email": "Archakov_AM24@magas.ithub.ru",
+  "avatarUrl": "",
+  "balance": 5000,
+  "premium": true,
+  "__v": 2,
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T14:30:09.961Z"
+      },
+      "_id": {
+        "$oid": "67eaa6f1925f39816fc0395d"
+      }
+    }
+  ],
+  "lastSeen": {
+    "$date": "2025-03-31T12:07:02.489Z"
+  },
+  "role": "user",
+  "notifications": [
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:24:19.527Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f909f364604d19e35b33aa"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "67e5316ef542b69be3ee21f2"
+  },
+  "name": "Муса",
+  "surname": "Буружев",
+  "login": "Momentum",
+  "password": "$2b$10$cptHaWf4y8bwVaPfciSyH.3UuukQnFx5NH/MSh1sPvMVt5tFzCHpm",
+  "email": "BuruzhevMI23@magas.ithub.ru",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1744179870077.jpg",
+  "balance": 992000,
+  "premium": true,
+  "role": "user",
+  "lastSeen": {
+    "$date": "2025-04-13T16:31:56.604Z"
+  },
+  "__v": 4,
+  "currentRoom": null,
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67eaafea4a354b9bd11af46c"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T16:59:53.158Z"
+      },
+      "_id": {
+        "$oid": "67eaca0936339aeb16819ec9"
+      }
+    },
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-03-31T20:31:33.653Z"
+      },
+      "_id": {
+        "$oid": "67eafba5f32ccb572d531324"
+      }
+    }
+  ],
+  "premiumExpiresAt": {
+    "$date": "2025-04-30T20:31:33.648Z"
+  },
+  "birthdate": "2005-09-24",
+  "city": "Нестеровск",
+  "country": "Россия",
+  "description": "Люблю читать",
+  "gender": "Мужской",
+  "genre": "Криминал",
+  "notifications": [
+    {
+      "_id": {
+        "$oid": "67fa12529b48e416d89fb9db"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "DevAhmed пригласил вас в комнату \"тест\"",
+      "roomId": {
+        "$oid": "67fa05479b48e416d89f1482"
+      },
+      "inviterId": {
+        "$oid": "67cf3a28b019d6e62e91b853"
+      },
+      "inviterLogin": "DevAhmed",
+      "roomName": "тест",
+      "link": "https://vaykino.ru/room/67fa05479b48e416d89f1482?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-12T07:12:18.913Z"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "67eeef1844bad174f45fe44f"
+  },
+  "name": "кадыр",
+  "surname": "кадыр",
+  "login": "Tetrix8",
+  "password": "$2b$10$NOMDPviHi.KKJ3rgUgZUGOxidOclymRy/SQzIpQgHVXFQlv29swTq",
+  "email": "tetrixuno@gmail.com",
+  "avatarUrl": "",
+  "balance": 999999999,
+  "premium": true,
+  "role": "user",
+  "lastSeen": {
+    "$date": "2025-04-03T20:27:04.362Z"
+  },
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-04-03T20:27:40.156Z"
+      },
+      "_id": {
+        "$oid": "67eeef3c44bad174f45fe4ff"
+      }
+    },
+    {
+      "achievementId": {
+        "$oid": "67eaafea4a354b9bd11af46c"
+      },
+      "unlockedAt": {
+        "$date": "2025-04-03T20:27:50.072Z"
+      },
+      "_id": {
+        "$oid": "67eeef4644bad174f45fe58b"
+      }
+    }
+  ],
+  "__v": 3,
+  "currentRoom": {
+    "$oid": "67eeef5144bad174f45fe667"
+  },
+  "notifications": []
+},
+{
+  "_id": {
+    "$oid": "67f28a77be6df089eaa84741"
+  },
+  "name": "aaaa",
+  "surname": "aaaa",
+  "login": "amkhadov",
+  "password": "$2b$10$4W7qBfjYEmmMYkR5s3MBkOr2L.UP20vRTpQ1tLgPjST3Y66D/K5z6",
+  "email": "amkhadovam@magas.ithub.ru",
+  "avatarUrl": "",
+  "balance": 0,
+  "premium": true,
+  "role": "user",
+  "lastSeen": {
+    "$date": "2025-04-06T16:05:18.314Z"
+  },
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-04-06T15:27:34.254Z"
+      },
+      "_id": {
+        "$oid": "67f29d66be6df089eaa87c8c"
+      }
+    }
+  ],
+  "__v": 2,
+  "currentRoom": {
+    "$oid": "67f29e40be6df089eaa87ec8"
+  },
+  "premiumExpiresAt": {
+    "$date": "2025-05-06T15:27:34.250Z"
+  },
+  "notifications": []
+},
+{
+  "_id": {
+    "$oid": "67f416ea13e6e890c2d505ff"
+  },
+  "name": "Ghg",
+  "surname": "Gbg",
+  "login": "Aaaaa",
+  "password": "$2b$10$XXTNdfXxnqN0ywpb09PRT.KyDgla8X1wlhAu6WMq8uMEksESQg/eK",
+  "email": "amkhadov2014@mail.ru",
+  "avatarUrl": "",
+  "balance": 5000,
+  "premium": false,
+  "role": "user",
+  "lastSeen": {
+    "$date": "2025-04-07T18:18:19.184Z"
+  },
+  "achievements": [],
+  "__v": 1,
+  "notifications": []
+},
+{
+  "_id": {
+    "$oid": "67f41bf913e6e890c2d50b6c"
+  },
+  "name": "Ислам",
+  "surname": "Амхадов",
+  "login": "mutnniyy06",
+  "password": "$2b$10$TlWt4qBwpZJO4qgKAgxmxO2QPjHgIhaR9CMo1jPsTcsWY0r4/lcQS",
+  "email": "george006@inbox.ru",
+  "avatarUrl": "",
+  "balance": 99991999,
+  "premium": true,
+  "role": "user",
+  "lastSeen": {
+    "$date": "2025-04-11T12:37:06.372Z"
+  },
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67eaafea4a354b9bd11af46c"
+      },
+      "unlockedAt": {
+        "$date": "2025-04-08T07:48:01.892Z"
+      },
+      "_id": {
+        "$oid": "67f4d4b113e6e890c2d51dab"
+      }
+    },
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-04-11T12:37:34.309Z"
+      },
+      "_id": {
+        "$oid": "67f90d0e64604d19e35be9de"
+      }
+    }
+  ],
+  "__v": 3,
+  "currentRoom": null,
+  "notifications": [],
+  "premiumExpiresAt": {
+    "$date": "2025-05-11T12:37:34.306Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67f4e11a13e6e890c2d530c5"
+  },
+  "name": "Дауд",
+  "surname": "Гогиев",
+  "login": "Islam1121",
+  "password": "$2b$10$xmvHW/91snnVz8v3iL.3H.Wp3cbx/IriwGKK0peS60lMEED7szRSW",
+  "email": "TemirkhanovIA24@magas.ithub.ru",
+  "avatarUrl": "",
+  "balance": 5000,
+  "premium": false,
+  "role": "user",
+  "lastSeen": {
+    "$date": "2025-04-08T08:40:58.350Z"
+  },
+  "achievements": [],
+  "__v": 0,
+  "notifications": [
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:14:17.930Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f9079964604d19e35b0f0c"
+      }
+    },
+    {
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "Gitler пригласил вас в комнату \"тест\"",
+      "link": "https://vaykino.ru/room/67f9039b64604d19e35ae43f",
+      "roomId": "67f9039b64604d19e35ae43f",
+      "inviterId": {
+        "$oid": "67e5316ef542b69be3ee21f2"
+      },
+      "inviterLogin": "Gitler",
+      "roomName": "тест",
+      "createdAt": {
+        "$date": "2025-04-11T12:26:43.939Z"
+      },
+      "read": false,
+      "_id": {
+        "$oid": "67f90a8364604d19e35b4305"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "67f548c213e6e890c2d61835"
+  },
+  "name": "Саид",
+  "surname": "Гойгов",
+  "login": "Sagvakx1",
+  "password": "$2b$10$jgGmlhuw/iKIu99x62SXgu2ytA3eLVZGjF7UJRI0AJLo58bI2GERa",
+  "email": "goygovsaid@gmail.com",
+  "avatarUrl": "",
+  "balance": 0,
+  "premium": false,
+  "role": "user",
+  "lastSeen": {
+    "$date": "2025-04-08T16:03:14.470Z"
+  },
+  "achievements": [],
+  "__v": 1,
+  "notifications": []
+},
+{
+  "_id": {
+    "$oid": "67f90ebd64604d19e35bf963"
+  },
+  "name": "IThub",
+  "surname": "Magas",
+  "login": "ithub",
+  "password": "$2b$10$2yyz7rM0QlJDHDD2astivOG/fEAXw10HaZgNxJNZbAhV3ouT1kOv6",
+  "email": "presentation@ithub.ru",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1744438716269.jpg",
+  "balance": 7000,
+  "premium": true,
+  "role": "user",
+  "lastSeen": {
+    "$date": "2025-04-12T10:52:52.032Z"
+  },
+  "notifications": [
+    {
+      "_id": {
+        "$oid": "67f91e1ce71feead7245a77a"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "DevAhmed пригласил вас в комнату \"Шрек 3\"",
+      "roomId": {
+        "$oid": "67f91dafe71feead72458734"
+      },
+      "inviterId": {
+        "$oid": "67cf3a28b019d6e62e91b853"
+      },
+      "inviterLogin": "DevAhmed",
+      "roomName": "Шрек 3",
+      "link": "https://vaykino.ru/room/67f91dafe71feead72458734?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-11T13:50:20.993Z"
+      }
+    },
+    {
+      "_id": {
+        "$oid": "67f94b3b9b48e416d89daa66"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "DevAhmed пригласил вас в комнату \"тест\"",
+      "roomId": {
+        "$oid": "67f94b269b48e416d89da7a5"
+      },
+      "inviterId": {
+        "$oid": "67cf3a28b019d6e62e91b853"
+      },
+      "inviterLogin": "DevAhmed",
+      "roomName": "тест",
+      "link": "https://vaykino.ru/room/67f94b269b48e416d89da7a5?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-11T17:02:51.656Z"
+      }
+    },
+    {
+      "_id": {
+        "$oid": "67f9534e9b48e416d89e63ec"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "DevAhmed пригласил вас в комнату \"тест\"",
+      "roomId": {
+        "$oid": "67f9533a9b48e416d89e610b"
+      },
+      "inviterId": {
+        "$oid": "67cf3a28b019d6e62e91b853"
+      },
+      "inviterLogin": "DevAhmed",
+      "roomName": "тест",
+      "link": "https://vaykino.ru/room/67f9533a9b48e416d89e610b?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-11T17:37:18.858Z"
+      }
+    },
+    {
+      "_id": {
+        "$oid": "67f953959b48e416d89e6e8e"
+      },
+      "type": "room_invitation",
+      "title": "Приглашение в комнату",
+      "message": "DevAhmed пригласил вас в комнату \"тест\"",
+      "roomId": {
+        "$oid": "67f9537e9b48e416d89e6b38"
+      },
+      "inviterId": {
+        "$oid": "67cf3a28b019d6e62e91b853"
+      },
+      "inviterLogin": "DevAhmed",
+      "roomName": "тест",
+      "link": "https://vaykino.ru/room/67f9537e9b48e416d89e6b38?invite=true",
+      "read": false,
+      "createdAt": {
+        "$date": "2025-04-11T17:38:29.449Z"
+      }
+    }
+  ],
+  "achievements": [
+    {
+      "achievementId": {
+        "$oid": "67ea856692d866ee8c4d5150"
+      },
+      "unlockedAt": {
+        "$date": "2025-04-12T06:23:26.322Z"
+      },
+      "_id": {
+        "$oid": "67fa06de9b48e416d89f5a28"
+      }
+    }
+  ],
+  "__v": 1,
+  "currentRoom": null,
+  "city": "Назрань",
+  "country": "Россия",
+  "description": "IThub Magas самый лучший колледж",
+  "gender": "Мужской",
+  "genre": "Экшен",
+  "premiumExpiresAt": {
+    "$date": "2025-05-14T06:12:57.418Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fa43559b48e416d8a3c4ee"
+  },
+  "name": "Адам",
+  "surname": "Аушев",
+  "login": "DevAhmed123",
+  "password": "$2b$10$2Wzipf.rm/hg2UUNeL8Uu.7kfJEn.rdHTdV1onEhKR7zpk/hRkmXK",
+  "email": "BuruzhevMI24@magas.ithub.ru",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1744454529434.jpg",
+  "balance": 5000,
+  "premium": false,
+  "role": "user",
+  "lastSeen": {
+    "$date": "2025-04-12T10:41:25.781Z"
+  },
+  "notifications": [],
+  "achievements": [],
+  "__v": 0,
+  "city": "Магас",
+  "country": "Россия",
+  "gender": "Мужской"
+}]

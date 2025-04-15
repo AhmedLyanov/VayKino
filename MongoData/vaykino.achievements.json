@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "67ea856692d866ee8c4d5150"
+  },
+  "name": "Премиум-статус",
+  "description": "Приобрести премиум-подписку",
+  "iconUrl": "/achievements/trollface.png",
+  "criteria": {
+    "premium": true
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ea856692d866ee8c4d514e"
+  },
+  "name": "Премиум-статус",
+  "description": "Приобрести премиум-подписку",
+  "iconUrl": "/achievements/trollface.png",
+  "criteria": {
+    "premium": true
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67eaafea4a354b9bd11af46c"
+  },
+  "name": "Миллионер",
+  "description": "Накопить 1 000 000 на балансе",
+  "iconUrl": "/achievements/idiot.jpg",
+  "criteria": {
+    "balance": 1000000
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67eaafea4a354b9bd11af46a"
+  },
+  "name": "Миллионер",
+  "description": "Накопить 1 000 000 на балансе",
+  "iconUrl": "/achievements/idiot.jpg",
+  "criteria": {
+    "balance": 1000000
+  },
+  "__v": 0
+}]

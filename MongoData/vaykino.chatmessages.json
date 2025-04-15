@@ -1,0 +1,312 @@
+[{
+  "_id": {
+    "$oid": "67fa07199b48e416d89f5cf2"
+  },
+  "sender": "Gitler",
+  "text": "Посоветуйте фильм",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1744179870077.jpg",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T06:24:25.597Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa077d9b48e416d89f83ef"
+  },
+  "sender": "Aloha",
+  "text": "Посмотри дудпул 3) четкий фильмец",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T06:26:05.208Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa07cf9b48e416d89fa171"
+  },
+  "sender": "Aloha",
+  "imageUrl": "/uploads/1744439247157-1461863676_deadpool.jpg",
+  "avatarUrl": "",
+  "timestamp": {
+    "$date": "2025-04-12T06:27:27.157Z"
+  },
+  "roomId": "global",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa08179b48e416d89fa820"
+  },
+  "sender": "Nays06",
+  "text": "Да нет дедпул как-то скучновато как по мне, мб стоит взглянуть Веном 3",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1744310732894.gif",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T06:28:39.164Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa08fa9b48e416d89fa901"
+  },
+  "sender": "ithub",
+  "text": "Админ,  а ты как думаешь?",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1744438716269.jpg",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T06:32:26.621Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa09089b48e416d89fac2d"
+  },
+  "sender": "DevAhmed",
+  "text": "ааа я что?",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1741634146510.jpg",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T06:32:40.852Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa09259b48e416d89faf0a"
+  },
+  "sender": "ithub",
+  "text": "какой фильмец выбрать для просмотра с кентами?",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1744438716269.jpg",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T06:33:09.386Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa12a49b48e416d89fc425"
+  },
+  "sender": "DevAhmed",
+  "audioUrl": "/uploads/1744442020778-voice-message.webm",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1741634146510.jpg",
+  "timestamp": {
+    "$date": "2025-04-12T07:13:40.778Z"
+  },
+  "roomId": "global",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa20b89b48e416d8a35d74"
+  },
+  "sender": "Aloha",
+  "text": "кто взломал мой аккаунт???????",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T08:13:44.752Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa20c39b48e416d8a35e15"
+  },
+  "sender": "Aloha",
+  "text": "что вообще за сайт ",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T08:13:55.947Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa20d89b48e416d8a36017"
+  },
+  "sender": "Aloha",
+  "text": "никакой конфидициальности ",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T08:14:16.565Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa20db9b48e416d8a3605c"
+  },
+  "sender": "Aloha",
+  "text": "ужассссс",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T08:14:19.947Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa20e99b48e416d8a360cf"
+  },
+  "sender": "Aloha",
+  "text": "!!!",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T08:14:33.435Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa42ce9b48e416d8a38cea"
+  },
+  "sender": "DevAhmed",
+  "text": "Всем привет!",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1741634146510.jpg",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T10:39:10.112Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa42da9b48e416d8a392a3"
+  },
+  "sender": "Aloha",
+  "text": "Салам алейкум,  братва",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T10:39:22.180Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa42e69b48e416d8a39856"
+  },
+  "sender": "DevAhmed",
+  "audioUrl": "/uploads/1744454374231-voice-message.webm",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1741634146510.jpg",
+  "timestamp": {
+    "$date": "2025-04-12T10:39:34.231Z"
+  },
+  "roomId": "global",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa42fa9b48e416d8a3a1b5"
+  },
+  "sender": "Aloha",
+  "text": "где чел, который мне шапку продать хотел,",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T10:39:54.164Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa43029b48e416d8a3a57e"
+  },
+  "sender": "Aloha",
+  "text": "дика, даьььь ва",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T10:40:02.131Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa43079b48e416d8a3a7ed"
+  },
+  "sender": "DevAhmed",
+  "imageUrl": "/uploads/1744454407082-1461863676_deadpool.jpg",
+  "avatarUrl": "https://dreamfood.space:3000/uploads/1741634146510.jpg",
+  "timestamp": {
+    "$date": "2025-04-12T10:40:07.082Z"
+  },
+  "roomId": "global",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa43129b48e416d8a3ad0a"
+  },
+  "sender": "Aloha",
+  "text": "четкий фильм ",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T10:40:18.283Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa43139b48e416d8a3adb1"
+  },
+  "sender": "Aloha",
+  "text": "ежиии",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T10:40:19.777Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa43219b48e416d8a3b42e"
+  },
+  "sender": "Aloha",
+  "text": "Ахмед топ",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T10:40:33.430Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa432b9b48e416d8a3b8e9"
+  },
+  "sender": "Aloha",
+  "text": "я пошутила",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T10:40:43.260Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa43439b48e416d8a3c12d"
+  },
+  "sender": "Aloha",
+  "text": "нас терроризируют ",
+  "avatarUrl": "",
+  "roomId": "global",
+  "timestamp": {
+    "$date": "2025-04-12T10:41:07.714Z"
+  },
+  "__v": 0
+}]
