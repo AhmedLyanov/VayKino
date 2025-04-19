@@ -25,12 +25,14 @@
 Установите зависимости
 
 Серверная часть (/server):
+   ```
+   cd server && npm install;
+   ```
 
-cd server && npm install
 Клиентская часть (/client):
-
-
-cd client && npm install
+   ```
+   cd client && npm install
+   ```
 🛠 Настройка MongoDB
 Установите MongoDB и запустите сервер (mongod).
 
